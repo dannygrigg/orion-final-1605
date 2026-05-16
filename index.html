@@ -214,6 +214,7 @@ padding:88px 36px 72px;border-bottom:1px solid var(--line)}
 .feature p{font-size:14.5px;line-height:1.6}
 .mock-machine{border:1px solid var(--line2);border-radius:28px;background:linear-gradient(180deg,rgba(15,29,49,.75),rgba(7,17,31,.6));padding:28px;position:relative;overflow:hidden;min-height:520px}
 .machine-stage{height:440px;border:1px dashed rgba(0,213,255,.18);border-radius:24px;position:relative;background:radial-gradient(circle at 50% 45%,rgba(0,213,255,.12),transparent 45%)}
+/* legacy schematic styling (kept for any other usage) */
 .module{position:absolute;left:16%;right:16%;height:54px;border:1px solid rgba(0,213,255,.35);border-radius:12px;background:linear-gradient(180deg,#1b3152,#0C1A2C);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--soft);letter-spacing:.12em}
 .m1{top:72px}.m2{top:160px}.m3{top:248px}
 .chute{position:absolute;height:5px;background:linear-gradient(90deg,var(--blue),var(--cyan));box-shadow:0 0 14px rgba(0,213,255,.5);border-radius:999px}
@@ -222,6 +223,25 @@ padding:88px 36px 72px;border-bottom:1px solid var(--line)}
 .c3{left:8%;top:274px;width:26%;transform:rotate(-20deg)}
 .label{position:absolute;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
 .l1{left:8%;top:56px}.l2{right:8%;top:142px}.l3{left:8%;top:232px}.l4{left:50%;bottom:50px;transform:translateX(-50%)}
+
+/* HELIX CAROUSEL — replaces the static schematic with video + mockup images */
+.helix-carousel{position:relative;height:440px;border:1px dashed rgba(0,213,255,.18);border-radius:24px;background:radial-gradient(circle at 50% 45%,rgba(0,213,255,.10),transparent 45%);overflow:hidden}
+.helix-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .5s ease;pointer-events:none;padding:18px 24px}
+.helix-slide.active{opacity:1;pointer-events:auto}
+.helix-slide-label{position:absolute;top:14px;left:14px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#fff;font-weight:700;background:rgba(0,0,0,.5);padding:5px 11px;border-radius:999px;z-index:3;backdrop-filter:blur(8px);border:1px solid rgba(0,213,255,.28)}
+.helix-slide.video iframe{height:100%;width:auto;aspect-ratio:9/16;max-width:100%;border:0;border-radius:18px;background:#000;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.helix-slide.image{padding:24px}
+.helix-slide.image img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;background:#fff;box-shadow:0 18px 42px rgba(0,0,0,.4)}
+.helix-slide.image .missing{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:100%;height:100%;border:1px dashed rgba(0,213,255,.28);border-radius:14px;background:rgba(0,0,0,.25);color:var(--soft);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-align:center;padding:24px}
+.helix-slide.image .missing b{color:#fff;font-size:13px;letter-spacing:.06em;font-weight:600}
+.helix-slide.image .missing code{background:rgba(0,0,0,.4);padding:4px 8px;border-radius:6px;color:var(--cyan);font-size:11px}
+.helix-controls{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;padding:0 12px;transform:translateY(-50%);pointer-events:none;z-index:4}
+.helix-controls button{pointer-events:auto;background:rgba(0,0,0,.55);border:1px solid rgba(0,213,255,.3);color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s,background .15s,border-color .15s;backdrop-filter:blur(8px)}
+.helix-controls button:hover{background:rgba(0,213,255,.20);border-color:var(--cyan);transform:scale(1.05)}
+.helix-controls svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.helix-dots{position:absolute;bottom:14px;left:0;right:0;display:flex;justify-content:center;gap:8px;z-index:4}
+.helix-dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(0,213,255,.45);background:transparent;cursor:pointer;padding:0;transition:all .2s}
+.helix-dot.active{background:var(--cyan);box-shadow:0 0 10px var(--cyan);border-color:var(--cyan)}
 
 /* ── ROI ── */
 .roi{background:var(--paper);color:var(--ink)}
@@ -610,12 +630,54 @@ tr:last-child td{border-bottom:none}
       </div>
     </div>
     <div class="mock-machine">
-      <div class="machine-stage">
-        <span class="label l1">divert left</span><span class="label l2">divert right</span><span class="label l3">oversize / route</span><span class="label l4">main flow</span>
-        <div class="module m1">HELIX MODULE 01</div>
-        <div class="module m2">HELIX MODULE 02</div>
-        <div class="module m3">HELIX MODULE 03</div>
-        <div class="chute c1"></div><div class="chute c2"></div><div class="chute c3"></div>
+      <div class="helix-carousel" id="helixCarousel" aria-roledescription="carousel" aria-label="Helix sortation media">
+        <!-- Slide 1 · YouTube Short -->
+        <div class="helix-slide video active" data-slide="0">
+          <span class="helix-slide-label">Helix · short</span>
+          <iframe src="https://www.youtube.com/embed/XGBxhsK8Nos?modestbranding=1&rel=0&playsinline=1&enablejsapi=1"
+                  title="Helix sortation · short walkthrough"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen loading="lazy"></iframe>
+        </div>
+        <!-- Slide 2 · Technical drawing mockup -->
+        <div class="helix-slide image" data-slide="1">
+          <span class="helix-slide-label">Technical drawing</span>
+          <img src="images/helix-mockup-1.png" alt="Helix technical descriptive drawing — scan, divert &amp; convey system"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="missing" style="display:none">
+            <b>Drop the image here</b>
+            <span>Save the technical drawing as</span>
+            <code>images/helix-mockup-1.png</code>
+            <span>and refresh — no code change needed.</span>
+          </div>
+        </div>
+        <!-- Slide 3 · Schematic mockup -->
+        <div class="helix-slide image" data-slide="2">
+          <span class="helix-slide-label">System schematic</span>
+          <img src="images/helix-mockup-2.png" alt="Helix sortation schematic — divert left, divert right, oversize route"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="missing" style="display:none">
+            <b>Drop the image here</b>
+            <span>Save the schematic as</span>
+            <code>images/helix-mockup-2.png</code>
+            <span>and refresh — no code change needed.</span>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="helix-controls">
+          <button type="button" id="helixPrev" aria-label="Previous slide">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" id="helixNext" aria-label="Next slide">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <div class="helix-dots" id="helixDots">
+          <button type="button" class="helix-dot active" data-dot="0" aria-label="Slide 1"></button>
+          <button type="button" class="helix-dot" data-dot="1" aria-label="Slide 2"></button>
+          <button type="button" class="helix-dot" data-dot="2" aria-label="Slide 3"></button>
+        </div>
       </div>
     </div>
   </div>
@@ -1146,6 +1208,57 @@ tr:last-child td{border-bottom:none}
 </footer>
 
 <script src="site.js" defer></script>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// HELIX CAROUSEL — video + mockup images
+// ════════════════════════════════════════════════════════════════
+(function(){
+  const carousel = document.getElementById('helixCarousel');
+  if (!carousel) return;
+  const slides = carousel.querySelectorAll('.helix-slide');
+  const dots = carousel.querySelectorAll('.helix-dot');
+  const prev = document.getElementById('helixPrev');
+  const next = document.getElementById('helixNext');
+  const videoIframe = carousel.querySelector('.helix-slide.video iframe');
+  let current = 0;
+  let autoTimer = null;
+
+  function show(i) {
+    current = (i + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+    // pause the YouTube video when navigating away to avoid hidden-tab playback
+    if (current !== 0 && videoIframe) {
+      try {
+        videoIframe.contentWindow.postMessage(
+          '{"event":"command","func":"pauseVideo","args":""}', '*'
+        );
+      } catch (e) {}
+    }
+  }
+  function nextSlide() { show(current + 1); }
+  function prevSlide() { show(current - 1); }
+
+  function startAuto() {
+    stopAuto();
+    autoTimer = setInterval(nextSlide, 9000);
+  }
+  function stopAuto() {
+    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+  }
+
+  next.addEventListener('click', () => { nextSlide(); startAuto(); });
+  prev.addEventListener('click', () => { prevSlide(); startAuto(); });
+  dots.forEach((d, idx) => d.addEventListener('click', () => { show(idx); startAuto(); }));
+
+  // pause auto-advance on hover so a reader can study a slide
+  carousel.addEventListener('mouseenter', stopAuto);
+  carousel.addEventListener('mouseleave', startAuto);
+
+  startAuto();
+})();
+</script>
 
 <script>
 // ════════════════════════════════════════════════════════════════
