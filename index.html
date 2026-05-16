@@ -232,6 +232,10 @@ padding:88px 36px 72px;border-bottom:1px solid var(--line)}
 .helix-slide.video iframe{height:100%;width:auto;aspect-ratio:9/16;max-width:100%;border:0;border-radius:18px;background:#000;box-shadow:0 24px 60px rgba(0,0,0,.45)}
 .helix-slide.image{padding:24px}
 .helix-slide.image img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;background:#fff;box-shadow:0 18px 42px rgba(0,0,0,.4)}
+.helix-slide.drawing{padding:14px}
+.helix-slide.drawing iframe{width:100%;height:100%;border:0;border-radius:10px;background:#fff;box-shadow:0 18px 42px rgba(0,0,0,.45);display:block}
+.helix-slide-open{position:absolute;bottom:14px;right:14px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.55);padding:6px 12px;border-radius:999px;text-decoration:none;border:1px solid rgba(0,213,255,.32);backdrop-filter:blur(8px);z-index:3;font-weight:700;transition:.15s}
+.helix-slide-open:hover{background:rgba(0,213,255,.20);border-color:var(--cyan)}
 .helix-slide.image .missing{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:100%;height:100%;border:1px dashed rgba(0,213,255,.28);border-radius:14px;background:rgba(0,0,0,.25);color:var(--soft);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-align:center;padding:24px}
 .helix-slide.image .missing b{color:#fff;font-size:13px;letter-spacing:.06em;font-weight:600}
 .helix-slide.image .missing code{background:rgba(0,0,0,.4);padding:4px 8px;border-radius:6px;color:var(--cyan);font-size:11px}
@@ -639,17 +643,13 @@ tr:last-child td{border-bottom:none}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowfullscreen loading="lazy"></iframe>
         </div>
-        <!-- Slide 2 · Technical drawing mockup -->
-        <div class="helix-slide image" data-slide="1">
-          <span class="helix-slide-label">Technical drawing</span>
-          <img src="images/helix-mockup-1.png" alt="Helix technical descriptive drawing — scan, divert &amp; convey system"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="missing" style="display:none">
-            <b>Drop the image here</b>
-            <span>Save the technical drawing as</span>
-            <code>images/helix-mockup-1.png</code>
-            <span>and refresh — no code change needed.</span>
-          </div>
+        <!-- Slide 2 · Technical drawing (live HTML mockup) -->
+        <div class="helix-slide drawing" data-slide="1">
+          <span class="helix-slide-label">Technical drawing · ORI-SS-001</span>
+          <iframe src="helix-tech-drawing.html"
+                  title="Helix technical descriptive drawing — scan, divert &amp; convey system"
+                  loading="lazy"></iframe>
+          <a class="helix-slide-open" href="helix-tech-drawing.html" target="_blank" rel="noopener">Open full drawing →</a>
         </div>
         <!-- Slide 3 · Schematic mockup -->
         <div class="helix-slide image" data-slide="2">
