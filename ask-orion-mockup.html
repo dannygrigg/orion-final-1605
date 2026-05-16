@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ask Orion launcher · mockup</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dark:#02050A;--bg2:#07111F;--panel:#0B1626;
+  --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
+  --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
+  --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;
+  --sans:"Inter",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:radial-gradient(circle at 70% 20%,rgba(0,213,255,.10),transparent 35%),radial-gradient(circle at 10% 80%,rgba(30,144,255,.10),transparent 40%),linear-gradient(180deg,#07111F 0%,#050B14 70%,#02050A 100%);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;letter-spacing:-.005em;padding:48px 36px 200px}
+a{color:var(--cyan);text-decoration:none}
+
+.wrap{max-width:880px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:18px;display:inline-flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+h1{font-size:clamp(28px,3.6vw,44px);font-weight:600;line-height:1.15;margin-bottom:16px;letter-spacing:-.022em}
+h1 em{font-family:"DM Serif Display",Georgia,serif;font-style:italic;color:var(--cyan);font-weight:400}
+.lead{font-size:16px;color:var(--muted);max-width:620px;margin-bottom:30px;line-height:1.65}
+.note{background:rgba(0,213,255,.06);border:1px solid var(--line2);border-radius:14px;padding:18px 22px;color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:28px}
+.note strong{color:#fff}
+.demo-rules{display:grid;gap:10px;margin-top:32px}
+.demo-rule{display:flex;gap:14px;align-items:flex-start;padding:14px 18px;background:rgba(15,29,49,.45);border:1px solid var(--line);border-radius:14px;font-size:14px;color:var(--muted)}
+.demo-rule b{display:block;color:#fff;font-weight:600;margin-bottom:3px;font-size:14px}
+.demo-rule .num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;font-weight:700}
+
+/* ── ASK ORION LAUNCHER ── */
+#ask-orion-launcher{position:fixed;right:20px;bottom:20px;z-index:9500;display:inline-flex;align-items:center;gap:12px;padding:12px 18px 12px 12px;background:linear-gradient(180deg,#111926,#07111F);border:1px solid rgba(0,213,255,.32);border-radius:999px;color:#F7FAFF;font-family:var(--sans);cursor:pointer;box-shadow:0 12px 32px rgba(0,0,0,.45);transition:transform .18s,box-shadow .18s,border-color .18s;font-size:14px;line-height:1.2}
+#ask-orion-launcher:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(0,213,255,.18);border-color:#00D5FF}
+#ask-orion-launcher .ao-icon{flex-shrink:0;width:38px;height:38px;border-radius:50%;background:#02050A;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(0,213,255,.24)}
+#ask-orion-launcher .ao-icon svg{width:24px;height:24px;display:block}
+#ask-orion-launcher .ao-text{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15;text-align:left}
+#ask-orion-launcher .ao-text b{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.01em}
+#ask-orion-launcher .ao-text span{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(247,250,255,.6);margin-top:2px}
+
+/* ── CHAT PANEL MOCK ── */
+.chat-panel{position:fixed;right:20px;bottom:96px;z-index:9400;width:min(360px,calc(100vw - 40px));height:min(540px,calc(100vh - 140px));background:#07111F;border:1px solid var(--line2);border-radius:18px;box-shadow:0 24px 72px rgba(0,0,0,.55);display:none;flex-direction:column;overflow:hidden;transform-origin:bottom right;animation:popOpen .22s ease-out}
+.chat-panel.open{display:flex}
+@keyframes popOpen{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+.cp-header{padding:18px 20px;background:linear-gradient(180deg,#111926,#0B1626);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.cp-header .ao-icon{width:36px;height:36px;border-radius:50%;background:#02050A;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(0,213,255,.24)}
+.cp-header .ao-icon svg{width:22px;height:22px}
+.cp-header .cp-title{flex:1}
+.cp-header b{display:block;color:#fff;font-size:15px;font-weight:600;letter-spacing:-.01em}
+.cp-header .cp-status{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-top:3px;display:inline-flex;align-items:center;gap:6px}
+.cp-header .cp-status::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.cp-close{background:transparent;border:0;color:var(--soft);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;transition:.15s}
+.cp-close:hover{background:rgba(255,255,255,.06);color:#fff}
+.cp-body{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;background:radial-gradient(circle at 80% 0%,rgba(0,213,255,.04),transparent 30%)}
+.cp-msg{max-width:80%;padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.5}
+.cp-msg.agent{background:rgba(15,29,49,.55);border:1px solid var(--line);color:#fff;border-bottom-left-radius:6px}
+.cp-msg.agent small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px}
+.cp-msg.user{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d;align-self:flex-end;border-bottom-right-radius:6px;font-weight:500}
+.cp-quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.cp-quick button{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--cyan);background:rgba(0,213,255,.06);border:1px dashed rgba(0,213,255,.32);border-radius:999px;padding:8px 12px;cursor:pointer;transition:.15s}
+.cp-quick button:hover{background:rgba(0,213,255,.12);border-color:var(--cyan)}
+.cp-input{padding:14px 16px;border-top:1px solid var(--line);background:rgba(2,5,10,.5);display:flex;gap:8px;align-items:center}
+.cp-input input{flex:1;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:999px;padding:11px 16px;font-family:var(--sans);font-size:13.5px;color:#fff;outline:none;transition:border-color .2s}
+.cp-input input:focus{border-color:var(--cyan)}
+.cp-input button{background:linear-gradient(135deg,var(--blue),var(--cyan));border:0;border-radius:50%;width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.cp-input button:hover{transform:translateY(-1px)}
+.cp-input button svg{width:18px;height:18px;fill:#00111d}
+.cp-footer{padding:10px 16px;border-top:1px solid var(--line);background:rgba(2,5,10,.7);font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);text-align:center}
+
+@media(max-width:520px){
+  #ask-orion-launcher{right:14px;bottom:14px;padding:10px 16px 10px 10px;gap:10px}
+  #ask-orion-launcher .ao-icon{width:34px;height:34px}
+  #ask-orion-launcher .ao-icon svg{width:20px;height:20px}
+  #ask-orion-launcher .ao-text b{font-size:13px}
+  #ask-orion-launcher .ao-text span{font-size:9px}
+  .chat-panel{right:14px;bottom:84px;height:min(500px,calc(100vh - 110px))}
+}
+
+.mockup-banner{position:fixed;top:0;left:0;right:0;background:linear-gradient(90deg,#0066CC,#00D5FF);color:#00111d;padding:8px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;text-align:center;z-index:10000}
+</style>
+</head>
+<body>
+
+<div class="mockup-banner">Ask Orion launcher · standalone mockup · no Tawk required</div>
+
+<div class="wrap" style="padding-top:36px">
+  <div class="eyebrow">Chat launcher preview</div>
+  <h1>This is what the <em>Ask Orion</em> button will look like.</h1>
+  <p class="lead">The dark pill in the bottom-right corner is the launcher. The text "Ask Orion · Talk to an engineer" replaces Tawk's default chat bubble. Click it to see the chat panel preview.</p>
+
+  <div class="note">
+    <strong>Why this mockup exists:</strong> Tawk's real widget can't load from <code style="color:var(--cyan)">file://</code> URLs — it requires HTTP(S) and a whitelisted domain. So we built a standalone preview that mimics exactly how the launcher + chat panel will look once deployed to Netlify. The styling and behaviour match the production code in <code style="color:var(--cyan)">site.js</code> 1:1.
+  </div>
+
+  <div class="demo-rules">
+    <div class="demo-rule"><span class="num">1</span><div><b>The launcher</b>Dark gradient pill, Orion star icon in cyan-blue gradient, "Ask Orion" headline + "Talk to an engineer" subtext in monospace. Sits fixed bottom-right.</div></div>
+    <div class="demo-rule"><span class="num">2</span><div><b>On click</b>The chat panel slides in above the launcher (in production it would be Tawk's real chat window with your live agent or AI bot).</div></div>
+    <div class="demo-rule"><span class="num">3</span><div><b>On Netlify</b>Replace the simulated panel with the real Tawk widget — the launcher stays exactly the same, only what opens on click changes.</div></div>
+  </div>
+
+  <p style="margin-top:36px;font-size:14px;color:var(--soft)"><strong style="color:#fff">Try it →</strong> click the "Ask Orion" button bottom-right.</p>
+</div>
+
+<!-- Launcher -->
+<button id="ask-orion-launcher" type="button" aria-label="Ask Orion — talk to an engineer">
+  <span class="ao-icon" aria-hidden="true">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="aog" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#1E90FF"/><stop offset="1" stop-color="#00D5FF"/>
+      </linearGradient></defs>
+      <circle cx="50" cy="50" r="48" fill="none" stroke="url(#aog)" stroke-width="6"/>
+      <path fill="url(#aog)" d="M50 18 L60 42 L86 42 L65 58 L73 84 L50 68 L27 84 L35 58 L14 42 L40 42 Z"/>
+    </svg>
+  </span>
+  <span class="ao-text"><b>Ask Orion</b><span>Talk to an engineer</span></span>
+</button>
+
+<!-- Simulated chat panel -->
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="Ask Orion chat">
+  <div class="cp-header">
+    <span class="ao-icon">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs><linearGradient id="aog2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#1E90FF"/><stop offset="1" stop-color="#00D5FF"/>
+        </linearGradient></defs>
+        <circle cx="50" cy="50" r="48" fill="none" stroke="url(#aog2)" stroke-width="6"/>
+        <path fill="url(#aog2)" d="M50 18 L60 42 L86 42 L65 58 L73 84 L50 68 L27 84 L35 58 L14 42 L40 42 Z"/>
+      </svg>
+    </span>
+    <div class="cp-title">
+      <b>Ask Orion</b>
+      <span class="cp-status">Engineers online</span>
+    </div>
+    <button class="cp-close" id="chatClose" aria-label="Close">×</button>
+  </div>
+  <div class="cp-body">
+    <div class="cp-msg agent">
+      <small>Orion · automation</small>
+      Hi — thanks for stopping by. We typically reply in under 2 minutes during UK working hours. What's slowing your operation down?
+    </div>
+    <div class="cp-msg agent">
+      <small>Pick one to start</small>
+      Or jump straight to a topic:
+      <div class="cp-quick">
+        <button>Sortation</button>
+        <button>Finance</button>
+        <button>Book site visit</button>
+        <button>ROI estimate</button>
+      </div>
+    </div>
+  </div>
+  <div class="cp-input">
+    <input type="text" placeholder="Type your message…" aria-label="Type your message">
+    <button aria-label="Send"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg></button>
+  </div>
+  <div class="cp-footer">Powered by Tawk · UK-built warehouse automation</div>
+</div>
+
+<script>
+const launcher = document.getElementById('ask-orion-launcher');
+const panel = document.getElementById('chatPanel');
+const closeBtn = document.getElementById('chatClose');
+launcher.addEventListener('click', () => panel.classList.toggle('open'));
+closeBtn.addEventListener('click', () => panel.classList.remove('open'));
+document.querySelectorAll('.cp-quick button').forEach(b => {
+  b.addEventListener('click', () => {
+    const body = document.querySelector('.cp-body');
+    const msg = document.createElement('div');
+    msg.className = 'cp-msg user';
+    msg.textContent = b.textContent;
+    body.appendChild(msg);
+    body.scrollTop = body.scrollHeight;
+    setTimeout(() => {
+      const reply = document.createElement('div');
+      reply.className = 'cp-msg agent';
+      reply.innerHTML = '<small>Orion · typing</small>Great — one of our engineers will pick this up. In the live version this is your real Tawk agent or AI bot replying.';
+      body.appendChild(reply);
+      body.scrollTop = body.scrollHeight;
+    }, 700);
+  });
+});
+</script>
+
+</body>
+</html>

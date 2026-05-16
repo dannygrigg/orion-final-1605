@@ -1,0 +1,44 @@
+# ──────────────────────────────────────────────────────────────────────
+# Netlify config for the Orion site
+# Drag the parent folder onto https://app.netlify.com/drop and this gets
+# picked up automatically. No build step — it's a static site.
+# ──────────────────────────────────────────────────────────────────────
+
+[build]
+  publish = "."
+
+# ── Security headers (applied site-wide) ──
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+# ── media.json — no caching so admin edits show on next page load ──
+[[headers]]
+  for = "/media.json"
+  [headers.values]
+    Cache-Control = "no-cache, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+# ── Block admin pages from search engines ──
+[[headers]]
+  for = "/admin-media.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-cache, must-revalidate"
+
+# ── Email assets are internal — block from crawling ──
+[[headers]]
+  for = "/email-assets/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# ── Long cache for the carousel script (versioned by content) ──
+[[headers]]
+  for = "/media-carousel.js"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

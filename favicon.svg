@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="og" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1E90FF"/>
+      <stop offset="1" stop-color="#00D5FF"/>
+    </linearGradient>
+  </defs>
+  <!-- dark navy disc with gradient ring -->
+  <circle cx="50" cy="50" r="48" fill="#050B14"/>
+  <circle cx="50" cy="50" r="48" fill="none" stroke="url(#og)" stroke-width="5"/>
+  <!-- gradient star with double-outline look (outer minus inner via even-odd) -->
+  <path fill="url(#og)" fill-rule="evenodd" d="
+    M50 12 L58.8 37.9 L86.1 38.3 L64.3 54.6 L72.3 80.7 L50 65 L27.7 80.7 L35.7 54.6 L13.9 38.3 L41.2 37.9 Z
+    M50 20 L57.1 40.3 L78.5 40.7 L61.4 53.7 L67.6 74.3 L50 62 L32.4 74.3 L38.6 53.7 L21.5 40.7 L42.9 40.3 Z
+  "/>
+  <!-- small filled star in the centre -->
+  <path fill="#00D5FF" d="M50 35 L53.5 45.2 L64.3 45.4 L55.7 51.9 L58.8 62.1 L50 56 L41.2 62.1 L44.3 51.9 L35.7 45.4 L46.5 45.2 Z"/>
+</svg>

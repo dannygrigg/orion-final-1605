@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Media manager — Orion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700;800&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050B14;--bg2:#07111F;--dark:#02050A;--panel:#0B1626;
+  --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
+  --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
+  --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--amber:#FDB022;--red:#F97066;
+  --serif:"DM Serif Display",Georgia,serif;--sans:"DM Sans",system-ui,sans-serif;--mono:"JetBrains Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--dark);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;padding:30px 24px 80px;min-height:100vh}
+a{color:var(--cyan);text-decoration:none}
+a:hover{color:#fff}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1;letter-spacing:-.025em}
+button{font-family:inherit;cursor:pointer}
+
+.wrap{max-width:1200px;margin:0 auto}
+
+/* Header */
+.header{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:34px;flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.header-text .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.header-text .eyebrow::before{content:"";display:inline-block;width:24px;height:1px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.header-text h1{font-size:36px;margin-bottom:6px}
+.header-text h1 em{font-style:italic;color:var(--cyan)}
+.header-text p{color:var(--muted);font-weight:300;font-size:14.5px;max-width:520px}
+.header-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 18px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;border:1px solid transparent;transition:transform .15s,background .2s;text-decoration:none}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d}
+.btn-secondary{background:rgba(255,255,255,.05);color:#fff;border-color:rgba(255,255,255,.18)}
+.btn-secondary:hover{background:rgba(255,255,255,.1)}
+.btn-danger{background:rgba(249,112,102,.08);color:var(--red);border-color:rgba(249,112,102,.35)}
+.btn-danger:hover{background:rgba(249,112,102,.2)}
+
+/* Slot list */
+.slot{background:rgba(15,29,49,.55);border:1px solid var(--line);border-radius:18px;margin-bottom:18px;overflow:hidden;transition:border-color .2s}
+.slot.expanded{border-color:var(--line2)}
+.slot-head{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;flex-wrap:wrap}
+.slot-head:hover{background:rgba(255,255,255,.02)}
+.slot-name{flex:1;min-width:200px}
+.slot-name strong{display:block;font-family:var(--serif);font-size:20px;color:#fff;font-weight:400;margin-bottom:2px}
+.slot-name code{font-family:var(--mono);font-size:11px;color:var(--cyan);background:rgba(0,213,255,.07);border:1px solid var(--line2);padding:2px 7px;border-radius:6px}
+.slot-meta{display:flex;gap:14px;align-items:center;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.slot-meta .count{color:#fff;font-weight:700}
+.slot-meta .count.zero{color:var(--amber)}
+.slot-body{display:none;padding:0 22px 22px;border-top:1px solid var(--line)}
+.slot.expanded .slot-body{display:block}
+
+.slot-settings{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:18px 0 22px}
+.slot-settings label{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--soft);margin-bottom:6px;font-weight:500}
+.slot-settings select,.slot-settings input{width:100%;background:rgba(255,255,255,.04);color:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-family:var(--sans);font-size:13px}
+.slot-settings select:focus,.slot-settings input:focus{outline:none;border-color:var(--cyan)}
+
+.item-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.item-handle{width:18px;height:18px;color:var(--soft);cursor:grab;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;letter-spacing:-2px;line-height:1}
+.item-thumb{width:54px;height:42px;border-radius:6px;background:linear-gradient(135deg,#0B1626,#1b3152);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+.item-thumb img{width:100%;height:100%;object-fit:cover}
+.item-thumb-icon{font-family:var(--mono);font-size:9px;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase}
+.item-fields{flex:1;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:8px;min-width:0}
+.item-fields input{width:100%;background:rgba(0,0,0,.2);color:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-family:var(--sans);font-size:12.5px;min-width:0}
+.item-fields input:focus{outline:none;border-color:var(--cyan)}
+.item-fields input::placeholder{color:var(--soft)}
+.item-actions{display:flex;gap:6px;flex-shrink:0}
+.item-btn{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:8px;color:var(--muted);padding:6px 10px;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .15s,color .15s}
+.item-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.item-btn.delete:hover{background:rgba(249,112,102,.15);color:var(--red);border-color:rgba(249,112,102,.35)}
+.item-empty{padding:18px 14px;text-align:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);border:1px dashed var(--line);border-radius:12px}
+
+.add-item-row{display:flex;gap:8px;align-items:flex-end;background:rgba(0,213,255,.04);border:1px dashed var(--line2);border-radius:12px;padding:14px}
+.add-item-fields{flex:1;display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px}
+.add-item-fields input{background:rgba(0,0,0,.2);color:#fff;border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:13px}
+.add-item-fields input:focus{outline:none;border-color:var(--cyan)}
+.add-item-fields input::placeholder{color:var(--soft)}
+
+/* Preview panel */
+.preview-panel{margin-top:14px;background:#02050A;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.preview-panel-head{padding:10px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--soft);font-weight:700}
+.preview-panel-head .pp-link{color:var(--cyan);text-decoration:none}
+.preview-frame{padding:16px}
+
+/* Export modal */
+.export-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center;padding:20px}
+.export-modal.open{display:flex}
+.export-card{background:var(--bg2);border:1px solid var(--line2);border-radius:18px;padding:28px;max-width:720px;width:100%;max-height:90vh;overflow:auto}
+.export-card h3{font-size:24px;margin-bottom:8px;color:#fff}
+.export-card p{color:var(--muted);font-size:13.5px;margin-bottom:18px;line-height:1.6}
+.export-card textarea{width:100%;height:280px;background:#02050A;color:var(--cyan);border:1px solid var(--line);border-radius:10px;padding:14px;font-family:var(--mono);font-size:11px;line-height:1.5;resize:vertical}
+.export-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;justify-content:flex-end}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;right:24px;background:#02050A;border:1px solid var(--green);border-radius:12px;padding:14px 18px;color:#fff;font-size:13px;display:none;z-index:90;box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.toast.show{display:block;animation:toastIn .25s ease}
+@keyframes toastIn{from{transform:translateY(8px);opacity:0}to{transform:translateY(0);opacity:1}}
+.toast.error{border-color:var(--red)}
+
+/* Section divider for slot groups */
+.group-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin:32px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.group-label:first-of-type{margin-top:0}
+
+/* Help block */
+.help{background:rgba(0,213,255,.04);border:1px solid var(--line2);border-radius:14px;padding:20px 24px;margin-bottom:28px}
+.help h2{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;font-weight:700;line-height:1.2}
+.help p{font-size:13.5px;line-height:1.65;color:var(--muted);margin-bottom:6px}
+.help p:last-child{margin-bottom:0}
+.help code{font-family:var(--mono);font-size:11.5px;color:var(--cyan);background:rgba(0,213,255,.08);padding:2px 6px;border-radius:4px}
+
+@media(max-width:760px){
+  .slot-settings{grid-template-columns:1fr}
+  .item-fields{grid-template-columns:1fr}
+  .add-item-fields{grid-template-columns:1fr}
+  .item{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="header">
+    <div class="header-text">
+      <div class="eyebrow">Media manager · internal</div>
+      <h1>Carousels &amp; media <em>across the site</em></h1>
+      <p>Each card below is a media slot live on the site. Add image URLs, video links or YouTube/Vimeo links. Save and the slot updates everywhere.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-secondary" id="addSlotBtn">+ New slot</button>
+      <button class="btn btn-secondary" id="reloadBtn">Reload</button>
+      <button class="btn btn-primary" id="exportBtn">Export media.json →</button>
+    </div>
+  </div>
+
+  <div class="help">
+    <h2>How to use this</h2>
+    <p>1 · Each slot maps to a <code>&lt;div class="media-slot" data-slot="..."&gt;</code> placeholder somewhere on the site.</p>
+    <p>2 · Paste any image or video URL — Cloudinary, S3, the orionmis.co.uk CDN, YouTube, Vimeo, or a direct <code>.mp4</code>.</p>
+    <p>3 · Hit <strong>Export media.json</strong>, copy the output, replace the contents of <code>media.json</code> in the repo and push. The carousel widget will pick it up automatically on the next page load.</p>
+    <p>4 · Changes you make here are saved to your browser as a draft. They become live only after you replace <code>media.json</code> in the repo.</p>
+  </div>
+
+  <div id="slotList"></div>
+
+  <!-- Export modal -->
+  <div class="export-modal" id="exportModal">
+    <div class="export-card">
+      <h3>Export <em style="font-style:italic;color:var(--cyan)">media.json</em></h3>
+      <p>Copy the JSON below and paste it into <code>media.json</code> at the root of the repo, then commit and push. Netlify will rebuild and the new media will be live.</p>
+      <textarea id="exportText" readonly></textarea>
+      <div class="export-actions">
+        <button class="btn btn-secondary" id="exportClose">Close</button>
+        <button class="btn btn-primary" id="exportCopy">Copy to clipboard</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════════
+const STORAGE_KEY = 'orion_media_draft';
+let state = { slots: {} };
+
+const SLOT_TEMPLATES = {
+  'hero-home': { page: 'index.html', name: 'Homepage hero', defaultInterval: 7000 },
+  'helix-product': { page: 'index.html', name: 'Helix product area', defaultInterval: 6000 },
+  'case-studies': { page: 'index.html', name: 'Case studies carousel', defaultInterval: 8000 },
+  'factory-tour': { page: 'index.html', name: 'Factory tour', defaultInterval: 6500 },
+  'products-hero': { page: 'products.html', name: 'Products page hero', defaultInterval: 6000 },
+  'news-featured': { page: 'news.html', name: 'News featured', defaultInterval: 0 }
+};
+
+// ════════════════════════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════════════════════════
+function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function uid() { return Math.random().toString(36).slice(2, 9); }
+
+function detectType(url) {
+  if (/(?:youtube\.com|youtu\.be)/i.test(url)) return 'youtube';
+  if (/vimeo\.com/i.test(url)) return 'vimeo';
+  if (/\.(mp4|webm|mov|m4v)(\?|$)/i.test(url)) return 'video';
+  if (/\.(jpg|jpeg|png|gif|webp|avif|svg|heic)(\?|$)/i.test(url) || url.startsWith('data:image/')) return 'image';
+  return 'image'; // default guess
+}
+
+function toast(msg, isError) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.toggle('error', !!isError);
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2400);
+}
+
+// ════════════════════════════════════════════════════════════════════
+// LOAD
+// ════════════════════════════════════════════════════════════════════
+async function loadConfig() {
+  // Prefer browser draft (work in progress); fall back to live media.json
+  const draft = localStorage.getItem(STORAGE_KEY);
+  if (draft) {
+    try { state = JSON.parse(draft); } catch (e) { state = { slots: {} }; }
+  } else {
+    try {
+      const res = await fetch('media.json', { cache: 'no-cache' });
+      if (res.ok) state = await res.json();
+    } catch (e) {
+      state = { slots: {} };
+    }
+  }
+  if (!state.slots) state.slots = {};
+  render();
+}
+
+function persist() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+// ════════════════════════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════════════════════════
+function render() {
+  const list = document.getElementById('slotList');
+
+  // Ensure all known slot templates exist in state (auto-add empty slots)
+  Object.keys(SLOT_TEMPLATES).forEach(name => {
+    if (!state.slots[name]) {
+      state.slots[name] = {
+        title: SLOT_TEMPLATES[name].name,
+        autoplay: true,
+        interval: SLOT_TEMPLATES[name].defaultInterval || 6000,
+        items: []
+      };
+    }
+  });
+
+  const slotNames = Object.keys(state.slots);
+
+  // Group: known slots first, custom slots after
+  const knownNames = slotNames.filter(n => SLOT_TEMPLATES[n]);
+  const customNames = slotNames.filter(n => !SLOT_TEMPLATES[n]);
+
+  let html = '';
+  if (knownNames.length) {
+    html += '<div class="group-label">Site slots</div>';
+    knownNames.forEach(name => { html += renderSlot(name); });
+  }
+  if (customNames.length) {
+    html += '<div class="group-label">Custom slots</div>';
+    customNames.forEach(name => { html += renderSlot(name); });
+  }
+
+  list.innerHTML = html;
+  wireSlotEvents();
+}
+
+function renderSlot(name) {
+  const slot = state.slots[name];
+  const template = SLOT_TEMPLATES[name];
+  const count = (slot.items || []).length;
+  const pageHint = template ? template.page : 'custom';
+
+  return `
+    <div class="slot" data-slot="${escapeHtml(name)}">
+      <div class="slot-head">
+        <div class="slot-name">
+          <strong>${escapeHtml(slot.title || name)}</strong>
+          <code>data-slot="${escapeHtml(name)}"</code>
+          <span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--soft);margin-left:8px">${escapeHtml(pageHint)}</span>
+        </div>
+        <div class="slot-meta">
+          <span class="count ${count === 0 ? 'zero' : ''}">${count} ${count === 1 ? 'item' : 'items'}</span>
+          <span>${slot.autoplay !== false ? 'Auto · ' + Math.round((slot.interval || 6000) / 1000) + 's' : 'Manual'}</span>
+          <button class="item-btn">Edit ▾</button>
+        </div>
+      </div>
+      <div class="slot-body">
+
+        <div class="slot-settings">
+          <div>
+            <label>Title (admin only)</label>
+            <input type="text" data-field="title" value="${escapeHtml(slot.title || '')}" placeholder="Homepage hero">
+          </div>
+          <div>
+            <label>Auto-advance</label>
+            <select data-field="autoplay">
+              <option value="true" ${slot.autoplay !== false ? 'selected' : ''}>Auto-advance</option>
+              <option value="false" ${slot.autoplay === false ? 'selected' : ''}>Manual only</option>
+            </select>
+          </div>
+          <div>
+            <label>Interval (ms)</label>
+            <input type="number" data-field="interval" min="2000" step="500" value="${slot.interval || 6000}">
+          </div>
+        </div>
+
+        <div class="item-list">
+          ${(slot.items || []).length === 0
+            ? `<div class="item-empty">No media yet — paste a URL below</div>`
+            : (slot.items || []).map((item, i) => renderItem(name, item, i)).join('')}
+        </div>
+
+        <div class="add-item-row">
+          <div class="add-item-fields">
+            <input type="url" placeholder="Paste image / video / YouTube / Vimeo URL" data-add="url">
+            <input type="text" placeholder="Tag (optional)" data-add="tag">
+            <input type="text" placeholder="Caption (optional)" data-add="caption">
+          </div>
+          <button class="btn btn-primary" data-action="add-item" data-slot="${escapeHtml(name)}">+ Add</button>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;flex-wrap:wrap">
+          <a class="item-btn" href="#" data-action="preview" data-slot="${escapeHtml(name)}">Preview ↗</a>
+          ${!template ? `<button class="btn btn-danger" data-action="delete-slot" data-slot="${escapeHtml(name)}">Delete this slot</button>` : ''}
+        </div>
+
+        <div class="preview-panel" id="preview-${escapeHtml(name)}" style="display:none">
+          <div class="preview-panel-head">
+            <span>Live preview</span>
+            <span class="pp-link" data-action="hide-preview" data-slot="${escapeHtml(name)}">close</span>
+          </div>
+          <div class="preview-frame">
+            <div class="media-slot" data-slot="preview-${escapeHtml(name)}"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+}
+
+function renderItem(slotName, item, index) {
+  const type = item.type || detectType(item.url || '');
+  const isImg = type === 'image';
+  return `
+    <div class="item" data-index="${index}" draggable="true">
+      <div class="item-handle" title="Drag to reorder">⋮⋮</div>
+      <div class="item-thumb">
+        ${isImg && item.url ? `<img src="${escapeHtml(item.url)}" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=&quot;item-thumb-icon&quot;>IMG</span>'">` : `<span class="item-thumb-icon">${type.toUpperCase()}</span>`}
+      </div>
+      <div class="item-fields">
+        <input type="url" data-item-field="url" value="${escapeHtml(item.url || '')}" placeholder="URL">
+        <input type="text" data-item-field="tag" value="${escapeHtml(item.tag || '')}" placeholder="Tag">
+        <input type="text" data-item-field="caption" value="${escapeHtml(item.caption || '')}" placeholder="Caption">
+      </div>
+      <div class="item-actions">
+        <button class="item-btn" data-action="move-up" data-slot="${escapeHtml(slotName)}" data-index="${index}">↑</button>
+        <button class="item-btn" data-action="move-down" data-slot="${escapeHtml(slotName)}" data-index="${index}">↓</button>
+        <button class="item-btn delete" data-action="delete-item" data-slot="${escapeHtml(slotName)}" data-index="${index}">✕</button>
+      </div>
+    </div>
+  `;
+}
+
+// ════════════════════════════════════════════════════════════════════
+// EVENT WIRING
+// ════════════════════════════════════════════════════════════════════
+function wireSlotEvents() {
+  // Toggle slot expansion
+  document.querySelectorAll('.slot-head').forEach(head => {
+    head.addEventListener('click', (e) => {
+      if (e.target.closest('button.item-btn')) return; // ignore button clicks bubbling
+      const slot = head.closest('.slot');
+      slot.classList.toggle('expanded');
+    });
+  });
+
+  // Field changes (slot settings)
+  document.querySelectorAll('.slot-settings [data-field]').forEach(input => {
+    input.addEventListener('input', () => {
+      const slot = input.closest('.slot');
+      const name = slot.dataset.slot;
+      const field = input.dataset.field;
+      let val = input.value;
+      if (field === 'autoplay') val = val === 'true';
+      else if (field === 'interval') val = parseInt(val) || 6000;
+      state.slots[name][field] = val;
+      persist();
+      updateSlotMeta(name);
+    });
+  });
+
+  // Item field changes
+  document.querySelectorAll('.item [data-item-field]').forEach(input => {
+    input.addEventListener('input', () => {
+      const item = input.closest('.item');
+      const slot = item.closest('.slot');
+      const slotName = slot.dataset.slot;
+      const index = +item.dataset.index;
+      const field = input.dataset.itemField;
+      state.slots[slotName].items[index][field] = input.value;
+      if (field === 'url') {
+        state.slots[slotName].items[index].type = detectType(input.value);
+      }
+      persist();
+    });
+  });
+
+  // Actions
+  document.querySelectorAll('[data-action]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const action = el.dataset.action;
+      const slotName = el.dataset.slot;
+      const idx = el.dataset.index !== undefined ? +el.dataset.index : -1;
+
+      if (action === 'add-item') {
+        const row = el.closest('.add-item-row');
+        const url = row.querySelector('[data-add="url"]').value.trim();
+        const tag = row.querySelector('[data-add="tag"]').value.trim();
+        const caption = row.querySelector('[data-add="caption"]').value.trim();
+        if (!url) return toast('Paste a URL first', true);
+        state.slots[slotName].items.push({ type: detectType(url), url, tag, caption });
+        persist();
+        render();
+      }
+      if (action === 'delete-item') {
+        state.slots[slotName].items.splice(idx, 1);
+        persist();
+        render();
+      }
+      if (action === 'move-up' && idx > 0) {
+        const items = state.slots[slotName].items;
+        [items[idx - 1], items[idx]] = [items[idx], items[idx - 1]];
+        persist();
+        render();
+      }
+      if (action === 'move-down') {
+        const items = state.slots[slotName].items;
+        if (idx < items.length - 1) {
+          [items[idx + 1], items[idx]] = [items[idx], items[idx + 1]];
+          persist();
+          render();
+        }
+      }
+      if (action === 'delete-slot') {
+        if (confirm('Delete this custom slot? Any items will be lost.')) {
+          delete state.slots[slotName];
+          persist();
+          render();
+        }
+      }
+      if (action === 'preview') {
+        showPreview(slotName);
+      }
+      if (action === 'hide-preview') {
+        const panel = document.getElementById('preview-' + slotName);
+        if (panel) panel.style.display = 'none';
+      }
+    });
+  });
+}
+
+function updateSlotMeta(name) {
+  const slot = state.slots[name];
+  const headEl = document.querySelector(`.slot[data-slot="${CSS.escape(name)}"] .slot-meta`);
+  if (!headEl) return;
+  const count = (slot.items || []).length;
+  headEl.querySelector('.count').textContent = `${count} ${count === 1 ? 'item' : 'items'}`;
+  headEl.querySelector('.count').classList.toggle('zero', count === 0);
+  headEl.querySelectorAll('span')[1].textContent = slot.autoplay !== false ? 'Auto · ' + Math.round((slot.interval || 6000) / 1000) + 's' : 'Manual';
+}
+
+function showPreview(slotName) {
+  const slot = state.slots[slotName];
+  const panel = document.getElementById('preview-' + slotName);
+  if (!panel) return;
+  panel.style.display = 'block';
+  // Inject current draft into OrionMedia widget
+  const previewKey = 'preview-' + slotName;
+  if (window.OrionMedia && window.OrionMedia.renderSlot) {
+    window.OrionMedia.renderSlot(previewKey, slot);
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════
+// HEADER ACTIONS
+// ════════════════════════════════════════════════════════════════════
+document.getElementById('addSlotBtn').addEventListener('click', () => {
+  const name = prompt('Slot name (lowercase, hyphenated, e.g. "about-team")');
+  if (!name) return;
+  const clean = name.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+  if (!clean) return toast('Invalid slot name', true);
+  if (state.slots[clean]) return toast('Slot already exists', true);
+  state.slots[clean] = { title: clean.replace(/-/g, ' '), autoplay: true, interval: 6000, items: [] };
+  persist();
+  render();
+  toast('Slot added — place <div class="media-slot" data-slot="' + clean + '"> in the page');
+});
+
+document.getElementById('reloadBtn').addEventListener('click', () => {
+  if (confirm('Reload from live media.json? Any unsaved draft changes will be lost.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    loadConfig();
+    toast('Reloaded from live media.json');
+  }
+});
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const json = JSON.stringify(state, null, 2);
+  document.getElementById('exportText').value = json;
+  document.getElementById('exportModal').classList.add('open');
+});
+
+document.getElementById('exportClose').addEventListener('click', () => {
+  document.getElementById('exportModal').classList.remove('open');
+});
+
+document.getElementById('exportCopy').addEventListener('click', async () => {
+  const text = document.getElementById('exportText').value;
+  try {
+    await navigator.clipboard.writeText(text);
+    toast('Copied to clipboard — paste into media.json');
+  } catch (e) {
+    document.getElementById('exportText').select();
+    document.execCommand('copy');
+    toast('Copied');
+  }
+});
+
+// Init
+loadConfig();
+</script>
+
+<!-- Live preview widget -->
+<script src="media-carousel.js"></script>
+
+</body>
+</html>

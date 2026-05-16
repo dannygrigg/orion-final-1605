@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Page not found | Orion MIS</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--dark:#02050A;--bg2:#07111F;--text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);--line:rgba(255,255,255,.10);--blue:#1E90FF;--cyan:#00D5FF;--sans:"Inter",system-ui,sans-serif;--serif:"DM Serif Display",Georgia,serif;--mono:"JetBrains Mono",ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:radial-gradient(circle at 50% 0,rgba(0,213,255,.16),transparent 32%),radial-gradient(circle at 80% 80%,rgba(30,144,255,.14),transparent 40%),linear-gradient(180deg,#07111F 0%,#050B14 70%,#02050A 100%);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;letter-spacing:-.005em;font-weight:400}
+a{text-decoration:none;color:inherit}
+
+.bar{height:34px;background:linear-gradient(90deg,#0066CC,#00D5FF);color:#00111d;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:0 16px;text-align:center}
+@media(max-width:600px){.bar{height:30px;font-size:10px}}
+
+.logo-bar{padding:18px 36px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.logo-bar img{height:54px;filter:brightness(0) invert(1)}
+.logo-bar a.home{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.logo-bar a.home:hover{color:#fff}
+
+.wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px}
+.card{max-width:640px;text-align:center}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:18px;display:inline-flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+h1{font-size:clamp(48px,9vw,128px);line-height:.95;letter-spacing:-.04em;color:#fff;font-weight:600;margin-bottom:18px;font-family:var(--sans)}
+h1 em{font-family:var(--serif);font-style:italic;color:var(--cyan);font-weight:400}
+h2{font-size:clamp(20px,2.6vw,28px);line-height:1.25;color:#fff;margin-bottom:14px;font-weight:600;letter-spacing:-.018em}
+p{font-size:16px;line-height:1.65;color:var(--muted);max-width:520px;margin:0 auto 28px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:13px 22px;font-size:13.5px;font-weight:800;border:1px solid transparent;transition:.15s}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-line{border-color:rgba(255,255,255,.22);color:#fff;background:rgba(255,255,255,.03)}
+.btn-line:hover{background:rgba(255,255,255,.08)}
+
+.useful{margin-top:36px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:center;gap:22px;flex-wrap:wrap;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.useful a{color:var(--soft);transition:color .2s}
+.useful a:hover{color:var(--cyan)}
+
+.foot{padding:22px 24px;border-top:1px solid var(--line);text-align:center;color:var(--soft);font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="bar">Page not found · Try one of the links below or head back home</div>
+
+<div class="logo-bar">
+  <a href="/"><img src="https://www.orionmis.co.uk/front/images/comp/logo.png" alt="Orion MIS"></a>
+  <a class="home" href="/">← Back to home</a>
+</div>
+
+<div class="wrap">
+  <div class="card">
+    <div class="eyebrow">Error 404</div>
+    <h1>Looks like that <em>page</em> got mis-sorted.</h1>
+    <h2>The page you're after isn't here.</h2>
+    <p>It may have been moved, renamed, or the link you followed is out of date. Pick one of the routes below or head back home.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/">Back to home →</a>
+      <a class="btn btn-line" href="/sketch.html">Send a sketch</a>
+    </div>
+    <div class="useful">
+      <a href="/">Home</a>
+      <a href="/#helix">Helix</a>
+      <a href="/#roi">ROI</a>
+      <a href="/warehouse-automation-finance.html">Finance</a>
+      <a href="/products.html">Products</a>
+      <a href="/#proof">Case studies</a>
+      <a href="/news.html">News &amp; builds</a>
+      <a href="/#faq">FAQs</a>
+    </div>
+  </div>
+</div>
+
+<div class="foot">© 2026 Orion MIS Ltd · Company no. 11735049 · VAT GB 318 1797 83</div>
+
+<script src="/site.js" defer></script>
+</body>
+</html>

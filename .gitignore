@@ -1,0 +1,29 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local scratch
+*.log
+*.tmp
+*.bak
+*~
+.netlify/
+node_modules/
+
+# Local-only assets — never commit huge raw video to git
+hero-intro.mp4
+*.mov
+*.avi
+*.mkv
+*.wmv
+*.psd
+*.ai
+*.sketch
+*.fig

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin-media.html
+Disallow: /email-assets/
+Disallow: /mockup-fonts.html
+Disallow: /mockup-fonts-v2.html
+
+Sitemap: https://orionmis.co.uk/sitemap.xml

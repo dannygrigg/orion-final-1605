@@ -1,0 +1,63 @@
+{
+  "slots": {
+    "hero-home": {
+      "title": "Homepage hero",
+      "autoplay": false,
+      "interval": 7000,
+      "items": [
+        {
+          "type": "image",
+          "url": "images/hero-wcs-dashboard.png"
+        }
+      ]
+    },
+    "helix-product": {
+      "title": "Helix product area",
+      "autoplay": true,
+      "interval": 6000,
+      "items": []
+    },
+    "case-studies": {
+      "title": "Case studies carousel",
+      "autoplay": true,
+      "interval": 8000,
+      "items": [
+        {
+          "type": "image",
+          "url": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80",
+          "tag": "Gompels Healthcare",
+          "caption": "Outbound pack & sort install — 7 system integrations, zero downtime"
+        },
+        {
+          "type": "image",
+          "url": "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1600&q=80",
+          "tag": "Expeditors",
+          "caption": "Pick-to-light & goods-to-person — 400 units/hour"
+        },
+        {
+          "type": "image",
+          "url": "https://images.unsplash.com/photo-1565891741441-64926e441838?auto=format&fit=crop&w=1600&q=80",
+          "tag": "Tate & Lyle",
+          "caption": "Food-grade sugar line — 24/7 continuous operation, zero permitted downtime"
+        }
+      ]
+    },
+    "factory-tour": {
+      "title": "Factory tour",
+      "autoplay": true,
+      "interval": 6500,
+      "items": []
+    },
+    "products-hero": {
+      "title": "Products page hero",
+      "autoplay": true,
+      "interval": 6000,
+      "items": []
+    },
+    "news-featured": {
+      "title": "News featured",
+      "autoplay": false,
+      "items": []
+    }
+  }
+}

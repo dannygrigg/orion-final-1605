@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Warehouse Automation UK | Modular Parcel Sortation Systems | Orion Helix</title>
+<meta name="description" content="UK-built warehouse automation and modular parcel sortation systems for parcel centres, 3PLs and fulfilment operations. Reduce labour, increase capacity and prove the payback with Orion Helix.">
+<link rel="canonical" href="https://orionmis.co.uk/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://orionmis.co.uk/">
+<meta property="og:title" content="Warehouse Automation UK | Orion Helix">
+<meta property="og:description" content="UK-built warehouse automation: Helix parcel sortation, conveyors, robotics, AMRs, WCS. Reduce labour. Increase capacity. Prove the payback.">
+<meta property="og:image" content="https://orionmis.co.uk/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Warehouse Automation UK | Orion Helix">
+<meta name="twitter:description" content="UK-built warehouse automation. Reduce labour. Increase capacity. Prove the payback.">
+<meta name="twitter:image" content="https://orionmis.co.uk/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050B14;--bg2:#07111F;--dark:#02050A;--panel:#0B1626;--panel2:#0F1D31;
+  --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
+  --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
+  --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--amber:#FDB022;--red:#F97066;
+  --paper:#FBFAF7;--ink:#1d1d1f;--mid:#6e6e73;--paperline:#d2d2d7;
+  --serif:"DM Serif Display",Georgia,serif;--sans:"Inter",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --max:1280px;
+  --nav-h:88px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--dark);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:-.005em;font-feature-settings:"cv02","cv03","cv04","cv11";font-weight:400}
+a{text-decoration:none;color:inherit}
+h1,h2,h3{font-family:var(--sans);font-weight:600;line-height:1.1;letter-spacing:-.022em}
+h1 em,h2 em,h3 em,.head em,.faq summary em,em{font-family:var(--sans);font-style:italic;font-weight:400;letter-spacing:-.015em}
+p{color:var(--muted);font-weight:400}
+strong{font-weight:800;color:#fff}
+button{font-family:inherit}
+
+/* anchored sections clear the sticky nav */
+section[id],div[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
+
+/* ── TOP BANNER (above nav) ── */
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:60;height:34px;background:linear-gradient(90deg,#0066CC,#00D5FF);color:#00111d;overflow:hidden;display:flex;align-items:center;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(0,0,0,.18)}
+.top-banner-track{display:flex;gap:0;align-items:center;animation:topBanner 48s linear infinite;white-space:nowrap}
+.top-banner-track:hover{animation-play-state:paused}
+.top-banner-content{display:flex;align-items:center;gap:0;flex-shrink:0;padding-right:56px}
+.tb-item{flex-shrink:0;padding:0 18px}
+.tb-sep{flex-shrink:0;opacity:.45}
+.tb-item a{color:#00111d;text-decoration:none;border-bottom:1px solid rgba(0,17,29,.4);padding-bottom:1px;transition:opacity .15s}
+.tb-item a:hover{opacity:.7}
+@keyframes topBanner{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:600px){.top-banner{height:30px;font-size:10px}.tb-item{padding:0 12px}}
+
+.container{max-width:var(--max);margin:0 auto}
+.section{padding:88px 36px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.eyebrow:before{content:"";width:32px;height:1px;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:14px 22px;font-size:14px;font-weight:800;border:1px solid transparent;transition:.15s;cursor:pointer;text-decoration:none}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d}
+.btn-secondary{border-color:rgba(255,255,255,.25);color:#fff;background:rgba(255,255,255,.03)}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+.btn-line{border:1px solid var(--paperline);color:var(--ink);background:#fff}
+.btn-line:hover{background:#f5f5f0}
+.btn-dark{background:#111;color:#fff}
+.note{font-family:var(--mono);font-size:10px;color:var(--soft);letter-spacing:.1em;text-transform:uppercase}
+
+/* ── NAV ── */
+.nav{position:fixed;top:34px;left:0;right:0;z-index:50;height:var(--nav-h);background:rgba(5,11,20,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:0 36px;display:flex;align-items:center;justify-content:space-between;transition:box-shadow .2s}
+@media(max-width:600px){.nav{top:30px}}
+.nav.scrolled{box-shadow:0 8px 28px rgba(0,0,0,.4)}
+.logo img{height:64px;filter:brightness(0) invert(1);display:block}
+.news-dot{display:inline-block;width:8px;height:8px;background:var(--cyan);border-radius:50%;margin-left:7px;box-shadow:0 0 10px var(--cyan),0 0 3px rgba(0,213,255,.7);animation:newsPulse 2.4s ease-in-out infinite;vertical-align:super;position:relative;top:-3px}
+@keyframes newsPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.45}}
+
+/* ── FINANCE CARDS (clickable in #finance grid) ── */
+.fin-card{display:block;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);border-radius:12px;padding:12px 14px;text-decoration:none;color:inherit;transition:background .2s,border-color .2s,transform .15s,box-shadow .2s;position:relative}
+.fin-card:hover{background:rgba(0,213,255,.06);border-color:rgba(0,213,255,.5);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,213,255,.08)}
+.fin-card-tag{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);display:block}
+.fin-card-title{font-family:var(--sans);font-size:16px;color:#fff;font-weight:400;margin-top:6px;line-height:1.15;display:block;letter-spacing:-.01em}
+.fin-card-arrow{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:14px;color:rgba(0,213,255,.5);opacity:0;transition:opacity .2s,transform .2s;line-height:1}
+.fin-card:hover .fin-card-arrow{opacity:1;transform:translateX(2px)}
+.nav ul{display:flex;gap:26px;list-style:none;font-size:13px;color:var(--muted)}
+.nav li a{padding:6px 0;position:relative;transition:color .2s}
+.nav li a:hover{color:#fff}
+.nav li a.active{color:var(--cyan)}
+.nav li a.active::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.nav-actions{display:flex;align-items:center;gap:14px}
+.nav .phone{font-family:var(--mono);font-size:10px;letter-spacing:.11em;color:var(--soft);text-transform:uppercase}
+.nav .quote{background:#fff;color:#07111F;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;gap:6px;transition:transform .15s,background .2s}
+.nav .quote:hover{transform:translateY(-1px);background:var(--cyan);color:#00111d}
+
+body{padding-top:calc(var(--nav-h) + 34px)}
+@media(max-width:600px){body{padding-top:calc(var(--nav-h) + 30px)}}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:none;background:transparent}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.mobile-nav{display:none;position:fixed;top:calc(var(--nav-h) + 34px);left:0;right:0;background:rgba(5,11,20,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--line2);padding:18px 24px 24px;z-index:49;flex-direction:column;gap:2px}
+@media(max-width:600px){.mobile-nav{top:calc(var(--nav-h) + 30px)}}
+.mobile-nav.open{display:flex}
+.mobile-nav a{font-size:16px;color:#fff;padding:14px 0;border-bottom:1px solid var(--line)}
+.mobile-nav a:last-of-type{border-bottom:none}
+.mobile-nav a.mobile-cta{background:#fff;color:#07111F!important;border-radius:999px;padding:14px;margin-top:10px;font-weight:800;text-align:center;border:none}
+
+/* ── HERO ── */
+.hero{position:relative;overflow:hidden;background:
+  radial-gradient(circle at 78% 12%,rgba(0,213,255,.18),transparent 30%),
+  radial-gradient(circle at 20% 0,rgba(30,144,255,.16),transparent 32%),
+  linear-gradient(180deg,#07111F 0%,#050B14 70%,#02050A 100%);
+padding:88px 36px 72px;border-bottom:1px solid var(--line)}
+.hero:after{content:"";position:absolute;right:-140px;top:30px;width:640px;height:640px;border-radius:50%;border:1px solid rgba(0,213,255,.10);box-shadow:0 0 120px rgba(0,213,255,.12);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:.75fr 1.25fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(34px,4.4vw,62px);margin-bottom:22px;max-width:780px}
+.hero h1 em{font-style:italic;color:var(--cyan)}
+.hero-lead{font-size:17px;line-height:1.65;max-width:600px;margin-bottom:24px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.hero-proof{display:flex;gap:10px;flex-wrap:wrap}
+.hero-proof span{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:999px;padding:8px 11px;font-size:13px;color:var(--soft)}
+.hero-card{border:1px solid var(--line2);border-radius:34px;background:linear-gradient(180deg,rgba(15,29,49,.82),rgba(7,17,31,.72));box-shadow:0 30px 90px rgba(0,0,0,.42);overflow:hidden}
+.hero-media{position:relative;border-radius:28px;border:1px solid var(--line2);box-shadow:0 30px 90px rgba(0,0,0,.42);background:#050B14;overflow:hidden;display:block;aspect-ratio:16/9;width:100%;cursor:pointer}
+.hero-media img,.hero-media video,.hero-media iframe{display:block;width:100%;height:100%;object-fit:cover;border:0}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%);pointer-events:none;transition:opacity .25s}
+.hero-media:hover::after{opacity:.7}
+.hero-media .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.96);display:flex;align-items:center;justify-content:center;box-shadow:0 12px 36px rgba(0,0,0,.5);z-index:2;transition:transform .15s,background .15s;border:0;cursor:pointer}
+.hero-media:hover .play{transform:translate(-50%,-50%) scale(1.06)}
+.hero-media .play svg{width:32px;height:32px;fill:#FF0000;margin-left:5px}
+.hero-media .label{position:absolute;left:18px;bottom:16px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#fff;z-index:2;background:rgba(0,0,0,.55);padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(6px)}
+.card-top{height:48px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.card-body{padding:22px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.kpi{border:1px solid var(--line);background:rgba(255,255,255,.045);border-radius:15px;padding:16px}
+.kpi small{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--soft)}
+.kpi b{display:block;font-family:var(--sans);font-size:32px;line-height:1.05;margin-top:8px;color:#fff;font-weight:400}
+.kpi span{font-family:var(--mono);font-size:10px;color:var(--green)}
+.visual{height:318px;border:1px solid var(--line);border-radius:24px;position:relative;background:
+  radial-gradient(circle at 50% 46%,rgba(0,213,255,.18),transparent 45%),
+  linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.01));overflow:hidden}
+.track{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56%;height:24%;border:1px solid rgba(0,213,255,.35);border-radius:13px;background:linear-gradient(180deg,#1b3152,#0b1a2e)}
+.arm{position:absolute;height:5px;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--cyan));box-shadow:0 0 15px rgba(0,213,255,.55)}
+.a1{left:7%;top:30%;width:40%;transform:rotate(-15deg)}
+.a2{right:7%;top:30%;width:40%;transform:rotate(15deg)}
+.a3{left:7%;bottom:27%;width:40%;transform:rotate(15deg)}
+.a4{right:7%;bottom:27%;width:40%;transform:rotate(-15deg)}
+.box{position:absolute;width:28px;height:20px;border-radius:4px;background:linear-gradient(135deg,var(--amber),#E89106);box-shadow:0 0 10px rgba(253,176,34,.4);animation:parcelFloat 6s ease-in-out infinite}
+.b1{left:17%;top:25%;transform:rotate(-8deg);animation-delay:0s}
+.b2{left:49%;top:47%;animation-delay:1.6s}
+.b3{right:24%;bottom:24%;transform:rotate(11deg);animation-delay:3s}
+@keyframes parcelFloat{
+  0%,100%{transform:translateY(0) rotate(var(--r,0deg))}
+  50%{transform:translateY(-6px) rotate(var(--r,0deg))}
+}
+.alert{margin-top:14px;border:1px solid rgba(0,213,255,.24);background:rgba(0,213,255,.06);border-radius:15px;padding:14px;display:flex;justify-content:space-between;gap:16px;font-size:13px;color:#fff}
+.alert span{color:var(--cyan)}
+
+/* ── PROOF STRIP ── */
+.proof-strip{background:#030710;border-bottom:1px solid var(--line);padding:44px 36px}
+.proof-grid-strip{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border-radius:20px;overflow:hidden}
+.proof-cell{background:#050B14;padding:32px 28px;border-left:2px solid var(--cyan)}
+.proof-cell b{display:block;font-family:var(--sans);font-size:clamp(30px,3.6vw,46px);line-height:1;color:#fff;font-weight:500;letter-spacing:-.02em;margin-top:10px}
+.proof-cell small{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:700}
+.proof-cell p{font-size:14.5px;margin-top:10px;color:var(--muted);line-height:1.5}
+@media(max-width:900px){.proof-cell b{font-size:42px}.proof-cell{padding:24px 20px}}
+
+/* ── TRUSTED BY (moving marquee) ── */
+.trusted{background:#02050A;padding:42px 0 46px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;position:relative}
+.trusted::before,.trusted::after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.trusted::before{left:0;background:linear-gradient(90deg,#02050A 0%,rgba(2,5,10,0) 100%)}
+.trusted::after{right:0;background:linear-gradient(270deg,#02050A 0%,rgba(2,5,10,0) 100%)}
+.trusted-label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);text-align:center;margin-bottom:28px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:14px}
+.trusted-label::before,.trusted-label::after{content:"";width:34px;height:1px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.trusted-track{display:flex;gap:0;animation:trustedScroll 70s linear infinite;white-space:nowrap;will-change:transform}
+.trusted-track:hover{animation-play-state:paused}
+.trusted-row{display:flex;gap:28px;align-items:center;flex-shrink:0;padding:0 14px}
+.trusted-row img{flex-shrink:0;height:128px;width:auto;max-width:440px;object-fit:contain;padding:24px 44px;background:#F7FAFF;border:1px solid rgba(255,255,255,.10);border-radius:18px;opacity:.92;transition:opacity .25s,transform .2s}
+.trusted-row img:hover{opacity:1;transform:translateY(-2px)}
+@keyframes trustedScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:600px){.trusted-row{gap:18px}.trusted-row img{height:88px;padding:18px 28px;max-width:280px}.trusted{padding:30px 0 34px}}
+
+/* ── LIGHT SECTIONS ── */
+.light{background:var(--paper);color:var(--ink)}
+.light p{color:var(--mid)}
+.light strong{color:var(--ink)}
+.light .eyebrow{color:var(--blue)}
+.light .eyebrow:before{background:var(--blue);box-shadow:none}
+.head{max-width:900px;margin:0 auto 46px}
+.head h2{font-size:clamp(26px,3.2vw,46px);margin-bottom:16px;color:var(--ink)}
+.head h2 em{font-style:italic;color:var(--blue)}
+.head p{font-size:16.5px;line-height:1.62}
+
+/* ── PAIN CARDS ── */
+.pain-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pain{background:#fff;border:1px solid var(--paperline);border-radius:18px;padding:26px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.pain:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.06);border-color:rgba(30,144,255,.4)}
+.pain h3{font-size:19px;margin-bottom:10px;color:var(--ink);font-weight:600;line-height:1.25;letter-spacing:-.015em}
+.pain p{font-size:14.5px;line-height:1.55}
+.pain .role{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:14px}
+
+/* ── PRODUCT SECTION ── */
+.product{background:linear-gradient(180deg,#050B14,#07111F)}
+.product-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
+.product-copy h2{font-size:clamp(26px,3.2vw,46px);margin-bottom:18px}
+.product-copy h2 em{font-style:italic;color:var(--cyan)}
+.product-copy p{font-size:16.5px;line-height:1.65;margin-bottom:14px}
+.feature-list{display:grid;gap:12px;margin-top:24px}
+.feature{border-top:1px solid var(--line);padding-top:16px;display:grid;grid-template-columns:54px 1fr;gap:16px}
+.feature b{font-family:var(--sans);font-size:22px;color:var(--cyan);font-weight:500;letter-spacing:-.005em}
+.feature p{font-size:14.5px;line-height:1.6}
+.mock-machine{border:1px solid var(--line2);border-radius:28px;background:linear-gradient(180deg,rgba(15,29,49,.75),rgba(7,17,31,.6));padding:28px;position:relative;overflow:hidden;min-height:520px}
+.machine-stage{height:440px;border:1px dashed rgba(0,213,255,.18);border-radius:24px;position:relative;background:radial-gradient(circle at 50% 45%,rgba(0,213,255,.12),transparent 45%)}
+.module{position:absolute;left:16%;right:16%;height:54px;border:1px solid rgba(0,213,255,.35);border-radius:12px;background:linear-gradient(180deg,#1b3152,#0C1A2C);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--soft);letter-spacing:.12em}
+.m1{top:72px}.m2{top:160px}.m3{top:248px}
+.chute{position:absolute;height:5px;background:linear-gradient(90deg,var(--blue),var(--cyan));box-shadow:0 0 14px rgba(0,213,255,.5);border-radius:999px}
+.c1{left:8%;top:96px;width:26%;transform:rotate(-20deg)}
+.c2{right:8%;top:186px;width:26%;transform:rotate(20deg)}
+.c3{left:8%;top:274px;width:26%;transform:rotate(-20deg)}
+.label{position:absolute;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.l1{left:8%;top:56px}.l2{right:8%;top:142px}.l3{left:8%;top:232px}.l4{left:50%;bottom:50px;transform:translateX(-50%)}
+
+/* ── ROI ── */
+.roi{background:var(--paper);color:var(--ink)}
+.roi-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:.85fr 1.15fr;gap:20px;align-items:stretch}
+.roi-card{background:#fff;border:1px solid var(--paperline);border-radius:22px;padding:24px 26px;display:flex;flex-direction:column;justify-content:center}
+.roi-card h3{font-size:22px;margin-bottom:14px;color:var(--ink);font-weight:600;letter-spacing:-.018em}
+.roi-card h3 em{font-style:italic;color:var(--blue)}
+.roi-card p{font-size:15px;line-height:1.55;color:var(--mid)}
+.roi-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.calculator{background:#111926;color:#fff;border-radius:22px;padding:20px;position:relative;overflow:hidden}
+.calculator::before{content:"";position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(0,213,255,.16),transparent 70%);pointer-events:none}
+.calc-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;position:relative}
+.calc-box{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);border-radius:14px;padding:16px}
+.calc-box small{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--soft)}
+.calc-box b{display:block;font-family:var(--sans);font-size:26px;line-height:1;margin-top:8px;font-weight:500;letter-spacing:-.015em}
+.calc-result{margin-top:10px;border:1px solid rgba(50,213,131,.32);background:rgba(50,213,131,.08);border-radius:14px;padding:12px 14px;position:relative}
+.calc-result b{font-family:var(--sans);font-size:24px;color:var(--green);display:block;font-weight:600;line-height:1.05;letter-spacing:-.02em}
+.calc-result p{margin-top:4px;color:rgba(255,255,255,.65);font-size:12.5px;line-height:1.45}
+.coming-soon{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);border:1px solid rgba(0,213,255,.35);border-radius:999px;padding:5px 11px}
+
+/* ── INTERACTIVE ROI CALCULATOR ── */
+.calc-inputs{display:flex;flex-direction:column;gap:12px;margin-bottom:12px;position:relative}
+.calc-input{position:relative}
+.calc-input-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:12px}
+.calc-input-label{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,250,255,.65)}
+.calc-input-value{font-family:var(--sans);font-size:16px;color:#fff;line-height:1;letter-spacing:-.015em;font-weight:500}
+.calc-input-units{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);margin-top:4px}
+input[type=range].calc-slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;background:rgba(255,255,255,.08);border-radius:999px;outline:none;margin:0;padding:0;cursor:pointer}
+input[type=range].calc-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:var(--cyan);border:2px solid #07111F;box-shadow:0 0 16px rgba(0,213,255,.55);cursor:pointer;transition:transform .15s}
+input[type=range].calc-slider:hover::-webkit-slider-thumb{transform:scale(1.1)}
+input[type=range].calc-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--cyan);border:2px solid #07111F;box-shadow:0 0 16px rgba(0,213,255,.55);cursor:pointer}
+input[type=range].calc-slider::-moz-range-track{background:rgba(255,255,255,.08);height:5px;border-radius:999px}
+.calc-output{margin-top:6px;position:relative}
+.calc-output-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.calc-out-cell{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);border-radius:12px;padding:10px 12px}
+.calc-out-cell small{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--soft)}
+.calc-out-cell b{display:block;font-family:var(--sans);font-size:22px;line-height:1.05;margin-top:4px;color:#fff;font-weight:600;letter-spacing:-.02em}
+.calc-result-headline{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:3px}
+.calc-result-detail{margin-top:6px;color:rgba(255,255,255,.7);font-size:12.5px;line-height:1.45}
+.calc-result-detail b{color:#fff;font-weight:700}
+.calc-disclaimer{margin-top:10px;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);line-height:1.5}
+.calc-form{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;position:relative}
+.calc-form .hp-field{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+.calc-form input[type=email]{flex:1;min-width:180px;background:rgba(255,255,255,.05);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:11px 16px;font-family:var(--sans);font-size:13.5px;font-weight:300}
+.calc-form input[type=email]:focus{outline:none;border-color:var(--cyan);background:rgba(0,213,255,.04)}
+.calc-form input[type=email]::placeholder{color:var(--soft)}
+.calc-form button{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d;border:0;border-radius:999px;padding:11px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:transform .15s}
+.calc-form button:hover{transform:translateY(-1px)}
+.calc-form button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.calc-success{margin-top:14px;font-size:13px;color:var(--green);font-family:var(--mono);letter-spacing:.05em;display:none}
+.calc-success.show{display:block}
+
+/* ── ROI tabs ── */
+.calc-tabs{display:flex;gap:4px;margin:-4px -4px 12px;padding:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;position:relative}
+.calc-tab{flex:1;padding:8px 12px;font-family:var(--mono);font-size:10px;letter-spacing:.11em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.55);border-radius:8px;background:transparent;cursor:pointer;transition:.15s;line-height:1.25;text-align:center}
+.calc-tab:hover{color:#fff}
+.calc-tab.active{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d;box-shadow:0 4px 16px rgba(0,213,255,.18)}
+.calc-tab-panel{display:none}
+.calc-tab-panel.active{display:block}
+
+/* ── General process ROI table ── */
+.gp-table-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.10);border-radius:14px;background:rgba(0,0,0,.18)}
+.gp-table{width:100%;border-collapse:collapse;font-size:13px;min-width:680px}
+.gp-table thead th{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:700;text-align:left;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.02);white-space:nowrap}
+.gp-table thead th.gp-num{text-align:right}
+.gp-table thead th.gp-out{color:var(--cyan)}
+.gp-table tbody tr{border-bottom:1px solid rgba(255,255,255,.05)}
+.gp-table tbody tr:last-child{border-bottom:none}
+.gp-table tbody td{padding:8px 8px;vertical-align:middle}
+.gp-table tbody td.gp-num{text-align:right;font-family:var(--sans);font-variant-numeric:tabular-nums;font-weight:500}
+.gp-table tbody td.gp-out{color:var(--cyan);font-weight:600}
+.gp-table input[type="text"],.gp-table input[type="number"]{width:100%;background:transparent;border:1px solid transparent;border-radius:8px;padding:8px 10px;font-family:var(--sans);font-size:13px;color:#fff;font-weight:500;line-height:1.3;transition:border-color .15s,background .15s}
+.gp-table input[type="number"]{text-align:right;font-variant-numeric:tabular-nums}
+.gp-table input:hover{border-color:rgba(255,255,255,.10);background:rgba(255,255,255,.03)}
+.gp-table input:focus{outline:none;border-color:var(--cyan);background:rgba(0,213,255,.06)}
+.gp-table .gp-step-input{font-weight:500}
+.gp-remove{background:transparent;border:1px solid transparent;color:rgba(255,255,255,.4);width:28px;height:28px;border-radius:8px;cursor:pointer;font-size:16px;line-height:1;display:inline-flex;align-items:center;justify-content:center;transition:.15s}
+.gp-remove:hover{color:var(--red,#F97066);border-color:rgba(249,112,102,.3);background:rgba(249,112,102,.08)}
+.gp-add{margin-top:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--cyan);background:rgba(0,213,255,.06);border:1px dashed rgba(0,213,255,.32);border-radius:999px;padding:10px 18px;cursor:pointer;transition:.15s}
+.gp-add:hover{background:rgba(0,213,255,.12);border-color:var(--cyan)}
+
+/* ── SECTORS ── */
+.sector-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sector{background:#fff;border:1px solid var(--paperline);border-radius:20px;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s}
+.sector:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.06);border-color:rgba(30,144,255,.35)}
+.sector-visual{height:150px;background:linear-gradient(135deg,#07111F,#1b3152);position:relative;overflow:hidden}
+.sector-visual:after{content:"";position:absolute;inset:34px;border:1px solid rgba(0,213,255,.28);border-radius:14px;background:radial-gradient(circle,rgba(0,213,255,.12),transparent 60%)}
+.sector-body{padding:26px}
+.sector h3{font-size:22px;margin-bottom:10px;color:var(--ink);font-weight:600;letter-spacing:-.018em}
+.sector ul{list-style:none;display:grid;gap:8px;color:var(--mid);font-size:14px}
+.sector li{padding-left:14px;position:relative}
+.sector li:before{content:"—";color:var(--blue);position:absolute;left:0}
+
+/* ── COMPARE ── */
+.compare{background:linear-gradient(180deg,#050B14,#07111F)}
+.tablewrap{max-width:var(--max);margin:0 auto;border:1px solid var(--line2);border-radius:24px;background:rgba(255,255,255,.03);overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th,td{padding:17px;text-align:left;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan)}
+td:first-child{color:#fff;font-weight:800}
+tr:last-child td{border-bottom:none}
+
+/* ── CASE STUDIES ── */
+.case-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px}
+.case{background:#fff;border:1px solid var(--paperline);border-radius:20px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.case:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.06)}
+.case-img{height:220px;background:linear-gradient(135deg,#050B14,#1b3152);position:relative;overflow:hidden}
+.case-img::after{content:"";position:absolute;inset:24px;border:1px solid rgba(0,213,255,.22);border-radius:14px;background:radial-gradient(circle,rgba(0,213,255,.12),transparent 60%)}
+.case-img span{position:absolute;top:16px;left:16px;background:rgba(0,0,0,.55);color:#fff;border-radius:999px;padding:6px 12px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;z-index:1}
+.case-body{padding:26px}
+.case h3{font-size:19px;margin-bottom:10px;color:var(--ink);line-height:1.25;font-weight:600;letter-spacing:-.015em}
+.case h3 em{font-style:italic;color:var(--blue)}
+.case-body p{font-size:14px;color:var(--mid);line-height:1.65}
+.case-stats{display:flex;gap:18px;border-top:1px solid var(--paperline);padding-top:16px;margin-top:18px;flex-wrap:wrap}
+.case-stat b{font-family:var(--sans);font-size:26px;color:var(--blue);display:block;font-weight:400;line-height:1}
+.case-stat small{font-size:11px;color:var(--mid);display:block;margin-top:4px;line-height:1.4}
+
+/* ── FAQ ── */
+.faq-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.faq{border:1px solid var(--paperline);background:#fff;border-radius:18px;overflow:hidden;transition:border-color .2s}
+.faq[open]{border-color:rgba(30,144,255,.35)}
+.faq summary{padding:22px 24px;font-size:16px;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;list-style:none;letter-spacing:-.008em;font-family:var(--sans);font-weight:600;line-height:1.35}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--sans);font-size:24px;color:var(--blue);font-weight:300;flex-shrink:0;line-height:1;transition:transform .2s}
+.faq[open] summary::after{content:"−"}
+.faq p{padding:0 24px 24px;font-size:14.5px;line-height:1.65;color:var(--mid)}
+
+/* ── FINAL CTA ── */
+.final{background:radial-gradient(circle at 50% 30%,rgba(0,213,255,.18),transparent 42%),#02050A;text-align:center;padding:96px 36px;border-top:1px solid var(--line);position:relative;overflow:hidden}
+.final::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:680px;height:680px;border-radius:50%;border:1px solid rgba(0,213,255,.08);pointer-events:none}
+.final-inner{position:relative;z-index:1;max-width:920px;margin:0 auto}
+.final h2{font-size:clamp(32px,4.2vw,56px);margin:0 auto 20px;color:#fff;max-width:780px}
+.final h2 em{font-style:italic;color:var(--cyan)}
+.final p{max-width:600px;margin:0 auto 30px;font-size:17px;line-height:1.65}
+.final-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:64px}
+.final-contact{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:18px;overflow:hidden;max-width:880px;margin:0 auto;border:1px solid var(--line2)}
+.contact-tile{background:rgba(7,17,31,.6);padding:24px;text-align:left}
+.contact-tile small{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:8px}
+.contact-tile a,.contact-tile span{color:#fff;font-size:14px;font-weight:500;line-height:1.5}
+.contact-tile a:hover{color:var(--cyan)}
+
+/* ── FOOTER ── */
+.footer{background:#02050A;border-top:1px solid var(--line);padding:50px 36px;color:var(--soft)}
+.footer-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.2fr 2fr;gap:40px}
+.footer img{height:34px;filter:brightness(0) invert(1);margin-bottom:18px;opacity:.8}
+.footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.footer h4{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+.footer ul{list-style:none;display:grid;gap:8px;font-size:13px;color:var(--muted)}
+.footer ul a:hover{color:#fff}
+.footer-bottom{max-width:var(--max);margin:32px auto 0;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--soft);flex-wrap:wrap;gap:8px}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── TABLET (1024px) ── tighten padding before stack ── */
+@media(max-width:1100px){
+  .section{padding:72px 28px}
+  .hero{padding:64px 28px 56px}
+  .proof-strip{padding:32px 28px}
+  .final{padding:80px 28px}
+  .head{margin-bottom:34px}
+}
+/* ── TABLET-STACK (1050px) ── single column, hide desktop nav ── */
+@media(max-width:1050px){
+  .hero-inner,.product-grid,.roi-grid,.footer-inner{grid-template-columns:1fr}
+  .proof-grid-strip{grid-template-columns:repeat(2,1fr)}
+  .pain-grid{grid-template-columns:repeat(2,1fr)}
+  .sector-grid,.case-grid{grid-template-columns:1fr 1fr}
+  .nav ul,.nav .phone{display:none}
+  .hamburger{display:flex}
+  .nav .quote{display:none}
+  .final-contact{grid-template-columns:1fr}
+}
+/* ── MOBILE (700px) ── ── */
+@media(max-width:700px){
+  .section{padding:52px 20px}
+  .hero{padding:44px 20px 40px}
+  .proof-strip{padding:28px 20px}
+  .final{padding:60px 20px}
+  .nav,.footer{padding-left:20px;padding-right:20px}
+  .kpis,.pain-grid,.calc-row,.faq-grid,.footer-cols,.sector-grid,.case-grid,.proof-grid-strip{grid-template-columns:1fr}
+  .hero-card{border-radius:24px}
+  .nav .quote{display:none}
+  .mock-machine{min-height:auto}
+  .head{margin-bottom:28px}
+  .head h2{margin-bottom:12px}
+  .pain h3{font-size:18px}
+  .sector h3{font-size:20px}
+  .case h3{font-size:18px}
+  .proof-cell b{font-size:34px}
+  .proof-cell{padding:22px 18px}
+}
+/* ── SMALL MOBILE (430px) ── ── */
+@media(max-width:430px){
+  .section{padding:44px 16px}
+  .hero{padding:36px 16px 36px}
+  .final{padding:52px 16px}
+  .nav,.footer,.proof-strip{padding-left:16px;padding-right:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOP BANNER · finance / labour / capacity / payback ── -->
+<div class="top-banner" aria-label="Key messages">
+  <div class="top-banner-track">
+    <div class="top-banner-content">
+      <span class="tb-item">Reduce labour</span><span class="tb-sep">·</span>
+      <span class="tb-item">Increase capacity</span><span class="tb-sep">·</span>
+      <span class="tb-item">Pay monthly</span><span class="tb-sep">·</span>
+      <span class="tb-item">Prove the payback</span><span class="tb-sep">·</span>
+      <span class="tb-item">UK-built warehouse automation</span><span class="tb-sep">·</span>
+      <span class="tb-item"><a href="#finance">Get a monthly automation quote →</a></span><span class="tb-sep">·</span>
+      <span class="tb-item">Finance options subject to specification &amp; approval</span><span class="tb-sep">·</span>
+      <span class="tb-item"><a href="#roi">Open the ROI engine →</a></span><span class="tb-sep">·</span>
+      <span class="tb-item">Mechanical · electrical · controls · WCS · support, one UK facility</span><span class="tb-sep">·</span>
+    </div>
+    <div class="top-banner-content" aria-hidden="true">
+      <span class="tb-item">Reduce labour</span><span class="tb-sep">·</span>
+      <span class="tb-item">Increase capacity</span><span class="tb-sep">·</span>
+      <span class="tb-item">Pay monthly</span><span class="tb-sep">·</span>
+      <span class="tb-item">Prove the payback</span><span class="tb-sep">·</span>
+      <span class="tb-item">UK-built warehouse automation</span><span class="tb-sep">·</span>
+      <span class="tb-item"><a href="#finance">Get a monthly automation quote →</a></span><span class="tb-sep">·</span>
+      <span class="tb-item">Finance options subject to specification &amp; approval</span><span class="tb-sep">·</span>
+      <span class="tb-item"><a href="#roi">Open the ROI engine →</a></span><span class="tb-sep">·</span>
+      <span class="tb-item">Mechanical · electrical · controls · WCS · support, one UK facility</span><span class="tb-sep">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<nav class="nav" id="mainNav">
+  <a class="logo" href="#top"><img src="https://www.orionmis.co.uk/front/images/comp/logo.png" alt="Orion MIS"></a>
+  <ul>
+    <li><a href="#helix">Helix</a></li>
+    <li><a href="#roi">ROI</a></li>
+    <li><a href="warehouse-automation-finance.html">Finance</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="#proof">Case studies</a></li>
+    <li><a href="news.html">News &amp; builds<span class="news-dot" aria-label="new updates"></span></a></li>
+    <li><a href="sketch.html">Send a sketch</a></li>
+    <li><a href="#faq">FAQs</a></li>
+  </ul>
+  <div class="nav-actions">
+    <span class="phone">UK-built automation</span>
+    <a class="quote" href="#contact">
+      Book a site visit
+      <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#helix">Helix</a>
+  <a href="#roi">ROI</a>
+  <a href="warehouse-automation-finance.html">Finance</a>
+  <a href="#sectors">Sectors</a>
+  <a href="products.html">Products</a>
+  <a href="#proof">Case studies</a>
+  <a href="news.html">News &amp; builds<span class="news-dot" aria-label="new updates"></span></a>
+  <a href="sketch.html">Send a sketch</a>
+  <a href="#faq">FAQs</a>
+  <a href="#contact" class="mobile-cta">Book a site visit</a>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Parcel centres · 3PLs · Fulfilment · Dispatch</div>
+      <h1>From shop floor hardware to <em>warehouse intelligence</em>.</h1>
+      <p class="hero-lead">Orion is a UK OEM and technology house building the full automation stack: mechanical systems, electrical engineering, controls, WCS, live data and support.</p>
+      <p class="hero-lead" style="margin-top:18px">Conveyors, Helix sortation, robotics, AMRs, print &amp; apply and turnkey systems — designed to reduce labour, increase capacity and prove the payback.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#roi">Calculate your labour saving →</a>
+        <a class="btn btn-secondary" href="#contact">Book a site visit</a>
+      </div>
+      <div class="hero-proof">
+        <span>WCS included</span><span>SCADA included</span><span>24-month warranty</span><span>15-minute repair target</span><span>Flexible finance available</span>
+      </div>
+    </div>
+
+    <!-- Hero media · YouTube embed · autoplay muted loop, no controls/branding -->
+    <div class="hero-media">
+      <iframe src="https://www.youtube.com/embed/9DSG_uWUv9s?autoplay=1&mute=1&loop=1&playlist=9DSG_uWUv9s&controls=0&modestbranding=1&rel=0&showinfo=0&playsinline=1"
+              title="Orion · Helix walkthrough"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen></iframe>
+      <span class="label">Helix · live site footage</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUSTED BY · moving marquee of customer wordmarks ── -->
+<section class="trusted" aria-label="Trusted by">
+  <div class="trusted-label">— Trusted by —</div>
+  <div class="trusted-track">
+    <div class="trusted-row">
+      <img src="images/logos/amazon.png" alt="Amazon" loading="lazy">
+      <img src="images/logos/apc-overnight.png" alt="APC Overnight" loading="lazy">
+      <img src="images/logos/tate-lyle.png" alt="Tate &amp; Lyle" loading="lazy">
+      <img src="images/logos/salvation-army.png" alt="The Salvation Army" loading="lazy">
+      <img src="images/logos/gompels.png" alt="Gompels Healthcare" loading="lazy">
+      <img src="images/logos/expeditors.png" alt="Expeditors" loading="lazy">
+      <img src="images/logos/bmw.png" alt="BMW" loading="lazy">
+      <img src="images/logos/denso.png" alt="Denso" loading="lazy">
+      <img src="images/logos/octopus-energy.png" alt="Octopus Energy" loading="lazy">
+      <img src="images/logos/ncc.png" alt="National Composites Centre" loading="lazy">
+      <img src="images/logos/azotic.png" alt="Azotic" loading="lazy">
+      <img src="images/logos/claires.png" alt="Claire's Accessories" loading="lazy">
+      <img src="images/logos/dfds.png" alt="DFDS" loading="lazy">
+      <img src="images/logos/dominos.png" alt="Domino's" loading="lazy">
+      <img src="images/logos/hellofresh.png" alt="HelloFresh" loading="lazy">
+      <img src="images/logos/rolls-royce.png" alt="Rolls-Royce" loading="lazy">
+      <img src="images/logos/royal-mail.png" alt="Royal Mail" loading="lazy">
+    </div>
+    <div class="trusted-row" aria-hidden="true">
+      <img src="images/logos/amazon.png" alt="" loading="lazy">
+      <img src="images/logos/apc-overnight.png" alt="" loading="lazy">
+      <img src="images/logos/tate-lyle.png" alt="" loading="lazy">
+      <img src="images/logos/salvation-army.png" alt="" loading="lazy">
+      <img src="images/logos/gompels.png" alt="" loading="lazy">
+      <img src="images/logos/expeditors.png" alt="" loading="lazy">
+      <img src="images/logos/bmw.png" alt="" loading="lazy">
+      <img src="images/logos/denso.png" alt="" loading="lazy">
+      <img src="images/logos/octopus-energy.png" alt="" loading="lazy">
+      <img src="images/logos/ncc.png" alt="" loading="lazy">
+      <img src="images/logos/azotic.png" alt="" loading="lazy">
+      <img src="images/logos/claires.png" alt="" loading="lazy">
+      <img src="images/logos/dfds.png" alt="" loading="lazy">
+      <img src="images/logos/dominos.png" alt="" loading="lazy">
+      <img src="images/logos/hellofresh.png" alt="" loading="lazy">
+      <img src="images/logos/rolls-royce.png" alt="" loading="lazy">
+      <img src="images/logos/royal-mail.png" alt="" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ── COMMERCIAL PAIN ── -->
+<section class="section light">
+  <div class="head">
+    <div class="eyebrow">01 · The commercial pain</div>
+    <h2>Reduce labour. Increase capacity. <em>Protect profit</em>.</h2>
+    <p>Every missed shift, every agency worker, every overtime spike and every dispatch bottleneck adds cost. Helix is built for the decision makers who are tired of throwing people at a process that needs engineering.</p>
+  </div>
+  <div class="pain-grid">
+    <div class="pain reveal"><div class="role">Owner operators</div><h3>Capacity without another building.</h3><p>Grow throughput inside your existing footprint and stop letting space constraints cap revenue.</p></div>
+    <div class="pain reveal"><div class="role">Operations managers</div><h3>Flow without firefighting.</h3><p>Reduce handballing, mis-sorts, bottlenecks and operator dependency at peak.</p></div>
+    <div class="pain reveal"><div class="role">Finance directors</div><h3>Labour cost into machine ROI.</h3><p>Compare monthly finance against agency labour, overtime and rework.</p></div>
+    <div class="pain reveal"><div class="role">3PL leaders</div><h3>Scale without chaos.</h3><p>Win contracts with a modular automation story your customers can understand.</p></div>
+  </div>
+</section>
+
+<!-- ── HELIX SPEC BAND · the headline numbers that introduce Helix ── -->
+<section class="proof-strip" style="border-bottom:none">
+  <div class="proof-grid-strip">
+    <div class="proof-cell"><small>Sortation capacity</small><b>20,000+</b><p>parcels/hour subject to configuration.</p></div>
+    <div class="proof-cell"><small>Commercial model</small><b>OPEX</b><p>Monthly finance route available across the full Orion range.</p></div>
+    <div class="proof-cell"><small>Repair target</small><b>15 min</b><p>Designed for rapid module access.</p></div>
+    <div class="proof-cell"><small>Warranty</small><b>24 mo</b><p>Standard core product warranty.</p></div>
+    <div class="proof-cell"><small>Delivery</small><b>UK</b><p>Built, coded and supported here.</p></div>
+  </div>
+</section>
+
+<!-- ── HELIX PRODUCT ── -->
+<section class="section product" id="helix" style="padding-top:48px">
+  <div class="product-grid">
+    <div class="product-copy">
+      <div class="eyebrow">02 · Helix sortation</div>
+      <h2>Helix: modular sortation for <em>real freight</em>.</h2>
+      <p>Bags. Boxes. Awkward parcels. Uneven loads. Mixed sizes. Peak windows.</p>
+      <p style="margin-top:14px">Helix is not built for a perfect brochure parcel. It is built for the freight that makes manual sortation fall apart.</p>
+      <p style="margin-top:14px">Each system is configured around your destinations, footprint, parcel profile and dispatch flow — with Orion WCS, live dashboards, controls and support included from day one.</p>
+      <div class="feature-list">
+        <div class="feature"><b>01</b><p><strong>Modular by design.</strong><br>300mm cassette modules configured around the destinations, footprint and parcel profile you actually need.</p></div>
+        <div class="feature"><b>02</b><p><strong>WCS and dashboards included.</strong><br>Routing, alarms, throughput, diagnostics and system health visible from day one — not a paid future add-on.</p></div>
+        <div class="feature"><b>03</b><p><strong>Built under one roof.</strong><br>Mechanical, electrical, PLC, WCS, manufacture, installation and support owned by Orion from one UK facility.</p></div>
+        <div class="feature"><b>04</b><p><strong>Designed for fast repair.</strong><br>Critical modules are designed for rapid access and replacement, backed by a 24-month warranty on the core product.</p></div>
+      </div>
+    </div>
+    <div class="mock-machine">
+      <div class="machine-stage">
+        <span class="label l1">divert left</span><span class="label l2">divert right</span><span class="label l3">oversize / route</span><span class="label l4">main flow</span>
+        <div class="module m1">HELIX MODULE 01</div>
+        <div class="module m2">HELIX MODULE 02</div>
+        <div class="module m3">HELIX MODULE 03</div>
+        <div class="chute c1"></div><div class="chute c2"></div><div class="chute c3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROI ── -->
+<section class="section roi" id="roi" style="padding-top:56px;padding-bottom:56px">
+  <div class="roi-grid">
+    <div class="roi-card">
+      <div class="eyebrow">03 · ROI engines</div>
+      <h2 style="font-size:clamp(24px,2.6vw,36px);line-height:1.15;letter-spacing:-.022em;margin-bottom:14px;color:var(--ink);font-family:var(--sans);font-weight:600">Reduce labour, increase capacity, <em style="font-family:var(--serif);font-style:italic;color:var(--blue);font-weight:400">prove the payback</em>.</h2>
+      <p>Two calculators in one panel. <strong style="color:var(--ink)">Helix ROI</strong> sizes a parcel sortation case against current operators. <strong style="color:var(--ink)">General process ROI</strong> turns any manual process — packing, labelling, picking, palletising — into an annualised cost and target saving.</p>
+      <p style="margin-top:10px">A live estimate won't replace a site survey, but it gives finance and operations a real starting point: current cost, projected saving, monthly finance comparison and payback period.</p>
+      <div class="roi-actions">
+        <a class="btn btn-line" href="#contact">Request an ROI estimate →</a>
+        <a class="btn btn-line" href="#contact" style="background:transparent">Speak to engineering</a>
+      </div>
+    </div>
+    <div class="calculator" id="roiCalc">
+      <div class="calc-tabs" role="tablist" aria-label="ROI calculators">
+        <button class="calc-tab active" type="button" role="tab" aria-selected="true" data-tab="helix">Helix ROI calculator</button>
+        <button class="calc-tab" type="button" role="tab" aria-selected="false" data-tab="general">General process ROI</button>
+      </div>
+
+      <div class="calc-tab-panel active" id="tab-helix" role="tabpanel">
+      <div class="eyebrow" style="margin-bottom:20px">Live calculator · Helix sortation</div>
+
+      <div class="calc-inputs">
+        <div class="calc-input">
+          <div class="calc-input-row">
+            <span class="calc-input-label">Peak throughput</span>
+            <span class="calc-input-value" id="thOut">9,000</span>
+          </div>
+          <input type="range" class="calc-slider" id="thInput" min="1000" max="25000" step="500" value="9000" aria-label="Peak throughput in parcels per hour">
+          <div class="calc-input-units">parcels per hour</div>
+        </div>
+        <div class="calc-input">
+          <div class="calc-input-row">
+            <span class="calc-input-label">Sort destinations</span>
+            <span class="calc-input-value" id="destOut">16</span>
+          </div>
+          <input type="range" class="calc-slider" id="destInput" min="2" max="40" step="1" value="16" aria-label="Number of sort destinations">
+          <div class="calc-input-units">lanes / chutes</div>
+        </div>
+        <div class="calc-input">
+          <div class="calc-input-row">
+            <span class="calc-input-label">Current manual sorters</span>
+            <span class="calc-input-value" id="opsOut">12</span>
+          </div>
+          <input type="range" class="calc-slider" id="opsInput" min="2" max="30" step="1" value="12" aria-label="Number of current manual sorters">
+          <div class="calc-input-units">people on the line today</div>
+        </div>
+      </div>
+
+      <div style="margin:2px 0 10px;padding:8px 12px;border:1px solid rgba(0,213,255,.22);background:rgba(0,213,255,.04);border-radius:10px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);line-height:1.45">
+        Labour · <span style="color:#fff">£16.30/hr</span> all-in (UK NLW + NI + pension + holiday)
+      </div>
+
+      <div class="calc-output">
+        <div class="calc-output-grid">
+          <div class="calc-out-cell"><small>Indicative system</small><b id="outSystem">£426k</b></div>
+          <div class="calc-out-cell"><small>Monthly finance</small><b id="outFinance">£8.5k</b></div>
+          <div class="calc-out-cell"><small>Operators removed</small><b id="outOps">9</b></div>
+          <div class="calc-out-cell"><small>Annual labour saving</small><b id="outSave">£962k</b></div>
+        </div>
+        <div class="calc-result">
+          <div class="calc-result-headline">Payback period</div>
+          <b id="outPayback">5 months</b>
+          <p class="calc-result-detail" id="outROI">Net monthly position: <b>+£71k</b> after finance &amp; maintenance. 5-year ROI: <b>980%</b>.</p>
+        </div>
+      </div>
+
+      <form class="calc-form" id="calcForm" method="POST" action="https://formsubmit.co/ajax/info@orionmis.co.uk">
+        <input type="hidden" name="_subject" value="ROI estimate request — Orion website">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_honey" value="" class="hp-field">
+        <input type="hidden" name="throughput_pph" id="hfTh">
+        <input type="hidden" name="sort_destinations" id="hfDest">
+        <input type="hidden" name="current_manual_sorters" id="hfOps">
+        <input type="hidden" name="loaded_labour_rate" id="hfCost" value="£16.30/hr (UK NLW + NI + pension + holiday cover)">
+        <input type="hidden" name="indicative_system_cost" id="hfSystem">
+        <input type="hidden" name="monthly_finance" id="hfFinance">
+        <input type="hidden" name="operators_removed" id="hfOpsRemoved">
+        <input type="hidden" name="annual_labour_saving" id="hfSave">
+        <input type="hidden" name="payback_months" id="hfPayback">
+        <input type="hidden" name="five_year_roi_percent" id="hfROI">
+        <input type="email" name="email" required placeholder="you@company.co.uk — email me this estimate">
+        <button type="submit">Email me this estimate →</button>
+      </form>
+      <div class="calc-success" id="calcSuccess">✓ On its way. Check your inbox.</div>
+
+      <div class="calc-disclaimer">Operating: 2&nbsp;×&nbsp;10hr shifts · 7 days/week · 50 weeks/year. Labour: £16.30/hr all-in (UK NLW + employer NI 15% + pension 3% + holiday cover). Finance: 60-month term @ 8% APR, £12k/yr maintenance. Indicative — final pricing depends on parcel mix, building &amp; finance approval.</div>
+      </div><!-- /tab-helix -->
+
+      <div class="calc-tab-panel" id="tab-general" role="tabpanel" hidden>
+        <div class="eyebrow" style="margin-bottom:16px">Live calculator · process &amp; cost tracker</div>
+        <p style="font-size:13px;line-height:1.55;color:rgba(255,255,255,.7);margin-bottom:14px">Add any manual process — packing, labelling, picking, palletising, dispatch admin. Cost/day uses UK minimum wage at £16.30/hr all-in and assumes 10% rework. Annualised across 250 working days; target saving assumes 50% reduction with automation.</p>
+
+        <div class="gp-table-wrap">
+          <table class="gp-table" aria-label="Manual process steps">
+            <thead>
+              <tr>
+                <th>Process step</th>
+                <th class="gp-num">Mins/task</th>
+                <th class="gp-num">Tasks/day</th>
+                <th class="gp-num gp-out">Cost/day</th>
+                <th class="gp-act" aria-label="Remove"></th>
+              </tr>
+            </thead>
+            <tbody id="gpBody"></tbody>
+          </table>
+        </div>
+        <button type="button" class="gp-add" id="gpAdd">+ Add process step</button>
+
+        <div class="calc-output" style="margin-top:18px">
+          <div class="calc-output-grid">
+            <div class="calc-out-cell"><small>Total wasted time</small><b id="gpOutMins">0 mins/day</b></div>
+            <div class="calc-out-cell"><small>Cost of waste</small><b id="gpOutCost">£0/day</b></div>
+            <div class="calc-out-cell"><small>Annualised waste</small><b id="gpOutAnnual">£0</b></div>
+            <div class="calc-out-cell"><small>Steps flagged</small><b id="gpOutFlags">0</b></div>
+          </div>
+          <div class="calc-result">
+            <div class="calc-result-headline">Potential saving @ 50% automation</div>
+            <b id="gpOutSaving">£0/yr</b>
+            <p class="calc-result-detail">Target saving once automation removes ~half of the wasted process time. Live, indicative — not a quote. Send the table over and we'll size the automation route.</p>
+          </div>
+        </div>
+
+        <form class="calc-form" id="gpForm" method="POST" action="https://formsubmit.co/ajax/info@orionmis.co.uk">
+          <input type="hidden" name="_subject" value="General process ROI — Orion website">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_honey" value="" class="hp-field">
+          <input type="hidden" name="process_summary" id="gpHfSummary">
+          <input type="hidden" name="total_wasted_minutes_per_day" id="gpHfMins">
+          <input type="hidden" name="cost_of_waste_per_day" id="gpHfCost">
+          <input type="hidden" name="annualised_waste_cost" id="gpHfAnnual">
+          <input type="hidden" name="potential_saving_per_year" id="gpHfSaving">
+          <input type="email" name="email" required placeholder="you@company.co.uk — email me this estimate">
+          <button type="submit">Email me this estimate →</button>
+        </form>
+        <div class="calc-success" id="gpSuccess">✓ On its way. Check your inbox.</div>
+
+        <div class="calc-disclaimer">Labour fixed at £16.30/hr all-in (UK NLW + NI + pension + holiday). Rework fixed at 10%. Annualised at 250 working days. Potential saving assumes 50% reduction once automation removes the manual step. Indicative — final saving depends on the chosen automation route.</div>
+      </div><!-- /tab-general -->
+    </div><!-- /calculator -->
+  </div>
+</section>
+
+<!-- ── 04 · FINANCE / PAY MONTHLY ── -->
+<section class="section light" id="finance" style="background:#F2F1ED">
+  <div class="head">
+    <div class="eyebrow">04 · Finance route</div>
+    <h2>Pay monthly. Reduce labour. <em>Increase capacity.</em></h2>
+    <p>Many operations are already spending the monthly cost of automation on labour, overtime, agency cover and manual rework. Orion helps you compare that spend against UK-built automation — <a href="products.html#unit-handling" style="color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(30,144,255,.4)">conveyor systems</a>, <a href="#helix" style="color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(30,144,255,.4)">Helix sortation</a>, robotics, AMRs, print &amp; apply and WCS — with <a href="warehouse-automation-finance.html" style="color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(30,144,255,.4)">finance routes</a> built around payback.</p>
+  </div>
+
+  <div style="max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:stretch">
+
+    <div style="background:#fff;border:1px solid var(--paperline);border-radius:22px;padding:32px;display:flex;flex-direction:column">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;font-weight:700">How a monthly automation case works</div>
+      <ul style="list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:14px">
+        <li style="display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start">
+          <span style="font-family:var(--sans);font-size:22px;color:var(--blue);line-height:1;font-weight:400">01</span>
+          <div style="font-size:14.5px;line-height:1.6;color:var(--mid)"><strong style="color:var(--ink);font-weight:700">Map current operating cost.</strong> Manual labour, overtime, agency cover, mis-sort rework, peak chaos. The real number is usually bigger than finance assume.</div>
+        </li>
+        <li style="display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start">
+          <span style="font-family:var(--sans);font-size:22px;color:var(--blue);line-height:1;font-weight:400">02</span>
+          <div style="font-size:14.5px;line-height:1.6;color:var(--mid)"><strong style="color:var(--ink);font-weight:700">Size the automation route.</strong> Throughput, destinations, parcel mix and shift pattern map to a sized Orion system — conveyors, Helix sortation, robotics or a turnkey combination.</div>
+        </li>
+        <li style="display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start">
+          <span style="font-family:var(--sans);font-size:22px;color:var(--blue);line-height:1;font-weight:400">03</span>
+          <div style="font-size:14.5px;line-height:1.6;color:var(--mid)"><strong style="color:var(--ink);font-weight:700">Compare monthly against monthly.</strong> The automation case sits next to the current labour line. Saving, payback months and five-year ROI fall out of the same model.</div>
+        </li>
+        <li style="display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start">
+          <span style="font-family:var(--sans);font-size:22px;color:var(--blue);line-height:1;font-weight:400">04</span>
+          <div style="font-size:14.5px;line-height:1.6;color:var(--mid)"><strong style="color:var(--ink);font-weight:700">Fund against current cost — not on top of it.</strong> Monthly finance routes are available subject to specification and approval. The route is built around payback, not around a heavy upfront CAPEX cycle.</div>
+        </li>
+      </ul>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:auto">
+        <a class="btn btn-line" href="#roi" style="background:var(--ink);color:#fff;border-color:var(--ink)">Calculate your monthly automation case →</a>
+        <a class="btn btn-line" href="sketch.html">Send us a sketch</a>
+      </div>
+      <p style="margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);line-height:1.55">Finance options available subject to specification &amp; approval. We do not promise guaranteed approval — we help build the technical and commercial case.</p>
+    </div>
+
+    <div style="background:#111926;color:#fff;border-radius:22px;padding:32px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(0,213,255,.16),transparent 70%);pointer-events:none"></div>
+      <div style="position:relative">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;font-weight:700">Everything on this site is available on monthly finance</div>
+        <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <li><a class="fin-card" href="products.html#unit-handling"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Conveyor systems</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="#helix"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Helix sortation</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="products.html#sortation"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Cross belt / tilt tray</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="products.html#robotics"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Robot cells &amp; palletising</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="products.html#robotics"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">AMR fleets</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="products.html#sortation"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Print &amp; apply</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="products.html#vision"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Scan tunnels &amp; vision</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="products.html#asrs"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">ASRS shuttles</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="products.html#food-beverage"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Food-grade conveyor</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="#helix"><span class="fin-card-tag">Software</span><span class="fin-card-title">WCS &amp; WMS integration</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="products.html"><span class="fin-card-tag">System</span><span class="fin-card-title">Turnkey automation</span><span class="fin-card-arrow">→</span></a></li>
+          <li><a class="fin-card" href="sketch.html"><span class="fin-card-tag">System</span><span class="fin-card-title">Retrofit &amp; integration</span><span class="fin-card-arrow">→</span></a></li>
+        </ul>
+        <div style="margin-top:18px;border:1px solid rgba(50,213,131,.32);background:rgba(50,213,131,.08);border-radius:16px;padding:18px">
+          <div style="font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px;font-weight:700">Headline of the finance route</div>
+          <div style="font-family:var(--sans);font-size:24px;color:var(--green);line-height:1.15;font-weight:400">Automation funded against current operating cost — not on top of it.</div>
+          <p style="margin-top:8px;color:rgba(255,255,255,.7);font-size:13.5px;line-height:1.55">Monthly finance routes available, subject to approval.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 05 · SECTORS ── -->
+<section class="section light" id="sectors">
+  <div class="head">
+    <div class="eyebrow">05 · Built around the operation</div>
+    <h2>Different operation. Same pressure: <em>more capacity, fewer people</em>.</h2>
+    <p>Parcel centres, 3PLs and fulfilment teams all have different flows. The pressure is the same: more volume, tighter cut-offs, fewer reliable people and less space to play with. Pick the route that matches your operation.</p>
+  </div>
+  <div class="sector-grid">
+    <div class="sector reveal">
+      <div class="sector-visual"></div>
+      <div class="sector-body">
+        <h3>Parcel centres</h3>
+        <p style="margin:0 0 14px;color:var(--mid);font-size:14px">Automated parcel sortation built for ugly freight.</p>
+        <ul>
+          <li>Bags, boxes and awkward freight</li>
+          <li>Dispatch lane routing</li>
+          <li>Peak volume protection</li>
+          <li>Live WCS visibility</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sector reveal">
+      <div class="sector-visual"></div>
+      <div class="sector-body">
+        <h3>3PLs</h3>
+        <p style="margin:0 0 14px;color:var(--mid);font-size:14px">Capacity that flexes with the contract.</p>
+        <ul>
+          <li>Multi-client routing</li>
+          <li>Modular expansion</li>
+          <li>Faster customer onboarding</li>
+          <li>ROI-led commercial case</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sector reveal">
+      <div class="sector-visual"></div>
+      <div class="sector-body">
+        <h3>Fulfilment</h3>
+        <p style="margin:0 0 14px;color:var(--mid);font-size:14px">End-of-line dispatch without the bottleneck.</p>
+        <ul>
+          <li>Pack-to-sort automation</li>
+          <li>Carrier sorting</li>
+          <li>Label, scan and route</li>
+          <li>Dispatch performance data</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPARE / WHY ORION ── -->
+<section class="section compare">
+  <div class="head">
+    <div class="eyebrow" style="justify-content:center">06 · Why Orion</div>
+    <h2 style="color:#fff">Integrators are slow. Component suppliers <em style="color:var(--cyan)">stop too early</em>.</h2>
+    <p style="color:var(--muted)">Orion sits in the gap: faster than the global integrators, more complete than component suppliers, and accountable across mechanical, electrical, controls, WCS and support from one UK facility.</p>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <tr><th>Buyer concern</th><th>Traditional integrator</th><th>Component supplier</th><th>Orion position</th></tr>
+      <tr><td>Speed</td><td>Long discovery, long programme, heavy process.</td><td>Fast product supply, limited delivery ownership.</td><td>Modular Helix system, UK-built, faster route to site.</td></tr>
+      <tr><td>Accountability</td><td>Multiple teams and long escalation routes.</td><td>Customer / integrator owns the gaps.</td><td>Mechanical, electrical, controls, WCS and support under one roof.</td></tr>
+      <tr><td>Commercial model</td><td>Often CAPEX-heavy and board-process heavy.</td><td>Lower component price, incomplete system cost.</td><td>Clear ROI case against labour, overtime and manual process cost.</td></tr>
+      <tr><td>Software</td><td>Powerful, but often expensive and complex.</td><td>Usually not a full WCS layer.</td><td>WCS, dashboards and system visibility included as standard.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ── PROOF / CASE STUDIES ── -->
+<section class="section light" id="proof">
+  <div class="head">
+    <div class="eyebrow">07 · Proof</div>
+    <h2>Real operations. Real numbers. <em>No brochure theatre.</em></h2>
+    <p>Case studies from live UK automation projects across parcel handling, fulfilment, freight forwarding, healthcare logistics and food manufacturing. Where a customer name is public, we show it. Where it is not, we show the sector, problem and result without dressing it up.</p>
+  </div>
+  <div class="case-grid">
+    <div class="case reveal">
+      <div class="case-img"><span>Featured · Gompels Healthcare</span></div>
+      <div class="case-body">
+        <h3>Outbound <em>pack &amp; sort</em> automation</h3>
+        <p>Orion implemented a pick &amp; pack solution handling up to 400 units per hour, with over 50% of materials sourced from recycled content — installed with zero downtime to live operations.</p>
+        <div class="case-stats">
+          <div class="case-stat"><b>7</b><small>System integrations delivered</small></div>
+          <div class="case-stat"><b>0</b><small>Downtime during install</small></div>
+          <div class="case-stat"><b>5+</b><small>Automation technologies integrated</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="case reveal">
+      <div class="case-img"><span>Logistics · Expeditors</span></div>
+      <div class="case-body">
+        <h3>Pick-to-light &amp; <em>goods-to-person</em></h3>
+        <p>End-to-end design and install of an automated pick line — driving operational excellence through pick-to-light integration and goods-to-person flow.</p>
+        <div class="case-stats">
+          <div class="case-stat"><b>400</b><small>Units per hour</small></div>
+          <div class="case-stat"><b>50%+</b><small>Recycled materials</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="case reveal">
+      <div class="case-img"><span>Food &amp; bev · Tate &amp; Lyle</span></div>
+      <div class="case-body">
+        <h3>Food-grade <em>sugar line</em> conveyors</h3>
+        <p>Bespoke food-grade conveyor system engineered for continuous 24/7 operation in a live production environment, with zero permitted downtime.</p>
+        <div class="case-stats">
+          <div class="case-stat"><b>24/7</b><small>Continuous operation</small></div>
+          <div class="case-stat"><b>0</b><small>Permitted downtime</small></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live media carousel — managed via admin-media.html → media.json -->
+    <div style="margin-top:40px">
+      <div class="media-slot" data-slot="case-studies" data-aspect="21:9"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FAQ (consolidated · Helix + Orion + commercial) ── -->
+<section class="section light" id="faq">
+  <div class="head">
+    <div class="eyebrow">08 · FAQs</div>
+    <h2>The questions buyers, engineers and operations leads <em>actually ask</em>.</h2>
+    <p>Everything we get asked before signing scope — Helix specifics, Orion the company, integration, finance, install and support — in one place.</p>
+  </div>
+  <div class="faq-grid">
+
+    <details class="faq">
+      <summary>How much does an Orion automation system cost?</summary>
+      <p>Cost depends on throughput, destinations, parcel profile, WCS scope, integration scope and install conditions. All Orion automation — conveyors, Helix sortation, robotics, AMRs, print &amp; apply and WCS — is available on monthly finance, with entry systems typically from £4,000/month on a 60-month term, subject to specification and finance approval. The ROI engine above gives a sized estimate; send us your numbers and we'll come back with a formal proposal.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can warehouse automation be paid monthly?</summary>
+      <p>Yes. Orion can build automation projects around monthly finance routes, subject to specification and approval. This lets you compare equipment cost against labour, overtime and manual process cost — funding the automation against current operating cost rather than waiting for a heavy upfront CAPEX cycle.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can conveyor systems be financed?</summary>
+      <p>Yes. Orion can provide finance routes for conveyor systems, subject to approval, allowing customers to spread the cost and compare monthly payments against operational savings. See <a href="conveyor-system-finance.html" style="color:var(--blue)">conveyor system finance</a> for the detail.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can sortation systems be financed?</summary>
+      <p>Yes. Helix parcel sortation systems can be structured around finance options, subject to specification and approval, helping parcel centres and 3PLs reduce manual sorting without waiting for a large CAPEX cycle. See <a href="sortation-system-finance.html" style="color:var(--blue)">sortation system finance</a>.</p>
+    </details>
+
+    <details class="faq">
+      <summary>How do I know whether automation will pay back?</summary>
+      <p>Orion's ROI engine compares current labour, shift pattern, throughput and manual process cost against a sized automation route. It provides a starting point for payback, monthly cost comparison and five-year ROI. <a href="#roi" style="color:var(--blue)">Open the ROI engine</a> or <a href="warehouse-automation-roi.html" style="color:var(--blue)">read the full breakdown</a>.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Is finance guaranteed?</summary>
+      <p>No. Finance is subject to specification, lender approval and commercial terms. Orion can help build the technical and commercial case, model the monthly finance figure against your current labour cost and present the proposal — but we do not promise guaranteed approval.</p>
+    </details>
+
+    <details class="faq">
+      <summary>What throughput can Helix actually deliver in my building?</summary>
+      <p>Helix is sized to your destination count, parcel mix and shift pattern. Live installations run between 4,000 and 20,000 parcels per hour, with the upper end driven by additional sorter slices and faster belt speeds. We model realistic throughput for your operation as part of the site survey — not a brochure number.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can Helix handle awkward parcels?</summary>
+      <p>Yes. Helix is designed for real parcel environments — bags, boxes, mixed sizes, polybags, uneven loads and high-volume peaks. Anything outside the standard envelope is profiled in our UK facility before specification — we run sample parcels through a live Helix before signing scope.</p>
+    </details>
+
+    <details class="faq">
+      <summary>How modular is Helix really — can we add destinations later?</summary>
+      <p>Yes. Helix is built around 300mm cassette modules. Adding sort destinations later means extending the divert run and adding cages, not rebuilding the system. Customers regularly start with 16–24 destinations and expand as volume grows.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Is WCS software included? Can it integrate with our existing WMS?</summary>
+      <p>Yes — Orion WCS is included with every Helix system as standard, with dashboards, routing logic and alarming. For customers with an existing WMS or transport management platform, Helix integrates via REST API, MQTT or flat-file drop, confirmed during the Functional Design Specification stage. Live integrations exist across parcel, 3PL and fulfilment platforms.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can Orion integrate with our existing equipment?</summary>
+      <p>Yes. Most projects involve extending, retrofitting or integrating with legacy conveyor, sortation, scanners or controls. We survey the existing kit first and design around it — rather than ripping out what is already working.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can automation be financed monthly?</summary>
+      <p>Yes — every part of the Orion automation range can be put on monthly finance: conveyors, Helix sortation, robotics, AMRs, print &amp; apply and WCS — turning a CAPEX-heavy automation decision into a monthly OPEX line. Subject to specification and finance approval. We'll model the monthly finance figure against your current labour cost as part of the site visit.</p>
+    </details>
+
+    <details class="faq">
+      <summary>How long does installation take?</summary>
+      <p>Smaller conveyor packages can be on site in 6–10 weeks. Full Helix sortation systems typically run 12–25 weeks from order to live, with detailed timelines confirmed in the Functional Design Specification stage. Typical Helix install on site completes in under 4 weeks, with no building extensions or planning permission required.</p>
+    </details>
+
+    <details class="faq">
+      <summary>What happens if something breaks at peak?</summary>
+      <p>Cassette modules are designed to be swapped in under 15 minutes with no specialist tools. Recommended spares are included in the proposal so the warehouse keeps running. Backed by a 24-month parts and labour warranty on the core product, with optional service contracts for ongoing cover.</p>
+    </details>
+
+    <details class="faq">
+      <summary>What standards and accreditations does Orion work to?</summary>
+      <p>ISO 9001:2015 certified, Avetta verified, EcoVadis rated. All systems are designed to UKCA and CE marking with conformity assessment to ISO 12100, ISO 13849, EN 619, BS 7671 and the Supply of Machinery (Safety) Regulations 2008. Full Statement of Manufacture and Declaration of Incorporation issued on completion.</p>
+    </details>
+
+    <details class="faq">
+      <summary>What does Orion actually build vs source from others?</summary>
+      <p>Mechanical, electrical, PLC, WCS, controls software and support are all owned by Orion. Everything is designed, manufactured and supported from our UK facility in Chichester. We work with specialist component vendors for parts of the stack — vision cameras, motors, drives — but the system, the integration and the accountability sit with us.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Can we visit the factory or see a Helix system running before committing?</summary>
+      <p>Yes — and we recommend it. Bring your real parcel profile or a sample product. We'll run it through a live Helix or relevant conveyor system, walk the manufacturing floor and talk through similar projects we've delivered. No sales pitch, just engineering.</p>
+    </details>
+
+  </div>
+</section>
+
+<!-- ── FINAL CTA / CONTACT ── -->
+<section class="final" id="contact">
+  <div class="final-inner">
+    <div class="eyebrow" style="justify-content:center">Talk to engineering</div>
+    <h2>Bring us your <em>worst parcel profile</em>.</h2>
+    <p>Bags, boxes, awkward freight, uneven loads, mixed sizes and peak-season pressure. If your current process is labour-heavy, inconsistent or reaching capacity, we should be speaking.</p>
+    <div class="final-actions">
+      <a class="btn btn-primary" href="mailto:info@orionmis.co.uk?subject=Site%20visit%20request">Book a site visit →</a>
+      <a class="btn btn-secondary" href="tel:+443333355269">Call +44 333 335 5269</a>
+    </div>
+    <div class="final-contact">
+      <div class="contact-tile">
+        <small>Phone</small>
+        <a href="tel:+443333355269">+44 333 335 5269</a>
+      </div>
+      <div class="contact-tile">
+        <small>Email</small>
+        <a href="mailto:info@orionmis.co.uk">info@orionmis.co.uk</a>
+      </div>
+      <div class="contact-tile">
+        <small>UK facility</small>
+        <a href="https://maps.google.com/?q=Orion+MIS+Fontwell+Chichester" target="_blank" rel="noopener">1 Fontwell Avenue, Chichester, PO20 3RU</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <img src="https://www.orionmis.co.uk/front/images/comp/logo.png" alt="Orion MIS">
+      <p>UK-built warehouse automation for parcel centres, 3PLs and fulfilment operations.</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <h4>Finance</h4>
+        <ul>
+          <li><a href="warehouse-automation-finance.html">Warehouse automation finance</a></li>
+          <li><a href="conveyor-system-finance.html">Conveyor system finance</a></li>
+          <li><a href="sortation-system-finance.html">Sortation system finance</a></li>
+          <li><a href="robotics-automation-finance.html">Robotics &amp; AMR finance</a></li>
+          <li><a href="warehouse-automation-roi.html">ROI calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#helix">Helix sortation</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="#sectors">Sectors</a></li>
+          <li><a href="#proof">Case studies</a></li>
+          <li><a href="news.html">News &amp; builds</a></li>
+          <li><a href="sketch.html">Send a sketch</a></li>
+          <li><a href="#faq">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+443333355269">+44 333 335 5269</a></li>
+          <li><a href="mailto:info@orionmis.co.uk">info@orionmis.co.uk</a></li>
+          <li><a href="https://maps.google.com/?q=Orion+MIS+Fontwell+Chichester" target="_blank" rel="noopener">Fontwell, Chichester PO20 3RU</a></li>
+          <li><a href="#contact">Book a site visit</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Orion MIS Ltd · Fontwell, Chichester PO20 3RU · Company no. <strong>11735049</strong> · VAT <strong>GB 318 1797 83</strong></span>
+    <span style="display:flex;gap:14px;flex-wrap:wrap">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="#" onclick="if(window.openCookieSettings)window.openCookieSettings();return false;">Cookie settings</a>
+      <span>Designed &amp; manufactured in the UK</span>
+    </span>
+  </div>
+</footer>
+
+<script src="site.js" defer></script>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// HELIX ROI CALCULATOR
+// Finance maths: standard annuity / amortisation.
+// ════════════════════════════════════════════════════════════════
+const ROI = {
+  // ── System sizing ────────────────────────────────────
+  // Calibrated against TWO real Orion quotes (April 2026):
+  //   CHASE_080426: 24 destinations, ~7,000 pph → £409,881 actual
+  //   APC_220426:   108 destinations, 7,000 pph → £1,175,546 actual
+  // Linear model can't fit both — base costs spread over more cages at scale,
+  // so per-destination cost falls. Using a power-curve model:
+  //   per_dest(N)  = REF_COST_PER_DEST × (REF_DEST / N) ^ SCALE_EXPONENT
+  //   system_cost  = per_dest(N) × N × throughputMultiplier
+  // Fits Chase within 0.5% and APC within 0.1%.
+  REF_DESTINATIONS: 24,            // reference point — Chase config
+  REF_COST_PER_DEST: 17078,        // £ per destination at REF_DESTINATIONS
+  SCALE_EXPONENT: 0.30,            // economies-of-scale curve steepness
+  REF_THROUGHPUT_PPH: 7000,        // baseline throughput both quotes were spec'd at
+  THROUGHPUT_SENSITIVITY: 50000,   // pph divisor; lower = more cost sensitivity to throughput
+
+  // Labour assumptions (UK)
+  LOADED_HOURLY: 16.30,            // £/hr — fixed all-in rate (UK NLW + employer NI 15% + pension 3% + holiday/sick cover). Midpoint of £16.25–£16.35.
+  HOURS_PER_DAY: 20,               // 2 × 10hr shifts
+  DAYS_PER_WEEK: 7,
+  WEEKS_PER_YEAR: 50,              // 2 weeks allowed for facility downtime / bank holidays
+  HELIX_OVERHEAD_RATIO: 0.15,      // Helix still needs ~15% of headcount for induct / oversight / exceptions
+
+  // Finance terms
+  INTEREST_RATE_PCT: 8,            // 8% APR
+  FINANCE_TERM_MONTHS: 60,
+  DEPOSIT: 0,
+  BALLOON: 0,
+  ANNUAL_MAINTENANCE: 12000        // £/yr
+};
+
+function fmtMoneyCompact(n) {
+  if (n >= 1000000) return '£' + (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'm';
+  if (n >= 1000) return '£' + (Math.round(n / 100) / 10).toFixed(1).replace(/\.0$/, '') + 'k';
+  return '£' + Math.round(n).toLocaleString('en-GB');
+}
+
+function fmtMoneyFull(n) {
+  return '£' + Math.round(n).toLocaleString('en-GB');
+}
+
+// Standard amortisation
+function calcMonthlyFinance(principal, annualRatePct, months, balloon) {
+  if (months <= 0) return 0;
+  const monthlyRate = (annualRatePct / 100) / 12;
+  if (monthlyRate === 0) return Math.max((principal - balloon) / months, 0);
+  const pvBalloon = balloon / Math.pow(1 + monthlyRate, months);
+  const amountToAmortise = Math.max(principal - pvBalloon, 0);
+  return amountToAmortise *
+    (monthlyRate * Math.pow(1 + monthlyRate, months)) /
+    (Math.pow(1 + monthlyRate, months) - 1);
+}
+
+function roiCalc() {
+  const thInput = document.getElementById('thInput');
+  if (!thInput) return;
+  const th = +thInput.value;
+  const dest = +document.getElementById('destInput').value;
+  const ops = +document.getElementById('opsInput').value;
+
+  // ── Labour ───────────────────────────────────────────
+  const loadedHourly = ROI.LOADED_HOURLY;
+  const hoursPerYearPerPosition = ROI.HOURS_PER_DAY * ROI.DAYS_PER_WEEK * ROI.WEEKS_PER_YEAR;
+  const annualCostPerPosition = loadedHourly * hoursPerYearPerPosition;
+  const opsRemoved = Math.max(1, Math.round(ops * (1 - ROI.HELIX_OVERHEAD_RATIO)));
+  const annualLabourSaving = opsRemoved * annualCostPerPosition;
+
+  // ── System (power-curve, calibrated against Chase + APC quotes) ──
+  const perDestCost = ROI.REF_COST_PER_DEST * Math.pow(ROI.REF_DESTINATIONS / dest, ROI.SCALE_EXPONENT);
+  const baseConfigCost = dest * perDestCost;
+  const throughputMultiplier = Math.max(0.7, 1 + (th - ROI.REF_THROUGHPUT_PPH) / ROI.THROUGHPUT_SENSITIVITY);
+  const systemCost = baseConfigCost * throughputMultiplier;
+  const amountFinanced = Math.max(systemCost - ROI.DEPOSIT, 0);
+
+  // ── Monthly finance (annuity) ────────────────────────
+  const monthlyFinance = calcMonthlyFinance(amountFinanced, ROI.INTEREST_RATE_PCT, ROI.FINANCE_TERM_MONTHS, ROI.BALLOON);
+  const annualFinance = monthlyFinance * 12;
+
+  // ── Net position ─────────────────────────────────────
+  const annualNetSaving = annualLabourSaving - ROI.ANNUAL_MAINTENANCE;
+  const monthlyNetPosition = (annualNetSaving / 12) - monthlyFinance;
+  const paybackMonths = annualNetSaving > 0 ? Math.max(1, Math.ceil((systemCost / annualNetSaving) * 12)) : 999;
+  const fiveYearNetBenefit = (annualNetSaving * 5) - systemCost;
+  const fiveYearROI = systemCost > 0 ? Math.round((fiveYearNetBenefit / systemCost) * 100) : 0;
+
+  // ── Input displays ───────────────────────────────────
+  document.getElementById('thOut').textContent = th.toLocaleString('en-GB');
+  document.getElementById('destOut').textContent = dest;
+  document.getElementById('opsOut').textContent = ops;
+
+  // ── Output displays ──────────────────────────────────
+  document.getElementById('outSystem').textContent = fmtMoneyCompact(systemCost);
+  document.getElementById('outFinance').textContent = fmtMoneyCompact(monthlyFinance) + '/mo';
+  document.getElementById('outOps').textContent = opsRemoved;
+  document.getElementById('outSave').textContent = fmtMoneyCompact(annualLabourSaving) + '/yr';
+  document.getElementById('outPayback').textContent = paybackMonths >= 999 ? 'No payback' : paybackMonths + ' months';
+
+  const netSign = monthlyNetPosition >= 0 ? '+' : '−';
+  const netAbs = fmtMoneyCompact(Math.abs(monthlyNetPosition));
+  document.getElementById('outROI').innerHTML =
+    `Net monthly position: <b>${netSign}${netAbs}</b> after finance &amp; maintenance. 5-year ROI: <b>${fiveYearROI.toLocaleString('en-GB')}%</b>.`;
+
+  // ── Hidden form fields (carried in the emailed estimate) ──
+  document.getElementById('hfTh').value = th.toLocaleString('en-GB') + ' pph';
+  document.getElementById('hfDest').value = dest;
+  document.getElementById('hfOps').value = ops + ' (positions on the line)';
+  document.getElementById('hfCost').value = `£${loadedHourly.toFixed(2)}/hr all-in (UK NLW + NI + pension + holiday cover)`;
+  document.getElementById('hfSystem').value = fmtMoneyFull(systemCost);
+  document.getElementById('hfFinance').value = fmtMoneyFull(monthlyFinance) + '/mo (60 mo @ 8% APR)';
+  document.getElementById('hfOpsRemoved').value = opsRemoved;
+  document.getElementById('hfSave').value = fmtMoneyFull(annualLabourSaving) + '/yr (2×10hr shifts, 7 days, 50 weeks)';
+  document.getElementById('hfPayback').value = paybackMonths >= 999 ? 'No payback' : paybackMonths + ' months';
+  document.getElementById('hfROI').value = fiveYearROI + '%';
+}
+
+['thInput','destInput','opsInput'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', roiCalc);
+});
+roiCalc();
+
+// Email-this-estimate form (FormSubmit relay) — generic wiring
+function wireCalcForm(formId, successId) {
+  const form = document.getElementById(formId);
+  if (!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button');
+    const orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try {
+      const fd = new FormData(form);
+      const res = await fetch(form.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
+      if (!res.ok) throw new Error('send failed');
+      form.style.display = 'none';
+      document.getElementById(successId).classList.add('show');
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = orig;
+      alert('Couldn\'t send. Email info@orionmis.co.uk directly with your figures and we\'ll come back the same day.');
+    }
+  });
+}
+wireCalcForm('calcForm', 'calcSuccess');
+wireCalcForm('gpForm', 'gpSuccess');
+
+// ════════════════════════════════════════════════════════════════
+// ROI TAB SWITCHING
+// ════════════════════════════════════════════════════════════════
+document.querySelectorAll('.calc-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.tab;
+    document.querySelectorAll('.calc-tab').forEach(t => {
+      const active = t.dataset.tab === target;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    document.querySelectorAll('.calc-tab-panel').forEach(p => {
+      const active = p.id === 'tab-' + target;
+      p.classList.toggle('active', active);
+      if (active) p.removeAttribute('hidden'); else p.setAttribute('hidden', '');
+    });
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+// GENERAL PROCESS ROI CALCULATOR
+// Simplified model (per row):
+//   total_mins/day = mins_per_task × tasks_per_day
+//   cost/day       = (total_mins/60) × LABOUR × REWORK_FACTOR
+// Labour fixed at £16.30/hr UK NLW. Rework fixed at 10%.
+// Annualised at 250 working days. Potential saving @ 50% reduction.
+// ════════════════════════════════════════════════════════════════
+const GP = {
+  LABOUR_HOURLY: 16.30,
+  REWORK_FACTOR: 0.10,
+  WORKING_DAYS_PER_YEAR: 250,
+  AUTOMATION_REDUCTION: 0.5,
+  DEFAULT_STEPS: [
+    { step: 'Packing boxes',     mins: 10, tasks: 1000 },
+    { step: 'Labelling',         mins: 5,  tasks: 1000 },
+    { step: 'Sorting (inbound)', mins: 8,  tasks: 1000 }
+  ]
+};
+
+function gpRowHTML(row) {
+  return `<tr>
+    <td><input type="text" class="gp-step-input" data-k="step" value="${row.step}" placeholder="Process step"></td>
+    <td class="gp-num"><input type="number" min="0" step="0.5" data-k="mins" value="${row.mins}"></td>
+    <td class="gp-num"><input type="number" min="0" step="1" data-k="tasks" value="${row.tasks}"></td>
+    <td class="gp-num gp-out gp-out-cost">£0</td>
+    <td class="gp-act"><button type="button" class="gp-remove" aria-label="Remove row" title="Remove row">×</button></td>
+  </tr>`;
+}
+
+function gpRenderInitial() {
+  const body = document.getElementById('gpBody');
+  if (!body) return;
+  body.innerHTML = GP.DEFAULT_STEPS.map(gpRowHTML).join('');
+  gpCalc();
+}
+
+function gpReadRow(tr) {
+  const get = (k) => tr.querySelector(`input[data-k="${k}"]`);
+  return {
+    step:  get('step').value.trim(),
+    mins:  +get('mins').value || 0,
+    tasks: +get('tasks').value || 0
+  };
+}
+
+function gpCalc() {
+  const body = document.getElementById('gpBody');
+  if (!body) return;
+  let totalMins = 0, totalCost = 0, flagged = 0;
+  const rows = [...body.querySelectorAll('tr')];
+  rows.forEach(tr => {
+    const r = gpReadRow(tr);
+    const mins = r.mins * r.tasks;
+    const costDay = (mins / 60) * GP.LABOUR_HOURLY * GP.REWORK_FACTOR;
+    tr.querySelector('.gp-out-cost').textContent = '£' + costDay.toLocaleString('en-GB', { maximumFractionDigits: 0 });
+    totalMins += mins;
+    totalCost += costDay;
+    if (r.step && (mins > 0 || costDay > 0)) flagged++;
+  });
+
+  const annualised = totalCost * GP.WORKING_DAYS_PER_YEAR;
+  const saving = annualised * GP.AUTOMATION_REDUCTION;
+
+  document.getElementById('gpOutMins').textContent  = totalMins.toLocaleString('en-GB', { maximumFractionDigits: 0 }) + ' mins/day';
+  document.getElementById('gpOutCost').textContent  = '£' + totalCost.toLocaleString('en-GB', { maximumFractionDigits: 0 }) + '/day';
+  document.getElementById('gpOutAnnual').textContent = fmtMoneyCompact(annualised);
+  document.getElementById('gpOutFlags').textContent = flagged;
+  document.getElementById('gpOutSaving').textContent = fmtMoneyCompact(saving) + '/yr';
+
+  document.getElementById('gpHfMins').value   = Math.round(totalMins).toLocaleString('en-GB') + ' mins/day (process minutes)';
+  document.getElementById('gpHfCost').value   = '£' + Math.round(totalCost).toLocaleString('en-GB') + '/day (10% rework, £16.30/hr)';
+  document.getElementById('gpHfAnnual').value = fmtMoneyFull(annualised);
+  document.getElementById('gpHfSaving').value = fmtMoneyFull(saving) + '/yr (50% reduction)';
+  document.getElementById('gpHfSummary').value = rows.map(tr => {
+    const r = gpReadRow(tr);
+    if (!r.step && !r.mins && !r.tasks) return null;
+    const mins = r.mins * r.tasks;
+    const cd = (mins / 60) * GP.LABOUR_HOURLY * GP.REWORK_FACTOR;
+    return `${r.step || 'Step'} | ${r.mins}min × ${r.tasks}/day → ${Math.round(mins)} process mins · £${Math.round(cd)}/day`;
+  }).filter(Boolean).join('\n');
+}
+
+document.addEventListener('input', (e) => {
+  if (e.target.closest && e.target.closest('#gpBody')) gpCalc();
+});
+document.addEventListener('click', (e) => {
+  if (e.target.classList && e.target.classList.contains('gp-remove')) {
+    const tr = e.target.closest('tr');
+    if (tr) tr.remove();
+    gpCalc();
+  }
+});
+const gpAddBtn = document.getElementById('gpAdd');
+if (gpAddBtn) {
+  gpAddBtn.addEventListener('click', () => {
+    const body = document.getElementById('gpBody');
+    body.insertAdjacentHTML('beforeend', gpRowHTML({ step: '', mins: 0, tasks: 0 }));
+    const newRow = body.lastElementChild;
+    const stepInput = newRow.querySelector('input[data-k="step"]');
+    if (stepInput) stepInput.focus();
+    gpCalc();
+  });
+}
+gpRenderInitial();
+
+// ── REVEAL ANIMATION ──────────────────────────────────────
+const reveals = document.querySelectorAll('.reveal');
+if (reveals.length && 'IntersectionObserver' in window) {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  reveals.forEach(el => obs.observe(el));
+} else {
+  reveals.forEach(el => el.classList.add('visible'));
+}
+
+// ── MOBILE NAV ────────────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileNav.classList.toggle('open');
+});
+mobileNav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  });
+});
+document.addEventListener('click', (e) => {
+  if (mobileNav.classList.contains('open') && !mobileNav.contains(e.target) && !hamburger.contains(e.target)) {
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+  }
+});
+
+// ── NAV SHADOW ON SCROLL ──────────────────────────────────
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+// ── ACTIVE NAV LINK ON SCROLL ─────────────────────────────
+const sectionIds = ['helix','roi','sectors','proof','faq'];
+const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+const navLinks = document.querySelectorAll('.nav ul a');
+if ('IntersectionObserver' in window && sections.length) {
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => navObserver.observe(s));
+}
+</script>
+
+<!-- Media carousel widget (loads media.json, renders any .media-slot placeholders on the page) -->
+<script src="media-carousel.js" defer></script>
+
+</body>
+</html>
