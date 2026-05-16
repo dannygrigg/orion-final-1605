@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Why finance your warehouse automation · Orion MIS</title>
+<meta name="description" content="22 reasons UK operations directors choose to buy warehouse automation on finance rather than write a single cheque — cash flow, tax, deployment speed, strategic positioning.">
+<link rel="canonical" href="https://orionmis.co.uk/why-finance.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dark:#02050A;--bg2:#07111F;--panel:#0B1626;
+  --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
+  --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
+  --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--amber:#FDB022;--red:#F97066;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --serif:"DM Serif Display",Georgia,serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --max:1240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:radial-gradient(circle at 80% 10%,rgba(0,213,255,.08),transparent 40%),radial-gradient(circle at 10% 90%,rgba(30,144,255,.08),transparent 45%),linear-gradient(180deg,#07111F 0%,#050B14 60%,#02050A 100%);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:-.005em;font-feature-settings:"cv02","cv03","cv04","cv11";font-weight:400;padding-top:34px}
+a{color:var(--cyan);text-decoration:none}
+em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--cyan)}
+h1,h2,h3{font-family:var(--sans);font-weight:600;line-height:1.1;letter-spacing:-.022em}
+
+/* TOP BANNER */
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:60;height:34px;background:linear-gradient(90deg,#0066CC,#00D5FF);color:#00111d;overflow:hidden;display:flex;align-items:center;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(0,0,0,.18)}
+.top-banner-track{display:flex;align-items:center;animation:topBanner 48s linear infinite;white-space:nowrap}
+.top-banner-content{display:flex;align-items:center;flex-shrink:0;padding-right:56px}
+.tb-item{flex-shrink:0;padding:0 18px}
+.tb-sep{flex-shrink:0;opacity:.45}
+@keyframes topBanner{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* HEADER */
+.page-head{max-width:var(--max);margin:0 auto;padding:42px 36px 12px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
+.brand .o{width:32px;height:32px;border-radius:50%;background:#02050A;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line2);position:relative}
+.brand .o::after{content:"";position:absolute;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 0 10px var(--cyan)}
+.brand b{color:#fff;font-weight:700;letter-spacing:.18em;font-size:13px}
+.page-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);background:rgba(0,213,255,.05);border:1px solid var(--line2);padding:6px 12px;border-radius:999px}
+
+/* HERO */
+.hero{max-width:var(--max);margin:0 auto;padding:50px 36px 80px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:24px;display:inline-flex;align-items:center;gap:14px;font-weight:600}
+.eyebrow::before{content:"";width:36px;height:1px;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+.hero h1{font-size:clamp(38px,5.5vw,72px);line-height:1.05;font-weight:600;letter-spacing:-.025em;margin-bottom:24px;color:#fff;max-width:1000px}
+.hero-lead{font-size:18px;color:var(--muted);max-width:760px;line-height:1.65;font-weight:400}
+.hero-meta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+.hero-meta-pill{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);background:rgba(0,213,255,.08);border:1px solid var(--line2);padding:9px 16px;border-radius:999px;font-weight:700}
+
+/* SECTION SHELL */
+.section{max-width:var(--max);margin:0 auto;padding:60px 36px}
+.section-head{margin-bottom:38px;max-width:780px}
+.section-head .eyebrow{margin-bottom:18px}
+.section-head h2{font-size:clamp(28px,3.4vw,44px);line-height:1.1;font-weight:600;letter-spacing:-.02em;color:#fff;margin-bottom:14px}
+.section-head .lead{font-size:16px;color:var(--muted);line-height:1.65}
+
+/* REASON GRID */
+.reasons{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.reason{background:linear-gradient(180deg,rgba(15,29,49,.55),rgba(7,17,31,.45));border:1px solid var(--line);border-radius:18px;padding:26px 24px;position:relative;transition:transform .25s,border-color .25s,box-shadow .25s;display:flex;flex-direction:column;gap:12px}
+.reason:hover{transform:translateY(-3px);border-color:var(--line2);box-shadow:0 18px 42px rgba(0,213,255,.08)}
+.reason-num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;font-weight:700;color:var(--cyan);background:rgba(0,213,255,.06);border:1px solid var(--line2);padding:5px 10px;border-radius:999px;align-self:flex-start}
+.reason h3{font-size:18px;line-height:1.25;letter-spacing:-.012em;color:#fff;font-weight:600}
+.reason p{font-size:14.5px;line-height:1.65;color:var(--muted)}
+.reason .stat{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--green);font-weight:700;margin-top:auto;padding-top:8px;border-top:1px dashed rgba(50,213,131,.22)}
+.reason.amber .stat{color:var(--amber);border-top-color:rgba(253,176,34,.22)}
+.reason.cyan .stat{color:var(--cyan);border-top-color:rgba(0,213,255,.22)}
+
+/* COMPARISON TABLE */
+.compare-wrap{background:linear-gradient(180deg,#0B1626,#050B14);border:1px solid var(--line2);border-radius:22px;overflow:hidden;margin-top:16px}
+.compare-head{display:grid;grid-template-columns:1.4fr 1fr 1fr;padding:18px 22px;border-bottom:1px solid var(--line);background:rgba(0,213,255,.04);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--soft)}
+.compare-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;padding:18px 22px;border-bottom:1px solid var(--line);align-items:center}
+.compare-row:last-child{border-bottom:0}
+.compare-row .label{color:#fff;font-size:14.5px;font-weight:500}
+.compare-row .cell{font-size:14px;color:var(--muted)}
+.compare-row .cell.win{color:var(--green);font-weight:600}
+.compare-row .cell.lose{color:var(--red)}
+.compare-row .cell .tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--green);display:inline-flex;align-items:center;gap:5px}
+.compare-row .cell .tag::before{content:"✓";font-size:13px}
+.compare-row .cell .tag.x{color:var(--red)}
+.compare-row .cell .tag.x::before{content:"✗"}
+
+/* OBJECTIONS */
+.objections{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.objection{background:rgba(15,29,49,.4);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.objection .q{display:flex;gap:12px;align-items:flex-start}
+.objection .q-mark{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:rgba(253,176,34,.12);color:var(--amber);font-family:var(--mono);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid rgba(253,176,34,.3)}
+.objection .q-body{color:#fff;font-size:15.5px;font-weight:500;line-height:1.45;letter-spacing:-.005em}
+.objection .a{display:flex;gap:12px;align-items:flex-start;padding-top:10px;border-top:1px dashed rgba(0,213,255,.18)}
+.objection .a-mark{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:rgba(0,213,255,.10);color:var(--cyan);font-family:var(--mono);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1px solid var(--line2)}
+.objection .a-body{font-size:14.5px;color:var(--muted);line-height:1.65}
+.objection .a-body strong{color:#fff;font-weight:600}
+
+/* CTA */
+.cta{background:radial-gradient(circle at 50% 30%,rgba(0,213,255,.16),transparent 45%),#02050A;text-align:center;padding:90px 36px;border-top:1px solid var(--line);position:relative;overflow:hidden;margin-top:60px}
+.cta::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 80%,rgba(30,144,255,.08),transparent 40%);pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:760px;margin:0 auto}
+.cta h2{font-size:clamp(30px,3.8vw,52px);line-height:1.1;font-weight:600;letter-spacing:-.022em;margin-bottom:18px;color:#fff}
+.cta p{color:var(--muted);font-size:17px;margin-bottom:32px;line-height:1.65}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:14px 22px;border-radius:999px;border:1px solid;cursor:pointer;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d;border-color:transparent}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,213,255,.3)}
+.btn-line{background:transparent;color:#fff;border-color:rgba(255,255,255,.22)}
+.btn-line:hover{background:rgba(255,255,255,.06);border-color:var(--cyan)}
+
+/* SUMMARY ROW */
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px}
+.summary-card{background:rgba(15,29,49,.4);border:1px solid var(--line);border-radius:16px;padding:20px 22px;display:flex;flex-direction:column;gap:6px}
+.summary-card .big{font-family:var(--serif);font-size:42px;line-height:1;color:var(--cyan);font-weight:400;font-style:italic}
+.summary-card .small{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:700}
+.summary-card .desc{font-size:13.5px;color:var(--muted);line-height:1.55;margin-top:4px}
+
+/* PERSONA NAVIGATOR */
+.personas{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:8px}
+.persona{display:flex;flex-direction:column;background:linear-gradient(180deg,rgba(15,29,49,.55),rgba(7,17,31,.40));border:1px solid var(--line);border-radius:18px;padding:24px 22px;text-decoration:none;color:#fff;transition:transform .25s,border-color .25s,box-shadow .25s;gap:12px;position:relative;overflow:hidden}
+.persona::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan));opacity:.55;transition:opacity .25s}
+.persona:hover{transform:translateY(-3px);border-color:var(--line2);box-shadow:0 18px 38px rgba(0,213,255,.10)}
+.persona:hover::before{opacity:1}
+.persona-icon{width:42px;height:42px;border-radius:50%;background:#02050A;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;color:var(--cyan)}
+.persona-icon svg{width:22px;height:22px;stroke-width:1.6;stroke:currentColor;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.persona-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:700}
+.persona h3{font-size:17px;line-height:1.22;color:#fff;font-weight:600;letter-spacing:-.012em}
+.persona p{font-size:13.5px;color:var(--muted);line-height:1.55}
+.persona ul{list-style:none;padding:0;margin:auto 0 0;display:flex;flex-direction:column;gap:6px}
+.persona ul li{font-family:var(--mono);font-size:11px;color:var(--soft);line-height:1.45;padding-left:14px;position:relative}
+.persona ul li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:1px;background:var(--cyan);opacity:.65}
+.persona-link{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--cyan);padding-top:8px;border-top:1px dashed rgba(0,213,255,.18);transition:gap .15s;display:inline-flex;align-items:center;gap:6px}
+.persona:hover .persona-link{gap:10px}
+
+@media(max-width:1100px){.personas{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:720px){.personas{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.personas{grid-template-columns:1fr}}
+
+/* CALLOUT */
+.callout{background:linear-gradient(135deg,rgba(30,144,255,.10),rgba(0,213,255,.04));border:1px solid var(--line2);border-radius:18px;padding:28px 30px;margin-top:24px;display:flex;gap:24px;align-items:center}
+.callout-icon{flex-shrink:0;width:54px;height:54px;border-radius:50%;background:#02050A;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;color:var(--cyan)}
+.callout-icon svg{width:26px;height:26px}
+.callout-body{flex:1}
+.callout-body b{display:block;color:#fff;font-size:15.5px;margin-bottom:4px;letter-spacing:-.01em;font-weight:600}
+.callout-body span{font-size:14px;color:var(--muted);line-height:1.6}
+
+/* FOOTER */
+.footer{padding:38px 36px 50px;border-top:1px solid var(--line);background:#02050A;margin-top:40px}
+.footer-inner{max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.footer-meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.footer-meta a{color:var(--soft);margin-left:18px}
+.footer-meta a:hover{color:var(--cyan)}
+
+/* DIVIDER */
+.divider{max-width:var(--max);margin:0 auto;padding:0 36px}
+.divider hr{border:0;height:1px;background:linear-gradient(90deg,transparent,var(--line2),transparent);margin:24px 0}
+
+/* PRINT */
+@media print{
+  body{background:#fff!important;color:#000!important;padding-top:0}
+  .top-banner,.cta,.footer{display:none}
+  .reason,.objection,.summary-card,.callout{break-inside:avoid;border-color:#ddd!important;background:#fafafa!important;color:#000!important}
+  .reason h3,.objection .q-body,.summary-card .big,.section-head h2{color:#000!important}
+  .reason p,.objection .a-body,.summary-card .desc,.section-head .lead,.hero-lead{color:#333!important}
+  .eyebrow,.reason-num,.hero-meta-pill{color:#0066cc!important}
+}
+
+@media(max-width:980px){
+  .reasons{grid-template-columns:repeat(2,1fr)}
+  .summary{grid-template-columns:repeat(2,1fr)}
+  .compare-head,.compare-row{grid-template-columns:1.2fr 1fr 1fr;padding:14px 16px;font-size:13px}
+  .objections{grid-template-columns:1fr}
+  .callout{flex-direction:column;text-align:center}
+}
+@media(max-width:640px){
+  .reasons{grid-template-columns:1fr}
+  .summary{grid-template-columns:1fr 1fr}
+  .compare-head,.compare-row{grid-template-columns:1fr;padding:14px}
+  .compare-row{gap:6px;border-left:3px solid var(--line2)}
+  .compare-row .cell::before{content:attr(data-label);display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:2px}
+  .hero{padding:30px 22px 50px}
+  .section{padding:40px 22px}
+  .page-head{padding:30px 22px 8px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner" aria-label="Key messages">
+  <div class="top-banner-track">
+    <div class="top-banner-content">
+      <span class="tb-item">Pay monthly · own the asset</span><span class="tb-sep">·</span>
+      <span class="tb-item">Preserve cash</span><span class="tb-sep">·</span>
+      <span class="tb-item">Deploy now, save tomorrow</span><span class="tb-sep">·</span>
+      <span class="tb-item">Full year-1 capital allowances</span><span class="tb-sep">·</span>
+      <span class="tb-item">UK-built automation</span><span class="tb-sep">·</span>
+      <span class="tb-item">Finance subject to specification &amp; approval</span><span class="tb-sep">·</span>
+    </div>
+    <div class="top-banner-content" aria-hidden="true">
+      <span class="tb-item">Pay monthly · own the asset</span><span class="tb-sep">·</span>
+      <span class="tb-item">Preserve cash</span><span class="tb-sep">·</span>
+      <span class="tb-item">Deploy now, save tomorrow</span><span class="tb-sep">·</span>
+      <span class="tb-item">Full year-1 capital allowances</span><span class="tb-sep">·</span>
+      <span class="tb-item">UK-built automation</span><span class="tb-sep">·</span>
+      <span class="tb-item">Finance subject to specification &amp; approval</span><span class="tb-sep">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="page-head">
+  <a href="index.html" class="brand" style="text-decoration:none">
+    <span class="o"></span>
+    <b>ORION</b>
+    <span style="opacity:.5">·</span>
+    <span>Why finance — the full case</span>
+  </a>
+  <a href="warehouse-automation-finance.html" class="page-tag" style="text-decoration:none;color:var(--cyan);border-color:var(--cyan)">← Back to finance overview</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">The conversation we keep having</div>
+  <h1>Writing one big cheque is the <em>obvious</em> move.<br>Spreading it over the term is the <em>smarter</em> one.</h1>
+  <p class="hero-lead">Orion sells warehouse automation on finance — the customer owns the asset at the end, the cash stays on their balance sheet today, and the monthly payment usually sits well inside the labour savings the system delivers. Every reason a buyer should pick a monthly plan over a lump-sum cheque — pulled apart by theme, with the objections sales teams hear most.</p>
+  <div class="hero-meta">
+    <span class="hero-meta-pill">22 reasons</span>
+    <span class="hero-meta-pill">5 themes</span>
+    <span class="hero-meta-pill">5 common objections answered</span>
+    <span class="hero-meta-pill">Print-friendly</span>
+  </div>
+</section>
+
+<!-- SUMMARY ROW -->
+<div class="section" style="padding-top:0">
+  <div class="summary">
+    <div class="summary-card"><span class="big">£0</span><span class="small">Upfront cash</span><span class="desc">Deploy a six- or seven-figure system without touching the cash balance.</span></div>
+    <div class="summary-card"><span class="big">100%</span><span class="small">Year-1 tax relief</span><span class="desc">Full expensing or Annual Investment Allowance — the full capital cost can be deducted from year-1 taxable profits. Plus the interest portion of every monthly payment is also deductible.</span></div>
+    <div class="summary-card"><span class="big">3–6mo</span><span class="small">Faster to live</span><span class="desc">Spread payments fit budget cycles that a single big cheque doesn't. System runs sooner.</span></div>
+    <div class="summary-card"><span class="big">£0</span><span class="small">Working capital impact</span><span class="desc">Credit lines, overdraft, supplier terms — all untouched.</span></div>
+  </div>
+</div>
+
+<!-- PERSONA NAVIGATOR · read-this-if-you-are -->
+<section class="section" id="personas" style="padding-top:30px">
+  <div class="section-head" style="max-width:none">
+    <div class="eyebrow">Read this if you're…</div>
+    <h2>Five lenses on the <em>same case</em>.</h2>
+    <p class="lead">Skip to the section that matches your seat. Each persona's three most relevant reasons sit one click away.</p>
+  </div>
+  <div class="personas">
+
+    <a class="persona" href="#cash-flow">
+      <div class="persona-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+      </div>
+      <span class="persona-tag">Owner / Operator</span>
+      <h3>Cash flow &amp; growth funding</h3>
+      <p>You're the founder, MD or owner-operator. Cash is the constraint, growth is the goal. Keep capital free to act on the next opportunity.</p>
+      <ul>
+        <li>01 · Preserve cash reserves</li>
+        <li>03 · Don't lock out other investments</li>
+        <li>17 · Move faster than the cash-only competitor</li>
+      </ul>
+      <span class="persona-link">Open the cash-flow case →</span>
+    </a>
+
+    <a class="persona" href="#tax">
+      <div class="persona-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18"/><path d="M5 7l7-4 7 4"/><path d="M5 7v6c0 4 7 7 7 7s7-3 7-7V7"/></svg>
+      </div>
+      <span class="persona-tag">Finance Director / CFO</span>
+      <h3>Tax efficiency &amp; balance sheet</h3>
+      <p>You sign off the case. You care about full expensing, AIA, interest deductibility, ratios and the audit trail. The accountant's lens.</p>
+      <ul>
+        <li>07 · Full expensing in year 1</li>
+        <li>09 · Interest portion deductible too</li>
+        <li>10 · HP, not lease — you own the asset</li>
+      </ul>
+      <span class="persona-link">Open the tax case →</span>
+    </a>
+
+    <a class="persona" href="#speed">
+      <div class="persona-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+      </div>
+      <span class="persona-tag">Operations Manager</span>
+      <h3>Capacity, speed, labour</h3>
+      <p>Vacancies are climbing, throughput targets aren't. Get the system live this quarter — not after the next budget refresh.</p>
+      <ul>
+        <li>13 · Skip the CapEx cash queue</li>
+        <li>21 · Labour shortage is structural</li>
+        <li>18 · Take bigger contracts sooner</li>
+      </ul>
+      <span class="persona-link">Open the deployment case →</span>
+    </a>
+
+    <a class="persona" href="#strategic">
+      <div class="persona-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/><path d="M5.6 5.6l2.1 2.1"/><path d="M16.3 16.3l2.1 2.1"/><path d="M5.6 18.4l2.1-2.1"/><path d="M16.3 7.7l2.1-2.1"/></svg>
+      </div>
+      <span class="persona-tag">Engineering Manager</span>
+      <h3>Scalability &amp; integration</h3>
+      <p>The system has to grow with the operation. Modular Helix, conveyor extensions, AMR additions — financed the same way, not from scratch.</p>
+      <ul>
+        <li>15 · Add modules under the same agreement</li>
+        <li>16 · Multi-asset, one agreement</li>
+        <li>22 · UK-built · UK lead times · UK finance</li>
+      </ul>
+      <span class="persona-link">Open the scale case →</span>
+    </a>
+
+    <a class="persona" href="#strategic">
+      <div class="persona-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+      </div>
+      <span class="persona-tag">MD / CEO / Board</span>
+      <h3>Strategic positioning</h3>
+      <p>You're focused on the next 3–5 years. First-mover advantage, capacity for tenders, balance sheet readability for investors and acquirers.</p>
+      <ul>
+        <li>17 · Move faster than cash-only competitors</li>
+        <li>18 · Capacity to win bigger contracts</li>
+        <li>20 · Buying signals to investors &amp; acquirers</li>
+      </ul>
+      <span class="persona-link">Open the strategic case →</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- THEME 1: CASH FLOW -->
+<section class="section" id="cash-flow">
+  <div class="section-head">
+    <div class="eyebrow">01 · Cash flow</div>
+    <h2>Keep capital working where it <em>earns</em> — not parked in a machine</h2>
+    <p class="lead">Every pound spent on automation is a pound that can't be spent on stock, payroll, new sites, or a downturn cushion. Finance lets you have both.</p>
+  </div>
+  <div class="reasons">
+    <article class="reason cyan">
+      <span class="reason-num">01</span>
+      <h3>Preserve your cash reserves</h3>
+      <p>A £500K conveyor system signed today is £500K not sitting in the business when a recession, big restock or expansion opportunity arrives. Spreading the cost over the finance term keeps the cash cushion intact.</p>
+      <span class="stat">Typical preserved: £250K–£2M</span>
+    </article>
+    <article class="reason cyan">
+      <span class="reason-num">02</span>
+      <h3>Pay from savings, not from reserves</h3>
+      <p>A well-sized automation system removes labour cost that already exceeds the monthly finance payment. The system pays for itself month-by-month — no capital outlay required.</p>
+      <span class="stat">Common: 1.5–3× monthly cover</span>
+    </article>
+    <article class="reason cyan">
+      <span class="reason-num">03</span>
+      <h3>Don't lock out other investments</h3>
+      <p>Marketing, recruitment, new product lines, IT upgrades — all compete for the same pot. A monthly payment for automation doesn't steal that pot.</p>
+      <span class="stat">Free for: growth, hiring, R&amp;D</span>
+    </article>
+    <article class="reason cyan">
+      <span class="reason-num">04</span>
+      <h3>Protect credit lines and overdraft</h3>
+      <p>Asset finance sits separate from your operating credit. Bank lines, supplier terms and overdraft headroom stay clean — so you can still borrow against them when needed.</p>
+      <span class="stat">Headroom kept: 100%</span>
+    </article>
+    <article class="reason cyan">
+      <span class="reason-num">05</span>
+      <h3>Predictable monthly cost</h3>
+      <p>Fixed monthly payments make budgeting trivial. No big spike on the P&amp;L. Forecasts, board packs and cash-flow models all stay smooth.</p>
+      <span class="stat">Variance: ±0% (fixed)</span>
+    </article>
+    <article class="reason cyan">
+      <span class="reason-num">06</span>
+      <h3>Hedge against rising labour costs</h3>
+      <p>A fixed monthly finance payment locks in cost today. Living Wage, NI, agency rates and recruitment costs keep climbing. The gap between your fixed cost and rising labour cost widens every year.</p>
+      <span class="stat">Living Wage: +9.8% (Apr 2024)</span>
+    </article>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- THEME 2: TAX & ACCOUNTING -->
+<section class="section" id="tax">
+  <div class="section-head">
+    <div class="eyebrow">02 · Tax &amp; accounting</div>
+    <h2>The accountant's case — written for finance directors</h2>
+    <p class="lead">The HMRC and balance-sheet maths are not the headline reason most operators choose finance — but they are the reason most CFOs sign it off.</p>
+  </div>
+  <div class="reasons">
+    <article class="reason">
+      <span class="reason-num">07</span>
+      <h3>Full expensing — 100% in year 1</h3>
+      <p>UK companies can deduct 100% of the cost of new qualifying plant &amp; machinery from year-1 taxable profits under HMRC's full expensing scheme (permanent since the 2024 Spring Budget). The customer owns the asset under the finance agreement — the allowance is theirs, not the lender's.</p>
+      <span class="stat">CT relief: up to 25% of capital cost</span>
+    </article>
+    <article class="reason">
+      <span class="reason-num">08</span>
+      <h3>Annual Investment Allowance fallback</h3>
+      <p>If full expensing doesn't apply (e.g. used kit, non-company structure), the £1M Annual Investment Allowance still gives 100% first-year relief up to that ceiling. Most warehouse automation projects sit inside it comfortably.</p>
+      <span class="stat">AIA limit: £1M / year</span>
+    </article>
+    <article class="reason">
+      <span class="reason-num">09</span>
+      <h3>Interest portion fully deductible too</h3>
+      <p>The interest element of every monthly payment is a trading expense — comes off profit. So the customer gets the capital allowance up front <em>and</em> ongoing interest deductions across the term. Pure cash purchase only gets the allowance.</p>
+      <span class="stat">Double tax benefit vs cash buy</span>
+    </article>
+    <article class="reason">
+      <span class="reason-num">10</span>
+      <h3>Spread cash without losing ownership</h3>
+      <p>This is hire purchase, not a lease. The asset is on the customer's balance sheet from day one and 100% theirs at the end of the term — no residual, no return, no buyout. You get the cash-flow benefit of monthly payments and the ownership outcome of an outright purchase.</p>
+      <span class="stat">End-of-term: own the asset outright</span>
+    </article>
+    <article class="reason">
+      <span class="reason-num">11</span>
+      <h3>VAT typically paid up-front, reclaimed up-front</h3>
+      <p>On UK HP agreements, VAT on the capital element is usually paid at signing and reclaimed in the next return — same as a cash purchase. Some structures spread VAT over the term — both routes are workable, the finance team will recommend based on the customer's VAT position.</p>
+      <span class="stat">VAT treatment: same as outright</span>
+    </article>
+    <article class="reason">
+      <span class="reason-num">12</span>
+      <h3>Bundled maintenance, fixed price</h3>
+      <p>Orion finance packages can include scheduled maintenance and parts cover in the monthly payment. Cost is fixed, predictable, off the maintenance budget — no end-of-year invoice spikes.</p>
+      <span class="stat">Maintenance budget shock: zero</span>
+    </article>
+  </div>
+  <div class="callout">
+    <div class="callout-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 4 4 5-5"/></svg>
+    </div>
+    <div class="callout-body">
+      <b>Tax law check before sales conversations</b>
+      <span>Every customer's tax position is different. Use these points to open the conversation, not to give advice. Refer the customer's FD to their accountant for confirmation — Orion is not a tax advisor.</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- THEME 3: SPEED & DEPLOYMENT -->
+<section class="section" id="speed">
+  <div class="section-head">
+    <div class="eyebrow">03 · Speed &amp; deployment</div>
+    <h2>Deploy <em>this quarter</em>, not next year</h2>
+    <p class="lead">The longest part of an automation project is usually getting it approved. Finance shortens that by reframing the spend from CapEx to OpEx.</p>
+  </div>
+  <div class="reasons">
+    <article class="reason amber">
+      <span class="reason-num">13</span>
+      <h3>Skip the CapEx cash queue</h3>
+      <p>Companies plan large CapEx cheques 12–18 months ahead. New capacity problems rarely fit that cycle. Spreading the cost on finance lets a customer act on a capacity problem when it appears — not on the next budget refresh.</p>
+      <span class="stat">Saves: 6–12 months</span>
+    </article>
+    <article class="reason amber">
+      <span class="reason-num">14</span>
+      <h3>Match the payback period to the finance term</h3>
+      <p>3–5 year finance term, 18–30 month payback on labour savings. The system generates net positive cash long before the final payment is due — the rest of the term is pure margin.</p>
+      <span class="stat">Net positive: ~18 months</span>
+    </article>
+    <article class="reason amber">
+      <span class="reason-num">15</span>
+      <h3>Add modules under the same agreement</h3>
+      <p>Helix modular sortation, conveyor extensions and AMR fleet additions can be added on subsequent finance facilities through the same lender — no fresh underwriting from scratch. The system grows with you, finance grows with it.</p>
+      <span class="stat">Modular finance: yes</span>
+    </article>
+    <article class="reason amber">
+      <span class="reason-num">16</span>
+      <h3>Multi-asset, one agreement</h3>
+      <p>Conveyors, sortation, WCS software, P&amp;A printers, vision systems — all under one finance agreement. One signature, one monthly payment, one schedule. Not five.</p>
+      <span class="stat">Consolidates: hardware + software</span>
+    </article>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- THEME 4: STRATEGIC -->
+<section class="section" id="strategic">
+  <div class="section-head">
+    <div class="eyebrow">04 · Strategic positioning</div>
+    <h2>Out-automate the people you're competing with</h2>
+    <p class="lead">The competitor down the road is making the same call. Finance lets you be the first one to actually press go.</p>
+  </div>
+  <div class="reasons">
+    <article class="reason">
+      <span class="reason-num">17</span>
+      <h3>Move faster than the cash-only competitor</h3>
+      <p>A rival saving cash for an outright purchase is 6–18 months behind. By the time they sign, you've banked savings, taken extra capacity, won the contract.</p>
+      <span class="stat">First-mover advantage: 12–18mo</span>
+    </article>
+    <article class="reason">
+      <span class="reason-num">18</span>
+      <h3>Take on bigger contracts sooner</h3>
+      <p>Capacity is often the constraint on winning new business. Financed automation removes that constraint immediately — before the contract demands it.</p>
+      <span class="stat">Capacity unlock: same quarter</span>
+    </article>
+    <article class="reason">
+      <span class="reason-num">19</span>
+      <h3>Own the asset at the end of the term</h3>
+      <p>Pay the final instalment and the equipment is 100% yours — no residual to negotiate, no return condition to argue, no renewal cycle. The benefit of an outright purchase, the cash-flow of a monthly payment.</p>
+      <span class="stat">Ownership: 100% at term end</span>
+    </article>
+    <article class="reason">
+      <span class="reason-num">20</span>
+      <h3>Buying signals to investors and acquirers</h3>
+      <p>A modern, automated, well-financed operation reads as "ready to scale" — not "needs capital". Useful for PE conversations, sale processes or investor diligence.</p>
+      <span class="stat">Valuation lens: positive</span>
+    </article>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- THEME 5: UK MARKET REALITY -->
+<section class="section" id="uk-reality">
+  <div class="section-head">
+    <div class="eyebrow">05 · UK market reality</div>
+    <h2>The 2026 numbers that make doing <em>nothing</em> the riskier choice</h2>
+    <p class="lead">The cost of doing nothing keeps climbing. Wage inflation, recruitment difficulty and energy prices are pushing the breakeven for automation closer every quarter.</p>
+  </div>
+  <div class="reasons">
+    <article class="reason amber">
+      <span class="reason-num">21</span>
+      <h3>Labour shortage is structural</h3>
+      <p>UK warehousing has 200K+ unfilled roles in 2026. Even with rising wages, you cannot recruit your way out of capacity problems. Automation isn't a "nice to have", it's the only way some operators stay open.</p>
+      <span class="stat">UK warehousing vacancy: 200K+</span>
+    </article>
+    <article class="reason amber">
+      <span class="reason-num">22</span>
+      <h3>UK-built means UK-financed</h3>
+      <p>Orion systems are built in Chichester. UK finance providers know the kit, know the lead times, know the residuals. Approvals are faster, terms are better, currency risk is zero.</p>
+      <span class="stat">FX risk: none · Approvals: fast</span>
+    </article>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- COMPARISON TABLE -->
+<section class="section" id="compare">
+  <div class="section-head">
+    <div class="eyebrow">Side-by-side</div>
+    <h2>Outright purchase vs. monthly finance — at a glance</h2>
+    <p class="lead">The summary a CFO can read in 30 seconds.</p>
+  </div>
+  <div class="compare-wrap">
+    <div class="compare-head">
+      <div>Decision area</div>
+      <div>Cash purchase</div>
+      <div>Buy on finance (HP)</div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Upfront cash required</div>
+      <div class="cell" data-label="Cash purchase"><span class="tag x">£250K–£2M day one</span></div>
+      <div class="cell" data-label="Buy on finance"><span class="tag">Deposit only — typically 0–10%</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Working capital protected?</div>
+      <div class="cell" data-label="Cash purchase"><span class="tag x">No — cash depleted</span></div>
+      <div class="cell" data-label="Buy on finance"><span class="tag">Yes — fully protected</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Bank credit lines untouched?</div>
+      <div class="cell" data-label="Cash purchase"><span class="tag x">Often dipped into</span></div>
+      <div class="cell" data-label="Buy on finance"><span class="tag">Yes — separate asset-secured facility</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Year-1 capital allowances</div>
+      <div class="cell" data-label="Cash purchase"><span class="tag">Full expensing / AIA</span></div>
+      <div class="cell" data-label="Buy on finance"><span class="tag">Full expensing / AIA · same</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Interest deductibility</div>
+      <div class="cell" data-label="Cash purchase"><span class="tag x">No — no interest paid</span></div>
+      <div class="cell" data-label="Buy on finance"><span class="tag">Interest portion 100% deductible</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Ownership at end of term</div>
+      <div class="cell" data-label="Cash purchase"><span class="tag">100% owned day one</span></div>
+      <div class="cell" data-label="Buy on finance"><span class="tag">100% owned at final payment</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Speed to deployment</div>
+      <div class="cell" data-label="Cash purchase"><span class="tag x">Held up by cash availability</span></div>
+      <div class="cell" data-label="Buy on finance"><span class="tag">Limited only by build &amp; install lead time</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Scalability mid-term</div>
+      <div class="cell" data-label="Cash purchase"><span class="tag x">Another big cheque needed</span></div>
+      <div class="cell" data-label="Buy on finance"><span class="tag">Add modules on subsequent facilities</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Predictable budget impact</div>
+      <div class="cell" data-label="Cash purchase"><span class="tag x">One large P&amp;L event</span></div>
+      <div class="cell" data-label="Buy on finance"><span class="tag">Fixed monthly cost over the term</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="label">Total cash over 5y</div>
+      <div class="cell" data-label="Cash purchase">Lower headline number</div>
+      <div class="cell" data-label="Buy on finance">~12–18% higher (interest), partially offset by interest tax relief and earnings on cash retained</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- OBJECTIONS -->
+<section class="section" id="objections">
+  <div class="section-head">
+    <div class="eyebrow">Objection handling</div>
+    <h2>What customers <em>actually</em> say — and what to say back</h2>
+    <p class="lead">Lifted from real sales calls. Print this page, fold it, keep it in the laptop bag.</p>
+  </div>
+  <div class="objections">
+    <article class="objection">
+      <div class="q"><div class="q-mark">?</div><div class="q-body">"We always buy outright — we don't like debt on the books."</div></div>
+      <div class="a"><div class="a-mark">A</div><div class="a-body">This isn't traditional debt — it's a hire purchase agreement secured against the asset itself, not the business. <strong>The asset goes on the balance sheet from day one,</strong> just like a cash purchase. The finance liability sits opposite it. Net effect on equity over the term: identical to outright purchase, with the cash kept inside the business.</div></div>
+    </article>
+    <article class="objection">
+      <div class="q"><div class="q-mark">?</div><div class="q-body">"We've got the cash sitting in the bank earning nothing — why pay interest?"</div></div>
+      <div class="a"><div class="a-mark">A</div><div class="a-body">That cash isn't earning nothing — it's <strong>optionality</strong>. The next time a competitor's site is up for sale, a supplier offers a stock deal, or a customer wants you to commit to a multi-year contract, that cash buys the move. A few thousand pounds a month of interest keeps the chequebook open.</div></div>
+    </article>
+    <article class="objection">
+      <div class="q"><div class="q-mark">?</div><div class="q-body">"Finance ends up costing more — we'll pay way more over 5 years."</div></div>
+      <div class="a"><div class="a-mark">A</div><div class="a-body">In nominal cash terms, typically 12–18% more over 5 years. <strong>Subtract the corporation tax relief on interest</strong> (25% of every interest payment back), <strong>add the earnings on the cash you didn't spend</strong> (4–5%+ in a treasury account), and the real gap closes to a few percent — for a system that started earning labour savings on day one instead of waiting 12 months for board approval.</div></div>
+    </article>
+    <article class="objection">
+      <div class="q"><div class="q-mark">?</div><div class="q-body">"What if our business slows — we'd rather not be tied in."</div></div>
+      <div class="a"><div class="a-mark">A</div><div class="a-body">If the worst happens, the customer owns the asset under HP — it can be sold to recoup capital or refinanced into a longer, lower-monthly facility. <strong>An outright purchase gives no flexibility either</strong>: you own the same depreciating asset and have already paid for it in full. Finance gives more exit routes, not fewer.</div></div>
+    </article>
+    <article class="objection">
+      <div class="q"><div class="q-mark">?</div><div class="q-body">"Our bank gave us a loan offer — surely that's cheaper?"</div></div>
+      <div class="a"><div class="a-mark">A</div><div class="a-body">Worth comparing like-for-like. <strong>Asset finance vs. bank loan:</strong> the bank loan ties up your overdraft / RCF (which you'll want for working capital later), it's secured against the business (HP is secured against the asset only), and a floating-rate loan goes up if Base Rate rises — HP is fixed. On total cost they're usually within 1–2%, so the structural advantages tip the balance.</div></div>
+    </article>
+    <article class="objection">
+      <div class="q"><div class="q-mark">?</div><div class="q-body">"We just want to keep it simple — one invoice, paid, done."</div></div>
+      <div class="a"><div class="a-mark">A</div><div class="a-body">It is simple. One monthly payment for the term, then the asset is yours. The "simple" cash route still has maintenance, parts, upgrades and (eventually) replacement — they don't disappear just because you wrote the cheque up front. <strong>Finance is at least as simple operationally</strong>, with better cash optics.</div></div>
+    </article>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <div class="eyebrow" style="justify-content:center;display:flex">Take the conversation forward</div>
+    <h2>Put real numbers on the page in <em>under 24 hours</em>.</h2>
+    <p>Send the customer's site footprint, throughput target and current labour bill. The Orion finance specialist will return an indicative monthly, total cost, tax position and payback period — same day.</p>
+    <div class="cta-btns">
+      <a class="btn btn-primary" href="warehouse-automation-finance.html">Open the finance page →</a>
+      <a class="btn btn-line" href="warehouse-automation-roi.html">Run the ROI engine →</a>
+      <a class="btn btn-line" href="mailto:info@orionmis.co.uk?subject=Finance%20brief%20%E2%80%94%20Why%20finance%20deck">Email the finance team →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-meta">Orion MIS · UK-built warehouse automation · Finance subject to specification &amp; approval</div>
+    <div class="footer-meta">
+      <a href="index.html">Home</a>
+      <a href="warehouse-automation-finance.html">Finance</a>
+      <a href="warehouse-automation-roi.html">ROI</a>
+      <a href="javascript:window.print()">Print this brief</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

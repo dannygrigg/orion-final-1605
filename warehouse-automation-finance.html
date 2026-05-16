@@ -455,6 +455,68 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
   </div>
 </section>
 
+<!-- ── DEEP DIVE: WHY FINANCE (audience-targeted entry points) ── -->
+<style>
+.why-deep{padding:64px 36px;background:linear-gradient(180deg,#02050A,#05101F);border-top:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.why-deep::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(0,213,255,.10),transparent 38%),radial-gradient(circle at 15% 80%,rgba(30,144,255,.08),transparent 35%);pointer-events:none}
+.why-deep-inner{max-width:var(--max);margin:0 auto;position:relative;display:grid;grid-template-columns:1.05fr 1fr;gap:42px;align-items:center}
+.why-deep-copy .eyebrow{color:var(--cyan)}
+.why-deep h2{font-family:var(--sans);font-size:clamp(28px,3.4vw,42px);line-height:1.1;font-weight:600;letter-spacing:-.022em;color:#fff;margin:14px 0 16px;max-width:560px}
+.why-deep p{font-size:15.5px;color:rgba(247,250,255,.7);line-height:1.65;max-width:540px;margin-bottom:22px}
+.why-deep .btn{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:14px 22px;border-radius:999px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1E90FF,#00D5FF);color:#00111d;border:0;transition:transform .15s,box-shadow .15s}
+.why-deep .btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,213,255,.28)}
+.why-deep-persona-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.why-deep-persona{background:rgba(15,29,49,.55);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;text-decoration:none;color:#fff;transition:transform .15s,border-color .15s}
+.why-deep-persona:hover{transform:translateY(-2px);border-color:rgba(0,213,255,.36)}
+.why-deep-persona .tag{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(0,213,255,.85);font-weight:700}
+.why-deep-persona b{font-size:14px;line-height:1.25;color:#fff;font-weight:600;letter-spacing:-.005em}
+.why-deep-persona .arrow{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(247,250,255,.45);margin-top:4px;font-weight:700}
+@media(max-width:980px){
+  .why-deep-inner{grid-template-columns:1fr;gap:26px}
+  .why-deep p{max-width:none}
+}
+@media(max-width:520px){
+  .why-deep-persona-grid{grid-template-columns:1fr}
+}
+</style>
+<section class="why-deep">
+  <div class="why-deep-inner">
+    <div class="why-deep-copy">
+      <div class="eyebrow"><span style="background:var(--cyan);box-shadow:none"></span>Take the case to your CFO</div>
+      <h2>22 reasons to buy on finance, written for the <em>person you need to convince</em>.</h2>
+      <p>Cash flow, tax efficiency, deployment speed, strategic positioning and UK market reality — pulled apart by audience. Side-by-side comparison vs cash purchase. Real objection handling from sales calls. Print-friendly for the boardroom.</p>
+      <a class="btn" href="why-finance.html">Open the full case →</a>
+    </div>
+    <div class="why-deep-persona-grid">
+      <a class="why-deep-persona" href="why-finance.html#cash-flow">
+        <span class="tag">Owner · Operator</span>
+        <b>Cash flow &amp; growth funding</b>
+        <span class="arrow">Read the case →</span>
+      </a>
+      <a class="why-deep-persona" href="why-finance.html#tax">
+        <span class="tag">Finance Director</span>
+        <b>Tax efficiency &amp; balance sheet</b>
+        <span class="arrow">Read the case →</span>
+      </a>
+      <a class="why-deep-persona" href="why-finance.html#speed">
+        <span class="tag">Ops Manager</span>
+        <b>Capacity, speed, labour</b>
+        <span class="arrow">Read the case →</span>
+      </a>
+      <a class="why-deep-persona" href="why-finance.html#strategic">
+        <span class="tag">Engineering Manager</span>
+        <b>Scalability &amp; integration</b>
+        <span class="arrow">Read the case →</span>
+      </a>
+      <a class="why-deep-persona" href="why-finance.html#strategic" style="grid-column:span 2;background:linear-gradient(135deg,rgba(30,144,255,.18),rgba(0,213,255,.08));border-color:rgba(0,213,255,.4)">
+        <span class="tag">MD · CEO · Board</span>
+        <b>Strategic positioning · first-mover advantage</b>
+        <span class="arrow">Read the case →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ── ROI INSET ── -->
 <section class="section roi-inset">
   <div class="roi-inset-inner section-inner">
