@@ -354,14 +354,12 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
       </div>
 
       <!-- ── FORM ── -->
-      <!-- Submission via Web3Forms (free tier, 250/mo, supports file attachments via AJAX). -->
-      <!-- Access key registered to info@orionmis.co.uk · whitelisted domains: dannygrigg.github.io + orionmis.co.uk. -->
-      <form id="sketchForm" method="POST" action="https://api.web3forms.com/submit" enctype="multipart/form-data" novalidate>
-        <input type="hidden" name="access_key" value="4c32d1be-07ef-4549-8a9b-9e2fc4baf831">
-        <input type="hidden" name="subject" value="New sketch + brief — Orion website">
-        <input type="hidden" name="from_name" value="Orion website · sketch form">
-        <!-- Honeypot: real users leave this empty; bots fill it and get rejected -->
-        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <!-- Submission via Basin (usebasin.com, free tier, supports file attachments via AJAX). -->
+      <!-- Endpoint d04288a27fc6 routes to info@orionmis.co.uk. -->
+      <form id="sketchForm" method="POST" action="https://usebasin.com/f/d04288a27fc6" enctype="multipart/form-data" novalidate>
+        <input type="hidden" name="_subject" value="New sketch + brief — Orion website">
+        <input type="hidden" name="_honeypot" value="_honey_secondary">
+        <!-- Honeypot: real users leave this empty; bots fill it and Basin rejects the submission -->
         <p class="hp"><label>Don't fill: <input name="_honey_secondary" tabindex="-1" autocomplete="off"></label></p>
 
         <fieldset class="fieldset">
