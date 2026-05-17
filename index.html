@@ -750,11 +750,11 @@ tr:last-child td{border-bottom:none}
         </div>
       </div>
 
-      <form class="calc-form" id="calcForm" method="POST" action="https://formsubmit.co/ajax/info@orionmis.co.uk">
-        <input type="hidden" name="_subject" value="ROI estimate request — Orion website">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_honey" value="" class="hp-field">
+      <form class="calc-form" id="calcForm" method="POST" action="https://api.web3forms.com/submit">
+        <input type="hidden" name="access_key" value="4c32d1be-07ef-4549-8a9b-9e2fc4baf831">
+        <input type="hidden" name="subject" value="Helix ROI estimate request — Orion website">
+        <input type="hidden" name="from_name" value="Orion website · Helix ROI calculator">
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <input type="hidden" name="throughput_pph" id="hfTh">
         <input type="hidden" name="sort_destinations" id="hfDest">
         <input type="hidden" name="current_manual_sorters" id="hfOps">
@@ -807,11 +807,11 @@ tr:last-child td{border-bottom:none}
           </div>
         </div>
 
-        <form class="calc-form" id="gpForm" method="POST" action="https://formsubmit.co/ajax/info@orionmis.co.uk">
-          <input type="hidden" name="_subject" value="General process ROI — Orion website">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_honey" value="" class="hp-field">
+        <form class="calc-form" id="gpForm" method="POST" action="https://api.web3forms.com/submit">
+          <input type="hidden" name="access_key" value="4c32d1be-07ef-4549-8a9b-9e2fc4baf831">
+          <input type="hidden" name="subject" value="General process ROI — Orion website">
+          <input type="hidden" name="from_name" value="Orion website · General process ROI">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
           <input type="hidden" name="process_summary" id="gpHfSummary">
           <input type="hidden" name="total_wasted_minutes_per_day" id="gpHfMins">
           <input type="hidden" name="cost_of_waste_per_day" id="gpHfCost">
@@ -1386,25 +1386,38 @@ function roiCalc() {
 });
 roiCalc();
 
-// Email-this-estimate form (FormSubmit relay) — generic wiring
+// Email-this-estimate form (Web3Forms relay) — generic wiring with timeout safety
 function wireCalcForm(formId, successId) {
   const form = document.getElementById(formId);
   if (!form) return;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = form.querySelector('button');
+    const btn = form.querySelector('button[type="submit"], button:not([type])');
     const orig = btn.innerHTML;
     btn.disabled = true;
     btn.textContent = 'Sending…';
+    const abort = new AbortController();
+    const timeoutId = setTimeout(() => abort.abort('timeout'), 15000);
     try {
       const fd = new FormData(form);
-      const res = await fetch(form.action, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } });
-      if (!res.ok) throw new Error('send failed');
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: fd,
+        headers: { 'Accept': 'application/json' },
+        signal: abort.signal
+      });
+      clearTimeout(timeoutId);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === false) {
+        throw new Error(data.message || ('HTTP ' + res.status));
+      }
       form.style.display = 'none';
       document.getElementById(successId).classList.add('show');
     } catch (err) {
+      clearTimeout(timeoutId);
       btn.disabled = false;
       btn.innerHTML = orig;
+      console.error('[Orion] Form failed:', err);
       alert('Couldn\'t send. Email info@orionmis.co.uk directly with your figures and we\'ll come back the same day.');
     }
   });
