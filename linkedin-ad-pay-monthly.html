@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080,initial-scale=1.0">
+<title>Orion · LinkedIn Ad · Pay Monthly · 1080×1080</title>
+<meta name="robots" content="noindex,nofollow">
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  ORION MIS · LINKEDIN AD · PAY MONTHLY · 1080×1080
+  Branded with the real Orion star mark (from favicon.svg) + brand system.
+  Export to PNG: open in Chrome → F12 → Ctrl+Shift+P → "Capture node
+  screenshot" → click on the dark ad canvas. Output: 1080×1080 PNG.
+  ════════════════════════════════════════════════════════════════════════
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --dark:#02050A;--bg2:#07111F;--text:#F7FAFF;
+  --soft:rgba(247,250,255,.45);--muted:rgba(247,250,255,.72);
+  --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.32);
+  --blue:#1E90FF;--cyan:#00D5FF;--red:#FF6B6B;--green:#32D583;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"DM Serif Display",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+html,body{
+  background:#181E27;font-family:var(--sans);
+  font-feature-settings:"cv02","cv03","cv04","cv11";
+  display:flex;align-items:center;justify-content:center;min-height:100vh;
+}
+
+/* ═══════════════════════════════════════════════════
+   AD CANVAS · 1080 × 1080
+   ═══════════════════════════════════════════════════ */
+.ad{
+  width:1080px;height:1080px;position:relative;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(0,213,255,.18), transparent 38%),
+    radial-gradient(circle at 8% 84%,  rgba(30,144,255,.14), transparent 42%),
+    linear-gradient(180deg, #02050A 0%, #07111F 55%, #050B14 100%);
+  color:var(--text);overflow:hidden;isolation:isolate;
+}
+.ad::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(0,213,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,213,255,.045) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask:radial-gradient(circle at 50% 50%, black 30%, transparent 78%);
+  pointer-events:none;
+}
+
+/* ═══════════════════════════════════════════════════
+   TOP BAR · Orion lockup + small spec line
+   ═══════════════════════════════════════════════════ */
+.topbar{
+  position:absolute;top:54px;left:60px;right:60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+/* Use the actual Orion logo PNG from the live site,
+   filtered to white exactly the same way as the site nav (.logo img). */
+.brand-mark{
+  height:72px;width:auto;display:block;
+  filter:brightness(0) invert(1);
+}
+
+.spec-tag{
+  display:inline-flex;align-items:center;
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cyan);
+  padding:8px 14px;
+  border:1px solid var(--line2);
+  border-radius:999px;
+  background:rgba(0,213,255,.06);
+}
+
+/* ═══════════════════════════════════════════════════
+   EYEBROW + HEADLINE
+   ═══════════════════════════════════════════════════ */
+.eyebrow{
+  position:absolute;top:148px;left:60px;
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  letter-spacing:.20em;text-transform:uppercase;color:var(--cyan);
+}
+.eyebrow::before{
+  content:"";width:42px;height:1px;background:var(--cyan);
+  box-shadow:0 0 14px var(--cyan);
+}
+
+.headline{
+  position:absolute;top:202px;left:60px;right:60px;
+  font-family:var(--sans);font-weight:600;
+  font-size:76px;line-height:1.02;
+  letter-spacing:-.028em;color:#fff;
+}
+.headline span{display:block}
+.headline em{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  color:var(--cyan);letter-spacing:-.02em;
+}
+
+/* ═══════════════════════════════════════════════════
+   COMPARISON · TWO COLUMNS
+   ═══════════════════════════════════════════════════ */
+.compare{
+  position:absolute;left:60px;right:60px;top:494px;
+  display:grid;grid-template-columns:1fr 1fr;gap:18px;
+}
+.col{
+  border-radius:18px;padding:22px 24px 24px;
+  background:rgba(7,17,31,.6);position:relative;
+}
+.col-today{border:1px solid rgba(255,107,107,.30)}
+.col-orion{
+  border:1px solid var(--line2);
+  box-shadow:0 18px 42px rgba(0,213,255,.10);
+}
+.col-tag{
+  display:inline-flex;align-items:center;
+  font-family:var(--mono);font-size:10.5px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:6px 12px;border-radius:999px;margin-bottom:16px;
+}
+.col-today .col-tag{
+  color:#FF6B6B;background:rgba(255,107,107,.10);
+  border:1px solid rgba(255,107,107,.30);
+}
+.col-orion .col-tag{
+  color:var(--cyan);background:rgba(0,213,255,.10);
+  border:1px solid var(--line2);
+}
+.col ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.col li{
+  display:grid;grid-template-columns:20px 1fr;align-items:center;gap:11px;
+  font-family:var(--sans);font-size:15px;font-weight:500;line-height:1.32;
+  color:#fff;letter-spacing:-.005em;
+}
+.col-today li .icon{
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(255,107,107,.14);
+  border:1px solid rgba(255,107,107,.40);
+  display:flex;align-items:center;justify-content:center;
+  color:#FF6B6B;font-weight:700;font-size:12px;line-height:1;
+}
+.col-orion li .icon{
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(0,213,255,.14);
+  border:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cyan);font-weight:700;font-size:12px;line-height:1;
+}
+
+/* ═══════════════════════════════════════════════════
+   TRUSTED BY STRIP
+   ═══════════════════════════════════════════════════ */
+.trusted{
+  position:absolute;left:60px;right:60px;top:855px;
+  display:flex;align-items:center;gap:14px;
+  font-family:var(--mono);font-size:10px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--soft);
+}
+.trusted-label{flex-shrink:0;color:var(--cyan)}
+.trusted-line{flex:1;height:1px;background:linear-gradient(90deg, var(--line2), transparent)}
+.trusted-names{
+  font-family:var(--mono);font-size:10.5px;font-weight:600;
+  letter-spacing:.16em;color:#fff;text-transform:uppercase;
+  display:flex;gap:18px;flex-wrap:nowrap;align-items:center;
+}
+.trusted-names span{position:relative}
+.trusted-names span + span::before{
+  content:"·";color:var(--cyan);margin-right:18px;
+}
+
+/* ═══════════════════════════════════════════════════
+   PROOF PILLS
+   ═══════════════════════════════════════════════════ */
+.pills{
+  position:absolute;left:60px;right:60px;top:900px;
+  display:flex;flex-wrap:wrap;gap:7px;justify-content:center;
+}
+.pill{
+  font-family:var(--mono);font-size:10.5px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);
+  background:rgba(0,213,255,.06);
+  border:1px solid var(--line2);
+  border-radius:999px;padding:7px 13px;
+}
+
+/* ═══════════════════════════════════════════════════
+   CTA STRIP
+   ═══════════════════════════════════════════════════ */
+.cta-strip{
+  position:absolute;left:60px;right:60px;top:954px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:15px 22px;border-radius:14px;
+  background:linear-gradient(90deg, rgba(0,213,255,.14), rgba(30,144,255,.08));
+  border:1px solid var(--line2);
+  box-shadow:0 14px 32px rgba(0,213,255,.10);
+}
+.cta-strip .cta-text{
+  font-family:var(--sans);font-size:16px;font-weight:600;
+  color:#fff;letter-spacing:-.01em;
+}
+.cta-strip .cta-arrow{
+  font-family:var(--mono);font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);
+  display:flex;align-items:center;gap:8px;
+}
+.cta-strip .cta-arrow svg{width:16px;height:16px}
+
+/* ═══════════════════════════════════════════════════
+   FOOTER · disclaimer + contact
+   ═══════════════════════════════════════════════════ */
+.foot{
+  position:absolute;left:60px;right:60px;bottom:30px;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+.disclaimer{
+  font-family:var(--mono);font-size:9px;font-weight:600;
+  letter-spacing:.06em;color:var(--soft);
+  max-width:600px;line-height:1.45;
+}
+.foot-contact{
+  font-family:var(--mono);font-size:9.5px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:#fff;
+  text-align:right;line-height:1.5;
+}
+.foot-contact .web{color:var(--cyan)}
+
+/* ═══════════════════════════════════════════════════
+   EXPORT HELPER (off-canvas)
+   ═══════════════════════════════════════════════════ */
+.export-help{
+  position:fixed;bottom:14px;left:14px;
+  background:rgba(2,5,10,.92);color:#F7FAFF;
+  font-family:var(--mono);font-size:11px;
+  padding:10px 14px;border-radius:8px;
+  border:1px solid var(--line2);max-width:380px;line-height:1.5;z-index:10;
+}
+.export-help b{color:var(--cyan);font-weight:700}
+.export-help code{color:var(--cyan);font-size:10.5px}
+@media print{.export-help{display:none}}
+</style>
+</head>
+<body>
+
+<div class="ad" id="adCanvas">
+
+  <!-- ─── TOP BAR · ORION LOGO (same PNG as live site, same white filter) ─── -->
+  <div class="topbar">
+    <img class="brand-mark" src="https://www.orionmis.co.uk/front/images/comp/logo.png" alt="Orion MIS" crossorigin="anonymous">
+    <span class="spec-tag">UK OEM · Chichester</span>
+  </div>
+
+  <!-- ─── EYEBROW + HEADLINE ─── -->
+  <div class="eyebrow">UK-Made Warehouse Automation</div>
+  <h1 class="headline">
+    <span>Reduce labour.</span>
+    <span>Increase capacity.</span>
+    <span><em>Pay monthly.</em></span>
+  </h1>
+
+  <!-- ─── COMPARISON PANEL ─── -->
+  <div class="compare">
+    <div class="col col-today">
+      <span class="col-tag">Today</span>
+      <ul>
+        <li><span class="icon">×</span>Upfront CAPEX cheque</li>
+        <li><span class="icon">×</span>Labour cost climbing</li>
+        <li><span class="icon">×</span>Overtime &amp; agency cover</li>
+        <li><span class="icon">×</span>Manual rework cost</li>
+        <li><span class="icon">×</span>One-shot board approval</li>
+      </ul>
+    </div>
+    <div class="col col-orion">
+      <span class="col-tag">With Orion</span>
+      <ul>
+        <li><span class="icon">✓</span>Fixed monthly payment</li>
+        <li><span class="icon">✓</span>Funded vs operating cost</li>
+        <li><span class="icon">✓</span>WCS &amp; dashboards included</li>
+        <li><span class="icon">✓</span>Hire purchase — own the asset</li>
+        <li><span class="icon">✓</span>Live data &amp; payback model</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ─── TRUSTED BY · customer wordmarks ─── -->
+  <div class="trusted">
+    <span class="trusted-label">Trusted by</span>
+    <span class="trusted-line"></span>
+    <div class="trusted-names">
+      <span>BMW</span>
+      <span>Amazon</span>
+      <span>APC</span>
+      <span>Tate &amp; Lyle</span>
+      <span>Gompels</span>
+      <span>Royal Mail</span>
+    </div>
+  </div>
+
+  <!-- ─── PROOF PILLS ─── -->
+  <div class="pills">
+    <span class="pill">UK-Made</span>
+    <span class="pill">OEM</span>
+    <span class="pill">WCS Included</span>
+    <span class="pill">Finance-Led</span>
+    <span class="pill">Turnkey</span>
+  </div>
+
+  <!-- ─── CTA STRIP ─── -->
+  <div class="cta-strip">
+    <span class="cta-text">Calculate your monthly automation case</span>
+    <span class="cta-arrow">
+      Open ROI engine
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg>
+    </span>
+  </div>
+
+  <!-- ─── FOOTER · disclaimer + contact ─── -->
+  <div class="foot">
+    <div class="disclaimer">Finance options available subject to specification and approval. UK-designed, UK-manufactured, UK-supported. © Orion MIS 2026.</div>
+    <div class="foot-contact">
+      <div class="web">orionmis.co.uk</div>
+      <div>+44 333 335 5269</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- On-screen export instructions (outside the ad — won't appear in screenshot) -->
+<div class="export-help">
+  <b>To export as PNG (1080×1080):</b><br>
+  1. Press <code>F12</code> to open DevTools<br>
+  2. Press <code>Ctrl+Shift+P</code><br>
+  3. Type <code>screenshot</code> → "Capture node screenshot"<br>
+  4. Click the dark ad canvas → PNG saved to Downloads
+</div>
+
+</body>
+</html>
