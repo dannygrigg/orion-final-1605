@@ -539,8 +539,8 @@ tr:last-child td{border-bottom:none}
 
     <!-- Hero media · YouTube embed · autoplay muted loop, no controls/branding -->
     <div class="hero-media">
-      <iframe src="https://www.youtube.com/embed/9DSG_uWUv9s?autoplay=1&mute=1&loop=1&playlist=9DSG_uWUv9s&controls=0&modestbranding=1&rel=0&showinfo=0&playsinline=1"
-              title="Orion · Helix walkthrough"
+      <iframe id="heroVideo" src="https://www.youtube.com/embed/ZJhXlXHJ_5c?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=ZJhXlXHJ_5c&controls=0&modestbranding=1&rel=0&showinfo=0&playsinline=1"
+              title="Orion · Helix sortation"
               allow="autoplay; encrypted-media; picture-in-picture"
               allowfullscreen></iframe>
       <span class="label">Helix · live site footage</span>
@@ -1283,6 +1283,45 @@ tr:last-child td{border-bottom:none}
     window.onYouTubeIframeAPIReady = function () {
       if (typeof priorReady === 'function') { try { priorReady(); } catch (e) {} }
       initPlayers();
+    };
+    if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    }
+  }
+})();
+</script>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// HERO VIDEO — bulletproof loop via YouTube IFrame API
+// YouTube's loop=1 param is unreliable; this restarts the video the
+// instant it ends, guaranteeing a seamless loop.
+// ════════════════════════════════════════════════════════════════
+(function(){
+  const iframe = document.getElementById('heroVideo');
+  if (!iframe) return;
+
+  function initHero() {
+    new YT.Player(iframe, {
+      events: {
+        onStateChange: function (e) {
+          if (e.data === YT.PlayerState.ENDED) {
+            try { e.target.seekTo(0); e.target.playVideo(); } catch (err) {}
+          }
+        }
+      }
+    });
+  }
+
+  if (window.YT && window.YT.Player) {
+    initHero();
+  } else {
+    const priorReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function () {
+      if (typeof priorReady === 'function') { try { priorReady(); } catch (e) {} }
+      initHero();
     };
     if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
       const tag = document.createElement('script');
