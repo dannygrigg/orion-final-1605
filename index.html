@@ -229,7 +229,9 @@ padding:88px 36px 72px;border-bottom:1px solid var(--line)}
 .helix-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .5s ease;pointer-events:none;padding:18px 24px}
 .helix-slide.active{opacity:1;pointer-events:auto}
 .helix-slide-label{position:absolute;top:14px;left:14px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#fff;font-weight:700;background:rgba(0,0,0,.5);padding:5px 11px;border-radius:999px;z-index:3;backdrop-filter:blur(8px);border:1px solid rgba(0,213,255,.28)}
-.helix-slide.video iframe{height:100%;width:auto;aspect-ratio:9/16;max-width:100%;border:0;border-radius:18px;background:#000;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.helix-slide.video iframe{border:0;border-radius:16px;background:#000;box-shadow:0 24px 60px rgba(0,0,0,.45);display:block}
+.helix-slide.video.portrait iframe{height:100%;width:auto;aspect-ratio:9/16;max-width:100%}
+.helix-slide.video.landscape iframe{width:100%;height:auto;aspect-ratio:16/9;max-height:100%}
 .helix-slide.image{padding:24px}
 .helix-slide.image img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;background:#fff;box-shadow:0 18px 42px rgba(0,0,0,.4)}
 .helix-slide.drawing{padding:14px}
@@ -634,49 +636,48 @@ tr:last-child td{border-bottom:none}
       </div>
     </div>
     <div class="mock-machine">
-      <div class="helix-carousel" id="helixCarousel" aria-roledescription="carousel" aria-label="Helix sortation media">
-        <!-- Slide 1 · YouTube Short -->
-        <div class="helix-slide video active" data-slide="0">
-          <span class="helix-slide-label">Helix · short</span>
-          <iframe src="https://www.youtube.com/embed/XGBxhsK8Nos?modestbranding=1&rel=0&playsinline=1&enablejsapi=1"
-                  title="Helix sortation · short walkthrough"
+      <div class="helix-carousel" id="helixCarousel" aria-roledescription="carousel" aria-label="Helix sortation videos">
+        <!-- Slide 1 · Helix live test (Short, portrait) -->
+        <div class="helix-slide video portrait active" data-slide="0">
+          <span class="helix-slide-label">Helix · live test</span>
+          <iframe id="helixVid0"
+                  src="https://www.youtube.com/embed/chK5zymsW4A?enablejsapi=1&autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1"
+                  title="Helix sortation — live test"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen loading="lazy"></iframe>
+                  allowfullscreen></iframe>
         </div>
-        <!-- Slide 2 · Technical drawing (live HTML mockup) -->
-        <div class="helix-slide drawing" data-slide="1">
-          <span class="helix-slide-label">Technical drawing · ORI-SS-001</span>
-          <iframe src="helix-tech-drawing.html"
-                  title="Helix technical descriptive drawing — scan, divert &amp; convey system"
-                  loading="lazy"></iframe>
-          <a class="helix-slide-open" href="helix-tech-drawing.html" target="_blank" rel="noopener">Open full drawing →</a>
+        <!-- Slide 2 · General sorter testing (landscape) -->
+        <div class="helix-slide video landscape" data-slide="1">
+          <span class="helix-slide-label">General sorter testing</span>
+          <iframe id="helixVid1"
+                  src="https://www.youtube.com/embed/MXd7yMMlzg0?enablejsapi=1&autoplay=0&mute=1&playsinline=1&rel=0&modestbranding=1"
+                  title="General sorter testing"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
         </div>
-        <!-- Slide 3 · Schematic mockup -->
-        <div class="helix-slide image" data-slide="2">
-          <span class="helix-slide-label">System schematic</span>
-          <img src="images/helix-mockup-2.png" alt="Helix sortation schematic — divert left, divert right, oversize route"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="missing" style="display:none">
-            <b>Drop the image here</b>
-            <span>Save the schematic as</span>
-            <code>images/helix-mockup-2.png</code>
-            <span>and refresh — no code change needed.</span>
-          </div>
+        <!-- Slide 3 · Helix in motion (landscape) -->
+        <div class="helix-slide video landscape" data-slide="2">
+          <span class="helix-slide-label">Helix · sortation test</span>
+          <iframe id="helixVid2"
+                  src="https://www.youtube.com/embed/ZJhXlXHJ_5c?enablejsapi=1&autoplay=0&mute=1&playsinline=1&rel=0&modestbranding=1"
+                  title="Helix sortation in motion"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen></iframe>
         </div>
 
         <!-- Controls -->
         <div class="helix-controls">
-          <button type="button" id="helixPrev" aria-label="Previous slide">
+          <button type="button" id="helixPrev" aria-label="Previous video">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
-          <button type="button" id="helixNext" aria-label="Next slide">
+          <button type="button" id="helixNext" aria-label="Next video">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
           </button>
         </div>
         <div class="helix-dots" id="helixDots">
-          <button type="button" class="helix-dot active" data-dot="0" aria-label="Slide 1"></button>
-          <button type="button" class="helix-dot" data-dot="1" aria-label="Slide 2"></button>
-          <button type="button" class="helix-dot" data-dot="2" aria-label="Slide 3"></button>
+          <button type="button" class="helix-dot active" data-dot="0" aria-label="Video 1"></button>
+          <button type="button" class="helix-dot" data-dot="1" aria-label="Video 2"></button>
+          <button type="button" class="helix-dot" data-dot="2" aria-label="Video 3"></button>
         </div>
       </div>
     </div>
@@ -1211,52 +1212,84 @@ tr:last-child td{border-bottom:none}
 
 <script>
 // ════════════════════════════════════════════════════════════════
-// HELIX CAROUSEL — video + mockup images
+// HELIX CAROUSEL — video showreel
+// Auto-advances to the next video when the current one finishes,
+// using the YouTube IFrame Player API (onStateChange · ENDED).
+// First video autoplays muted; users can unmute via YT controls.
 // ════════════════════════════════════════════════════════════════
 (function(){
   const carousel = document.getElementById('helixCarousel');
   if (!carousel) return;
   const slides = carousel.querySelectorAll('.helix-slide');
   const dots = carousel.querySelectorAll('.helix-dot');
-  const prev = document.getElementById('helixPrev');
-  const next = document.getElementById('helixNext');
-  const videoIframe = carousel.querySelector('.helix-slide.video iframe');
+  const prevBtn = document.getElementById('helixPrev');
+  const nextBtn = document.getElementById('helixNext');
   let current = 0;
-  let autoTimer = null;
+  const players = [];
+  let playersReady = false;
 
-  function show(i) {
+  // ── Slide switching ──
+  function show(i, autoplay) {
+    const previous = current;
     current = (i + slides.length) % slides.length;
     slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
     dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
-    // pause the YouTube video when navigating away to avoid hidden-tab playback
-    if (current !== 0 && videoIframe) {
-      try {
-        videoIframe.contentWindow.postMessage(
-          '{"event":"command","func":"pauseVideo","args":""}', '*'
-        );
-      } catch (e) {}
+    // Pause whichever video we just left
+    if (playersReady && previous !== current && players[previous]) {
+      try { players[previous].pauseVideo(); } catch (e) {}
+    }
+    // Play the new current video
+    if (autoplay && playersReady && players[current]) {
+      try { players[current].playVideo(); } catch (e) {}
     }
   }
-  function nextSlide() { show(current + 1); }
-  function prevSlide() { show(current - 1); }
 
-  function startAuto() {
-    stopAuto();
-    autoTimer = setInterval(nextSlide, 9000);
+  nextBtn.addEventListener('click', () => show(current + 1, true));
+  prevBtn.addEventListener('click', () => show(current - 1, true));
+  dots.forEach((d, idx) => d.addEventListener('click', () => show(idx, true)));
+
+  // Keyboard arrows when carousel focused
+  carousel.setAttribute('tabindex', '0');
+  carousel.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { show(current + 1, true); e.preventDefault(); }
+    if (e.key === 'ArrowLeft')  { show(current - 1, true); e.preventDefault(); }
+  });
+
+  // ── YouTube IFrame Player API ──
+  function initPlayers() {
+    if (playersReady) return;
+    playersReady = true;
+    slides.forEach((slide, idx) => {
+      const iframe = slide.querySelector('iframe');
+      if (!iframe) return;
+      players[idx] = new YT.Player(iframe, {
+        events: {
+          onStateChange: function (e) {
+            // When the ACTIVE video ends, advance to the next and play it
+            if (e.data === YT.PlayerState.ENDED && idx === current) {
+              show(current + 1, true);
+            }
+          }
+        }
+      });
+    });
   }
-  function stopAuto() {
-    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+
+  // Load the API script once, then hook in (chaining any existing handler)
+  if (window.YT && window.YT.Player) {
+    initPlayers();
+  } else {
+    const priorReady = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function () {
+      if (typeof priorReady === 'function') { try { priorReady(); } catch (e) {} }
+      initPlayers();
+    };
+    if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    }
   }
-
-  next.addEventListener('click', () => { nextSlide(); startAuto(); });
-  prev.addEventListener('click', () => { prevSlide(); startAuto(); });
-  dots.forEach((d, idx) => d.addEventListener('click', () => { show(idx); startAuto(); }));
-
-  // pause auto-advance on hover so a reader can study a slide
-  carousel.addEventListener('mouseenter', stopAuto);
-  carousel.addEventListener('mouseleave', startAuto);
-
-  startAuto();
 })();
 </script>
 
