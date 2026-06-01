@@ -351,7 +351,7 @@ td:first-child{color:#fff;font-weight:800}
 tr:last-child td{border-bottom:none}
 
 /* ── CASE STUDIES ── */
-.case-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px}
+.case-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .case{background:#fff;border:1px solid var(--paperline);border-radius:20px;overflow:hidden;transition:transform .2s,box-shadow .2s}
 .case:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.06)}
 .case-img{height:220px;background:linear-gradient(135deg,#050B14,#1b3152);position:relative;overflow:hidden}
@@ -1020,6 +1020,24 @@ tr:last-child td{border-bottom:none}
         <div class="case-stats">
           <div class="case-stat"><b>24/7</b><small>Continuous operation</small></div>
           <div class="case-stat"><b>0</b><small>Permitted downtime</small></div>
+        </div>
+      </div>
+    </div>
+    <div class="case reveal">
+      <div class="case-img has-video">
+        <span>Plug &amp; play · QC automation</span>
+        <iframe src="https://www.youtube.com/embed/ySf7jum-nn4?modestbranding=1&rel=0&playsinline=1"
+                title="Plug-and-play QC automation · order to onsite in 3 weeks"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="case-body">
+        <h3>From order to <em>onsite in 3 weeks</em></h3>
+        <p>A fully plug-and-play Orion system delivered, installed and operational with minimal disruption — built, tested and supplied as a ready-to-run solution. Removed a manual QC step completely. No drawn-out commissioning. No snagging.</p>
+        <div class="case-stats">
+          <div class="case-stat"><b>3wks</b><small>Order to onsite</small></div>
+          <div class="case-stat"><b>100%</b><small>QC rework removed</small></div>
+          <div class="case-stat"><b>0</b><small>Snags on install</small></div>
         </div>
       </div>
     </div>
