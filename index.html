@@ -361,6 +361,23 @@ tr:last-child td{border-bottom:none}
 .case.featured .case-stat b{font-size:26px}
 @media(max-width:900px){.case.featured{grid-template-columns:1fr}.case.featured .case-img{min-height:240px}.case.featured h3{font-size:23px}.case.featured .case-body{padding:24px}}
 
+/* CASE STUDY CAROUSEL — one full-width featured card visible at a time */
+.case-carousel{position:relative;max-width:var(--max);margin:0 auto;overflow:hidden;border-radius:24px}
+.case-track{display:flex;transition:transform .55s cubic-bezier(.22,.61,.36,1);will-change:transform}
+.case-slide{flex:0 0 100%;min-width:0}
+.case-slide .case.featured{margin:0;height:100%;border-radius:24px}
+.case-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.96);border:1px solid var(--paperline);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 28px rgba(11,22,38,.20);transition:transform .15s,background .15s,box-shadow .15s;backdrop-filter:blur(8px)}
+.case-nav:hover{background:#fff;transform:translateY(-50%) scale(1.08);box-shadow:0 14px 36px rgba(0,102,204,.22)}
+.case-nav.prev{left:18px}
+.case-nav.next{right:18px}
+.case-nav svg{width:18px;height:18px;stroke:var(--ink);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.case-counter{position:absolute;top:20px;right:24px;z-index:4;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(11,22,38,.55);backdrop-filter:blur(8px);padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.15)}
+.case-dots{display:flex;justify-content:center;gap:8px;margin-top:20px;max-width:var(--max);margin-left:auto;margin-right:auto}
+.case-dot{width:8px;height:8px;border-radius:50%;border:1px solid rgba(11,22,38,.22);background:transparent;cursor:pointer;padding:0;transition:all .25s;display:block}
+.case-dot:hover{border-color:var(--blue)}
+.case-dot.active{background:var(--blue);border-color:var(--blue);width:28px;border-radius:999px}
+@media(max-width:600px){.case-nav{width:40px;height:40px}.case-nav.prev{left:10px}.case-nav.next{right:10px}.case-counter{top:14px;right:14px;font-size:9.5px;padding:5px 10px}}
+
 /* LinkedIn project posts — sub-section beneath the case-card grid */
 .li-cases{max-width:var(--max);margin:48px auto 0;padding-top:36px;border-top:1px solid var(--paperline)}
 .li-cases-head{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-bottom:22px;flex-wrap:wrap}
@@ -996,96 +1013,135 @@ tr:last-child td{border-bottom:none}
     <h2>Real operations. Real numbers. <em>No brochure theatre.</em></h2>
     <p>Case studies from live UK automation projects across parcel handling, fulfilment, freight forwarding, healthcare logistics and food manufacturing. Where a customer name is public, we show it. Where it is not, we show the sector, problem and result without dressing it up.</p>
   </div>
-  <div class="case-grid">
-    <!-- Featured · Octopus Energy -->
-    <div class="case featured reveal">
-      <div class="case-img has-video">
-        <span>Featured · Octopus Energy</span>
-        <iframe src="https://www.youtube.com/embed/ChqPd5GOb1s?modestbranding=1&rel=0&playsinline=1"
-                title="Octopus Energy · flexible AMR fleet — live in 3 days"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="case-body">
-        <h3>Flexible <em>AMR fleet</em> — from PO to live in 3 days</h3>
-        <p>A custom AMR solution built around Octopus Energy's lean lift-to-dispatch flow. Dynamic route management through a pedestrian-heavy environment, quick-change trolley beds for varied product sizes, safety LIDAR with pause/start, integrated order screens and operator alerting — engineered, built, installed and trained against an extremely tight deadline.</p>
-        <div class="case-stats">
-          <div class="case-stat"><b>3</b><small>Days, PO to live</small></div>
-          <div class="case-stat"><b>8</b><small>Operators redeployed</small></div>
-          <div class="case-stat"><b>AMR</b><small>Fleet · LIDAR · order screens</small></div>
+  <div class="case-carousel" id="caseCarousel" aria-roledescription="carousel" aria-label="Case studies">
+    <span class="case-counter" id="caseCounter">01 / 05</span>
+    <div class="case-track" id="caseTrack">
+
+      <!-- Slide 1 · Octopus Energy -->
+      <div class="case-slide">
+        <div class="case featured reveal">
+          <div class="case-img has-video">
+            <span>Featured · Octopus Energy</span>
+            <iframe src="https://www.youtube.com/embed/ChqPd5GOb1s?enablejsapi=1&modestbranding=1&rel=0&playsinline=1"
+                    title="Octopus Energy · flexible AMR fleet — live in 3 days"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="case-body">
+            <h3>Flexible <em>AMR fleet</em> — from PO to live in 3 days</h3>
+            <p>A custom AMR solution built around Octopus Energy's lean lift-to-dispatch flow. Dynamic route management through a pedestrian-heavy environment, quick-change trolley beds for varied product sizes, safety LIDAR with pause/start, integrated order screens and operator alerting — engineered, built, installed and trained against an extremely tight deadline.</p>
+            <div class="case-stats">
+              <div class="case-stat"><b>3</b><small>Days, PO to live</small></div>
+              <div class="case-stat"><b>8</b><small>Operators redeployed</small></div>
+              <div class="case-stat"><b>AMR</b><small>Fleet · LIDAR · order screens</small></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="case reveal">
-      <div class="case-img has-video">
-        <span>Healthcare · Gompels Healthcare</span>
-        <iframe src="https://www.youtube.com/embed/RygOMzNq6oE?modestbranding=1&rel=0&playsinline=1"
-                title="Gompels Healthcare · outbound pack &amp; sort automation"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="case-body">
-        <h3>Outbound <em>pack &amp; sort</em> automation</h3>
-        <p>Orion implemented a pick &amp; pack solution handling up to 400 units per hour, with over 50% of materials sourced from recycled content — installed with zero downtime to live operations.</p>
-        <div class="case-stats">
-          <div class="case-stat"><b>7</b><small>System integrations delivered</small></div>
-          <div class="case-stat"><b>0</b><small>Downtime during install</small></div>
-          <div class="case-stat"><b>5+</b><small>Automation technologies integrated</small></div>
+
+      <!-- Slide 2 · Gompels Healthcare -->
+      <div class="case-slide">
+        <div class="case featured reveal">
+          <div class="case-img has-video">
+            <span>Healthcare · Gompels Healthcare</span>
+            <iframe src="https://www.youtube.com/embed/RygOMzNq6oE?enablejsapi=1&modestbranding=1&rel=0&playsinline=1"
+                    title="Gompels Healthcare · outbound pack &amp; sort automation"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="case-body">
+            <h3>Outbound <em>pack &amp; sort</em> automation</h3>
+            <p>Orion implemented a pick &amp; pack solution handling up to 400 units per hour, with over 50% of materials sourced from recycled content — installed with zero downtime to live operations.</p>
+            <div class="case-stats">
+              <div class="case-stat"><b>7</b><small>System integrations delivered</small></div>
+              <div class="case-stat"><b>0</b><small>Downtime during install</small></div>
+              <div class="case-stat"><b>5+</b><small>Automation technologies integrated</small></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="case reveal">
-      <div class="case-img has-video">
-        <span>Logistics · Expeditors</span>
-        <iframe src="https://www.youtube.com/embed/NG5ZqcrWrbQ?modestbranding=1&rel=0&playsinline=1"
-                title="Expeditors · pick-to-light &amp; goods-to-person automation"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="case-body">
-        <h3>Pick-to-light &amp; <em>goods-to-person</em></h3>
-        <p>End-to-end design and install of an automated pick line — driving operational excellence through pick-to-light integration and goods-to-person flow.</p>
-        <div class="case-stats">
-          <div class="case-stat"><b>400</b><small>Units per hour</small></div>
-          <div class="case-stat"><b>50%+</b><small>Recycled materials</small></div>
+
+      <!-- Slide 3 · Expeditors -->
+      <div class="case-slide">
+        <div class="case featured reveal">
+          <div class="case-img has-video">
+            <span>Logistics · Expeditors</span>
+            <iframe src="https://www.youtube.com/embed/NG5ZqcrWrbQ?enablejsapi=1&modestbranding=1&rel=0&playsinline=1"
+                    title="Expeditors · pick-to-light &amp; goods-to-person automation"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="case-body">
+            <h3>Pick-to-light &amp; <em>goods-to-person</em></h3>
+            <p>End-to-end design and install of an automated pick line — driving operational excellence through pick-to-light integration and goods-to-person flow.</p>
+            <div class="case-stats">
+              <div class="case-stat"><b>400</b><small>Units per hour</small></div>
+              <div class="case-stat"><b>50%+</b><small>Recycled materials</small></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="case reveal">
-      <div class="case-img has-video">
-        <span>Food &amp; bev · Tate &amp; Lyle</span>
-        <iframe src="https://www.youtube.com/embed/AB4suO59HYE?modestbranding=1&rel=0&playsinline=1"
-                title="Tate &amp; Lyle · food-grade sugar line conveyors"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="case-body">
-        <h3>Food-grade <em>sugar line</em> conveyors</h3>
-        <p>Bespoke food-grade conveyor system engineered for continuous 24/7 operation in a live production environment, with zero permitted downtime.</p>
-        <div class="case-stats">
-          <div class="case-stat"><b>24/7</b><small>Continuous operation</small></div>
-          <div class="case-stat"><b>0</b><small>Permitted downtime</small></div>
+
+      <!-- Slide 4 · Tate & Lyle -->
+      <div class="case-slide">
+        <div class="case featured reveal">
+          <div class="case-img has-video">
+            <span>Food &amp; bev · Tate &amp; Lyle</span>
+            <iframe src="https://www.youtube.com/embed/AB4suO59HYE?enablejsapi=1&modestbranding=1&rel=0&playsinline=1"
+                    title="Tate &amp; Lyle · food-grade sugar line conveyors"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="case-body">
+            <h3>Food-grade <em>sugar line</em> conveyors</h3>
+            <p>Bespoke food-grade conveyor system engineered for continuous 24/7 operation in a live production environment, with zero permitted downtime.</p>
+            <div class="case-stats">
+              <div class="case-stat"><b>24/7</b><small>Continuous operation</small></div>
+              <div class="case-stat"><b>0</b><small>Permitted downtime</small></div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="case reveal">
-      <div class="case-img has-video">
-        <span>Plug &amp; play · QC automation</span>
-        <iframe src="https://www.youtube.com/embed/ySf7jum-nn4?modestbranding=1&rel=0&playsinline=1"
-                title="Plug-and-play QC automation · order to onsite in 3 weeks"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen loading="lazy"></iframe>
-      </div>
-      <div class="case-body">
-        <h3>From order to <em>onsite in 3 weeks</em></h3>
-        <p>A fully plug-and-play Orion system delivered, installed and operational with minimal disruption — built, tested and supplied as a ready-to-run solution. Removed a manual QC step completely. No drawn-out commissioning. No snagging.</p>
-        <div class="case-stats">
-          <div class="case-stat"><b>3wks</b><small>Order to onsite</small></div>
-          <div class="case-stat"><b>100%</b><small>QC rework removed</small></div>
-          <div class="case-stat"><b>0</b><small>Snags on install</small></div>
+
+      <!-- Slide 5 · Plug & play QC -->
+      <div class="case-slide">
+        <div class="case featured reveal">
+          <div class="case-img has-video">
+            <span>Plug &amp; play · QC automation</span>
+            <iframe src="https://www.youtube.com/embed/ySf7jum-nn4?enablejsapi=1&modestbranding=1&rel=0&playsinline=1"
+                    title="Plug-and-play QC automation · order to onsite in 3 weeks"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="case-body">
+            <h3>From order to <em>onsite in 3 weeks</em></h3>
+            <p>A fully plug-and-play Orion system delivered, installed and operational with minimal disruption — built, tested and supplied as a ready-to-run solution. Removed a manual QC step completely. No drawn-out commissioning. No snagging.</p>
+            <div class="case-stats">
+              <div class="case-stat"><b>3wks</b><small>Order to onsite</small></div>
+              <div class="case-stat"><b>100%</b><small>QC rework removed</small></div>
+              <div class="case-stat"><b>0</b><small>Snags on install</small></div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
+
+    <button class="case-nav prev" id="casePrev" aria-label="Previous case study">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="case-nav next" id="caseNext" aria-label="Next case study">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+  <div class="case-dots" id="caseDots" role="tablist" aria-label="Case study selector">
+    <button type="button" class="case-dot active" data-i="0" aria-label="Octopus Energy"></button>
+    <button type="button" class="case-dot" data-i="1" aria-label="Gompels Healthcare"></button>
+    <button type="button" class="case-dot" data-i="2" aria-label="Expeditors"></button>
+    <button type="button" class="case-dot" data-i="3" aria-label="Tate &amp; Lyle"></button>
+    <button type="button" class="case-dot" data-i="4" aria-label="Plug &amp; play · QC automation"></button>
+  </div>
 
     <!-- ── Live LinkedIn project posts ── -->
     <div class="li-cases">
@@ -1126,10 +1182,6 @@ tr:last-child td{border-bottom:none}
       </div>
     </div>
 
-    <!-- Live media carousel — managed via admin-media.html → media.json -->
-    <div style="margin-top:40px">
-      <div class="media-slot" data-slot="case-studies" data-aspect="21:9"></div>
-    </div>
 
   </div>
 </section>
@@ -1311,6 +1363,70 @@ tr:last-child td{border-bottom:none}
 </footer>
 
 <script src="site.js" defer></script>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// CASE STUDY CAROUSEL — one full-width featured card visible at a time,
+// arrow + dot navigation. Pauses any playing YouTube video on slide change.
+// ════════════════════════════════════════════════════════════════
+(function(){
+  const track = document.getElementById('caseTrack');
+  if (!track) return;
+  const slides = track.querySelectorAll('.case-slide');
+  const dots = document.querySelectorAll('#caseDots .case-dot');
+  const prev = document.getElementById('casePrev');
+  const next = document.getElementById('caseNext');
+  const counter = document.getElementById('caseCounter');
+  const total = slides.length;
+  let i = 0;
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function go(n) {
+    const previousI = i;
+    i = (n + total) % total;
+    track.style.transform = 'translateX(-' + (i * 100) + '%)';
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+    if (counter) counter.textContent = pad(i + 1) + ' / ' + pad(total);
+    // Pause the video on the slide we just left so audio doesn't overlap
+    if (previousI !== i) {
+      const leaving = slides[previousI];
+      const iframe = leaving && leaving.querySelector('iframe');
+      if (iframe && iframe.contentWindow) {
+        try {
+          iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        } catch (e) {}
+      }
+    }
+  }
+
+  prev.addEventListener('click', () => go(i - 1));
+  next.addEventListener('click', () => go(i + 1));
+  dots.forEach((d, idx) => d.addEventListener('click', () => go(idx)));
+
+  // Keyboard left / right arrow when the carousel is in viewport
+  document.addEventListener('keydown', (e) => {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+    const rect = track.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      if (e.key === 'ArrowLeft')  { go(i - 1); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { go(i + 1); e.preventDefault(); }
+    }
+  });
+
+  // Basic swipe support on touch devices
+  let touchStartX = null;
+  track.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', (e) => {
+    if (touchStartX == null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) go(dx < 0 ? i + 1 : i - 1);
+    touchStartX = null;
+  });
+
+  if (counter) counter.textContent = '01 / ' + pad(total);
+})();
+</script>
 
 <script>
 // ════════════════════════════════════════════════════════════════
