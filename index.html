@@ -360,6 +360,24 @@ tr:last-child td{border-bottom:none}
 .case.featured .case-stats{margin-top:auto;display:flex;gap:28px;flex-wrap:wrap}
 .case.featured .case-stat b{font-size:26px}
 @media(max-width:900px){.case.featured{grid-template-columns:1fr}.case.featured .case-img{min-height:240px}.case.featured h3{font-size:23px}.case.featured .case-body{padding:24px}}
+
+/* LinkedIn project posts — sub-section beneath the case-card grid */
+.li-cases{max-width:var(--max);margin:48px auto 0;padding-top:36px;border-top:1px solid var(--paperline)}
+.li-cases-head{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-bottom:22px;flex-wrap:wrap}
+.li-cases-head .li-eye{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);font-weight:700;display:flex;align-items:center;gap:10px}
+.li-cases-head .li-eye::before{content:"";width:28px;height:1px;background:var(--blue)}
+.li-cases-head h3{font-size:clamp(22px,2.4vw,30px);color:var(--ink);font-weight:600;letter-spacing:-.018em;margin:0;line-height:1.2}
+.li-cases-head .li-cta{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid rgba(10,102,194,.30);border-radius:999px;transition:.15s}
+.li-cases-head .li-cta:hover{background:rgba(10,102,194,.08);border-color:#0a66c2}
+.li-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.li-card{background:#fff;border:1px solid var(--paperline);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.li-card-head{padding:12px 16px;background:#0a66c2;color:#fff;display:flex;align-items:center;gap:10px}
+.li-card-head .li-icon{width:24px;height:24px;background:#fff;color:#0a66c2;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;font-family:var(--sans);letter-spacing:-.02em}
+.li-card-head .li-title{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.005em}
+.li-card-head .li-tag{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:999px;font-weight:700}
+.li-frame{flex:1;background:#f3f4f6;min-height:640px;display:flex}
+.li-frame iframe{width:100%;border:0;display:block;min-height:640px}
+@media(max-width:820px){.li-grid{grid-template-columns:1fr}}
 .case{background:#fff;border:1px solid var(--paperline);border-radius:20px;overflow:hidden;transition:transform .2s,box-shadow .2s}
 .case:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.06)}
 .case-img{height:220px;background:linear-gradient(135deg,#050B14,#1b3152);position:relative;overflow:hidden}
@@ -1066,6 +1084,45 @@ tr:last-child td{border-bottom:none}
           <div class="case-stat"><b>100%</b><small>QC rework removed</small></div>
           <div class="case-stat"><b>0</b><small>Snags on install</small></div>
         </div>
+      </div>
+    </div>
+
+    <!-- ── Live LinkedIn project posts ── -->
+    <div class="li-cases">
+      <div class="li-cases-head">
+        <div>
+          <span class="li-eye">Live from LinkedIn</span>
+          <h3 style="margin-top:8px">Recent <em style="font-family:var(--serif);font-style:italic;color:var(--blue);font-weight:400">project posts</em></h3>
+        </div>
+        <a class="li-cta" href="https://www.linkedin.com/in/dannygriggorion/" target="_blank" rel="noopener">Follow on LinkedIn →</a>
+      </div>
+      <div class="li-grid">
+        <!-- Denso -->
+        <article class="li-card">
+          <div class="li-card-head">
+            <span class="li-icon">in</span>
+            <span class="li-title">Orion on LinkedIn</span>
+            <span class="li-tag">Denso</span>
+          </div>
+          <div class="li-frame">
+            <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7404116301964738560"
+                    title="Denso · Orion project update on LinkedIn"
+                    loading="lazy" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </article>
+        <!-- Airbus / National Composites Centre -->
+        <article class="li-card">
+          <div class="li-card-head">
+            <span class="li-icon">in</span>
+            <span class="li-title">Orion on LinkedIn</span>
+            <span class="li-tag">Airbus · NCC</span>
+          </div>
+          <div class="li-frame">
+            <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7359199107573239808"
+                    title="Airbus / National Composites Centre · Orion project update on LinkedIn"
+                    loading="lazy" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </article>
       </div>
     </div>
 
