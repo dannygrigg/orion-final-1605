@@ -352,6 +352,14 @@ tr:last-child td{border-bottom:none}
 
 /* ── CASE STUDIES ── */
 .case-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.case.featured{grid-column:1/-1;display:grid;grid-template-columns:1.15fr 1fr;align-items:stretch;background:#fff;border:1px solid var(--paperline);border-radius:24px;overflow:hidden}
+.case.featured .case-img{height:auto;min-height:320px}
+.case.featured .case-body{padding:32px 34px;display:flex;flex-direction:column;justify-content:center}
+.case.featured h3{font-size:28px;line-height:1.15;margin-bottom:14px;letter-spacing:-.018em}
+.case.featured .case-body > p{font-size:15.5px;line-height:1.6;margin-bottom:18px;max-width:560px}
+.case.featured .case-stats{margin-top:auto;display:flex;gap:28px;flex-wrap:wrap}
+.case.featured .case-stat b{font-size:26px}
+@media(max-width:900px){.case.featured{grid-template-columns:1fr}.case.featured .case-img{min-height:240px}.case.featured h3{font-size:23px}.case.featured .case-body{padding:24px}}
 .case{background:#fff;border:1px solid var(--paperline);border-radius:20px;overflow:hidden;transition:transform .2s,box-shadow .2s}
 .case:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.06)}
 .case-img{height:220px;background:linear-gradient(135deg,#050B14,#1b3152);position:relative;overflow:hidden}
@@ -971,9 +979,28 @@ tr:last-child td{border-bottom:none}
     <p>Case studies from live UK automation projects across parcel handling, fulfilment, freight forwarding, healthcare logistics and food manufacturing. Where a customer name is public, we show it. Where it is not, we show the sector, problem and result without dressing it up.</p>
   </div>
   <div class="case-grid">
+    <!-- Featured · Octopus Energy -->
+    <div class="case featured reveal">
+      <div class="case-img has-video">
+        <span>Featured · Octopus Energy</span>
+        <iframe src="https://www.youtube.com/embed/ChqPd5GOb1s?modestbranding=1&rel=0&playsinline=1"
+                title="Octopus Energy · flexible AMR fleet — live in 3 days"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="case-body">
+        <h3>Flexible <em>AMR fleet</em> — from PO to live in 3 days</h3>
+        <p>A custom AMR solution built around Octopus Energy's lean lift-to-dispatch flow. Dynamic route management through a pedestrian-heavy environment, quick-change trolley beds for varied product sizes, safety LIDAR with pause/start, integrated order screens and operator alerting — engineered, built, installed and trained against an extremely tight deadline.</p>
+        <div class="case-stats">
+          <div class="case-stat"><b>3</b><small>Days, PO to live</small></div>
+          <div class="case-stat"><b>8</b><small>Operators redeployed</small></div>
+          <div class="case-stat"><b>AMR</b><small>Fleet · LIDAR · order screens</small></div>
+        </div>
+      </div>
+    </div>
     <div class="case reveal">
       <div class="case-img has-video">
-        <span>Featured · Gompels Healthcare</span>
+        <span>Healthcare · Gompels Healthcare</span>
         <iframe src="https://www.youtube.com/embed/RygOMzNq6oE?modestbranding=1&rel=0&playsinline=1"
                 title="Gompels Healthcare · outbound pack &amp; sort automation"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
