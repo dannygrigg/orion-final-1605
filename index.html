@@ -334,7 +334,12 @@ input[type=range].calc-slider::-moz-range-track{background:rgba(255,255,255,.08)
 .sector{background:#fff;border:1px solid var(--paperline);border-radius:20px;overflow:hidden;transition:transform .2s,box-shadow .2s,border-color .2s}
 .sector:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,0,0,.06);border-color:rgba(30,144,255,.35)}
 .sector-visual{height:150px;background:linear-gradient(135deg,#07111F,#1b3152);position:relative;overflow:hidden}
-.sector-visual:after{content:"";position:absolute;inset:34px;border:1px solid rgba(0,213,255,.28);border-radius:14px;background:radial-gradient(circle,rgba(0,213,255,.12),transparent 60%)}
+.sector-visual:after{content:"";position:absolute;inset:34px;border:1px solid rgba(0,213,255,.28);border-radius:14px;background:radial-gradient(circle,rgba(0,213,255,.12),transparent 60%);transition:opacity .3s;pointer-events:none}
+.sector-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.sector-visual:has(img):after{opacity:0}
+.sector-visual::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,17,31,0) 40%,rgba(7,17,31,.55) 100%);z-index:1;pointer-events:none;opacity:0;transition:opacity .3s}
+.sector-visual:has(img)::before{opacity:1}
+.sector:hover .sector-visual img{transform:scale(1.05)}
 .sector-body{padding:26px}
 .sector h3{font-size:22px;margin-bottom:10px;color:var(--ink);font-weight:600;letter-spacing:-.018em}
 .sector ul{list-style:none;display:grid;gap:8px;color:var(--mid);font-size:14px}
@@ -930,7 +935,11 @@ tr:last-child td{border-bottom:none}
   </div>
   <div class="sector-grid">
     <div class="sector reveal">
-      <div class="sector-visual"></div>
+      <div class="sector-visual">
+        <img src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=900&q=80"
+             alt="Automated parcel sortation conveyor with mixed freight"
+             loading="lazy" onerror="this.style.display='none'">
+      </div>
       <div class="sector-body">
         <h3>Parcel centres</h3>
         <p style="margin:0 0 14px;color:var(--mid);font-size:14px">Automated parcel sortation built for ugly freight.</p>
@@ -943,7 +952,11 @@ tr:last-child td{border-bottom:none}
       </div>
     </div>
     <div class="sector reveal">
-      <div class="sector-visual"></div>
+      <div class="sector-visual">
+        <img src="https://images.unsplash.com/photo-1565891741441-64926e441838?auto=format&fit=crop&w=900&q=80"
+             alt="Multi-client 3PL warehouse with high-bay racking"
+             loading="lazy" onerror="this.style.display='none'">
+      </div>
       <div class="sector-body">
         <h3>3PLs</h3>
         <p style="margin:0 0 14px;color:var(--mid);font-size:14px">Capacity that flexes with the contract.</p>
@@ -956,7 +969,11 @@ tr:last-child td{border-bottom:none}
       </div>
     </div>
     <div class="sector reveal">
-      <div class="sector-visual"></div>
+      <div class="sector-visual">
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=80"
+             alt="E-commerce fulfilment pack and dispatch line"
+             loading="lazy" onerror="this.style.display='none'">
+      </div>
       <div class="sector-body">
         <h3>Fulfilment</h3>
         <p style="margin:0 0 14px;color:var(--mid);font-size:14px">End-of-line dispatch without the bottleneck.</p>
