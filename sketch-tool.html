@@ -205,6 +205,17 @@ input[type=file]{display:none}
    ════════════════════════════════════════════════════════════ */
 /* internal-only controls hidden for the public build */
 #btn-import-excel,#btn-ai{display:none!important}
+/* car-sales style: lead with "From £/mo" — hide cash breakdown, raw totals and the full lease table */
+.pricing .p-block:has(#raw-total){display:none!important}
+.pricing .final-card{display:none!important}
+.pricing .lease-card{display:none!important}
+
+/* ── FROM-PER-MONTH hero card ── */
+.from-card{background:linear-gradient(135deg,rgba(30,144,255,.16),rgba(0,213,255,.08));border:1px solid var(--line2);border-radius:14px;padding:20px 16px;margin-bottom:14px;text-align:center;box-shadow:0 10px 30px rgba(0,213,255,.08)}
+.from-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:8px}
+.from-val{font-family:var(--sans);font-size:36px;font-weight:700;color:#fff;letter-spacing:-.025em;line-height:1}
+.from-val small{font-size:15px;font-weight:600;color:var(--muted);letter-spacing:0}
+.from-meta{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);line-height:1.7;margin-top:10px}
 /* margin & uplift breakdowns are internal — public sees final ROM + lease only */
 .pricing .p-block:has(#u-controls){display:none!important}
 .pricing .p-block:has(#u-margin){display:none!important}
@@ -373,8 +384,15 @@ input[type=file]{display:none}
       </div>
     </div>
 
-    <h2 class="p-h">ROM Budget</h2>
-    <div class="p-sub">Live · per-component cascade</div>
+    <h2 class="p-h">Indicative price</h2>
+    <div class="p-sub">Live · updates as you draw</div>
+
+    <!-- car-sales hero figure (public build) — mirrors the 60-month lease -->
+    <div class="from-card">
+      <div class="from-lbl">Your layout · from</div>
+      <div class="from-val"><span id="from-val">£0</span><small>/month</small></div>
+      <div class="from-meta">60-month term · no deposit · subject to approval<br>Final figure at site survey</div>
+    </div>
 
     <div class="tput-card">
       <div class="tput-lbl">Estimated throughput · range</div>
@@ -2901,6 +2919,15 @@ window.addEventListener('DOMContentLoaded', () => {
       alert('That didn\'t send — please try again, or email info@orionmis.co.uk and we\'ll unlock you manually.');
     }
   });
+
+  // "From £/mo" hero — mirrors the (hidden) 60-month lease figure live as the layout changes
+  const leaseSrc = document.getElementById('lease-60');
+  const fromVal  = document.getElementById('from-val');
+  if (leaseSrc && fromVal){
+    const sync = function(){ fromVal.textContent = leaseSrc.textContent || '£0'; };
+    sync();
+    new MutationObserver(sync).observe(leaseSrc, { childList:true, characterData:true, subtree:true });
+  }
 
   // Export Quote is gated too — document-level capture runs before the tool's own handler
   document.addEventListener('click', function(e){
