@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Orion · Conveyor Sketch Tool</title>
+<title>Orion · Solution Builder — design your line, unlock a monthly price</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/konva@9.3.0/konva.min.js"></script>
@@ -16,11 +16,12 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:var(--sans)}
 html,body{height:100%;overflow:hidden}
-body{background:var(--bg);color:var(--text);font-size:13.5px;font-weight:400;letter-spacing:-.003em;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-size:13.5px;font-weight:400;letter-spacing:-.003em;-webkit-font-smoothing:antialiased;font-feature-settings:"cv02","cv03","cv04","cv11"}
 em{font-family:var(--serif);font-style:italic;color:var(--cyan);font-weight:400}
 
 /* TOP BAR */
-.topbar{height:54px;background:#02050A;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:18px;flex-shrink:0}
+.topbar{height:62px;background:linear-gradient(90deg,#0066CC,#00D5FF) top left/100% 3px no-repeat,#02050A;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:18px;flex-shrink:0}
+.brand img{height:40px;filter:brightness(0) invert(1);display:block}
 .brand{display:flex;align-items:center;gap:12px}
 .lockup{font-size:17px;font-weight:600;letter-spacing:-.01em}
 .lockup .pipe{color:var(--soft);font-weight:300;margin:0 4px}
@@ -248,14 +249,16 @@ input[type=file]{display:none}
 
 <header class="topbar">
   <div class="brand">
-    <a href="index.html" style="text-decoration:none;color:inherit" title="Back to orionmis.co.uk">
-      <span class="lockup">ORION<span class="pipe">|</span><span class="sub">MIS</span></span>
+    <a href="index.html" title="Back to the Orion site">
+      <img src="https://www.orionmis.co.uk/front/images/comp/logo.png" alt="Orion MIS"
+           onerror="this.outerHTML='&lt;span class=&quot;lockup&quot;&gt;ORION&lt;span class=&quot;pipe&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;sub&quot;&gt;MIS&lt;/span&gt;&lt;/span&gt;'">
     </a>
     <span class="divider"></span>
-    <span class="doctype">Conveyor Sketch Tool</span>
+    <span class="doctype">Solution Builder</span>
   </div>
   <input type="text" id="project-name" class="project-input" placeholder="Project name — e.g. APC Stage 2" value="">
   <div class="topbar-right">
+    <a class="btn" href="index.html" style="text-decoration:none">← Back to site</a>
     <span class="rom-pill">ROM · Indicative</span>
     <button class="btn" id="btn-import-excel" title="Import pricing from spreadsheet">↥ Pricing</button>
     <button class="btn" id="btn-import-json" title="Load saved layout">↥ Layout</button>
