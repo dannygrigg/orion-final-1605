@@ -1,0 +1,2921 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orion · Conveyor Sketch Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/konva@9.3.0/konva.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root{
+  --bg:#050B14;--bg2:#07111F;--panel:#0B1626;--panel2:#0F1D31;
+  --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
+  --text:#F7FAFF;--muted:rgba(247,250,255,.66);--soft:rgba(247,250,255,.42);
+  --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--amber:#FDB022;--red:#F97066;
+  --sans:"Inter",system-ui,sans-serif;--serif:"DM Serif Display",Georgia,serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:var(--sans)}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-size:13.5px;font-weight:400;letter-spacing:-.003em;-webkit-font-smoothing:antialiased}
+em{font-family:var(--serif);font-style:italic;color:var(--cyan);font-weight:400}
+
+/* TOP BAR */
+.topbar{height:54px;background:#02050A;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:18px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:12px}
+.lockup{font-size:17px;font-weight:600;letter-spacing:-.01em}
+.lockup .pipe{color:var(--soft);font-weight:300;margin:0 4px}
+.lockup .sub{color:var(--cyan);font-weight:500}
+.divider{width:1px;height:22px;background:var(--line)}
+.doctype{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.project-input{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);font-family:var(--sans);font-size:13.5px;padding:7px 12px;border-radius:7px;width:280px;outline:none;transition:.15s}
+.project-input:focus{border-color:var(--cyan);background:rgba(0,213,255,.06)}
+.topbar-right{display:flex;gap:8px;align-items:center}
+.rom-pill{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#00111d;background:var(--amber);border-radius:999px;padding:6px 11px;font-weight:700}
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-size:12.5px;font-weight:500;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);padding:7px 12px;border-radius:7px;cursor:pointer;transition:.15s;white-space:nowrap}
+.btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--cyan));border-color:transparent;color:#00111d;font-weight:600}
+.btn-primary:hover{transform:translateY(-1px);color:#00111d}
+.btn-danger:hover{border-color:var(--red);color:var(--red)}
+.btn.active{background:var(--cyan);color:#00111d;border-color:var(--cyan);font-weight:600}
+.btn.active:hover{color:#00111d;background:#3ee1ff}
+
+/* ── AI sketch modal ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,5,12,.78);backdrop-filter:blur(6px);z-index:9000;display:none;align-items:center;justify-content:center;padding:40px 24px}
+.modal-bg.open{display:flex}
+.modal{background:var(--panel);border:1px solid var(--line2);border-radius:16px;max-width:780px;width:100%;max-height:90vh;overflow:auto;box-shadow:0 30px 90px rgba(0,0,0,.55)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line)}
+.modal-head h3{margin:0;font-size:17px;font-weight:600;color:#fff;letter-spacing:-.01em}
+.modal-head .x{background:none;border:0;color:var(--soft);font-size:22px;cursor:pointer;padding:4px 10px;border-radius:6px;line-height:1}
+.modal-head .x:hover{color:#fff;background:rgba(255,255,255,.06)}
+.modal-body{padding:20px 22px;display:grid;gap:16px}
+.modal-body label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin-bottom:6px}
+.modal-body input[type="password"],.modal-body input[type="text"]{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--text);font-family:var(--mono);font-size:12px}
+.modal-body input[type="password"]:focus,.modal-body input[type="text"]:focus{outline:none;border-color:var(--cyan)}
+.drop-zone{border:2px dashed var(--line2);border-radius:12px;padding:30px 16px;text-align:center;cursor:pointer;transition:.15s;background:rgba(0,213,255,.02)}
+.drop-zone:hover,.drop-zone.dragover{border-color:var(--cyan);background:rgba(0,213,255,.06)}
+.drop-zone .hint{font-size:13px;color:var(--muted);line-height:1.6}
+.drop-zone .hint kbd{display:inline-block;background:rgba(255,255,255,.08);border:1px solid var(--line);padding:1px 6px;border-radius:4px;font-family:var(--mono);font-size:11px;color:#fff}
+.preview-img{max-width:100%;max-height:240px;border-radius:8px;border:1px solid var(--line);display:block;margin:0 auto}
+.modal-foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.status{font-size:12.5px;color:var(--soft);font-family:var(--mono);letter-spacing:.04em;flex:1;min-width:200px}
+.status.err{color:var(--red)}
+.status.ok{color:var(--green)}
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid rgba(0,213,255,.25);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-2px;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.detected-list{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:8px;padding:8px;max-height:220px;overflow:auto}
+.detected-list ul{margin:0;padding:0;list-style:none;display:grid;gap:4px}
+.detected-list li{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding:5px 9px;background:rgba(0,213,255,.04);border-radius:5px}
+.detected-list li strong{color:var(--cyan);margin-right:6px}
+
+.projects-list{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:8px;max-height:380px;overflow:auto}
+.proj-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.proj-row:last-child{border-bottom:0}
+.proj-row.current{background:rgba(0,213,255,.05)}
+.proj-row:hover{background:rgba(255,255,255,.03)}
+.proj-row.current:hover{background:rgba(0,213,255,.07)}
+.proj-info{flex:1;min-width:0}
+.proj-name{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-.008em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.proj-row.current .proj-name{color:var(--cyan)}
+.proj-meta{font-family:var(--mono);font-size:10.5px;color:var(--soft);letter-spacing:.04em;margin-top:3px}
+.proj-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.proj-actions .btn{padding:5px 11px;font-size:11.5px}
+.proj-tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);padding:5px 11px;border:1px solid rgba(0,213,255,.5);border-radius:7px;background:rgba(0,213,255,.08)}
+
+/* MAIN GRID */
+.main{display:grid;grid-template-columns:240px 1fr 320px;height:calc(100vh - 54px)}
+
+/* LIBRARY (LEFT) */
+.library{background:var(--panel);border-right:1px solid var(--line);overflow-y:auto;padding:14px 12px}
+.lib-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.lib-h::before{content:"";width:18px;height:1px;background:var(--cyan)}
+.lib-hint{font-size:11.5px;color:var(--soft);margin-bottom:14px;line-height:1.5}
+.lib-list{display:grid;gap:7px}
+.lib-item{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:9px;padding:10px 12px;cursor:grab;transition:.15s;display:grid;grid-template-columns:4px 1fr auto;gap:10px;align-items:center}
+.lib-item:hover{background:rgba(0,213,255,.07);border-color:var(--cyan);transform:translateX(2px)}
+.lib-item:active{cursor:grabbing}
+.lib-stripe{width:4px;height:30px;border-radius:2px}
+.lib-name{font-size:12.5px;font-weight:500;color:var(--text);line-height:1.25}
+.lib-meta{font-family:var(--mono);font-size:10px;color:var(--soft);margin-top:3px;letter-spacing:.04em}
+.lib-price{font-family:var(--mono);font-size:11px;color:var(--cyan);font-weight:600;text-align:right}
+
+/* CENTER (CANVAS + INSPECTOR) */
+.center{display:grid;grid-template-rows:auto 1fr 220px;overflow:hidden;background:#020610;min-height:0}
+.canvas-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 16px;background:rgba(7,17,31,.6);border-bottom:1px solid var(--line);font-size:12px;gap:10px 14px;flex-wrap:wrap;min-height:42px}
+.canvas-toolbar label{display:inline-flex;align-items:center;gap:7px;color:var(--muted);font-size:11.5px}
+.scale-input{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);font-family:var(--mono);font-size:11.5px;padding:4px 8px;border-radius:5px;width:80px;outline:none}
+.scale-input:focus{border-color:var(--cyan)}
+.tip{font-family:var(--mono);font-size:10.5px;color:var(--soft);letter-spacing:.04em}
+kbd{background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-family:var(--mono);font-size:10px;color:var(--text);margin:0 1px}
+.zoom-ctrl{display:inline-flex;align-items:center;gap:2px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:7px;padding:2px 4px;margin-left:auto;margin-right:8px}
+.zoom-btn{background:transparent;border:none;color:var(--text);font-family:var(--sans);font-size:14px;font-weight:600;padding:3px 8px;border-radius:4px;cursor:pointer;line-height:1;min-width:22px}
+.zoom-btn:hover{background:rgba(0,213,255,.12);color:var(--cyan)}
+.zoom-pct{font-family:var(--mono);font-size:11px;color:var(--cyan);padding:0 6px;min-width:44px;text-align:center;font-weight:600;letter-spacing:.04em}
+#canvas-container{position:relative;overflow:hidden;background:linear-gradient(180deg,#020610,#050B14);cursor:grab}
+#canvas-container.panning{cursor:grabbing}
+.scale-chip{position:absolute;bottom:14px;left:14px;background:rgba(0,0,0,.62);border:1px solid rgba(0,213,255,.3);border-radius:9px;padding:5px 12px;font-family:var(--mono);font-size:10.5px;color:var(--cyan);letter-spacing:.04em;z-index:5;pointer-events:none;backdrop-filter:blur(6px)}
+
+/* INSPECTOR (BOTTOM) */
+.inspector{border-top:1px solid var(--line);background:var(--panel);padding:14px 18px;overflow-y:auto}
+.insp-empty{display:flex;align-items:center;justify-content:center;height:100%;color:var(--soft);font-size:13px;font-style:italic}
+.insp-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+.insp-title{display:flex;align-items:center;gap:10px}
+.insp-stripe{width:6px;height:22px;border-radius:3px}
+.insp-name-wrap{display:flex;flex-direction:column}
+.insp-type{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:600}
+.insp-name-input{background:transparent;border:none;border-bottom:1px dashed var(--line);color:var(--text);font-size:16px;font-weight:600;padding:2px 0;outline:none;width:280px;letter-spacing:-.012em}
+.insp-name-input:focus{border-bottom-color:var(--cyan)}
+.insp-actions{display:flex;gap:6px}
+.insp-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:10px}
+.fld{display:flex;flex-direction:column;gap:4px}
+.fld.fld-wide{grid-column:span 2}
+.fld label{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.fld input,.fld textarea,.fld select{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);font-family:var(--sans);font-size:13px;padding:7px 9px;border-radius:6px;outline:none;transition:.15s;width:100%;font-weight:500}
+.fld select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%23F7FAFF' d='M0 0h10L5 6z'/></svg>");background-repeat:no-repeat;background-position:right 8px center;padding-right:26px}
+.fld select option{background:#0B1626;color:var(--text)}
+.fld input[type=number]{font-family:var(--mono);font-size:12.5px}
+.fld input:focus,.fld textarea:focus{border-color:var(--cyan);background:rgba(0,213,255,.05)}
+.fld textarea{resize:vertical;min-height:34px;font-family:var(--sans);font-size:12.5px;font-weight:400}
+.fld-calc{background:rgba(0,213,255,.06);border:1px solid var(--line2);border-radius:6px;padding:7px 9px;font-family:var(--mono);font-size:13.5px;color:var(--cyan);font-weight:600}
+
+/* RIGHT (PRICING) */
+.pricing{background:var(--panel);border-left:1px solid var(--line);overflow-y:auto;padding:18px 18px 24px}
+.p-h{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--cyan);margin-bottom:4px;letter-spacing:-.015em}
+.p-sub{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:500;margin-bottom:16px}
+
+.tput-card{background:linear-gradient(135deg,rgba(30,144,255,.12),rgba(0,213,255,.06));border:1px solid var(--line2);border-radius:11px;padding:14px 16px;margin-bottom:16px}
+.tput-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);font-weight:600;margin-bottom:6px}
+.tput-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.tput-val{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--text);line-height:1;letter-spacing:-.015em}
+.tput-unit{font-family:var(--sans);font-size:11px;color:var(--soft)}
+.tput-meta{font-size:11px;color:var(--muted);margin-top:7px;line-height:1.5}
+.tput-input{background:transparent;border:none;border-bottom:1px dotted var(--line);color:var(--cyan);font-family:var(--mono);font-size:11px;width:48px;text-align:center;outline:none;padding:1px 2px}
+.tput-input:focus{border-bottom-color:var(--cyan)}
+.tput-parcel-box{margin-top:14px;padding:12px 14px;background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:9px}
+.tput-parcel-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:600;margin-bottom:8px}
+.tput-parcel-inputs{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--soft);justify-content:space-between}
+.tput-parcel-fld{display:flex;flex-direction:column;align-items:center;gap:3px}
+.tput-parcel-fld .micro{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.tput-parcel-fld input{background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--cyan);font-family:var(--mono);font-size:13px;width:74px;text-align:center;outline:none;padding:5px 4px;border-radius:5px;font-weight:600}
+.tput-parcel-fld input:focus{border-color:var(--cyan);background:rgba(0,213,255,.05)}
+.tput-parcel-sep{font-family:var(--mono);font-size:18px;color:var(--soft);margin-top:14px;font-weight:300}
+.tput-parcel-unit{color:var(--soft);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;margin-top:14px}
+.tput-val.range{font-size:18px;letter-spacing:-.01em}
+
+.p-block{margin-bottom:14px}
+.p-block-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:600;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center;transition:color .12s}
+.p-block-h:hover{color:var(--cyan)}
+.p-block-h::after{content:'▾';font-size:10px;color:var(--soft);transition:transform .15s, color .12s;font-family:inherit}
+.p-block-h:hover::after{color:var(--cyan)}
+.p-block.collapsed .p-block-h{margin-bottom:0;border-bottom-color:transparent}
+.p-block.collapsed .p-block-h::after{transform:rotate(-90deg)}
+.p-block.collapsed .p-row{display:none}
+.p-row{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;padding:6px 0;font-size:12.5px}
+.p-row .lbl{color:var(--muted)}
+.p-row .pct-input{width:50px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);font-family:var(--mono);font-size:11.5px;padding:3px 6px;border-radius:5px;text-align:right;outline:none}
+.p-row .pct-input:focus{border-color:var(--cyan)}
+.p-row .pct-sign{color:var(--soft);font-family:var(--mono);font-size:11px;margin-left:-3px;margin-right:4px}
+.p-row .val{font-family:var(--mono);font-size:12.5px;color:var(--text);text-align:right;font-weight:500;min-width:78px}
+.p-row.raw .val{color:var(--cyan);font-weight:600}
+.p-divider{height:1px;background:var(--line);margin:6px 0}
+
+.final-card{background:linear-gradient(135deg,rgba(0,213,255,.18),rgba(30,144,255,.10));border:1px solid var(--cyan);border-radius:12px;padding:18px 18px 16px;margin:18px 0 14px}
+.final-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:600;margin-bottom:6px}
+.final-val{font-family:var(--serif);font-style:italic;font-size:32px;color:var(--text);line-height:1.02;letter-spacing:-.02em}
+.final-note{font-size:10.5px;color:var(--muted);margin-top:8px;letter-spacing:.02em}
+
+.lease-card{border:1px solid var(--line);border-radius:11px;padding:14px 16px}
+.lease-h{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:600;margin-bottom:10px;display:flex;justify-content:space-between;align-items:baseline}
+.lease-h-meta{font-size:10px;color:var(--soft);letter-spacing:.04em;text-transform:none;font-family:var(--sans)}
+.lease-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:baseline;padding:5px 0;border-bottom:1px dotted var(--line);font-size:12px}
+.lease-row:last-child{border-bottom:none}
+.lease-row .term{color:var(--muted);font-family:var(--mono);font-size:11.5px}
+.lease-row .mo{font-family:var(--mono);font-size:13px;color:var(--text);font-weight:500}
+
+.disclaimer{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);font-size:10.5px;color:var(--soft);line-height:1.6;letter-spacing:.01em}
+.disclaimer strong{color:var(--muted);font-weight:600}
+
+/* hidden file inputs */
+input[type=file]{display:none}
+
+@media(max-width:1280px){.main{grid-template-columns:220px 1fr 300px}}
+@media(max-width:1024px){.project-input{width:180px}.insp-grid{grid-template-columns:repeat(4,1fr)}}
+
+/* ════════════════════════════════════════════════════════════
+   PUBLIC SITE BUILD — hides internal features + adds email gate
+   ════════════════════════════════════════════════════════════ */
+/* internal-only controls hidden for the public build */
+#btn-import-excel,#btn-ai{display:none!important}
+/* margin & uplift breakdowns are internal — public sees final ROM + lease only */
+.pricing .p-block:has(#u-controls){display:none!important}
+.pricing .p-block:has(#u-margin){display:none!important}
+/* per-component rate editing is internal */
+.fld:has(#i-base){display:none!important}
+.fld:has(#i-perm){display:none!important}
+
+/* ── EMAIL GATE over the ROM panel ── */
+.pricing{position:relative}
+.price-gate{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:22px 18px;background:rgba(5,11,20,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.pg-card{width:100%;max-width:300px;background:linear-gradient(180deg,#111926,#0B1626);border:1px solid var(--line2);border-radius:16px;padding:22px 20px;box-shadow:0 24px 64px rgba(0,0,0,.5);transition:box-shadow .3s,border-color .3s}
+.price-gate.pg-flash .pg-card{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,213,255,.35),0 24px 64px rgba(0,0,0,.5)}
+.pg-eyebrow{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.pg-eyebrow::before{content:"";width:20px;height:1px;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+.pg-card h3{font-size:17px;font-weight:600;color:#fff;letter-spacing:-.014em;line-height:1.25;margin-bottom:8px}
+.pg-card h3 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--cyan)}
+.pg-card p{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px}
+.pg-card form{display:flex;flex-direction:column;gap:8px}
+.pg-card input[type="text"],.pg-card input[type="email"]{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:8px;padding:9px 11px;color:#fff;font-family:var(--sans);font-size:12.5px;outline:none;transition:border-color .15s}
+.pg-card input[type="text"]:focus,.pg-card input[type="email"]:focus{border-color:var(--cyan)}
+.pg-card input::placeholder{color:var(--soft)}
+.pg-consent{display:flex;gap:8px;align-items:flex-start;font-size:10.5px;color:var(--soft);line-height:1.45;cursor:pointer;margin-top:2px}
+.pg-consent input{margin-top:2px;accent-color:var(--cyan)}
+.pg-card button[type="submit"]{margin-top:6px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d;border:0;border-radius:999px;padding:11px 16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;cursor:pointer;transition:transform .15s}
+.pg-card button[type="submit"]:hover{transform:translateY(-1px)}
+.pg-card button[type="submit"]:disabled{opacity:.6;cursor:wait;transform:none}
+.pg-note{font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);text-align:center;line-height:1.6;margin-top:8px}
+</style></head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <a href="index.html" style="text-decoration:none;color:inherit" title="Back to orionmis.co.uk">
+      <span class="lockup">ORION<span class="pipe">|</span><span class="sub">MIS</span></span>
+    </a>
+    <span class="divider"></span>
+    <span class="doctype">Conveyor Sketch Tool</span>
+  </div>
+  <input type="text" id="project-name" class="project-input" placeholder="Project name — e.g. APC Stage 2" value="">
+  <div class="topbar-right">
+    <span class="rom-pill">ROM · Indicative</span>
+    <button class="btn" id="btn-import-excel" title="Import pricing from spreadsheet">↥ Pricing</button>
+    <button class="btn" id="btn-import-json" title="Load saved layout">↥ Layout</button>
+    <button class="btn" id="btn-export-json" title="Download layout as JSON">↧ Layout</button>
+    <button class="btn btn-primary" id="btn-export-quote" title="Generate customer-facing quote">Export Quote →</button>
+    <input type="file" id="file-excel" accept=".xlsx,.xls,.csv">
+    <input type="file" id="file-json" accept=".json">
+    <input type="file" id="file-ai-image" accept="image/*" style="display:none;">
+
+    <input type="file" id="file-backup" accept=".json" style="display:none;">
+
+    <!-- Projects Modal -->
+    <div class="modal-bg" id="projects-modal">
+      <div class="modal" style="max-width:720px;">
+        <div class="modal-head">
+          <h3>📁 Projects</h3>
+          <button class="x" id="projects-close" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body">
+          <p style="margin:0;color:var(--muted);font-size:13px;line-height:1.55;">Every change auto-saves to the currently open project. Switch between projects, duplicate the current one as a starting point for the next quote, or back the whole library up to a file so you never lose work.</p>
+          <div>
+            <label>Saved projects</label>
+            <div id="projects-list" class="projects-list"></div>
+          </div>
+        </div>
+        <div class="modal-foot" style="justify-content:space-between;">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn active" id="btn-proj-new">+ New project</button>
+            <button class="btn" id="btn-proj-dup">⧉ Duplicate current</button>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn" id="btn-proj-backup" title="Download a single JSON file with ALL your projects — safe off-disk snapshot">💾 Backup all to file</button>
+            <button class="btn" id="btn-proj-restore" title="Restore the entire library from a backup file">↩ Restore from backup…</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Sketch Import Modal -->
+    <div class="modal-bg" id="ai-modal">
+      <div class="modal">
+        <div class="modal-head">
+          <h3>🤖 AI sketch import</h3>
+          <button class="x" id="ai-close" aria-label="Close">×</button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <label for="ai-key">Claude API key (saved locally in your browser only)</label>
+            <input type="password" id="ai-key" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+          </div>
+          <div>
+            <label>Image — paste, drop, or pick a file</label>
+            <div class="drop-zone" id="ai-drop">
+              <div class="hint">
+                Drop an image here · or <kbd>Ctrl</kbd>+<kbd>V</kbd> to paste · or click to choose<br>
+                <span style="font-size:11px;color:var(--soft);">Works with CAD top-down views, hand sketches, PDF screenshots</span>
+              </div>
+              <img class="preview-img" id="ai-preview" style="display:none;" alt="">
+            </div>
+          </div>
+          <div id="ai-results" style="display:none;">
+            <label>Detected components</label>
+            <div class="detected-list"><ul id="ai-detected"></ul></div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <div class="status" id="ai-status">Paste or drop an image to begin.</div>
+          <button class="btn" id="ai-analyse">Analyse</button>
+          <button class="btn active" id="ai-add" style="display:none;">Add to canvas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- LIBRARY -->
+  <aside class="library">
+    <div class="lib-h">Components</div>
+    <p class="lib-hint">Drag onto canvas or click to add. Real defaults from Orion / Fastrax data — override per-component in the inspector.</p>
+    <div class="lib-list" id="lib-list"></div>
+  </aside>
+
+  <!-- CENTER -->
+  <section class="center">
+    <div class="canvas-toolbar">
+      <label>Scale &mdash; <strong style="color:var(--text);">1 sq = <input type="number" id="scale-mm" class="scale-input" value="500" min="100" max="2000" step="50"></strong> mm</label>
+      <button class="btn active" id="btn-projects" title="Switch between saved projects · backup to file">📁 Projects</button>
+      <button class="btn" id="btn-snap" title="Toggle snap-to-connect (Shift inverts temporarily)">🧲 Snap-to-connect: Off</button>
+      <button class="btn" id="btn-measure" title="Click two points to measure distance · Esc to exit">📏 Measure</button>
+      <button class="btn" id="btn-measure-clear" title="Clear all measurements" style="display:none;">✕ Clear measurements</button>
+      <button class="btn" id="btn-ai" title="Paste a sketch or CAD image — AI detects components and adds them">🤖 AI sketch import</button>
+      <span class="tip"><kbd>R</kbd> rotate · <kbd>Shift</kbd>+<kbd>R</kbd> reverse · <kbd>M</kbd> mirror · <kbd>D</kbd> dupe · <kbd>Del</kbd> delete · <kbd>Ctrl</kbd>+click multi · <kbd>scroll</kbd> zoom · drag empty to pan</span>
+      <div class="zoom-ctrl">
+        <button class="zoom-btn" id="btn-zoom-out" title="Zoom out">−</button>
+        <span class="zoom-pct" id="zoom-pct">100%</span>
+        <button class="zoom-btn" id="btn-zoom-in" title="Zoom in">+</button>
+        <button class="zoom-btn" id="btn-zoom-reset" title="Reset zoom &amp; pan" style="font-size:13px;">⊙</button>
+      </div>
+      <button class="btn btn-danger" id="btn-clear" title="Clear all components">Clear canvas</button>
+    </div>
+    <div id="canvas-container"><div class="scale-chip" id="scale-chip">1 sq = 500 mm</div></div>
+    <div class="inspector" id="inspector">
+      <div class="insp-empty">Select a component on the canvas to edit it &mdash; or drag a new one from the library on the left.</div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <aside class="pricing">
+
+    <!-- ── EMAIL GATE (public build) — removed on unlock ── -->
+    <div class="price-gate" id="priceGate">
+      <div class="pg-card">
+        <div class="pg-eyebrow">Indicative pricing</div>
+        <h3>Unlock your <em>live ROM budget</em></h3>
+        <p>Sketching is free. Pop your details in to unlock live indicative pricing and monthly lease figures for your layout.</p>
+        <form id="pgForm" novalidate>
+          <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+          <input type="text" name="company" placeholder="Company" autocomplete="organization">
+          <input type="email" name="email" placeholder="you@company.co.uk" required autocomplete="email">
+          <label class="pg-consent"><input type="checkbox" name="marketing_consent" value="Yes"><span>OK to send me occasional automation insights (optional)</span></label>
+          <button type="submit">Unlock pricing →</button>
+          <div class="pg-note">Your layout stays in your browser<br>We only receive your contact details</div>
+        </form>
+      </div>
+    </div>
+
+    <h2 class="p-h">ROM Budget</h2>
+    <div class="p-sub">Live · per-component cascade</div>
+
+    <div class="tput-card">
+      <div class="tput-lbl">Estimated throughput · range</div>
+      <div class="tput-row"><span class="tput-val" id="tput-val">—</span><span class="tput-unit">parcels / hr</span></div>
+      <div class="tput-meta" id="tput-detail">Add a belt with speed &gt; 0</div>
+      <div class="tput-parcel-box">
+        <div class="tput-parcel-lbl">Parcel length range · min / max</div>
+        <div class="tput-parcel-inputs">
+          <div class="tput-parcel-fld"><span class="micro">Min</span><input type="number" id="tput-parcel-min" value="150" min="50" step="50"></div>
+          <span class="tput-parcel-sep">→</span>
+          <div class="tput-parcel-fld"><span class="micro">Max</span><input type="number" id="tput-parcel-max" value="1200" min="50" step="50"></div>
+          <span class="tput-parcel-unit">mm</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-block">
+      <div class="p-block-h">Component cost</div>
+      <div class="p-row raw"><span class="lbl"><span id="cmp-count">0</span> components &middot; raw total</span><span></span><span class="val" id="raw-total">&pound;0</span></div>
+    </div>
+
+    <div class="p-block">
+      <div class="p-block-h">Uplifts &middot; applied on raw</div>
+      <div class="p-row"><span class="lbl">Controls / WCS allowance</span><span><input type="number" id="u-controls" class="pct-input" value="8" min="0" step="0.5"><span class="pct-sign">%</span></span><span class="val" id="v-controls">&pound;0</span></div>
+      <div class="p-row"><span class="lbl">Installation allowance</span><span><input type="number" id="u-installation" class="pct-input" value="12" min="0" step="0.5"><span class="pct-sign">%</span></span><span class="val" id="v-installation">&pound;0</span></div>
+      <div class="p-row"><span class="lbl">Contingency</span><span><input type="number" id="u-contingency" class="pct-input" value="5" min="0" step="0.5"><span class="pct-sign">%</span></span><span class="val" id="v-contingency">&pound;0</span></div>
+    </div>
+
+    <div class="p-block">
+      <div class="p-block-h">Sell &middot; margin &amp; delivery</div>
+      <div class="p-row"><span class="lbl">Margin</span><span><input type="number" id="u-margin" class="pct-input" value="30" min="0" step="0.5"><span class="pct-sign">%</span></span><span class="val" id="v-margin">&pound;0</span></div>
+      <div class="p-row"><span class="lbl">Delivery (fixed)</span><span>&pound;<input type="number" id="u-delivery" class="pct-input" style="width:64px;" value="2500" min="0" step="100"></span><span class="val" id="v-delivery">&pound;2,500</span></div>
+    </div>
+
+    <div class="final-card">
+      <div class="final-lbl">Final ROM &middot; excl. VAT</div>
+      <div class="final-val" id="final-rom">&pound;2,500</div>
+      <div class="final-note">Indicative · subject to site survey and final design approval.</div>
+    </div>
+
+    <div class="lease-card">
+      <div class="lease-h">Indicative monthly lease<span class="lease-h-meta">8% &middot; no deposit</span></div>
+      <div class="lease-row"><span class="term">36 months</span><span class="mo" id="lease-36">&pound;0</span></div>
+      <div class="lease-row"><span class="term">48 months</span><span class="mo" id="lease-48">&pound;0</span></div>
+      <div class="lease-row"><span class="term">60 months</span><span class="mo" id="lease-60">&pound;0</span></div>
+    </div>
+
+    <p class="disclaimer"><strong>ROM Budget</strong> &middot; indicative pricing for early-stage planning. Subject to site survey and final design approval. Lease figures are an illustration only and subject to finance approval. Built, tested and supported by Orion MIS.</p>
+  </aside>
+
+</div>
+
+<script>
+// =============================================================
+// ORION CONVEYOR SKETCH TOOL — single-file
+// =============================================================
+
+// ── COMPONENT DEFINITIONS ─────────────────────────────────────
+// Defaults seeded from real Fastrax / Orion project data.
+// Importable via Excel later (see importPricing()).
+const COMPONENT_DEFS = {
+  belt:    { name:'Belt conveyor',           length:3000, width:1050, base:2000,  perM:600, speed:0.7, color:'#1E90FF', isLength:true,  group:'Conveyors' },
+  driven:  { name:'Driven roller conveyor',  length:3000, width:1050, base:1500,  perM:450, speed:0.5, color:'#3B82F6', isLength:true,  group:'Conveyors' },
+  gravity: { name:'Gravity roller conveyor', length:3000, width:1050, base:500,   perM:150, speed:0,   color:'#64748B', isLength:true,  group:'Conveyors' },
+  bend:    { name:'Bend (60°)',              length:1500, width:1050, base:1750,  perM:0,   speed:0,   color:'#0EA5E9', isLength:false, group:'Conveyors' },
+  merge:   { name:'Right merge (30°)',       length:2291, width:969,  base:2900,  perM:0,   speed:0,   color:'#0891B2', isLength:false, group:'Conveyors' },
+  mergeL:  { name:'Left merge (30°)',        length:2291, width:969,  base:2900,  perM:0,   speed:0,   color:'#0891B2', isLength:false, group:'Conveyors' },
+  scan:    { name:'Scan tunnel',             length:1500, width:1500, base:15000, perM:0,   speed:2.5, color:'#EF4444', isLength:false, group:'Sortation' },
+  helix:   { name:'Helix sorter module',     length:200,  width:1050, base:0,     perM:27500, speed:2.5, color:'#F59E0B', isLength:false, group:'Sortation', lengthStep:200 },
+  chute:   { name:'Dispatch chute',          length:1200, width:1050, base:1800,  perM:0,   speed:0,   color:'#10B981', isLength:false, group:'Sortation' },
+  kickout: { name:'Kickout / reject lane',   length:3685, width:1050, base:4514,  perM:200, speed:0.5, color:'#F97066', isLength:true,  group:'Sortation' },
+  lift:    { name:'Lift',                    length:1500, width:1500, base:25000, perM:0,   speed:0,   color:'#8B5CF6', isLength:false, group:'Auxiliary' },
+  controls:{ name:'Controls / WCS allowance',length:0,    width:0,    base:50000, perM:0,   speed:0,   color:'#FACC15', isLength:false, group:'Auxiliary' }
+};
+
+// ── STATE ─────────────────────────────────────────────────────
+const state = {
+  components: [],
+  selectedIds: [],
+  scale: 500,           // mm per grid square
+  pxPerGrid: 30,        // px per grid square
+  project: '',
+  pricing: { margin:30, controls:8, installation:12, contingency:5, delivery:2500 },
+  parcelMin: 150,
+  parcelMax: 1200,
+  snapEnabled: false,   // free movement by default; toggle for snap-to-connect
+  rotateStep: 90,       // default rotation increment (deg) — adjustable in inspector
+  dragStartPositions: null,
+  // Measurement tool
+  measureMode: false,
+  measurements: [],     // [{ p1:{x,y}, p2:{x,y} } in world coords]
+  measureFirst: null    // {x,y} or null — first click of an in-progress measurement
+};
+
+// Selection helpers
+function isSelected(id){ return state.selectedIds.includes(id); }
+function setSelection(id){ state.selectedIds = id ? [id] : []; }
+function toggleInSelection(id){
+  const i = state.selectedIds.indexOf(id);
+  if (i >= 0) state.selectedIds.splice(i,1); else state.selectedIds.push(id);
+}
+function getSelected(){ return state.selectedIds.map(id => state.components.find(c => c.id === id)).filter(Boolean); }
+function getPrimaryId(){ return state.selectedIds[state.selectedIds.length-1] || null; }
+
+const STORE_KEY = 'orion-conveyor-sketch-v1';
+
+// ── HELPERS ───────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
+const newId = () => 'c-' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const pxPerMm = () => state.pxPerGrid / state.scale;
+const snap = v => Math.round(v / state.pxPerGrid) * state.pxPerGrid;
+function calcUnit(c){
+  let unit = c.base + (c.length / 1000) * c.perM;
+  // Scan tunnel multi-sided premium: ×3 base price
+  if (c.type === 'scan' && c.scanSide === 'multi') unit *= 3;
+  return unit;
+}
+function calcComp(c){ return calcUnit(c) * c.qty; }
+
+// ── CONNECTORS (snap-together connection points) ─────────────
+// Each component has connection points in local (px, before rotation).
+// `role` is 'in' (flow enters) or 'out' (flow exits).
+// `angle` is the outward-facing direction in local frame (deg, 0=+x/right).
+const SNAP_THRESHOLD = 38; // px — how close before snap activates
+
+function getConnectorsLocal(c){
+  const ppm = pxPerMm();
+  const w = c.length * ppm;
+  const h = c.width * ppm;
+  switch(c.type){
+    case 'bend': {
+      // 60° annular sector with RED caps at both ends.
+      // Connectors live at each cap midpoint, with outward angle = the radial direction
+      // (so the bend's red cap line lies collinear with whatever red mate edge it snaps to).
+      if (!w || !h) return [];
+      const cxL = w * 0.95;
+      const cyL = h * 1.05;
+      const rOut = Math.min(w * 0.95, h * 1.4);
+      const rIn  = rOut * 0.2;
+      const midR = (rIn + rOut) / 2;
+      const startA = 180, endA = 240;
+      const sR = startA * Math.PI / 180;
+      const eR = endA   * Math.PI / 180;
+      return [
+        { role:'bidir', x: cxL + Math.cos(sR)*midR, y: cyL + Math.sin(sR)*midR, angle: startA },
+        { role:'bidir', x: cxL + Math.cos(eR)*midR, y: cyL + Math.sin(eR)*midR, angle: endA   }
+      ];
+    }
+    case 'chute':
+      return [{ role:'in', x:0, y:h/2, angle:180 }];
+    case 'controls':
+      return [];
+    case 'merge': {
+      // Right merge — 30° right triangle. Vertices (0,h), (w,h), (w,0).
+      //   Bottom edge  — horizontal BLUE rail (longest, sits on adjacent module — helix etc.)
+      //   Right edge   — vertical RED short (mate to bend / sortation)
+      //   Hypotenuse   — slanted BLUE from apex (bottom-left tip) to top of red edge
+      if (!w || !h) return [];
+      const hypoOut = ((Math.atan2(-w, -h) * 180 / Math.PI) % 360 + 360) % 360;
+      // Multiple bottom-edge mate points so the merge snaps flush along the helix/sorter top
+      // wherever you drop it (quarter-points along the bottom edge).
+      return [
+        { role:'bidir', x: w,         y: h/2, angle: 0       }, // red edge midpoint, outward right
+        { role:'bidir', x: w/2,       y: h/2, angle: hypoOut }, // hypotenuse midpoint, outward up-left
+        { role:'bidir', x: w * 0.25,  y: h,   angle: 90      }, // bottom-quarter, outward down → mates helix top
+        { role:'bidir', x: w * 0.5,   y: h,   angle: 90      }, // bottom-mid
+        { role:'bidir', x: w * 0.75,  y: h,   angle: 90      }  // bottom-three-quarter
+      ];
+    }
+    case 'mergeL': {
+      // Left merge — 30° right triangle MIRROR. Vertices (w,h), (0,h), (0,0).
+      //   Bottom edge  — horizontal BLUE rail (longest, sits on adjacent module)
+      //   Left edge    — vertical RED short (mate to bend / sortation)
+      //   Hypotenuse   — slanted BLUE from apex (bottom-right tip) to top of red edge
+      if (!w || !h) return [];
+      const hypoOut = ((Math.atan2(-w, h) * 180 / Math.PI) % 360 + 360) % 360;
+      return [
+        { role:'bidir', x: 0,         y: h/2, angle: 180     }, // red edge midpoint, outward left
+        { role:'bidir', x: w/2,       y: h/2, angle: hypoOut }, // hypotenuse midpoint, outward up-right
+        { role:'bidir', x: w * 0.25,  y: h,   angle: 90      }, // bottom-quarter
+        { role:'bidir', x: w * 0.5,   y: h,   angle: 90      }, // bottom-mid
+        { role:'bidir', x: w * 0.75,  y: h,   angle: 90      }  // bottom-three-quarter
+      ];
+    }
+    case 'helix': {
+      // Sorter — main left/right flow PLUS top & bottom side IN points (accept feeds
+      // from a merge's red OUT edge). One 'in' connector per 200mm segment, both sides.
+      if (!w || !h) return [];
+      const pts = [
+        { role:'in',  x:0, y:h/2, angle:180 },
+        { role:'out', x:w, y:h/2, angle:0   }
+      ];
+      const segs = Math.max(1, Math.round(c.length / 200));
+      for (let i = 0; i < segs; i++) {
+        const sx = w * ((i + 0.5) / segs);
+        pts.push({ role:'in', x: sx, y: 0, angle: 270 }); // top edge feed-in
+        pts.push({ role:'in', x: sx, y: h, angle: 90  }); // bottom edge feed-in
+      }
+      return pts;
+    }
+    case 'scan': case 'lift':
+    case 'belt': case 'driven': case 'gravity': case 'kickout':
+    default:
+      if (!w || !h) return [];
+      return [
+        { role:'in',  x:0, y:h/2, angle:180 },
+        { role:'out', x:w, y:h/2, angle:0   }
+      ];
+  }
+}
+
+// Project local connector to world (x, y, angle) given component pos + rotation + mirror.
+// Mirror is applied about the component centre, matching the Konva group's scaleX/Y(-1).
+function getConnectorsWorld(c){
+  const conns = getConnectorsLocal(c);
+  if (conns.length === 0) return [];
+  const ppm = pxPerMm();
+  const w = c.length * ppm;
+  const h = c.width * ppm;
+  const rot = c.rotation || 0;
+  const rad = rot * Math.PI / 180;
+  const cos = Math.cos(rad), sin = Math.sin(rad);
+  const mx = c.mirrorX ? -1 : 1;
+  const my = c.mirrorY ? -1 : 1;
+  return conns.map(p => {
+    // Mirror local position about centre (matches scaleX/Y(-1) on the rendered group)
+    const localX = w/2 + (p.x - w/2) * mx;
+    const localY = h/2 + (p.y - h/2) * my;
+    // Mirror also flips the outward-facing angle
+    let localAngle = p.angle;
+    if (c.mirrorX) localAngle = 180 - localAngle;
+    if (c.mirrorY) localAngle = -localAngle;
+    localAngle = ((localAngle % 360) + 360) % 360;
+    const dx = localX - w/2;
+    const dy = localY - h/2;
+    return {
+      role: p.role,
+      x: c.x + dx*cos - dy*sin,
+      y: c.y + dx*sin + dy*cos,
+      angle: ((localAngle + rot) % 360 + 360) % 360,
+      localAngle,
+      localX,
+      localY
+    };
+  });
+}
+
+// Find best snap target for a dragged component at (posX, posY, rot).
+// Returns null or { x, y, rotation, target: {x,y} }
+function findSnapTarget(draggedC, posX, posY, rot){
+  const dragged = { ...draggedC, x:posX, y:posY, rotation:rot };
+  const dConns = getConnectorsWorld(dragged);
+  if (dConns.length === 0) return null;
+
+  let best = null;
+  let bestDist = SNAP_THRESHOLD;
+
+  state.components.forEach(other => {
+    if (other.id === draggedC.id) return;
+    const oConns = getConnectorsWorld(other);
+    dConns.forEach(dc => {
+      oConns.forEach(oc => {
+        // Compatible if roles are opposite (in↔out) OR either side is bidirectional
+        const compat = (dc.role !== oc.role) || dc.role === 'bidir' || oc.role === 'bidir';
+        if (!compat) return;
+        const dist = Math.hypot(dc.x - oc.x, dc.y - oc.y);
+        if (dist < bestDist) { bestDist = dist; best = { dc, oc }; }
+      });
+    });
+  });
+  if (!best) return null;
+
+  // Compute the dragged component's required rotation so the connector faces opposite of target
+  const desiredWorldAngle = (best.oc.angle + 180) % 360;
+  const newRot = ((desiredWorldAngle - best.dc.localAngle) % 360 + 360) % 360;
+
+  // Compute new component position so connector ends up at (oc.x, oc.y)
+  const ppm = pxPerMm();
+  const w = draggedC.length * ppm;
+  const h = draggedC.width * ppm;
+  const dx = best.dc.localX - w/2;
+  const dy = best.dc.localY - h/2;
+  const rad = newRot * Math.PI / 180;
+  const offX = dx * Math.cos(rad) - dy * Math.sin(rad);
+  const offY = dx * Math.sin(rad) + dy * Math.cos(rad);
+  return {
+    x: best.oc.x - offX,
+    y: best.oc.y - offY,
+    rotation: newRot,
+    target: { x: best.oc.x, y: best.oc.y }
+  };
+}
+
+// ── ALIGNMENT SNAP POINTS (corners, edge mids, centre) ───────
+const ALIGN_THRESHOLD_PX = 6; // screen pixels — converted to world units at runtime
+
+function getSnapPointsLocal(c){
+  const ppm = pxPerMm();
+  const w = c.length * ppm;
+  const h = c.width * ppm;
+  if (w <= 0 || h <= 0) return [];
+  return [
+    { x:0,   y:0   }, // top-left
+    { x:w,   y:0   }, // top-right
+    { x:0,   y:h   }, // bottom-left
+    { x:w,   y:h   }, // bottom-right
+    { x:w/2, y:0   }, // top mid
+    { x:w,   y:h/2 }, // right mid
+    { x:w/2, y:h   }, // bottom mid
+    { x:0,   y:h/2 }, // left mid
+    { x:w/2, y:h/2 }  // centre
+  ];
+}
+
+function getSnapPointsWorld(c){
+  const pts = getSnapPointsLocal(c);
+  if (pts.length === 0) return [];
+  const ppm = pxPerMm();
+  const w = c.length * ppm;
+  const h = c.width * ppm;
+  const rad = (c.rotation || 0) * Math.PI / 180;
+  const cos = Math.cos(rad), sin = Math.sin(rad);
+  return pts.map(p => {
+    const dx = p.x - w/2;
+    const dy = p.y - h/2;
+    return { x: c.x + dx*cos - dy*sin, y: c.y + dx*sin + dy*cos };
+  });
+}
+
+// Find best x and y alignment offsets for dragged component vs others.
+// `excludeIds` = list of component ids to ignore as alignment targets (defaults to draggedC.id).
+// For multi-drag, pass the full selection so the group doesn't align to itself.
+function findAlignment(draggedC, posX, posY, rot, excludeIds){
+  const z = stage ? stage.scaleX() : 1;
+  const tol = ALIGN_THRESHOLD_PX / z;
+  const dragged = { ...draggedC, x:posX, y:posY, rotation:rot };
+  const dPts = getSnapPointsWorld(dragged);
+  if (dPts.length === 0) return { x:null, y:null };
+
+  let bestX = null, bestY = null;
+  let bestXDist = tol, bestYDist = tol;
+
+  const exclude = new Set(excludeIds && excludeIds.length ? excludeIds : [draggedC.id]);
+
+  state.components.forEach(other => {
+    if (exclude.has(other.id)) return;
+    const oPts = getSnapPointsWorld(other);
+    dPts.forEach(dp => {
+      oPts.forEach(op => {
+        const dx = Math.abs(dp.x - op.x);
+        if (dx < bestXDist) { bestXDist = dx; bestX = { offset: op.x - dp.x, lineX: op.x }; }
+        const dy = Math.abs(dp.y - op.y);
+        if (dy < bestYDist) { bestYDist = dy; bestY = { offset: op.y - dp.y, lineY: op.y }; }
+      });
+    });
+  });
+  return { x: bestX, y: bestY };
+}
+
+// ── KONVA STAGE ───────────────────────────────────────────────
+let stage, gridLayer, compLayer, overlayLayer, snapHint, alignGuideX, alignGuideY;
+function initStage(){
+  const container = $('canvas-container');
+  stage = new Konva.Stage({
+    container: 'canvas-container',
+    width: container.clientWidth,
+    height: container.clientHeight
+  });
+  gridLayer = new Konva.Layer({ listening:false });
+  compLayer = new Konva.Layer();
+  overlayLayer = new Konva.Layer({ listening:false });
+  stage.add(gridLayer);
+  stage.add(compLayer);
+  stage.add(overlayLayer);
+  // Snap-target hint indicator
+  snapHint = new Konva.Circle({
+    radius:14, stroke:'#00D5FF', strokeWidth:2.5, visible:false,
+    shadowColor:'#00D5FF', shadowBlur:22, shadowOpacity:0.9
+  });
+  overlayLayer.add(snapHint);
+  // Alignment snaplines (magenta, dashed, screen-constant width)
+  const guideStyle = { stroke:'#FF2D9E', strokeWidth:1.4, strokeScaleEnabled:false, dash:[6,6], visible:false, listening:false, shadowColor:'#FF2D9E', shadowBlur:6, shadowOpacity:0.6 };
+  alignGuideX = new Konva.Line(guideStyle);
+  alignGuideY = new Konva.Line(guideStyle);
+  overlayLayer.add(alignGuideX);
+  overlayLayer.add(alignGuideY);
+  drawGrid();
+  // Stage drag = pan (Konva: child draggable groups take precedence over stage)
+  stage.draggable(true);
+  stage.on('dragstart', () => { container.classList.add('panning'); });
+  stage.on('dragend', () => { container.classList.remove('panning'); });
+  // Click empty stage to deselect everything (skipped while measuring)
+  stage.on('click tap', e => {
+    if (state.measureMode) return;
+    if (e.target === stage) { state.selectedIds = []; render(); }
+  });
+  // Measurement: click adds a point in measure mode
+  stage.on('mousedown touchstart', e => {
+    if (!state.measureMode) return;
+    e.evt.preventDefault();
+    const pos = stage.getPointerPosition();
+    if (!pos) return;
+    const w = screenToWorld(pos.x, pos.y);
+    onMeasureClick(w.x, w.y);
+  });
+  // Measurement: live preview of the in-progress line
+  stage.on('mousemove', () => {
+    if (!state.measureMode) return;
+    const pos = stage.getPointerPosition();
+    if (!pos) return;
+    const w = screenToWorld(pos.x, pos.y);
+    onMeasureMove(w.x, w.y);
+  });
+  // Mouse-wheel zoom (centred on cursor)
+  stage.on('wheel', e => {
+    e.evt.preventDefault();
+    const pointer = stage.getPointerPosition();
+    const factor = e.evt.deltaY < 0 ? 1.15 : 1/1.15;
+    zoomBy(factor, pointer);
+    // Re-render measurements so labels stay readable at the new zoom
+    if (state.measurements.length || state.measureFirst) renderMeasurements();
+  });
+  // Drag & drop from library — convert screen drop coords to world coords
+  container.addEventListener('dragover', e => { e.preventDefault(); });
+  container.addEventListener('drop', e => {
+    e.preventDefault();
+    const type = e.dataTransfer.getData('orion-type');
+    if (!type) return;
+    const r = container.getBoundingClientRect();
+    addComponent(type, e.clientX - r.left, e.clientY - r.top);
+  });
+  // Resize
+  new ResizeObserver(() => {
+    stage.width(container.clientWidth);
+    stage.height(container.clientHeight);
+    drawGrid();
+    compLayer.batchDraw();
+  }).observe(container);
+}
+
+function drawGrid(){
+  gridLayer.destroyChildren();
+  const g = state.pxPerGrid;
+  // Expanded world coverage so pan/zoom doesn't show empty space
+  const ext = 4000;
+  for (let x = -ext; x <= ext; x += g) {
+    gridLayer.add(new Konva.Line({ points:[x,-ext,x,ext], stroke:'rgba(255,255,255,.04)', strokeWidth:1 }));
+  }
+  for (let y = -ext; y <= ext; y += g) {
+    gridLayer.add(new Konva.Line({ points:[-ext,y,ext,y], stroke:'rgba(255,255,255,.04)', strokeWidth:1 }));
+  }
+  // Stronger lines every 5 squares
+  for (let x = -ext; x <= ext; x += g*5) {
+    gridLayer.add(new Konva.Line({ points:[x,-ext,x,ext], stroke:'rgba(0,213,255,.06)', strokeWidth:1 }));
+  }
+  for (let y = -ext; y <= ext; y += g*5) {
+    gridLayer.add(new Konva.Line({ points:[-ext,y,ext,y], stroke:'rgba(0,213,255,.06)', strokeWidth:1 }));
+  }
+  // World origin crosshair
+  gridLayer.add(new Konva.Line({ points:[-16,0,16,0], stroke:'rgba(0,213,255,.35)', strokeWidth:1.4 }));
+  gridLayer.add(new Konva.Line({ points:[0,-16,0,16], stroke:'rgba(0,213,255,.35)', strokeWidth:1.4 }));
+  gridLayer.batchDraw();
+}
+// Screen ↔ world helpers (account for stage zoom + pan)
+function screenToWorld(sx, sy){
+  return { x: (sx - stage.x()) / stage.scaleX(), y: (sy - stage.y()) / stage.scaleY() };
+}
+function updateZoomDisplay(){
+  const z = stage.scaleX();
+  const el = document.getElementById('zoom-pct');
+  if (el) el.textContent = Math.round(z * 100) + '%';
+}
+function updateScaleChip(){
+  const el = document.getElementById('scale-chip');
+  if (el) el.textContent = '1 sq = ' + state.scale + ' mm';
+}
+function zoomBy(factor, anchorScreen){
+  const oldScale = stage.scaleX();
+  let newScale = oldScale * factor;
+  newScale = Math.max(0.25, Math.min(4, newScale));
+  if (newScale === oldScale) return;
+  const anchor = anchorScreen || { x: stage.width()/2, y: stage.height()/2 };
+  const worldPt = screenToWorld(anchor.x, anchor.y);
+  stage.scale({ x: newScale, y: newScale });
+  stage.position({ x: anchor.x - worldPt.x * newScale, y: anchor.y - worldPt.y * newScale });
+  updateZoomDisplay();
+}
+function resetView(){
+  stage.scale({ x:1, y:1 });
+  stage.position({ x:0, y:0 });
+  updateZoomDisplay();
+}
+
+// ── RENDER COMPONENTS ─────────────────────────────────────────
+function render(){
+  compLayer.destroyChildren();
+  state.components.forEach(c => {
+    const def = COMPONENT_DEFS[c.type];
+    const ppm = pxPerMm();
+    const w = Math.max(c.length * ppm, 50);
+    const h = Math.max(c.width * ppm, 28);
+    const group = new Konva.Group({
+      x: c.x, y: c.y, rotation: c.rotation, draggable: true, id: c.id, offsetX: w/2, offsetY: h/2,
+      scaleX: c.mirrorX ? -1 : 1,
+      scaleY: c.mirrorY ? -1 : 1
+    });
+    const selected = isSelected(c.id);
+    if (c.type === 'scan') {
+      // SCAN TUNNEL — red dashed frame, no fill, with camera + beam graphic
+      group.add(new Konva.Rect({
+        width:w, height:h,
+        fill: selected ? 'rgba(239,68,68,0.10)' : 'rgba(239,68,68,0.04)',
+        stroke: selected ? '#00D5FF' : '#EF4444',
+        strokeWidth: selected ? 3 : 2,
+        cornerRadius: 5,
+        dash: [10, 5],
+        shadowColor: selected ? '#00D5FF' : '#EF4444',
+        shadowBlur: selected ? 18 : 8,
+        shadowOpacity: selected ? 0.55 : 0.35
+      }));
+      // Scanner head (camera body) at top centre
+      const cx = w / 2;
+      const camW = Math.max(22, Math.min(36, h * 0.36));
+      const camH = Math.max(10, Math.min(15, h * 0.2));
+      const camY = Math.max(8, h * 0.1);
+      group.add(new Konva.Rect({
+        x: cx - camW/2, y: camY, width: camW, height: camH,
+        fill: '#EF4444', stroke: '#fff', strokeWidth: 1, cornerRadius: 3
+      }));
+      // Mount bar on top of camera
+      group.add(new Konva.Line({
+        points: [cx - camW*0.35, camY, cx + camW*0.35, camY],
+        stroke: '#fff', strokeWidth: 1.5, lineCap: 'round'
+      }));
+      // Lens (white dot just under the camera)
+      const lensR = Math.min(3.5, camH * 0.3);
+      group.add(new Konva.Circle({
+        x: cx, y: camY + camH + lensR + 1, radius: lensR,
+        fill: '#fff', stroke: '#EF4444', strokeWidth: 1.2
+      }));
+      // Scan beam — dashed triangle from lens down toward floor
+      const beamTop = camY + camH + lensR * 2 + 2;
+      const beamBottom = h - 8;
+      const beamSpread = Math.min(w * 0.22, (beamBottom - beamTop) * 1.2);
+      if (beamBottom > beamTop + 6) {
+        group.add(new Konva.Line({
+          points: [cx, beamTop, cx - beamSpread, beamBottom, cx + beamSpread, beamBottom],
+          closed: true,
+          fill: 'rgba(239,68,68,0.14)',
+          stroke: '#EF4444', strokeWidth: 1.2, dash: [4, 3]
+        }));
+      }
+      // Multi-sided: add side cameras + beams + badge
+      if (c.scanSide === 'multi') {
+        const sideCamW = Math.max(8, Math.min(14, w * 0.07));
+        const sideCamH = Math.max(18, Math.min(30, h * 0.3));
+        const cyMid = h / 2;
+        // LEFT camera
+        const lcamX = 5;
+        group.add(new Konva.Rect({
+          x: lcamX, y: cyMid - sideCamH/2,
+          width: sideCamW, height: sideCamH,
+          fill:'#EF4444', stroke:'#fff', strokeWidth:1, cornerRadius:3
+        }));
+        group.add(new Konva.Circle({
+          x: lcamX + sideCamW + 3, y: cyMid,
+          radius: Math.min(3, sideCamW * 0.3),
+          fill:'#fff', stroke:'#EF4444', strokeWidth:1.2
+        }));
+        const lBeamX = lcamX + sideCamW + 6;
+        const lBeamSpread = Math.min((w/2 - lBeamX) * 0.4, h * 0.18);
+        if ((w/2) > lBeamX + 6) {
+          group.add(new Konva.Line({
+            points: [lBeamX, cyMid, w/2, cyMid - lBeamSpread, w/2, cyMid + lBeamSpread],
+            closed:true,
+            fill:'rgba(239,68,68,0.10)',
+            stroke:'#EF4444', strokeWidth:1, dash:[4,3]
+          }));
+        }
+        // RIGHT camera (mirror)
+        const rcamX = w - 5 - sideCamW;
+        group.add(new Konva.Rect({
+          x: rcamX, y: cyMid - sideCamH/2,
+          width: sideCamW, height: sideCamH,
+          fill:'#EF4444', stroke:'#fff', strokeWidth:1, cornerRadius:3
+        }));
+        group.add(new Konva.Circle({
+          x: rcamX - 3, y: cyMid,
+          radius: Math.min(3, sideCamW * 0.3),
+          fill:'#fff', stroke:'#EF4444', strokeWidth:1.2
+        }));
+        const rBeamX = rcamX - 6;
+        const rBeamSpread = Math.min((rBeamX - w/2) * 0.4, h * 0.18);
+        if (rBeamX > (w/2) + 6) {
+          group.add(new Konva.Line({
+            points: [rBeamX, cyMid, w/2, cyMid - rBeamSpread, w/2, cyMid + rBeamSpread],
+            closed:true,
+            fill:'rgba(239,68,68,0.10)',
+            stroke:'#EF4444', strokeWidth:1, dash:[4,3]
+          }));
+        }
+        // "MULTI" badge top-right
+        if (w > 80) {
+          group.add(new Konva.Rect({
+            x: w - 44, y: 4, width: 40, height: 12,
+            fill:'#EF4444', cornerRadius:6
+          }));
+          group.add(new Konva.Text({
+            text:'MULTI', x: w - 44, y: 6, width: 40, align:'center',
+            fontSize: 8, fontFamily:'JetBrains Mono', fontStyle:'700',
+            fill:'#fff', letterSpacing:1
+          }));
+        }
+      }
+    } else if (c.type === 'belt') {
+      // BELT — grey body, dark-blue side guides, white centreline, filled amber arrow
+      group.add(new Konva.Rect({
+        width:w, height:h,
+        fill:'#B8BDC5',
+        stroke: selected ? '#00D5FF' : 'rgba(0,0,0,.45)',
+        strokeWidth: selected ? 3 : 1,
+        cornerRadius: 2,
+        shadowColor: selected ? '#00D5FF' : '#000',
+        shadowBlur: selected ? 18 : 6,
+        shadowOpacity: selected ? 0.55 : 0.25
+      }));
+      // Side guides (top + bottom dark-blue strips)
+      const guideH = Math.max(3, Math.min(h * 0.08, 6));
+      group.add(new Konva.Rect({ x:0, y:0, width:w, height:guideH, fill:'#1E40AF' }));
+      group.add(new Konva.Rect({ x:0, y:h-guideH, width:w, height:guideH, fill:'#1E40AF' }));
+      // White centreline
+      group.add(new Konva.Line({
+        points:[4, h/2, w-4, h/2],
+        stroke:'rgba(255,255,255,.78)', strokeWidth:1
+      }));
+      // Amber filled flow arrow
+      if (w > 60 && h > 22) {
+        const amargin = Math.max(10, Math.min(w * 0.18, 24));
+        const pLen = Math.max(8, Math.min(h * 0.35, 14));
+        const pW   = Math.max(8, Math.min(h * 0.5, 16));
+        const sW   = Math.max(2.5, Math.min(h * 0.14, 5));
+        group.add(new Konva.Arrow({
+          points:[amargin, h/2, w - amargin, h/2],
+          pointerLength: pLen, pointerWidth: pW,
+          fill:'#F59E0B', stroke:'#F59E0B', strokeWidth: sW
+        }));
+      }
+    } else if (c.type === 'driven' || c.type === 'gravity' || c.type === 'kickout') {
+      // ROLLER / KICKOUT — grey body, vertical roller lines, white centreline
+      // Edges are blue for driven/gravity, RED for kickout (reject lane)
+      const edgeColor = (c.type === 'kickout') ? '#EF4444' : '#1E40AF';
+      group.add(new Konva.Rect({
+        width:w, height:h,
+        fill:'#B8BDC5',
+        stroke: selected ? '#00D5FF' : edgeColor,
+        strokeWidth: selected ? 3 : 1.8,
+        cornerRadius: 2,
+        shadowColor: selected ? '#00D5FF' : (c.type === 'kickout' ? '#EF4444' : '#000'),
+        shadowBlur: selected ? 18 : (c.type === 'kickout' ? 10 : 6),
+        shadowOpacity: selected ? 0.55 : (c.type === 'kickout' ? 0.35 : 0.25)
+      }));
+      // Roller lines (vertical, packed)
+      const rollerStep = Math.max(2.2, Math.min(5, h * 0.06));
+      for (let x = 2; x <= w - 2; x += rollerStep) {
+        group.add(new Konva.Line({
+          points:[x, 2, x, h-2],
+          stroke:'rgba(255,255,255,.55)', strokeWidth:0.6
+        }));
+      }
+      // Top and bottom side rails — coloured to match the edge
+      const railH = Math.max(2.5, Math.min(h * 0.07, 5));
+      group.add(new Konva.Rect({ x:0, y:0, width:w, height:railH, fill: edgeColor }));
+      group.add(new Konva.Rect({ x:0, y:h-railH, width:w, height:railH, fill: edgeColor }));
+      // Centreline (broken in the middle for the roller look)
+      const clMargin = 4;
+      const breakW = Math.min(w * 0.04, 8);
+      group.add(new Konva.Line({
+        points:[clMargin, h/2, w/2 - breakW, h/2],
+        stroke:'rgba(255,255,255,.78)', strokeWidth:1
+      }));
+      group.add(new Konva.Line({
+        points:[w/2 + breakW, h/2, w - clMargin, h/2],
+        stroke:'rgba(255,255,255,.78)', strokeWidth:1
+      }));
+      // Kickout-only: amber direction arrow + small "REJECT" badge
+      if (c.type === 'kickout' && w > 70 && h > 22) {
+        const amargin = Math.max(10, Math.min(w * 0.18, 24));
+        const pLen = Math.max(8, Math.min(h * 0.35, 14));
+        const pW   = Math.max(8, Math.min(h * 0.5, 16));
+        const sW   = Math.max(2.5, Math.min(h * 0.14, 5));
+        group.add(new Konva.Arrow({
+          points:[amargin, h/2, w - amargin, h/2],
+          pointerLength: pLen, pointerWidth: pW,
+          fill:'#F59E0B', stroke:'#F59E0B', strokeWidth: sW
+        }));
+        if (w > 90) {
+          group.add(new Konva.Rect({
+            x: w - 52, y: 4, width: 48, height: 12,
+            fill:'#EF4444', cornerRadius:6
+          }));
+          group.add(new Konva.Text({
+            text:'REJECT', x: w - 52, y: 6, width: 48, align:'center',
+            fontSize: 8, fontFamily:'JetBrains Mono', fontStyle:'700',
+            fill:'#fff', letterSpacing:1
+          }));
+        }
+      }
+    } else if (c.type === 'bend') {
+      // BEND — 60° annular sector, dense radial roller hatching, blue inner+outer curves,
+      // RED radial caps at BOTH ends (so it mates red-to-red from either side).
+      const cx = w * 0.95;
+      const cy = h * 1.05;
+      const rOut = Math.min(w * 0.95, h * 1.4);
+      const rIn = rOut * 0.2;
+      const midR = (rIn + rOut) / 2;
+      const startA = 180; // degrees
+      const sweepA = 60;
+      const endA = startA + sweepA;
+      // Arc body (annular sector)
+      group.add(new Konva.Arc({
+        x: cx, y: cy,
+        innerRadius: rIn, outerRadius: rOut,
+        angle: sweepA, rotation: startA,
+        fill:'#B8BDC5',
+        stroke: selected ? '#00D5FF' : '#1E40AF',
+        strokeWidth: selected ? 3 : 1.5,
+        shadowColor: selected ? '#00D5FF' : '#000',
+        shadowBlur: selected ? 18 : 6,
+        shadowOpacity: selected ? 0.55 : 0.25
+      }));
+      // Dense radial roller hatching
+      const numHatch = 20;
+      for (let i = 1; i < numHatch; i++) {
+        const aRad = (startA + (i / numHatch) * sweepA) * Math.PI / 180;
+        group.add(new Konva.Line({
+          points:[
+            cx + Math.cos(aRad) * rIn,  cy + Math.sin(aRad) * rIn,
+            cx + Math.cos(aRad) * rOut, cy + Math.sin(aRad) * rOut
+          ],
+          stroke:'rgba(255,255,255,.55)', strokeWidth:0.7
+        }));
+      }
+      // RED caps at BOTH ends — radial line from inner to outer at start AND end
+      const aStartRad = startA * Math.PI / 180;
+      const aEndRad   = endA   * Math.PI / 180;
+      group.add(new Konva.Line({
+        points:[
+          cx + Math.cos(aStartRad) * rIn,  cy + Math.sin(aStartRad) * rIn,
+          cx + Math.cos(aStartRad) * rOut, cy + Math.sin(aStartRad) * rOut
+        ],
+        stroke:'#EF4444', strokeWidth:3
+      }));
+      group.add(new Konva.Line({
+        points:[
+          cx + Math.cos(aEndRad) * rIn,  cy + Math.sin(aEndRad) * rIn,
+          cx + Math.cos(aEndRad) * rOut, cy + Math.sin(aEndRad) * rOut
+        ],
+        stroke:'#EF4444', strokeWidth:3
+      }));
+      // Amber arrow following the arc midline (from start toward end)
+      const midA = (startA + sweepA * 0.6) * Math.PI / 180;
+      const startTangentA = (startA + sweepA * 0.35) * Math.PI / 180;
+      group.add(new Konva.Arrow({
+        points:[
+          cx + Math.cos(startTangentA) * midR, cy + Math.sin(startTangentA) * midR,
+          cx + Math.cos(midA) * midR,         cy + Math.sin(midA) * midR
+        ],
+        pointerLength: Math.max(7, midR * 0.18),
+        pointerWidth: Math.max(7, midR * 0.20),
+        fill:'#F59E0B', stroke:'#F59E0B',
+        strokeWidth: Math.max(2.5, midR * 0.06)
+      }));
+    } else if (c.type === 'merge' || c.type === 'mergeL') {
+      // 30° MERGE — right triangle (matches CAD reference).
+      //   Right merge: vertices (0,h), (w,h), (w,0) — apex tip at bottom-left, red mate edge on the right
+      //   Left merge:  vertices (w,h), (0,h), (0,0) — apex tip at bottom-right, red mate edge on the left
+      //   Bottom edge: horizontal BLUE rail (longest)
+      //   Hypotenuse:  slanted BLUE (from apex to top of red edge)
+      //   Red edge:    vertical short, on the corner opposite the apex
+      //   Hatching:    dense vertical lines from bottom edge UP to the hypotenuse
+      const isLeft = (c.type === 'mergeL');
+      const triPts = isLeft
+        ? [w, h, 0, h, 0, 0]   // Left merge — mirror
+        : [0, h, w, h, w, 0];  // Right merge — original orientation
+      // Triangle body
+      group.add(new Konva.Line({
+        points: triPts, closed: true,
+        fill:'#B8BDC5',
+        stroke: selected ? '#00D5FF' : 'rgba(0,0,0,.45)',
+        strokeWidth: selected ? 3 : 0.5,
+        shadowColor: selected ? '#00D5FF' : '#000',
+        shadowBlur: selected ? 18 : 6,
+        shadowOpacity: selected ? 0.55 : 0.25
+      }));
+      // Dense vertical roller hatching — from bottom edge up to the hypotenuse
+      const numHatch = Math.max(22, Math.floor(w / 8));
+      for (let i = 1; i < numHatch; i++) {
+        const x = (i / numHatch) * w;
+        // Hypotenuse y at this x:
+        //   Right merge hyp from (0,h) to (w,0): y = h - (h/w)*x
+        //   Left  merge hyp from (w,h) to (0,0): y = (h/w)*x
+        const yTop = isLeft ? (h / w) * x : h - (h / w) * x;
+        if (yTop < h - 2) {
+          group.add(new Konva.Line({
+            points: [x, h - 1.5, x, yTop + 1.5],
+            stroke: 'rgba(255,255,255,.55)', strokeWidth: 0.6
+          }));
+        }
+      }
+      // Blue edges: bottom + hypotenuse
+      const blueColor = selected ? '#00D5FF' : '#1E40AF';
+      group.add(new Konva.Line({ points:[0, h, w, h], stroke: blueColor, strokeWidth: 2.8 })); // bottom
+      if (!isLeft) {
+        group.add(new Konva.Line({ points:[0, h, w, 0], stroke: blueColor, strokeWidth: 2.8 })); // hypotenuse (up-right)
+        group.add(new Konva.Line({ points:[w, h, w, 0], stroke:'#EF4444', strokeWidth: 3 }));    // red right edge
+      } else {
+        group.add(new Konva.Line({ points:[w, h, 0, 0], stroke: blueColor, strokeWidth: 2.8 })); // hypotenuse (up-left, mirror)
+        group.add(new Konva.Line({ points:[0, h, 0, 0], stroke:'#EF4444', strokeWidth: 3 }));    // red left edge
+      }
+      // Amber arrow — pointing along flow toward the top of the red edge
+      if (w > 70 && h > 30) {
+        const sW = Math.max(3, Math.min(h * 0.12, 5));
+        const pLen = Math.max(9, Math.min(h * 0.3, 14));
+        const pW = Math.max(9, Math.min(h * 0.4, 16));
+        const pts = isLeft
+          ? [w * 0.58, h * 0.72, w * 0.22, h * 0.32]   // Left merge — arrow up-left
+          : [w * 0.42, h * 0.72, w * 0.78, h * 0.32];  // Right merge — arrow up-right
+        group.add(new Konva.Arrow({
+          points: pts,
+          pointerLength: pLen, pointerWidth: pW,
+          fill:'#F59E0B', stroke:'#F59E0B', strokeWidth: sW
+        }));
+      }
+    } else {
+      // Standard component — coloured fill
+      group.add(new Konva.Rect({
+        width:w, height:h, fill:def.color,
+        stroke: selected ? '#00D5FF' : 'rgba(255,255,255,.28)',
+        strokeWidth: selected ? 3 : 1,
+        cornerRadius:5,
+        opacity: 0.92,
+        shadowColor: selected ? '#00D5FF' : '#000',
+        shadowBlur: selected ? 18 : 8,
+        shadowOpacity: selected ? 0.55 : 0.35
+      }));
+      // Helix sorter — rendered as a ball-transfer-style grid:
+      // one wheel/diverter every ~200mm along the length AND across the width.
+      if (c.type === 'helix') {
+        const segsX = Math.max(1, Math.round(c.length / 200));
+        const segsY = Math.max(2, Math.round(c.width / 200));
+        const stepX = w / segsX;
+        const stepY = h / segsY;
+        const ballR = Math.max(2.2, Math.min(stepX * 0.32, stepY * 0.32, 6));
+        for (let i = 0; i < segsX; i++) {
+          const cx = stepX * (i + 0.5);
+          for (let j = 0; j < segsY; j++) {
+            const cy = stepY * (j + 0.5);
+            group.add(new Konva.Circle({
+              x:cx, y:cy, radius:ballR,
+              fill:'#FEF3C7', stroke:'#7C2D12', strokeWidth:1.0
+            }));
+          }
+          // Subtle 200mm segment divider line
+          if (i < segsX - 1 && stepX > 8) {
+            group.add(new Konva.Line({
+              points:[stepX*(i+1), 4, stepX*(i+1), h-4],
+              stroke:'rgba(0,0,0,.18)', strokeWidth:1, dash:[2,2]
+            }));
+          }
+        }
+      }
+    }
+    if (w > 80 && h > 26) {
+      group.add(new Konva.Text({
+        text: c.name + (c.qty > 1 ? '  ×'+c.qty : ''),
+        fontSize: Math.min(12, h-12),
+        fontFamily:'Inter', fontStyle:'600',
+        fill:'#fff', x:7, y:6, width:w-14, ellipsis:true, wrap:'none'
+      }));
+    }
+    if (c.length > 0 && w > 80 && h > 30) {
+      group.add(new Konva.Text({
+        text: c.length + ' × ' + c.width + ' mm',
+        fontSize:10, fontFamily:'JetBrains Mono',
+        fill:'rgba(255,255,255,0.82)', x:7, y: h-16, width:w-14, ellipsis:true, wrap:'none'
+      }));
+    }
+    // Direction-of-travel arrow — bold, in→out (only for types without their own arrow)
+    const localConns = getConnectorsLocal(c);
+    const hasIn = localConns.some(p => p.role === 'in');
+    const hasOut = localConns.some(p => p.role === 'out');
+    const arrowColor = 'rgba(255,255,255,0.78)';
+    const typesWithCustomArrow = ['scan','belt','merge','mergeL','bend','driven','gravity','kickout'];
+    if (!typesWithCustomArrow.includes(c.type) && hasIn && hasOut && w > 70 && h > 20) {
+      // Straight arrow left → right
+      const margin = Math.min(14, w * 0.12);
+      const x1 = margin, x2 = w - margin, y = h * 0.5;
+      const sw = Math.max(2.5, Math.min(4, h * 0.07));
+      const hs = Math.max(7, Math.min(h * 0.32, 12));
+      group.add(new Konva.Line({
+        points: [x1, y, x2 - hs*0.6, y],
+        stroke: arrowColor, strokeWidth: sw, lineCap:'round'
+      }));
+      group.add(new Konva.Line({
+        points: [x2 - hs, y - hs, x2, y, x2 - hs, y + hs],
+        stroke: arrowColor, strokeWidth: sw, lineCap:'round', lineJoin:'round'
+      }));
+    }
+    // Connector dots — amber for IN, cyan for OUT
+    localConns.forEach(p => {
+      const r = selected ? 6 : 4.5;
+      group.add(new Konva.Circle({
+        x: p.x, y: p.y, radius: r,
+        fill: p.role === 'out' ? '#00D5FF' : '#FDB022',
+        stroke: '#02050A', strokeWidth: 1.5,
+        shadowColor: p.role === 'out' ? '#00D5FF' : '#FDB022',
+        shadowBlur: selected ? 10 : 4,
+        shadowOpacity: 0.8
+      }));
+    });
+    // Corner snap indicators (small white squares at the 4 bounding-box corners)
+    if (w > 30 && h > 18 && c.type !== 'controls') {
+      const cs = selected ? 4 : 3.2;
+      const cornerFill = 'rgba(255,255,255,.78)';
+      const cornerStroke = 'rgba(0,0,0,.55)';
+      [[0,0],[w,0],[0,h],[w,h]].forEach(pt => {
+        group.add(new Konva.Rect({
+          x: pt[0] - cs/2, y: pt[1] - cs/2,
+          width: cs, height: cs,
+          fill: cornerFill, stroke: cornerStroke, strokeWidth: 0.5,
+          listening: false
+        }));
+      });
+    }
+
+    // Click — Ctrl/Cmd to toggle into multi-selection, else replace selection
+    group.on('click tap', e => {
+      const ctrl = e.evt && (e.evt.ctrlKey || e.evt.metaKey);
+      if (ctrl) toggleInSelection(c.id);
+      else setSelection(c.id);
+      render();
+      updateInspector();
+    });
+    // Dragstart — set selection + capture starting positions for multi-drag
+    group.on('dragstart', () => {
+      if (!isSelected(c.id)) setSelection(c.id);
+      state.dragStartPositions = {};
+      state.selectedIds.forEach(id => {
+        const sc = state.components.find(x => x.id === id);
+        if (sc) state.dragStartPositions[id] = { x: sc.x, y: sc.y };
+      });
+      const rect = group.findOne('Rect');
+      if (rect) {
+        rect.stroke('#00D5FF'); rect.strokeWidth(3);
+        rect.shadowColor('#00D5FF'); rect.shadowBlur(18); rect.shadowOpacity(0.55);
+      }
+      compLayer.batchDraw();
+      updateInspector();
+    });
+    group.on('dragmove', e => {
+      const shiftDown = e.evt && e.evt.shiftKey;
+      const isMulti = state.selectedIds.length > 1;
+      let curX = group.x(), curY = group.y();
+
+      // Connector snap (single-drag only)
+      if (!isMulti && (state.snapEnabled !== shiftDown)) {
+        const r = findSnapTarget(c, curX, curY, group.rotation());
+        if (r) {
+          group.x(r.x); group.y(r.y); group.rotation(r.rotation);
+          snapHint.x(r.target.x); snapHint.y(r.target.y); snapHint.visible(true);
+          alignGuideX.visible(false); alignGuideY.visible(false);
+          overlayLayer.batchDraw();
+          return;
+        }
+      }
+
+      // Alignment snap — single OR multi-drag (Shift disables).
+      // For multi, exclude the whole selection so the group only aligns against outsiders.
+      if (!shiftDown) {
+        const excl = isMulti ? state.selectedIds : [c.id];
+        const a = findAlignment(c, curX, curY, group.rotation(), excl);
+        let xs = false, ys = false;
+        if (a.x) { curX += a.x.offset; alignGuideX.points([a.x.lineX,-5000,a.x.lineX,5000]); alignGuideX.visible(true); xs = true; }
+        else { alignGuideX.visible(false); }
+        if (a.y) { curY += a.y.offset; alignGuideY.points([-5000,a.y.lineY,5000,a.y.lineY]); alignGuideY.visible(true); ys = true; }
+        else { alignGuideY.visible(false); }
+        if (!xs) curX = snap(curX);
+        if (!ys) curY = snap(curY);
+      } else {
+        curX = snap(curX); curY = snap(curY);
+        alignGuideX.visible(false); alignGuideY.visible(false);
+      }
+
+      group.x(curX); group.y(curY);
+
+      // Multi-drag — move the rest of the selection by the same delta
+      if (isMulti && state.dragStartPositions && state.dragStartPositions[c.id]) {
+        const dx = curX - state.dragStartPositions[c.id].x;
+        const dy = curY - state.dragStartPositions[c.id].y;
+        state.selectedIds.forEach(id => {
+          if (id === c.id) return;
+          const startOther = state.dragStartPositions[id];
+          if (!startOther) return;
+          const og = compLayer.findOne('#' + id);
+          if (og) { og.x(startOther.x + dx); og.y(startOther.y + dy); }
+        });
+      }
+
+      if (snapHint.visible()) snapHint.visible(false);
+      overlayLayer.batchDraw();
+    });
+    group.on('dragend', () => {
+      c.x = group.x(); c.y = group.y(); c.rotation = group.rotation();
+      // Commit positions for the rest of the multi-selection
+      if (state.selectedIds.length > 1) {
+        state.selectedIds.forEach(id => {
+          if (id === c.id) return;
+          const other = state.components.find(x => x.id === id);
+          const og = compLayer.findOne('#' + id);
+          if (other && og) { other.x = og.x(); other.y = og.y(); }
+        });
+      }
+      state.dragStartPositions = null;
+      snapHint.visible(false);
+      alignGuideX.visible(false); alignGuideY.visible(false);
+      overlayLayer.batchDraw();
+      save();
+      render();
+    });
+    compLayer.add(group);
+  });
+  compLayer.batchDraw();
+  updateInspector();
+  updatePricing();
+}
+
+// ── ADD / DUPLICATE / DELETE ─────────────────────────────────
+function addComponent(type, sx, sy){
+  const def = COMPONENT_DEFS[type];
+  if (!def) return;
+  // Convert screen coords to world coords (accounts for zoom + pan)
+  const wp = (sx !== undefined && sy !== undefined)
+    ? screenToWorld(sx, sy)
+    : screenToWorld(stage.width()/2, stage.height()/2);
+  const c = {
+    id: newId(),
+    type,
+    name: def.name,
+    x: snap(wp.x),
+    y: snap(wp.y),
+    length: def.length, width: def.width,
+    rotation: 0, qty: 1,
+    mirrorX: false, mirrorY: false,
+    base: def.base, perM: def.perM,
+    speed: def.speed,
+    notes: ''
+  };
+  if (type === 'scan') c.scanSide = 'top';
+  // Try to snap on placement only if snap mode is enabled
+  if (state.snapEnabled) {
+    const snapResult = findSnapTarget(c, c.x, c.y, c.rotation);
+    if (snapResult) {
+      c.x = snapResult.x;
+      c.y = snapResult.y;
+      c.rotation = snapResult.rotation;
+    }
+  }
+  state.components.push(c);
+  setSelection(c.id);
+  render(); save();
+}
+function duplicateSelected(){
+  const ids = state.selectedIds.slice();
+  if (ids.length === 0) return;
+  const newIds = [];
+  ids.forEach(id => {
+    const c = state.components.find(x => x.id === id);
+    if (!c) return;
+    const copy = JSON.parse(JSON.stringify(c));
+    copy.id = newId();
+    copy.x += state.pxPerGrid * 2;
+    copy.y += state.pxPerGrid * 2;
+    state.components.push(copy);
+    newIds.push(copy.id);
+  });
+  state.selectedIds = newIds;
+  render(); save();
+}
+function deleteSelected(){
+  if (state.selectedIds.length === 0) return;
+  const toDel = new Set(state.selectedIds);
+  state.components = state.components.filter(c => !toDel.has(c.id));
+  state.selectedIds = [];
+  render(); save();
+}
+function rotateSelected(stepDeg){
+  if (state.selectedIds.length === 0) return;
+  const step = (typeof stepDeg === 'number' && !isNaN(stepDeg)) ? stepDeg : (state.rotateStep || 90);
+  state.selectedIds.forEach(id => {
+    const c = state.components.find(x => x.id === id);
+    if (c) c.rotation = ((c.rotation + step) % 360 + 360) % 360;
+  });
+  render(); save();
+}
+function mirrorSelected(axis){
+  if (state.selectedIds.length === 0) return;
+  const key = (axis === 'y') ? 'mirrorY' : 'mirrorX';
+  state.selectedIds.forEach(id => {
+    const c = state.components.find(x => x.id === id);
+    if (c) c[key] = !c[key];
+  });
+  render(); save();
+}
+
+// ── LIBRARY UI ────────────────────────────────────────────────
+function renderLibrary(){
+  const list = $('lib-list');
+  list.innerHTML = '';
+  // Group by family
+  const groups = {};
+  Object.keys(COMPONENT_DEFS).forEach(k => {
+    const g = COMPONENT_DEFS[k].group || 'Other';
+    (groups[g] = groups[g] || []).push(k);
+  });
+  const order = ['Conveyors', 'Sortation', 'Auxiliary'];
+  order.forEach(grpName => {
+    if (!groups[grpName]) return;
+    const lbl = document.createElement('div');
+    lbl.className = 'lib-h';
+    lbl.style.marginTop = '14px';
+    lbl.style.fontSize = '10px';
+    lbl.textContent = grpName;
+    list.appendChild(lbl);
+    groups[grpName].forEach(type => {
+      const def = COMPONENT_DEFS[type];
+      const item = document.createElement('div');
+      item.className = 'lib-item';
+      item.draggable = true;
+      item.dataset.type = type;
+      let priceHtml;
+      if (def.lengthStep) {
+        const perStep = def.base + (def.lengthStep / 1000) * def.perM;
+        priceHtml = `${fmt(perStep)}<br><span style="color:var(--soft);font-weight:400;">per ${def.lengthStep}mm</span>`;
+      } else {
+        priceHtml = `${fmt(def.base)}${def.perM ? '<br><span style="color:var(--soft);font-weight:400;">+£'+def.perM+'/m</span>' : ''}`;
+      }
+      const metaText = def.isLength ? def.length+'×'+def.width+' default'
+                     : def.lengthStep ? 'from '+def.lengthStep+'mm · steps of '+def.lengthStep
+                     : def.length>0 ? def.length+'×'+def.width+'mm' : 'allowance';
+      item.innerHTML = `
+        <div class="lib-stripe" style="background:${def.color}"></div>
+        <div>
+          <div class="lib-name">${def.name}</div>
+          <div class="lib-meta">${metaText}</div>
+        </div>
+        <div class="lib-price">${priceHtml}</div>
+      `;
+      item.addEventListener('click', () => addComponent(type));
+      item.addEventListener('dragstart', e => { e.dataTransfer.setData('orion-type', type); e.dataTransfer.effectAllowed = 'copy'; });
+      list.appendChild(item);
+    });
+  });
+}
+
+// ── INSPECTOR ────────────────────────────────────────────────
+function updateInspector(){
+  const insp = $('inspector');
+  const sel = getSelected();
+  if (sel.length === 0) {
+    insp.innerHTML = '<div class="insp-empty">Select a component on the canvas to edit it — Ctrl+click to multi-select — drag a new one from the library on the left.</div>';
+    return;
+  }
+  if (sel.length > 1) {
+    const total = sel.reduce((s, c) => s + calcComp(c), 0);
+    const types = [...new Set(sel.map(c => (COMPONENT_DEFS[c.type]||{}).name || c.type))];
+    insp.innerHTML = `
+      <div class="insp-head">
+        <div class="insp-title">
+          <div class="insp-stripe" style="background:var(--cyan)"></div>
+          <div class="insp-name-wrap">
+            <span class="insp-type">Multi-selection</span>
+            <span style="font-size:17px;font-weight:600;color:var(--text);letter-spacing:-.012em;">${sel.length} components selected</span>
+          </div>
+        </div>
+        <div class="insp-actions">
+          <button class="btn" id="i-rotate-multi-ccw" title="Shift+R · rotate all by −step">↺</button>
+          <button class="btn" id="i-rotate-multi" title="R · rotate all by +step">↻ Rotate ${state.rotateStep}°</button>
+          <select class="btn" id="i-rotstep-multi" title="Rotation step size" style="padding:6px 8px;">
+            <option value="5"  ${state.rotateStep==5  ?'selected':''}>5°</option>
+            <option value="15" ${state.rotateStep==15 ?'selected':''}>15°</option>
+            <option value="30" ${state.rotateStep==30 ?'selected':''}>30°</option>
+            <option value="45" ${state.rotateStep==45 ?'selected':''}>45°</option>
+            <option value="60" ${state.rotateStep==60 ?'selected':''}>60°</option>
+            <option value="90" ${state.rotateStep==90 ?'selected':''}>90°</option>
+          </select>
+          <button class="btn" id="i-mirror-multi-x" title="Mirror all horizontally">⇆ Mirror X</button>
+          <button class="btn" id="i-mirror-multi-y" title="Mirror all vertically">⇅ Mirror Y</button>
+          <button class="btn" id="i-duplicate-multi" title="D · duplicate all">⧉ Duplicate all</button>
+          <button class="btn btn-danger" id="i-delete-multi" title="Del · delete all">🗑 Delete all</button>
+        </div>
+      </div>
+      <div style="display:flex;gap:28px;font-size:12.5px;color:var(--muted);padding:6px 0 0;flex-wrap:wrap;">
+        <div>Combined raw: <strong style="color:var(--text);font-family:var(--mono);">${fmt(total)}</strong></div>
+        <div>Types: <strong style="color:var(--text);font-weight:500;">${types.join(' · ')}</strong></div>
+        <div style="color:var(--soft);">Drag any one to move them all · Ctrl+click to add/remove</div>
+      </div>`;
+    $('i-rotate-multi').addEventListener('click', () => rotateSelected());
+    $('i-rotate-multi-ccw').addEventListener('click', () => rotateSelected(-state.rotateStep));
+    $('i-rotstep-multi').addEventListener('change', e => {
+      state.rotateStep = Number(e.target.value) || 90;
+      save();
+      updateInspector();
+    });
+    $('i-mirror-multi-x').addEventListener('click', () => mirrorSelected('x'));
+    $('i-mirror-multi-y').addEventListener('click', () => mirrorSelected('y'));
+    $('i-duplicate-multi').addEventListener('click', duplicateSelected);
+    $('i-delete-multi').addEventListener('click', deleteSelected);
+    return;
+  }
+  const c = sel[0];
+  const def = COMPONENT_DEFS[c.type];
+  insp.innerHTML = `
+    <div class="insp-head">
+      <div class="insp-title">
+        <div class="insp-stripe" style="background:${def.color}"></div>
+        <div class="insp-name-wrap">
+          <span class="insp-type">${def.group} · ${c.type}</span>
+          <input class="insp-name-input" id="i-name" value="${c.name.replace(/"/g,'&quot;')}">
+        </div>
+      </div>
+      <div class="insp-actions">
+        <button class="btn" id="i-rotate-ccw" title="Shift+R · rotate −step">↺</button>
+        <button class="btn" id="i-rotate" title="R · rotate +step">↻ Rotate ${state.rotateStep}°</button>
+        <select class="btn" id="i-rotstep" title="Rotation step size" style="padding:6px 8px;">
+          <option value="5"  ${state.rotateStep==5  ?'selected':''}>5°</option>
+          <option value="15" ${state.rotateStep==15 ?'selected':''}>15°</option>
+          <option value="30" ${state.rotateStep==30 ?'selected':''}>30°</option>
+          <option value="45" ${state.rotateStep==45 ?'selected':''}>45°</option>
+          <option value="60" ${state.rotateStep==60 ?'selected':''}>60°</option>
+          <option value="90" ${state.rotateStep==90 ?'selected':''}>90°</option>
+        </select>
+        <button class="btn ${c.mirrorX ? 'active' : ''}" id="i-mirror-x" title="Mirror horizontally (flip along vertical axis)">⇆ Mirror X</button>
+        <button class="btn ${c.mirrorY ? 'active' : ''}" id="i-mirror-y" title="Mirror vertically (flip along horizontal axis)">⇅ Mirror Y</button>
+        <button class="btn" id="i-duplicate" title="D">⧉ Duplicate</button>
+        <button class="btn btn-danger" id="i-delete" title="Del">🗑 Delete</button>
+      </div>
+    </div>
+    <div class="insp-grid">
+      <div class="fld"><label>Length (mm)${def.fixed ? ' · <span style="color:var(--amber);">locked</span>' : def.lengthStep ? ' · <span style="color:var(--cyan);">step '+def.lengthStep+'</span>' : ''}</label><input type="number" id="i-length" value="${c.length}" min="${def.lengthStep || 0}" step="${def.lengthStep || 50}" ${def.fixed ? 'readonly disabled style="opacity:.55;cursor:not-allowed"' : ''}></div>
+      <div class="fld"><label>Width (mm)${def.fixed ? ' · <span style="color:var(--amber);">locked</span>' : ''}</label><input type="number" id="i-width" value="${c.width}" min="0" step="50" ${def.fixed ? 'readonly disabled style="opacity:.55;cursor:not-allowed"' : ''}></div>
+      ${c.type === 'scan' ? `<div class="fld fld-wide" style="grid-column:span 2"><label>Scan type · pricing multiplier</label><select id="i-scan-side"><option value="top" ${(c.scanSide||'top')==='top'?'selected':''}>Top-read · ×1 price</option><option value="multi" ${(c.scanSide||'top')==='multi'?'selected':''}>Multi-sided · ×3 price</option></select></div>` : ''}
+      <div class="fld"><label>Rotation°</label><input type="number" id="i-rotation" value="${c.rotation}" step="${state.rotateStep}"></div>
+      <div class="fld"><label>Qty</label><input type="number" id="i-qty" value="${c.qty}" min="1" step="1"></div>
+      <div class="fld"><label>Base £</label><input type="number" id="i-base" value="${c.base}" min="0" step="50"></div>
+      <div class="fld"><label>£ / metre</label><input type="number" id="i-perm" value="${c.perM}" min="0" step="10"></div>
+      <div class="fld"><label>Speed m/s</label><input type="number" id="i-speed" value="${c.speed}" min="0" step="0.1"></div>
+      <div class="fld"><label>Calculated</label><div class="fld-calc" id="i-calc">${fmt(calcComp(c))}</div></div>
+      <div class="fld fld-wide" style="grid-column:span 8"><label>Notes</label><textarea id="i-notes" rows="1">${(c.notes||'').replace(/</g,'&lt;')}</textarea></div>
+    </div>
+  `;
+  const bind = (id, key, asNum) => {
+    const el = $(id);
+    el.addEventListener('input', () => {
+      c[key] = asNum ? (Number(el.value) || 0) : el.value;
+      $('i-calc').textContent = fmt(calcComp(c));
+      render(); save();
+    });
+  };
+  bind('i-name', 'name', false);
+  bind('i-length', 'length', true);
+  // For length-stepped components, snap to nearest multiple on blur/change
+  if (def.lengthStep) {
+    $('i-length').addEventListener('change', () => {
+      const stepped = Math.max(def.lengthStep, Math.round(c.length / def.lengthStep) * def.lengthStep);
+      if (stepped !== c.length) {
+        c.length = stepped;
+        $('i-length').value = stepped;
+        $('i-calc').textContent = fmt(calcComp(c));
+        render(); save();
+      }
+    });
+  }
+  bind('i-width', 'width', true);
+  bind('i-rotation', 'rotation', true);
+  bind('i-qty', 'qty', true);
+  bind('i-base', 'base', true);
+  bind('i-perm', 'perM', true);
+  bind('i-speed', 'speed', true);
+  bind('i-notes', 'notes', false);
+  if (c.type === 'scan') {
+    $('i-scan-side').addEventListener('change', () => {
+      c.scanSide = $('i-scan-side').value;
+      $('i-calc').textContent = fmt(calcComp(c));
+      render(); save();
+    });
+  }
+  $('i-rotate').addEventListener('click', () => rotateSelected());
+  $('i-rotate-ccw').addEventListener('click', () => rotateSelected(-state.rotateStep));
+  $('i-rotstep').addEventListener('change', e => {
+    state.rotateStep = Number(e.target.value) || 90;
+    save();
+    updateInspector();
+  });
+  $('i-mirror-x').addEventListener('click', () => mirrorSelected('x'));
+  $('i-mirror-y').addEventListener('click', () => mirrorSelected('y'));
+  $('i-duplicate').addEventListener('click', duplicateSelected);
+  $('i-delete').addEventListener('click', deleteSelected);
+}
+
+// ── PRICING ───────────────────────────────────────────────────
+function recalc(){
+  let raw = 0;
+  state.components.forEach(c => raw += calcComp(c));
+  const p = state.pricing;
+  const controls = raw * p.controls / 100;
+  const installation = raw * p.installation / 100;
+  const contingency = raw * p.contingency / 100;
+  const subPre = raw + controls + installation + contingency;
+  const margin = subPre * p.margin / 100;
+  const finalROM = subPre + margin + p.delivery;
+  const lease = months => {
+    if (finalROM <= 0) return 0;
+    const r = 0.08 / 12, f = Math.pow(1+r, months);
+    return finalROM * (r*f) / (f-1);
+  };
+  return { raw, controls, installation, contingency, margin, delivery:p.delivery, finalROM, lease36:lease(36), lease48:lease(48), lease60:lease(60) };
+}
+function calcThroughput(){
+  const hasHelix = state.components.some(c => c.type === 'helix');
+  const moving = state.components.filter(c => c.speed > 0);
+  if (moving.length === 0 && !hasHelix) return null;
+  let speed, basis;
+  if (hasHelix) {
+    speed = 2.5;
+    basis = 'Helix sorter @ 2.5 m/s';
+  } else {
+    speed = Math.min(...moving.map(c => c.speed));
+    basis = 'slowest belt @ ' + speed + ' m/s';
+  }
+  const gap = 250;
+  const minPitch = (state.parcelMin + gap) / 1000;
+  const maxPitch = (state.parcelMax + gap) / 1000;
+  return {
+    max: Math.round((speed / minPitch) * 3600), // smallest parcel → highest TPH
+    min: Math.round((speed / maxPitch) * 3600), // largest parcel  → lowest TPH
+    speed,
+    basis
+  };
+}
+function updatePricing(){
+  const r = recalc();
+  $('cmp-count').textContent = state.components.reduce((s,c) => s + (Number(c.qty)||1), 0);
+  $('raw-total').textContent = fmt(r.raw);
+  $('v-controls').textContent = fmt(r.controls);
+  $('v-installation').textContent = fmt(r.installation);
+  $('v-contingency').textContent = fmt(r.contingency);
+  $('v-margin').textContent = fmt(r.margin);
+  $('v-delivery').textContent = fmt(r.delivery);
+  $('final-rom').textContent = fmt(r.finalROM);
+  $('lease-36').textContent = fmt(r.lease36)+' / mo';
+  $('lease-48').textContent = fmt(r.lease48)+' / mo';
+  $('lease-60').textContent = fmt(r.lease60)+' / mo';
+  const tp = calcThroughput();
+  const valEl = $('tput-val');
+  const detailEl = $('tput-detail');
+  if (tp) {
+    if (tp.min === tp.max) {
+      valEl.textContent = tp.min.toLocaleString('en-GB');
+      valEl.classList.remove('range');
+    } else {
+      valEl.textContent = tp.min.toLocaleString('en-GB') + ' – ' + tp.max.toLocaleString('en-GB');
+      valEl.classList.add('range');
+    }
+    detailEl.textContent = tp.basis + ' · 250 mm gap';
+  } else {
+    valEl.textContent = '—';
+    valEl.classList.remove('range');
+    detailEl.textContent = 'Add a belt with speed > 0';
+  }
+}
+function bindPricingInputs(){
+  const bindNum = (id, key) => {
+    const el = $(id);
+    el.value = state.pricing[key];
+    el.addEventListener('input', () => { state.pricing[key] = Number(el.value)||0; updatePricing(); save(); });
+  };
+  bindNum('u-controls', 'controls');
+  bindNum('u-installation', 'installation');
+  bindNum('u-contingency', 'contingency');
+  bindNum('u-margin', 'margin');
+  bindNum('u-delivery', 'delivery');
+  const pmin = $('tput-parcel-min');
+  pmin.value = state.parcelMin;
+  pmin.addEventListener('input', () => { state.parcelMin = Number(pmin.value)||150; updatePricing(); save(); });
+  const pmax = $('tput-parcel-max');
+  pmax.value = state.parcelMax;
+  pmax.addEventListener('input', () => { state.parcelMax = Number(pmax.value)||1200; updatePricing(); save(); });
+}
+
+// ── SAVE / LOAD (localStorage autosave) ──────────────────────
+// ── PROJECT LIBRARY ──────────────────────────────────────────
+// Multi-project storage in localStorage. Each project has its own
+// blob (components, pricing, scale, etc.). Currently-open project is
+// auto-saved on every change. Backup-all-to-file lets you snapshot
+// the entire library so nothing is at risk of browser data loss.
+const PROJECTS_KEY = 'orion-projects-v2';
+
+function newProjectId(){ return 'p_' + Math.random().toString(36).slice(2, 10); }
+
+function loadProjectsBlob(){
+  try {
+    const raw = localStorage.getItem(PROJECTS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e){}
+  return null;
+}
+function saveProjectsBlob(blob){
+  try { localStorage.setItem(PROJECTS_KEY, JSON.stringify(blob)); return true; }
+  catch(e){ console.warn('save failed', e); return false; }
+}
+
+// First-run migration from the old single-project STORE_KEY
+function ensureProjectsBlob(){
+  let blob = loadProjectsBlob();
+  if (blob && blob.currentId && blob.projects && blob.projects[blob.currentId]) return blob;
+  // Try to read legacy single-blob format and wrap it as a project
+  let legacy = null;
+  try { legacy = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch(e){}
+  const id = newProjectId();
+  const projectName = (legacy && legacy.project) || 'Untitled project';
+  const now = new Date().toISOString();
+  blob = {
+    version: 2,
+    currentId: id,
+    projects: {
+      [id]: {
+        id, name: projectName,
+        createdAt: now, updatedAt: now,
+        data: legacy || {}
+      }
+    }
+  };
+  saveProjectsBlob(blob);
+  return blob;
+}
+
+// Pack the current canvas state into a portable data object
+function currentStateAsData(){
+  return {
+    components: state.components,
+    pricing: state.pricing,
+    scale: state.scale,
+    project: state.project,
+    parcelMin: state.parcelMin,
+    parcelMax: state.parcelMax,
+    snapEnabled: state.snapEnabled,
+    rotateStep: state.rotateStep,
+    measurements: state.measurements
+  };
+}
+
+// Apply a data object back to the live state — runs migrations.
+function applyProjectData(d, name){
+  d = d || {};
+  state.components = Array.isArray(d.components) ? d.components : [];
+  state.pricing    = Object.assign({ margin:30, controls:8, installation:12, contingency:5, delivery:2500 }, d.pricing || {});
+  state.scale      = (typeof d.scale === 'number' && d.scale > 0) ? d.scale : 500;
+  state.project    = name || d.project || '';
+  state.parcelMin  = (typeof d.parcelMin === 'number') ? d.parcelMin : 150;
+  state.parcelMax  = (typeof d.parcelMax === 'number') ? d.parcelMax : 1200;
+  state.snapEnabled = !!d.snapEnabled;
+  state.rotateStep = (typeof d.rotateStep === 'number') ? d.rotateStep : 90;
+  state.measurements = Array.isArray(d.measurements) ? d.measurements : [];
+  // Legacy: single parcelLen from earlier versions
+  if (typeof d.parcelLen === 'number') {
+    if (typeof d.parcelMin !== 'number') state.parcelMin = d.parcelLen;
+    if (typeof d.parcelMax !== 'number') state.parcelMax = d.parcelLen;
+  }
+  // Per-component migrations
+  state.components.forEach(c => {
+    // Legacy: balltransfer → helix
+    if (c.type === 'balltransfer') {
+      c.type = 'helix';
+      c.length = Math.max(200, Math.round((c.length || 600) / 200) * 200);
+      c.width = 1050; c.base = 0; c.perM = 27500;
+    }
+    // Existing merges: bring up to the CAD-accurate dims (2291 × 969).
+    if (c.type === 'merge' || c.type === 'mergeL') {
+      if (c.length === 1800 || c.length === 2290) c.length = 2291;
+      if (c.width === 1050) c.width = 969;
+    }
+    if (typeof c.mirrorX !== 'boolean') c.mirrorX = false;
+    if (typeof c.mirrorY !== 'boolean') c.mirrorY = false;
+    const def = COMPONENT_DEFS[c.type];
+    if (def && def.fixed) { c.length = def.length; c.width = def.width; }
+    if (c.type === 'scan') {
+      if (!c.scanSide) c.scanSide = 'top';
+      if (c.length === 5310 && c.width === 1500) { c.length = 1500; c.width = 1500; }
+    }
+    if (c.type === 'helix' && c.base === 5500 && c.perM === 0) { c.base = 0; c.perM = 27500; }
+    if (c.type === 'helix' && c.length % 200 !== 0) {
+      c.length = Math.max(200, Math.round(c.length / 200) * 200);
+    }
+  });
+}
+
+// Auto-save called on every change — writes the current state into the active project slot.
+function save(){
+  const blob = ensureProjectsBlob();
+  const proj = blob.projects[blob.currentId];
+  if (!proj) return;
+  proj.data = currentStateAsData();
+  proj.updatedAt = new Date().toISOString();
+  if (state.project) proj.name = state.project; // keep slot name in sync with the input
+  saveProjectsBlob(blob);
+}
+
+function restore(){
+  const blob = ensureProjectsBlob();
+  const proj = blob.projects[blob.currentId];
+  applyProjectData(proj.data, proj.name);
+}
+
+// ── PROJECT LIBRARY ACTIONS ──────────────────────────────────
+function refreshAfterProjectSwitch(){
+  state.selectedIds = [];
+  state.measureFirst = null;
+  if ($('project-name')) $('project-name').value = state.project;
+  if ($('scale-mm')) $('scale-mm').value = state.scale;
+  if (typeof drawGrid === 'function') drawGrid();
+  if (typeof render === 'function') render();
+  if (typeof updatePricing === 'function') updatePricing();
+  if (typeof updateScaleChip === 'function') updateScaleChip();
+  if (typeof renderMeasurements === 'function') renderMeasurements();
+  if (typeof bindPricingInputs === 'function') {
+    // Re-sync pricing input values to the loaded project
+    ['u-controls','u-installation','u-contingency','u-margin','u-delivery'].forEach(id => {
+      const el = $(id); if (el) el.value = state.pricing[id.replace('u-','')] || 0;
+    });
+    const pmin = $('tput-parcel-min'); if (pmin) pmin.value = state.parcelMin;
+    const pmax = $('tput-parcel-max'); if (pmax) pmax.value = state.parcelMax;
+  }
+}
+
+function switchToProject(id){
+  save();
+  const blob = ensureProjectsBlob();
+  if (!blob.projects[id]) return;
+  blob.currentId = id;
+  saveProjectsBlob(blob);
+  const proj = blob.projects[id];
+  applyProjectData(proj.data, proj.name);
+  refreshAfterProjectSwitch();
+}
+
+function createNewProject(name){
+  save();
+  const blob = ensureProjectsBlob();
+  const id = newProjectId();
+  const now = new Date().toISOString();
+  blob.projects[id] = {
+    id, name: name || 'Untitled project',
+    createdAt: now, updatedAt: now,
+    data: {}
+  };
+  blob.currentId = id;
+  saveProjectsBlob(blob);
+  applyProjectData({}, blob.projects[id].name);
+  refreshAfterProjectSwitch();
+}
+
+function duplicateCurrentProject(){
+  save();
+  const blob = ensureProjectsBlob();
+  const cur = blob.projects[blob.currentId];
+  if (!cur) return;
+  const copy = JSON.parse(JSON.stringify(cur));
+  copy.id = newProjectId();
+  copy.name = (cur.name || 'Untitled') + ' (copy)';
+  copy.createdAt = new Date().toISOString();
+  copy.updatedAt = new Date().toISOString();
+  blob.projects[copy.id] = copy;
+  blob.currentId = copy.id;
+  saveProjectsBlob(blob);
+  applyProjectData(copy.data, copy.name);
+  refreshAfterProjectSwitch();
+}
+
+function renameProjectById(id, newName){
+  const blob = ensureProjectsBlob();
+  if (!blob.projects[id]) return;
+  blob.projects[id].name = newName;
+  blob.projects[id].updatedAt = new Date().toISOString();
+  if (blob.currentId === id) state.project = newName;
+  saveProjectsBlob(blob);
+  if ($('project-name')) $('project-name').value = state.project;
+}
+
+function deleteProjectById(id){
+  const blob = ensureProjectsBlob();
+  if (!blob.projects[id]) return;
+  const others = Object.keys(blob.projects).filter(k => k !== id);
+  if (others.length === 0) {
+    // Don't allow deleting the only project — replace with a blank one
+    const newId = newProjectId();
+    blob.projects[newId] = {
+      id: newId, name: 'Untitled project',
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+      data: {}
+    };
+    blob.currentId = newId;
+    delete blob.projects[id];
+    saveProjectsBlob(blob);
+    applyProjectData({}, 'Untitled project');
+    refreshAfterProjectSwitch();
+    return;
+  }
+  delete blob.projects[id];
+  if (blob.currentId === id) blob.currentId = others[0];
+  saveProjectsBlob(blob);
+  if (blob.currentId === others[0] || others.includes(blob.currentId) === false) {
+    const proj = blob.projects[blob.currentId];
+    applyProjectData(proj.data, proj.name);
+    refreshAfterProjectSwitch();
+  }
+}
+
+// Backup the ENTIRE library to a single JSON file (safe off-disk snapshot)
+function backupAllProjects(){
+  save();
+  const blob = ensureProjectsBlob();
+  const data = {
+    type: 'orion-conveyor-sketch-backup',
+    version: 2,
+    savedAt: new Date().toISOString(),
+    projectCount: Object.keys(blob.projects).length,
+    library: blob
+  };
+  const dl = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(dl);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'orion-sketch-backup-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 100);
+}
+
+function restoreFromBackupFile(file){
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      const lib = parsed.library || parsed;
+      if (!lib.projects || typeof lib.projects !== 'object') {
+        alert('Not a valid Orion sketch backup file.');
+        return;
+      }
+      const incomingCount = Object.keys(lib.projects).length;
+      const action = confirm(
+        'Restore backup (' + incomingCount + ' project' + (incomingCount===1?'':'s') + ')?\n\n' +
+        'OK  = Replace your current project library entirely with this backup.\n' +
+        'Cancel = Merge — add the backup\'s projects to your existing ones (renamed to "… (restored)").'
+      );
+      if (action) {
+        saveProjectsBlob(lib);
+      } else {
+        const existing = ensureProjectsBlob();
+        Object.values(lib.projects).forEach(p => {
+          const newId = newProjectId();
+          existing.projects[newId] = {
+            ...p, id: newId,
+            name: (p.name || 'Imported') + ' (restored)',
+            updatedAt: new Date().toISOString()
+          };
+        });
+        saveProjectsBlob(existing);
+      }
+      restore();
+      refreshAfterProjectSwitch();
+      renderProjectsList();
+      alert('Backup restored.');
+    } catch(err) {
+      alert('Failed to read backup: ' + (err?.message || err));
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ── PROJECTS MODAL UI ────────────────────────────────────────
+function openProjectsModal(){
+  renderProjectsList();
+  $('projects-modal').classList.add('open');
+}
+function closeProjectsModal(){
+  $('projects-modal').classList.remove('open');
+}
+function renderProjectsList(){
+  const blob = ensureProjectsBlob();
+  const wrap = $('projects-list');
+  if (!wrap) return;
+  const projs = Object.values(blob.projects).sort((a, b) => (b.updatedAt || '').localeCompare(a.updatedAt || ''));
+  wrap.innerHTML = '';
+  projs.forEach(p => {
+    const isCurrent = p.id === blob.currentId;
+    const cmpCount = (p.data && Array.isArray(p.data.components)) ? p.data.components.length : 0;
+    const row = document.createElement('div');
+    row.className = 'proj-row' + (isCurrent ? ' current' : '');
+    row.innerHTML =
+      '<div class="proj-info">' +
+        '<div class="proj-name">' + (isCurrent ? '● ' : '') + escapeHtml(p.name || 'Untitled') + '</div>' +
+        '<div class="proj-meta">' + cmpCount + ' component' + (cmpCount===1?'':'s') +
+          ' · updated ' + new Date(p.updatedAt || p.createdAt || Date.now()).toLocaleString() +
+        '</div>' +
+      '</div>' +
+      '<div class="proj-actions">' +
+        (isCurrent ? '<span class="proj-tag">Open</span>' : '<button class="btn" data-act="open">Open</button>') +
+        '<button class="btn" data-act="rename">Rename</button>' +
+        '<button class="btn btn-danger" data-act="delete">Delete</button>' +
+      '</div>';
+    row.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const act = btn.dataset.act;
+        if (act === 'open') { switchToProject(p.id); renderProjectsList(); }
+        else if (act === 'rename') {
+          const newName = prompt('Rename project:', p.name || '');
+          if (newName != null && newName.trim()) { renameProjectById(p.id, newName.trim()); renderProjectsList(); }
+        }
+        else if (act === 'delete') {
+          if (confirm('Delete project "' + (p.name || 'Untitled') + '"? This cannot be undone.\n\nTip: Use "Backup all to file" first if you want a safety copy.')) {
+            deleteProjectById(p.id); renderProjectsList();
+          }
+        }
+      });
+    });
+    wrap.appendChild(row);
+  });
+}
+
+// ── EXPORT / IMPORT JSON ─────────────────────────────────────
+function exportLayoutJson(){
+  const data = {
+    project: state.project, scale: state.scale, parcelLen: state.parcelLen,
+    pricing: state.pricing, components: state.components,
+    componentDefs: COMPONENT_DEFS, savedAt: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (state.project || 'orion-layout') + '.json';
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 100);
+}
+function importLayoutJson(file){
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const d = JSON.parse(e.target.result);
+      if (d.components) state.components = d.components;
+      if (d.pricing) Object.assign(state.pricing, d.pricing);
+      if (d.scale) state.scale = d.scale;
+      if (d.project) { state.project = d.project; $('project-name').value = d.project; }
+      if (d.parcelLen) state.parcelLen = d.parcelLen;
+      if (d.componentDefs) Object.assign(COMPONENT_DEFS, d.componentDefs);
+      $('scale-mm').value = state.scale;
+      renderLibrary();
+      bindPricingInputs();
+      drawGrid();
+      render();
+      save();
+    } catch(err) { alert('Could not parse layout JSON: ' + err.message); }
+  };
+  reader.readAsText(file);
+}
+
+// ── EXCEL PRICING IMPORT (SheetJS) ───────────────────────────
+// Expected columns (header row): type, name, base, perM, length, width, speed
+// Updates COMPONENT_DEFS entries that match `type`.
+function importPricingExcel(file){
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const wb = XLSX.read(data, { type:'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws);
+      let updated = 0;
+      rows.forEach(row => {
+        const t = String(row.type || '').trim().toLowerCase();
+        if (COMPONENT_DEFS[t]) {
+          if (row.name != null)  COMPONENT_DEFS[t].name = String(row.name);
+          if (row.base != null)  COMPONENT_DEFS[t].base = Number(row.base) || 0;
+          if (row.perM != null)  COMPONENT_DEFS[t].perM = Number(row.perM) || 0;
+          if (row.length != null) COMPONENT_DEFS[t].length = Number(row.length) || 0;
+          if (row.width != null) COMPONENT_DEFS[t].width = Number(row.width) || 0;
+          if (row.speed != null) COMPONENT_DEFS[t].speed = Number(row.speed) || 0;
+          updated++;
+        }
+      });
+      renderLibrary();
+      alert('Imported pricing for ' + updated + ' component types.');
+    } catch(err) { alert('Could not import: ' + err.message); }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ── EXPORT QUOTE — proposal-grade HTML ───────────────────────
+function exportQuote(){
+  const r = recalc();
+  const tp = calcThroughput();
+  const project = state.project || 'Untitled project';
+  const date = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+  // Group components by family
+  const byGroup = {};
+  state.components.forEach(c => {
+    const g = (COMPONENT_DEFS[c.type] || {}).group || 'Other';
+    (byGroup[g] = byGroup[g] || []).push(c);
+  });
+  const groupRows = (items) => items.map(c => {
+    const def = COMPONENT_DEFS[c.type] || {};
+    const dims = c.length > 0 ? c.length+' × '+c.width+' mm' : '&mdash;';
+    return `<tr>
+      <td style="border-left:3px solid ${def.color};padding-left:14px;"><strong>${escapeHtml(c.name)}</strong>${c.notes ? '<br><span class="note">'+escapeHtml(c.notes)+'</span>' : ''}</td>
+      <td style="font-family:var(--mono);font-size:12.5px;color:var(--mute);">${dims}</td>
+      <td class="r" style="font-family:var(--mono)">${c.qty}</td>
+      <td class="r amt">${fmt(calcComp(c))}</td>
+    </tr>`;
+  }).join('');
+  const groupSubtotal = items => items.reduce((s,c)=>s+calcComp(c),0);
+
+  const html = `<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8">
+<title>Orion MIS — ${escapeHtml(project)} · ROM Budget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0e1626;--ink2:#2a3447;--mute:#5b6878;--soft:#8a93a3;--line:#e4e8ee;--line2:#cfd6df;--accent:#0066CC;--accent-soft:#e7f0fb;--amber:#d97706;--mono:"JetBrains Mono",monospace;--serif:"DM Serif Display",serif;--sans:"Inter",sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);color:var(--ink);background:#fafbfc;line-height:1.55;font-size:14px;letter-spacing:-.003em;-webkit-font-smoothing:antialiased}
+em{font-family:var(--serif);font-style:italic;color:var(--accent);font-weight:400}
+.wrap{max-width:1100px;margin:0 auto;padding:42px 36px 64px}
+.cover{background:#fff;border:1px solid var(--line);border-radius:18px;padding:38px 40px;box-shadow:0 4px 18px rgba(15,29,49,.04)}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--accent)}
+h1{font-family:var(--sans);font-size:clamp(28px,3.4vw,40px);line-height:1.1;font-weight:600;letter-spacing:-.022em;color:var(--ink);margin:12px 0 8px}
+.lead{color:var(--ink2);font-size:15px;line-height:1.7;max-width:760px}
+.cover-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px;border-top:1px solid var(--line);padding-top:22px}
+.cover-meta dt{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600;margin-bottom:5px}
+.cover-meta dd{font-size:15px;font-weight:500;color:var(--ink)}
+.rom-stamp{margin-top:18px;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);background:#fef3c7;border:1px solid var(--amber);border-radius:999px;padding:7px 14px;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+.stat-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--accent);font-weight:600;text-transform:uppercase;margin-bottom:10px}
+.stat-val{font-family:var(--serif);font-style:italic;font-size:28px;color:var(--ink);line-height:1.04;letter-spacing:-.015em}
+.stat-val small{font-family:var(--sans);font-size:12px;color:var(--soft);font-style:normal;font-weight:400;margin-left:4px}
+
+.section{margin-top:36px}
+h2{font-family:var(--sans);font-size:24px;line-height:1.15;font-weight:600;letter-spacing:-.018em;color:var(--ink);margin-bottom:14px}
+.tbl-wrap{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(15,29,49,.03);margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead th{background:#f3f6fa;text-align:left;padding:13px 18px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;border-bottom:1px solid var(--line2)}
+thead th.r,td.r{text-align:right}
+tbody td{padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:nth-child(even) td{background:#fbfcfd}
+.amt{font-family:var(--mono);color:var(--ink);font-weight:500;white-space:nowrap}
+.note{font-size:12px;color:var(--mute);margin-top:3px}
+.group-h{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:18px 0 6px;padding-left:4px}
+.subtotal{background:#f3f6fa;border:1px solid var(--line);border-radius:10px;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:13px;margin-top:-8px;margin-bottom:24px}
+.subtotal .lbl{color:var(--mute);letter-spacing:.04em}
+.subtotal .v{font-size:15px;color:var(--ink);font-weight:600}
+
+.totals{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-top:8px}
+.t-row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:8px 0;font-size:13.5px;border-bottom:1px dotted var(--line)}
+.t-row .lbl{color:var(--mute)}
+.t-row .v{font-family:var(--mono);color:var(--ink);font-weight:500;text-align:right}
+.t-row.head .lbl{font-weight:600;color:var(--ink)}
+.t-row:last-child{border-bottom:none}
+.final-bar{margin-top:18px;background:linear-gradient(135deg,#0066CC,#00A6D6);color:#fff;border-radius:14px;padding:24px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.final-bar .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.92)}
+.final-bar .v{font-family:var(--serif);font-style:italic;font-size:38px;letter-spacing:-.02em;line-height:1}
+
+.lease-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-top:16px}
+.lease-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;flex-wrap:wrap;gap:10px}
+.lease-h-title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.lease-h-meta{font-size:12px;color:var(--mute)}
+.lease-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.lease-cell{background:#f3f6fa;border-radius:10px;padding:14px 16px;border:1px solid var(--line)}
+.lease-cell .t{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase;margin-bottom:8px;font-weight:600}
+.lease-cell .v{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink);line-height:1.04;letter-spacing:-.015em}
+.lease-cell .v small{font-family:var(--sans);font-size:12px;font-style:normal;color:var(--mute);font-weight:400;margin-left:3px}
+
+.disclaimer{margin-top:26px;padding:18px 22px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:12px;color:var(--mute);line-height:1.7}
+.disclaimer strong{color:var(--ink2);font-weight:600}
+.footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--soft);letter-spacing:.04em;flex-wrap:wrap;gap:14px}
+
+@media(max-width:780px){.stats{grid-template-columns:repeat(2,1fr)}.cover-meta{grid-template-columns:1fr}.lease-grid{grid-template-columns:1fr}}
+@media print{@page{size:A4;margin:14mm}body{background:#fff}.wrap{padding:0;max-width:none}.cover,.tbl-wrap,.totals,.lease-card,.disclaimer,.stat{box-shadow:none;border:1px solid #d1d5db}.final-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}thead th{background:#f3f6fa!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.section{page-break-inside:avoid}.print-btn{display:none}}
+.print-btn{position:fixed;top:18px;right:18px;background:var(--accent);color:#fff;border:none;font-family:var(--sans);font-size:13px;font-weight:500;padding:9px 16px;border-radius:7px;cursor:pointer;box-shadow:0 4px 12px rgba(0,102,204,.25);z-index:50}
+.print-btn:hover{background:#0a4a99}
+</style></head><body>
+
+<button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+
+<div class="wrap">
+
+  <div class="cover">
+    <div class="eyebrow">ROM Budget · Prepared by Orion MIS</div>
+    <h1>${escapeHtml(project)} <em>—</em> Indicative Conveyor Pricing</h1>
+    <p class="lead">Rough Order of Magnitude pricing for the conveyor and sortation scope sketched below. Figures are indicative and intended to inform early-stage planning. Subject to site survey and final design approval.</p>
+    <dl class="cover-meta">
+      <div><dt>Project</dt><dd>${escapeHtml(project)}</dd></div>
+      <div><dt>Date</dt><dd>${date}</dd></div>
+      <div><dt>Reference</dt><dd>ORN-ROM-${Date.now().toString(36).toUpperCase().slice(-6)}</dd></div>
+    </dl>
+    <span class="rom-stamp">⚠ ROM &middot; Indicative only &middot; Subject to site survey</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-lbl">Components</div><div class="stat-val">${state.components.reduce((s,c)=>s+(Number(c.qty)||1),0)}</div></div>
+    <div class="stat"><div class="stat-lbl">Throughput range</div><div class="stat-val">${tp ? (tp.min === tp.max ? tp.min.toLocaleString('en-GB') : tp.min.toLocaleString('en-GB')+'–'+tp.max.toLocaleString('en-GB')) : '—'}<small>${tp ? ' pph' : ''}</small></div></div>
+    <div class="stat"><div class="stat-lbl">Final ROM</div><div class="stat-val">${fmt(r.finalROM)}</div></div>
+    <div class="stat"><div class="stat-lbl">From / month</div><div class="stat-val">${fmt(r.lease60)}<small> 60 mo</small></div></div>
+  </div>
+
+  <section class="section">
+    <h2>Scope of supply &amp; <em>indicative pricing</em></h2>
+    ${Object.keys(byGroup).map(g => `
+      <div class="group-h">${g}</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:48%">Item</th><th>Dimensions</th><th class="r" style="width:60px">Qty</th><th class="r" style="width:130px">Price (GBP)</th></tr></thead>
+          <tbody>${groupRows(byGroup[g])}</tbody>
+        </table>
+      </div>
+      <div class="subtotal"><span class="lbl">${g} subtotal</span><span class="v">${fmt(groupSubtotal(byGroup[g]))}</span></div>
+    `).join('')}
+  </section>
+
+  <section class="section">
+    <h2>Commercial <em>build-up</em></h2>
+    <div class="totals">
+      <div class="t-row head"><span class="lbl">Component cost (raw)</span><span class="v">${fmt(r.raw)}</span></div>
+      <div class="t-row"><span class="lbl">Controls / WCS allowance (${state.pricing.controls}%)</span><span class="v">${fmt(r.controls)}</span></div>
+      <div class="t-row"><span class="lbl">Installation allowance (${state.pricing.installation}%)</span><span class="v">${fmt(r.installation)}</span></div>
+      <div class="t-row"><span class="lbl">Contingency (${state.pricing.contingency}%)</span><span class="v">${fmt(r.contingency)}</span></div>
+      <div class="t-row"><span class="lbl">Margin (${state.pricing.margin}%)</span><span class="v">${fmt(r.margin)}</span></div>
+      <div class="t-row"><span class="lbl">Delivery (fixed)</span><span class="v">${fmt(r.delivery)}</span></div>
+    </div>
+    <div class="final-bar"><span class="lbl">Final ROM · excl. VAT</span><span class="v">${fmt(r.finalROM)}</span></div>
+  </section>
+
+  <section class="section">
+    <div class="lease-card">
+      <div class="lease-head"><span class="lease-h-title">Indicative monthly lease</span><span class="lease-h-meta">8% rate · no deposit · subject to finance approval</span></div>
+      <div class="lease-grid">
+        <div class="lease-cell"><div class="t">36 months</div><div class="v">${fmt(r.lease36)}<small> / mo</small></div></div>
+        <div class="lease-cell"><div class="t">48 months</div><div class="v">${fmt(r.lease48)}<small> / mo</small></div></div>
+        <div class="lease-cell"><div class="t">60 months</div><div class="v">${fmt(r.lease60)}<small> / mo</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="disclaimer"><strong>ROM Budget — indicative only.</strong> Pricing shown is a Rough Order of Magnitude estimate prepared for early-stage planning. All figures are subject to site survey and final design approval. Lease figures are an illustration only and subject to finance-provider credit approval and a formal finance quotation. All prices exclude VAT, which will be applied at the prevailing rate. Built, tested and supported by Orion MIS.</p>
+
+  <div class="footer">
+    <span>© ${new Date().getFullYear()} Orion MIS · Conveyor Sketch Tool</span>
+    <span>Generated ${new Date().toLocaleString('en-GB')}</span>
+  </div>
+
+</div>
+</body></html>`;
+
+  const w = window.open('', '_blank');
+  if (!w) { alert('Pop-up blocked. Allow pop-ups to view the quote.'); return; }
+  w.document.open();
+  w.document.write(html);
+  w.document.close();
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+}
+
+// ── MEASUREMENT TOOL ──────────────────────────────────────────
+// Click two points on the canvas to measure the distance between them.
+// Distance shown in mm (using the current scale). Multiple measurements persist.
+let measureLayer = null;
+let measurePreview = null;
+
+function initMeasureLayer(){
+  if (measureLayer) return;
+  measureLayer = new Konva.Group({ listening:false });
+  overlayLayer.add(measureLayer);
+}
+
+function setMeasureMode(on){
+  state.measureMode = !!on;
+  state.measureFirst = null;
+  stage.draggable(!state.measureMode);
+  const container = $('canvas-container');
+  if (container) container.style.cursor = state.measureMode ? 'crosshair' : '';
+  const btn = $('btn-measure');
+  if (btn) {
+    btn.classList.toggle('active', state.measureMode);
+    btn.textContent = '📏 Measure' + (state.measureMode ? ' (Esc to exit)' : '');
+  }
+  renderMeasurements();
+}
+
+function clearMeasurements(){
+  state.measurements = [];
+  state.measureFirst = null;
+  renderMeasurements();
+}
+
+function pxDistToMm(pxDist){
+  return pxDist / pxPerMm();
+}
+
+function fmtMm(mm){
+  if (mm >= 1000) return (mm / 1000).toFixed(2) + ' m';
+  return Math.round(mm) + ' mm';
+}
+
+function onMeasureClick(worldX, worldY){
+  if (!state.measureFirst) {
+    state.measureFirst = { x: worldX, y: worldY };
+  } else {
+    state.measurements.push({
+      p1: state.measureFirst,
+      p2: { x: worldX, y: worldY }
+    });
+    state.measureFirst = null;
+    save();
+  }
+  renderMeasurements();
+}
+
+function onMeasureMove(worldX, worldY){
+  if (!state.measureMode || !state.measureFirst) return;
+  drawMeasurePreview(state.measureFirst, { x: worldX, y: worldY });
+}
+
+function drawMeasurePreview(p1, p2){
+  if (!measurePreview) return;
+  measurePreview.destroyChildren();
+  drawSingleMeasurement(measurePreview, p1, p2, true);
+  overlayLayer.batchDraw();
+}
+
+function drawSingleMeasurement(parent, p1, p2, isPreview){
+  const dx = p2.x - p1.x;
+  const dy = p2.y - p1.y;
+  const lenPx = Math.hypot(dx, dy);
+  const lenMm = pxDistToMm(lenPx);
+  const stroke = isPreview ? 'rgba(50,213,131,.65)' : '#32D583';
+  // Main measurement line
+  parent.add(new Konva.Line({
+    points: [p1.x, p1.y, p2.x, p2.y],
+    stroke, strokeWidth: 1.4, strokeScaleEnabled: false,
+    dash: isPreview ? [6,4] : null
+  }));
+  // Endpoint markers
+  [p1, p2].forEach(p => {
+    parent.add(new Konva.Circle({
+      x: p.x, y: p.y, radius: 4,
+      stroke, strokeWidth: 1.4, strokeScaleEnabled: false,
+      fill: 'rgba(50,213,131,.18)'
+    }));
+  });
+  // Distance label at midpoint
+  if (lenPx > 12) {
+    const mx = (p1.x + p2.x) / 2;
+    const my = (p1.y + p2.y) / 2;
+    const lbl = new Konva.Label({
+      x: mx, y: my, listening: false,
+      offsetX: 0, offsetY: 0
+    });
+    lbl.add(new Konva.Tag({
+      fill: 'rgba(7,17,31,0.92)',
+      stroke: stroke, strokeWidth: 1, strokeScaleEnabled: false,
+      cornerRadius: 4
+    }));
+    lbl.add(new Konva.Text({
+      text: ' ' + fmtMm(lenMm) + ' ',
+      fontFamily: 'JetBrains Mono, ui-monospace, monospace',
+      fontSize: 12, fontStyle: '600',
+      padding: 4, fill: '#fff'
+    }));
+    // Cancel zoom scaling so label stays readable at any zoom
+    const zoom = stage.scaleX();
+    lbl.scale({ x: 1/zoom, y: 1/zoom });
+    parent.add(lbl);
+  }
+}
+
+function renderMeasurements(){
+  initMeasureLayer();
+  measureLayer.destroyChildren();
+  // Container for the in-progress preview
+  measurePreview = new Konva.Group({ listening: false });
+  measureLayer.add(measurePreview);
+  // Persistent measurements
+  state.measurements.forEach(m => {
+    const g = new Konva.Group({ listening: false });
+    drawSingleMeasurement(g, m.p1, m.p2, false);
+    measureLayer.add(g);
+  });
+  // Refresh the clear button visibility
+  const clearBtn = $('btn-measure-clear');
+  if (clearBtn) clearBtn.style.display = state.measurements.length > 0 ? '' : 'none';
+  overlayLayer.batchDraw();
+}
+
+// ── AI SKETCH IMPORT ──────────────────────────────────────────
+// Sends a pasted/dropped image to the Claude API and adds detected
+// conveyor components to the canvas. API key stored in localStorage only.
+const AI_KEY_STORE = 'orion-claude-api-key';
+const aiState = {
+  imageBase64: null,
+  imageMediaType: null,
+  detected: null  // last parsed array of components
+};
+
+function openAiModal(){
+  $('ai-modal').classList.add('open');
+  const keyInput = $('ai-key');
+  if (keyInput && !keyInput.value) {
+    try { keyInput.value = localStorage.getItem(AI_KEY_STORE) || ''; } catch(e){}
+  }
+}
+function closeAiModal(){
+  $('ai-modal').classList.remove('open');
+}
+
+function setAiStatus(text, cls){
+  const el = $('ai-status');
+  if (!el) return;
+  el.className = 'status' + (cls ? ' ' + cls : '');
+  el.innerHTML = text;
+}
+
+function handleAiFile(file){
+  if (!file || !file.type.startsWith('image/')) {
+    setAiStatus('Not an image file.', 'err');
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = () => {
+    const dataUrl = reader.result;
+    const m = dataUrl.match(/^data:(.+?);base64,(.+)$/);
+    if (!m) { setAiStatus('Could not read image.', 'err'); return; }
+    aiState.imageMediaType = m[1];
+    aiState.imageBase64 = m[2];
+    const preview = $('ai-preview');
+    preview.src = dataUrl;
+    preview.style.display = '';
+    $('ai-results').style.display = 'none';
+    $('ai-add').style.display = 'none';
+    setAiStatus('Image ready (' + Math.round(aiState.imageBase64.length * 3 / 4 / 1024) + ' KB). Click Analyse to detect components.');
+  };
+  reader.onerror = () => setAiStatus('Failed to read image.', 'err');
+  reader.readAsDataURL(file);
+}
+
+function validComponentTypes(){ return Object.keys(COMPONENT_DEFS); }
+
+async function callClaudeVision(){
+  const apiKey = ($('ai-key').value || '').trim();
+  if (!apiKey) { setAiStatus('Add a Claude API key first.', 'err'); return; }
+  if (!aiState.imageBase64) { setAiStatus('Add an image first.', 'err'); return; }
+  // Save key for next time
+  try { localStorage.setItem(AI_KEY_STORE, apiKey); } catch(e){}
+
+  setAiStatus('<span class="spinner"></span> Analysing image with Claude…');
+  $('ai-analyse').disabled = true;
+
+  const types = validComponentTypes();
+  const tool = {
+    name: 'add_components',
+    description: 'Add the conveyor / sortation components you detected in the drawing to the layout.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        scale_note: { type: 'string', description: 'Note about how you determined the scale of the drawing.' },
+        confidence: { type: 'string', enum: ['high','medium','low'], description: 'Overall confidence in the detection.' },
+        components: {
+          type: 'array',
+          description: 'Each detected component.',
+          items: {
+            type: 'object',
+            properties: {
+              type:     { type: 'string', enum: types, description: 'Component type from the available library.' },
+              x:        { type: 'number', description: 'X position of the component centre in mm (0 = left edge of drawing).' },
+              y:        { type: 'number', description: 'Y position of the component centre in mm (0 = top edge of drawing).' },
+              rotation: { type: 'number', description: 'Rotation in degrees, 0 = component long axis pointing right.' },
+              length:   { type: 'number', description: 'Component length in mm (along its long axis).' },
+              width:    { type: 'number', description: 'Component width in mm (perpendicular to long axis).' },
+              name:     { type: 'string', description: 'Optional friendly name override.' }
+            },
+            required: ['type','x','y']
+          }
+        }
+      },
+      required: ['components']
+    }
+  };
+
+  const prompt = [
+    'You are looking at a conveyor / sortation / warehouse layout drawing.',
+    'Identify each conveyor or sortation component you can see and return them via the add_components tool.',
+    '',
+    'Available component types (use the type code exactly):',
+    '  • belt    — belt conveyor (rectangle)',
+    '  • driven  — driven roller conveyor (rectangle)',
+    '  • gravity — gravity roller conveyor (rectangle, no motor)',
+    '  • bend    — 60° powered bend (curved annular sector)',
+    '  • merge   — Right merge (30° right triangle, RED mate edge on the right)',
+    '  • mergeL  — Left merge (mirror of merge, RED mate edge on the left)',
+    '  • scan    — scan / camera tunnel (red dashed frame)',
+    '  • helix   — Helix sorter module (ball-grid sortation)',
+    '  • chute   — dispatch chute',
+    '  • kickout — reject / rework lane',
+    '  • lift    — vertical lift',
+    '  • controls — control / WCS allowance (use sparingly, only if labelled)',
+    '',
+    'For each component, set:',
+    '  • x, y   = centre position in mm (use 0,0 = top-left of the visible drawing area; use any dimensions on the drawing or estimate from proportions if none are given)',
+    '  • rotation = degrees clockwise from horizontal (0 = long axis pointing right)',
+    '  • length, width = real dimensions in mm (use any sizes shown on the drawing; otherwise use sensible defaults: belt/driven/gravity 3000×1050, bend 1500×1050, merge 2291×969, scan 1500×1500, helix length is multiples of 200mm × 1050)',
+    '',
+    'Be conservative — only return components you are reasonably confident about. Set the confidence field accordingly.',
+    'Set scale_note to explain how you determined the drawing scale (e.g. "1 grid square = 500 mm" or "inferred from labelled dimensions").'
+  ].join('\n');
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-5',
+        max_tokens: 8000,
+        tools: [tool],
+        tool_choice: { type: 'tool', name: 'add_components' },
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: aiState.imageMediaType, data: aiState.imageBase64 } },
+            { type: 'text', text: prompt }
+          ]
+        }]
+      })
+    });
+    if (!resp.ok) {
+      const errText = await resp.text();
+      let msg = 'API error ' + resp.status;
+      try { const j = JSON.parse(errText); if (j.error?.message) msg += ': ' + j.error.message; } catch(e){}
+      setAiStatus(msg, 'err');
+      return;
+    }
+    const data = await resp.json();
+    const toolUse = (data.content || []).find(c => c.type === 'tool_use');
+    if (!toolUse?.input?.components) {
+      setAiStatus('No components were detected. Try a cleaner image or a different view.', 'err');
+      return;
+    }
+    aiState.detected = toolUse.input;
+    showAiResults(toolUse.input);
+  } catch(err) {
+    setAiStatus('Request failed: ' + (err?.message || err), 'err');
+  } finally {
+    $('ai-analyse').disabled = false;
+  }
+}
+
+function showAiResults(payload){
+  const ul = $('ai-detected');
+  ul.innerHTML = '';
+  payload.components.forEach((c, i) => {
+    const def = COMPONENT_DEFS[c.type] || {};
+    const li = document.createElement('li');
+    li.innerHTML = '<strong>' + (i+1) + '. ' + (def.name || c.type) + '</strong> · ' +
+      Math.round(c.x) + ', ' + Math.round(c.y) + ' mm · ' +
+      (c.rotation ? c.rotation + '°' : '0°') + ' · ' +
+      (c.length || def.length || '?') + '×' + (c.width || def.width || '?') + ' mm';
+    ul.appendChild(li);
+  });
+  $('ai-results').style.display = '';
+  $('ai-add').style.display = '';
+  const conf = payload.confidence ? ' (confidence: ' + payload.confidence + ')' : '';
+  const note = payload.scale_note ? ' · ' + escapeHtml(payload.scale_note) : '';
+  setAiStatus('Detected ' + payload.components.length + ' component' + (payload.components.length===1?'':'s') + conf + note, 'ok');
+}
+
+function addDetectedToCanvas(){
+  if (!aiState.detected?.components?.length) return;
+  const ppm = pxPerMm();
+  // Place components — convert their mm positions to world pixels, offset by canvas centre
+  const centre = screenToWorld(stage.width()/2, stage.height()/2);
+  // Find bbox of detected layout so we can centre it on the viewport
+  const xs = aiState.detected.components.map(c => c.x);
+  const ys = aiState.detected.components.map(c => c.y);
+  const minX = Math.min(...xs), maxX = Math.max(...xs);
+  const minY = Math.min(...ys), maxY = Math.max(...ys);
+  const cxMm = (minX + maxX) / 2;
+  const cyMm = (minY + maxY) / 2;
+
+  const newIds = [];
+  aiState.detected.components.forEach(d => {
+    const def = COMPONENT_DEFS[d.type];
+    if (!def) return;
+    const length = d.length || def.length;
+    const width  = d.width  || def.width;
+    const c = {
+      id: newId(),
+      type: d.type,
+      name: d.name || def.name,
+      x: centre.x + (d.x - cxMm) * ppm,
+      y: centre.y + (d.y - cyMm) * ppm,
+      length, width,
+      rotation: d.rotation || 0,
+      qty: 1,
+      mirrorX: false, mirrorY: false,
+      base: def.base, perM: def.perM,
+      speed: def.speed,
+      notes: 'Imported from AI sketch — confidence: ' + (aiState.detected.confidence || 'unknown')
+    };
+    if (d.type === 'scan') c.scanSide = 'top';
+    if (d.type === 'helix') c.length = Math.max(200, Math.round(length / 200) * 200);
+    state.components.push(c);
+    newIds.push(c.id);
+  });
+  state.selectedIds = newIds;
+  render(); save();
+  closeAiModal();
+}
+
+// ── KEYBOARD ──────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  // Esc cancels measure mode + closes any open modal
+  if (e.key === 'Escape') {
+    if (state.measureMode) { setMeasureMode(false); e.preventDefault(); return; }
+    if ($('ai-modal').classList.contains('open')) { closeAiModal(); e.preventDefault(); return; }
+    if ($('projects-modal').classList.contains('open')) { closeProjectsModal(); e.preventDefault(); return; }
+  }
+  const tag = (e.target.tagName || '').toUpperCase();
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  if (state.selectedIds.length === 0) return;
+  if (e.key === 'r' || e.key === 'R') {
+    rotateSelected(e.shiftKey ? -state.rotateStep : state.rotateStep);
+    e.preventDefault();
+  }
+  else if (e.key === 'm' || e.key === 'M') {
+    mirrorSelected(e.shiftKey ? 'y' : 'x');
+    e.preventDefault();
+  }
+  else if (e.key === 'd' || e.key === 'D') { duplicateSelected(); e.preventDefault(); }
+  else if (e.key === 'Delete' || e.key === 'Backspace') { deleteSelected(); e.preventDefault(); }
+});
+
+// ── INIT ──────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  restore();
+  $('project-name').value = state.project;
+  $('project-name').addEventListener('input', e => { state.project = e.target.value; save(); });
+  $('scale-mm').value = state.scale;
+  $('scale-mm').addEventListener('input', e => {
+    state.scale = Number(e.target.value) || 500;
+    drawGrid(); render(); updateScaleChip(); save();
+  });
+  $('btn-zoom-in').addEventListener('click', () => zoomBy(1.25));
+  $('btn-zoom-out').addEventListener('click', () => zoomBy(1/1.25));
+  $('btn-zoom-reset').addEventListener('click', resetView);
+  initStage();
+  renderLibrary();
+  bindPricingInputs();
+  render();
+  updatePricing();
+  updateZoomDisplay();
+  updateScaleChip();
+
+  // Wire toolbar buttons
+  $('btn-export-quote').addEventListener('click', exportQuote);
+  $('btn-export-json').addEventListener('click', exportLayoutJson);
+  $('btn-import-json').addEventListener('click', () => $('file-json').click());
+  $('file-json').addEventListener('change', e => { if (e.target.files[0]) importLayoutJson(e.target.files[0]); e.target.value = ''; });
+  $('btn-import-excel').addEventListener('click', () => $('file-excel').click());
+  $('file-excel').addEventListener('change', e => { if (e.target.files[0]) importPricingExcel(e.target.files[0]); e.target.value = ''; });
+  $('btn-clear').addEventListener('click', () => {
+    if (state.components.length === 0) return;
+    if (!confirm('Clear all '+state.components.length+' components from the canvas? Pricing settings will be kept.')) return;
+    state.components = []; state.selectedIds = []; render(); save();
+  });
+  const snapBtn = $('btn-snap');
+  const refreshSnapBtn = () => {
+    snapBtn.textContent = '🧲 Snap-to-connect: ' + (state.snapEnabled ? 'On' : 'Off');
+    snapBtn.classList.toggle('active', state.snapEnabled);
+  };
+  snapBtn.addEventListener('click', () => {
+    state.snapEnabled = !state.snapEnabled;
+    refreshSnapBtn();
+    save();
+  });
+  refreshSnapBtn();
+
+  // Measurement
+  $('btn-measure').addEventListener('click', () => setMeasureMode(!state.measureMode));
+  $('btn-measure-clear').addEventListener('click', clearMeasurements);
+  // Render any persisted measurements that came back from restore()
+  if (state.measurements && state.measurements.length) renderMeasurements();
+
+  // Projects library
+  $('btn-projects').addEventListener('click', openProjectsModal);
+  $('projects-close').addEventListener('click', closeProjectsModal);
+  $('projects-modal').addEventListener('click', e => { if (e.target.id === 'projects-modal') closeProjectsModal(); });
+  $('btn-proj-new').addEventListener('click', () => {
+    const name = prompt('Name the new project:', 'Untitled project');
+    if (name == null) return;
+    createNewProject(name.trim() || 'Untitled project');
+    renderProjectsList();
+  });
+  $('btn-proj-dup').addEventListener('click', () => { duplicateCurrentProject(); renderProjectsList(); });
+  $('btn-proj-backup').addEventListener('click', backupAllProjects);
+  $('btn-proj-restore').addEventListener('click', () => $('file-backup').click());
+  $('file-backup').addEventListener('change', e => {
+    if (e.target.files[0]) restoreFromBackupFile(e.target.files[0]);
+    e.target.value = '';
+  });
+
+  // AI sketch import
+  $('btn-ai').addEventListener('click', openAiModal);
+  $('ai-close').addEventListener('click', closeAiModal);
+  $('ai-modal').addEventListener('click', e => { if (e.target.id === 'ai-modal') closeAiModal(); });
+  $('ai-analyse').addEventListener('click', callClaudeVision);
+  $('ai-add').addEventListener('click', addDetectedToCanvas);
+  const drop = $('ai-drop');
+  drop.addEventListener('click', () => $('file-ai-image').click());
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('dragover'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('dragover'));
+  drop.addEventListener('drop', e => {
+    e.preventDefault();
+    drop.classList.remove('dragover');
+    const f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) handleAiFile(f);
+  });
+  $('file-ai-image').addEventListener('change', e => {
+    if (e.target.files[0]) handleAiFile(e.target.files[0]);
+    e.target.value = '';
+  });
+  // Paste an image from the clipboard when the modal is open
+  window.addEventListener('paste', e => {
+    if (!$('ai-modal').classList.contains('open')) return;
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const it of items) {
+      if (it.type && it.type.startsWith('image/')) {
+        const f = it.getAsFile();
+        if (f) { handleAiFile(f); e.preventDefault(); break; }
+      }
+    }
+  });
+
+  // Collapsible pricing blocks
+  const COLLAPSE_KEY = 'orion-tool-collapsed-blocks';
+  let collapsed = [];
+  try { collapsed = JSON.parse(localStorage.getItem(COLLAPSE_KEY) || '[]'); } catch(e){}
+  document.querySelectorAll('.p-block').forEach((blk, i) => {
+    const header = blk.querySelector('.p-block-h');
+    if (!header) return;
+    const key = header.textContent.trim();
+    if (collapsed.includes(key)) blk.classList.add('collapsed');
+    header.addEventListener('click', () => {
+      blk.classList.toggle('collapsed');
+      const isCollapsed = blk.classList.contains('collapsed');
+      collapsed = collapsed.filter(x => x !== key);
+      if (isCollapsed) collapsed.push(key);
+      try { localStorage.setItem(COLLAPSE_KEY, JSON.stringify(collapsed)); } catch(e){}
+    });
+  });
+});
+</script>
+<script>
+// ════════════════════════════════════════════════════════════
+// PUBLIC BUILD · EMAIL GATE — unlocks the ROM panel + quote export.
+// Submits to Basin (info@orionmis.co.uk), persists in localStorage.
+// ════════════════════════════════════════════════════════════
+(function(){
+  const KEY = 'orion_tool_unlock_v1';
+  const BASIN = 'https://usebasin.com/f/d04288a27fc6';
+  const gate = document.getElementById('priceGate');
+
+  function unlocked(){ try{ return !!localStorage.getItem(KEY); }catch(e){ return false; } }
+  if (unlocked() && gate) gate.remove();
+
+  const form = document.getElementById('pgForm');
+  if (form) form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const name  = form.querySelector('[name="name"]');
+    const email = form.querySelector('[name="email"]');
+    const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+    name.style.borderColor  = name.value.trim() ? '' : 'rgba(249,112,102,.7)';
+    email.style.borderColor = okEmail ? '' : 'rgba(249,112,102,.7)';
+    if (!name.value.trim() || !okEmail) return;
+
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = 'Unlocking…';
+    const fd = new FormData(form);
+    fd.append('_subject', 'Sketch tool unlock — ' + (fd.get('company') || fd.get('email')));
+    fd.append('source', 'Conveyor sketch tool');
+
+    try{
+      const res = await fetch(BASIN, { method:'POST', body:fd, headers:{ 'Accept':'application/json' } });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      try{ localStorage.setItem(KEY, JSON.stringify({ email: fd.get('email'), ts: Date.now() })); }catch(err){}
+      if (gate) gate.remove();
+    }catch(err){
+      btn.disabled = false; btn.textContent = 'Unlock pricing →';
+      alert('That didn\'t send — please try again, or email info@orionmis.co.uk and we\'ll unlock you manually.');
+    }
+  });
+
+  // Export Quote is gated too — document-level capture runs before the tool's own handler
+  document.addEventListener('click', function(e){
+    const t = e.target && e.target.closest && e.target.closest('#btn-export-quote');
+    if (t && !unlocked()){
+      e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation();
+      if (gate){
+        gate.scrollIntoView({ behavior:'smooth', block:'center' });
+        gate.classList.add('pg-flash');
+        setTimeout(function(){ gate.classList.remove('pg-flash'); }, 1000);
+        const first = gate.querySelector('input[name="name"]');
+        if (first) first.focus();
+      }
+    }
+  }, true);
+})();
+</script>
+</body></html>
