@@ -20,8 +20,40 @@ body{background:var(--bg);color:var(--text);font-size:13.5px;font-weight:400;let
 em{font-family:var(--serif);font-style:italic;color:var(--cyan);font-weight:400}
 
 /* TOP BAR */
-.topbar{height:62px;background:linear-gradient(90deg,#0066CC,#00D5FF) top left/100% 3px no-repeat,#02050A;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:18px;flex-shrink:0}
-.brand img{height:40px;filter:brightness(0) invert(1);display:block}
+.topbar{height:54px;background:#02050A;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:18px;flex-shrink:0}
+
+/* ════ SITE CHROME — matches every other Orion page ════ */
+body{padding-top:122px}
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:60;height:34px;background:linear-gradient(90deg,#0066CC,#00D5FF);color:#00111d;overflow:hidden;display:flex;align-items:center;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(0,0,0,.18)}
+.top-banner-track{display:flex;gap:0;align-items:center;animation:topBanner 48s linear infinite;white-space:nowrap}
+.top-banner-track:hover{animation-play-state:paused}
+.top-banner-content{display:flex;align-items:center;gap:0;flex-shrink:0;padding-right:56px}
+.tb-item{flex-shrink:0;padding:0 18px}
+.tb-sep{flex-shrink:0;opacity:.45}
+.tb-item a{color:#00111d;text-decoration:none;border-bottom:1px solid rgba(0,17,29,.4);padding-bottom:1px}
+@keyframes topBanner{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.site-nav{position:fixed;top:34px;left:0;right:0;z-index:50;height:88px;background:rgba(5,11,20,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:0 36px;display:flex;align-items:center;justify-content:space-between}
+.site-nav .logo img{height:64px;filter:brightness(0) invert(1);display:block}
+.site-nav ul{display:flex;gap:26px;list-style:none;font-size:13px;color:var(--muted)}
+.site-nav li a{padding:6px 0;position:relative;transition:color .2s;color:var(--muted);text-decoration:none;font-family:var(--sans)}
+.site-nav li a:hover{color:#fff}
+.site-nav li a.page-active{color:var(--cyan)}
+.site-nav li a.page-active::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.site-nav .nav-actions{display:flex;align-items:center;gap:14px}
+.site-nav .phone{font-family:var(--mono);font-size:10px;letter-spacing:.11em;color:var(--soft);text-transform:uppercase}
+.site-nav .quote{background:#fff;color:#07111F;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;gap:6px;transition:transform .15s,background .2s;text-decoration:none;font-family:var(--sans)}
+.site-nav .quote:hover{transform:translateY(-1px);background:var(--cyan);color:#00111d}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:122px;left:0;right:0;background:rgba(5,11,20,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--line2);padding:18px 24px 24px;z-index:49;flex-direction:column;gap:2px}
+.mobile-nav.open{display:flex}
+.mobile-nav a{font-size:16px;color:#fff;padding:14px 0;border-bottom:1px solid var(--line);text-decoration:none;font-family:var(--sans)}
+.mobile-nav a:last-of-type{border-bottom:none}
+@media(max-width:1180px){.site-nav ul{display:none}.hamburger{display:flex}}
+@media(max-width:600px){.top-banner{height:30px;font-size:10px}.tb-item{padding:0 12px}.site-nav{top:30px;padding:0 20px}body{padding-top:118px}.mobile-nav{top:118px}}
 .brand{display:flex;align-items:center;gap:12px}
 .lockup{font-size:17px;font-weight:600;letter-spacing:-.01em}
 .lockup .pipe{color:var(--soft);font-weight:300;margin:0 4px}
@@ -83,7 +115,8 @@ em{font-family:var(--serif);font-style:italic;color:var(--cyan);font-weight:400}
 .proj-tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);padding:5px 11px;border:1px solid rgba(0,213,255,.5);border-radius:7px;background:rgba(0,213,255,.08)}
 
 /* MAIN GRID */
-.main{display:grid;grid-template-columns:240px 1fr 320px;height:calc(100vh - 54px)}
+.main{display:grid;grid-template-columns:240px 1fr 320px;height:calc(100vh - 176px)}
+@media(max-width:600px){.main{height:calc(100vh - 172px)}}
 
 /* LIBRARY (LEFT) */
 .library{background:var(--panel);border-right:1px solid var(--line);overflow-y:auto;padding:14px 12px}
@@ -247,18 +280,73 @@ input[type=file]{display:none}
 </style></head>
 <body>
 
+<!-- ── SITE TOP BANNER · same marquee as every page ── -->
+<div class="top-banner" aria-label="Key messages">
+  <div class="top-banner-track">
+    <div class="top-banner-content">
+      <span class="tb-item">Reduce labour</span><span class="tb-sep">·</span>
+      <span class="tb-item">Increase capacity</span><span class="tb-sep">·</span>
+      <span class="tb-item">Pay monthly</span><span class="tb-sep">·</span>
+      <span class="tb-item">Prove the payback</span><span class="tb-sep">·</span>
+      <span class="tb-item">UK-built warehouse automation</span><span class="tb-sep">·</span>
+      <span class="tb-item"><a href="index.html#finance">Get a monthly automation quote →</a></span><span class="tb-sep">·</span>
+      <span class="tb-item">Finance options subject to specification &amp; approval</span><span class="tb-sep">·</span>
+      <span class="tb-item"><a href="index.html#roi">Open the ROI engine →</a></span><span class="tb-sep">·</span>
+      <span class="tb-item">Mechanical · electrical · controls · WCS · support, one UK facility</span><span class="tb-sep">·</span>
+    </div>
+    <div class="top-banner-content" aria-hidden="true">
+      <span class="tb-item">Reduce labour</span><span class="tb-sep">·</span>
+      <span class="tb-item">Increase capacity</span><span class="tb-sep">·</span>
+      <span class="tb-item">Pay monthly</span><span class="tb-sep">·</span>
+      <span class="tb-item">Prove the payback</span><span class="tb-sep">·</span>
+      <span class="tb-item">UK-built warehouse automation</span><span class="tb-sep">·</span>
+      <span class="tb-item"><a href="index.html#finance">Get a monthly automation quote →</a></span><span class="tb-sep">·</span>
+      <span class="tb-item">Finance options subject to specification &amp; approval</span><span class="tb-sep">·</span>
+      <span class="tb-item"><a href="index.html#roi">Open the ROI engine →</a></span><span class="tb-sep">·</span>
+      <span class="tb-item">Mechanical · electrical · controls · WCS · support, one UK facility</span><span class="tb-sep">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── SITE NAV · matches every page, Solution builder active ── -->
+<nav class="site-nav" id="mainNav">
+  <a class="logo" href="index.html"><img src="https://www.orionmis.co.uk/front/images/comp/logo.png" alt="Orion MIS"></a>
+  <ul>
+    <li><a href="index.html#helix">Helix</a></li>
+    <li><a href="index.html#roi">ROI</a></li>
+    <li><a href="warehouse-automation-finance.html">Finance</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="index.html#proof">Case studies</a></li>
+    <li><a href="news.html">News &amp; builds</a></li>
+    <li><a href="sketch.html?type=sketch">Send a sketch</a></li>
+    <li><a href="sketch-tool.html" class="page-active">Solution builder</a></li>
+    <li><a href="index.html#faq">FAQs</a></li>
+  </ul>
+  <div class="nav-actions">
+    <span class="phone">UK-built automation</span>
+    <a class="quote" href="sketch.html?type=visit">Book a site visit</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html#helix">Helix</a>
+  <a href="index.html#roi">ROI</a>
+  <a href="warehouse-automation-finance.html">Finance</a>
+  <a href="products.html">Products</a>
+  <a href="index.html#proof">Case studies</a>
+  <a href="news.html">News &amp; builds</a>
+  <a href="sketch.html?type=sketch">Send a sketch</a>
+  <a href="sketch-tool.html">Solution builder</a>
+  <a href="index.html#faq">FAQs</a>
+</div>
+
 <header class="topbar">
   <div class="brand">
-    <a href="index.html" title="Back to the Orion site">
-      <img src="https://www.orionmis.co.uk/front/images/comp/logo.png" alt="Orion MIS"
-           onerror="this.outerHTML='&lt;span class=&quot;lockup&quot;&gt;ORION&lt;span class=&quot;pipe&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;sub&quot;&gt;MIS&lt;/span&gt;&lt;/span&gt;'">
-    </a>
-    <span class="divider"></span>
     <span class="doctype">Solution Builder</span>
   </div>
   <input type="text" id="project-name" class="project-input" placeholder="Project name — e.g. APC Stage 2" value="">
   <div class="topbar-right">
-    <a class="btn" href="index.html" style="text-decoration:none">← Back to site</a>
     <span class="rom-pill">ROM · Indicative</span>
     <button class="btn" id="btn-import-excel" title="Import pricing from spreadsheet">↥ Pricing</button>
     <button class="btn" id="btn-import-json" title="Load saved layout">↥ Layout</button>
@@ -2930,6 +3018,22 @@ window.addEventListener('DOMContentLoaded', () => {
     const sync = function(){ fromVal.textContent = leaseSrc.textContent || '£0'; };
     sync();
     new MutationObserver(sync).observe(leaseSrc, { childList:true, characterData:true, subtree:true });
+  }
+
+  // Site nav hamburger (mobile)
+  const burger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  if (burger && mobileNav){
+    burger.addEventListener('click', function(){
+      burger.classList.toggle('open');
+      mobileNav.classList.toggle('open');
+    });
+    mobileNav.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        burger.classList.remove('open');
+        mobileNav.classList.remove('open');
+      });
+    });
   }
 
   // Export Quote is gated too — document-level capture runs before the tool's own handler
