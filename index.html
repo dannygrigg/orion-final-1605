@@ -249,6 +249,27 @@ padding:88px 36px 72px;border-bottom:1px solid var(--line)}
 .helix-dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(0,213,255,.45);background:transparent;cursor:pointer;padding:0;transition:all .2s}
 .helix-dot.active{background:var(--cyan);box-shadow:0 0 10px var(--cyan);border-color:var(--cyan)}
 
+/* ── WHY ORION · 60-SECOND EXPLAINER BAND ── */
+.explainer-band{position:relative;overflow:hidden;padding:88px 36px 84px;background:
+  radial-gradient(circle at 82% 10%,rgba(0,213,255,.14),transparent 38%),
+  radial-gradient(circle at 8% 90%,rgba(30,144,255,.12),transparent 40%),
+  linear-gradient(180deg,#02050A 0%,#07111F 60%,#050B14 100%);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.eb-inner{max-width:var(--max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
+.eb-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:12px;margin-bottom:20px;font-weight:700}
+.eb-eyebrow::before,.eb-eyebrow::after{content:"";width:32px;height:1px;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+.eb-h2{font-size:clamp(28px,3.6vw,50px);font-weight:600;line-height:1.08;letter-spacing:-.024em;color:#fff;max-width:760px}
+.eb-h2 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--cyan)}
+.eb-sub{margin-top:16px;font-size:16px;color:var(--muted);max-width:600px;line-height:1.6}
+.eb-chapters{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap;justify-content:center}
+.eb-chip{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--cyan);background:rgba(0,213,255,.06);border:1px solid var(--line2);border-radius:999px;padding:7px 13px}
+.eb-player-wrap{margin-top:36px;width:min(960px,100%);position:relative}
+.eb-player-wrap::before{content:"";position:absolute;inset:-40px -60px;background:radial-gradient(closest-side,rgba(0,213,255,.14),transparent 70%);pointer-events:none;z-index:0}
+.eb-player-wrap iframe{position:relative;z-index:1;display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:22px;box-shadow:0 40px 120px rgba(0,0,0,.55)}
+.eb-note{margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.eb-note a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,213,255,.4);padding-bottom:1px}
+.eb-note a:hover{color:#fff;border-bottom-color:#fff}
+
 /* ── ROI ── */
 .roi{background:var(--paper);color:var(--ink)}
 .roi-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:.85fr 1.15fr;gap:20px;align-items:stretch}
@@ -648,6 +669,24 @@ tr:last-child td{border-bottom:none}
     <div class="proof-cell"><small>Repair target</small><b>15 min</b><p>Designed for rapid module access.</p></div>
     <div class="proof-cell"><small>Warranty</small><b>24 mo</b><p>Standard core product warranty.</p></div>
     <div class="proof-cell"><small>Delivery</small><b>UK</b><p>Built, coded and supported here.</p></div>
+  </div>
+</section>
+
+<!-- ── WHY ORION · 60-SECOND EXPLAINER ── -->
+<section class="explainer-band" id="why-orion-60">
+  <div class="eb-inner">
+    <div class="eb-eyebrow">Why Orion · 60 seconds</div>
+    <h2 class="eb-h2">Three fears keep operations manual. <em>Watch us kill all three.</em></h2>
+    <p class="eb-sub">The price. The complexity. The fear you won't understand it. Sixty seconds, no brochure theatre.</p>
+    <div class="eb-chapters">
+      <span class="eb-chip">01 · The price → pay monthly</span>
+      <span class="eb-chip">02 · Complexity → modular</span>
+      <span class="eb-chip">03 · Understanding → it runs itself</span>
+    </div>
+    <div class="eb-player-wrap">
+      <iframe src="explainer-why-orion.html" title="Why Orion — 60 second explainer" loading="lazy"></iframe>
+    </div>
+    <div class="eb-note">Animated · no sound needed · <a href="explainer-the-process.html">next up: a price in minutes →</a></div>
   </div>
 </section>
 
