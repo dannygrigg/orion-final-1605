@@ -1788,7 +1788,9 @@ function updateInspector(){
   `;
   const bind = (id, key, asNum) => {
     const el = $(id);
-    el.addEventListener('input', () => {
+    // Numeric fields commit on 'change' (blur / Enter) so you can type a full
+    // number like 1050 without the canvas grabbing it mid-keystroke.
+    el.addEventListener(asNum ? 'change' : 'input', () => {
       c[key] = asNum ? (Number(el.value) || 0) : el.value;
       $('i-calc').textContent = fmt(calcComp(c));
       render(); save();
@@ -2336,6 +2338,10 @@ function importPricingExcel(file){
 function exportQuote(){
   const r = recalc();
   const tp = calcThroughput();
+  // Selected Controls & WCS tier (public build) — named on the quote
+  const tierNames = { 15000:'Basic — PLC controls, safety circuits, local HMI', 30000:'Advanced — Helios dashboards, live data, alerts, remote support', 50000:'Full stack — full Helios WCS, routing, WMS/ERP integration, reporting' };
+  const tierAmt = window.ORION_CONTROLS_TIER || 0;
+  const tierLabel = tierNames[tierAmt] || null;
   const project = state.project || 'Untitled project';
   const date = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
   // Group components by family
@@ -2417,6 +2423,16 @@ tbody tr:nth-child(even) td{background:#fbfcfd}
 .lease-cell .v{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink);line-height:1.04;letter-spacing:-.015em}
 .lease-cell .v small{font-family:var(--sans);font-size:12px;font-style:normal;color:var(--mute);font-weight:400;margin-left:3px}
 
+.next-steps{margin-top:26px;background:linear-gradient(135deg,#eaf4ff,#e7fbff);border:1px solid #bcd7f1;border-radius:14px;padding:26px 28px;text-align:center}
+.next-steps h3{font-family:var(--sans);font-size:20px;font-weight:600;color:var(--ink);letter-spacing:-.015em;margin-bottom:6px}
+.next-steps h3 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--accent)}
+.next-steps p{font-size:13.5px;color:var(--ink2);max-width:560px;margin:0 auto 18px;line-height:1.6}
+.ns-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.ns-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:13.5px;font-weight:600;padding:12px 22px;border-radius:999px;text-decoration:none;transition:.15s}
+.ns-btn.primary{background:linear-gradient(135deg,#0066CC,#00A6D6);color:#fff;box-shadow:0 6px 18px rgba(0,102,204,.25)}
+.ns-btn.line{border:1.5px solid #0066CC;color:#0066CC;background:#fff}
+.ns-phone{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--mute)}
+.ns-phone a{color:var(--accent);text-decoration:none;font-weight:600}
 .disclaimer{margin-top:26px;padding:18px 22px;background:#fff;border:1px solid var(--line);border-radius:12px;font-size:12px;color:var(--mute);line-height:1.7}
 .disclaimer strong{color:var(--ink2);font-weight:600}
 .footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--soft);letter-spacing:.04em;flex-wrap:wrap;gap:14px}
@@ -2465,14 +2481,13 @@ tbody tr:nth-child(even) td{background:#fbfcfd}
   </section>
 
   <section class="section">
-    <h2>Commercial <em>build-up</em></h2>
+    <h2>Your <em>investment</em></h2>
     <div class="totals">
-      <div class="t-row head"><span class="lbl">Component cost (raw)</span><span class="v">${fmt(r.raw)}</span></div>
-      <div class="t-row"><span class="lbl">Controls / WCS allowance (${state.pricing.controls}%)</span><span class="v">${fmt(r.controls)}</span></div>
-      <div class="t-row"><span class="lbl">Installation allowance (${state.pricing.installation}%)</span><span class="v">${fmt(r.installation)}</span></div>
-      <div class="t-row"><span class="lbl">Contingency (${state.pricing.contingency}%)</span><span class="v">${fmt(r.contingency)}</span></div>
-      <div class="t-row"><span class="lbl">Margin (${state.pricing.margin}%)</span><span class="v">${fmt(r.margin)}</span></div>
-      <div class="t-row"><span class="lbl">Delivery (fixed)</span><span class="v">${fmt(r.delivery)}</span></div>
+      <div class="t-row head"><span class="lbl">Includes</span><span class="v"></span></div>
+      ${tierLabel ? `<div class="t-row"><span class="lbl">Controls &amp; WCS · ${tierLabel}</span><span class="v">${fmt(tierAmt)}</span></div>` : ''}
+      <div class="t-row"><span class="lbl">Installation, commissioning &amp; functional testing</span><span class="v">Included</span></div>
+      <div class="t-row"><span class="lbl">Delivery to site</span><span class="v">Included</span></div>
+      <div class="t-row"><span class="lbl">24-month warranty &amp; Orion support</span><span class="v">Included</span></div>
     </div>
     <div class="final-bar"><span class="lbl">Final ROM · excl. VAT</span><span class="v">${fmt(r.finalROM)}</span></div>
   </section>
@@ -2487,6 +2502,17 @@ tbody tr:nth-child(even) td{background:#fbfcfd}
       </div>
     </div>
   </section>
+
+  <div class="next-steps">
+    <h3>Would you like to <em>discuss this quote?</em></h3>
+    <p>An Orion engineer can validate the layout, firm up the numbers and talk through the finance route — usually within one working day.</p>
+    <div class="ns-btns">
+      <a class="ns-btn primary" href="https://helixsorter.co.uk/sketch.html?type=callback">📞 Book a call →</a>
+      <a class="ns-btn line" href="https://helixsorter.co.uk/sketch.html?type=visit">Book a site visit</a>
+      <a class="ns-btn line" href="mailto:info@orionmis.co.uk?subject=Quote%20discussion%20—%20${encodeURIComponent(project)}">Email engineering</a>
+    </div>
+    <div class="ns-phone">Or call us now on <a href="tel:+443333355269">+44 333 335 5269</a></div>
+  </div>
 
   <p class="disclaimer"><strong>ROM Budget — indicative only.</strong> Pricing shown is a Rough Order of Magnitude estimate prepared for early-stage planning. All figures are subject to site survey and final design approval. Lease figures are an illustration only and subject to finance-provider credit approval and a formal finance quotation. All prices exclude VAT, which will be applied at the prevailing rate. Built, tested and supported by Orion MIS.</p>
 
