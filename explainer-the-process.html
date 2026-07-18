@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Orion Explainer · 02 · A Price in Minutes</title>
+<meta name="robots" content="noindex,nofollow">
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  ORION ANIMATED EXPLAINER · EPISODE 02 · A PRICE IN MINUTES
+  The sales process: calculator tool → sketch tool → price in minutes.
+  Same scene engine as Episode 01. Pure HTML/CSS/JS, no video files.
+  ════════════════════════════════════════════════════════════════════════
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dark:#02050A;--bg2:#07111F;--panel:#0B1626;
+  --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
+  --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.32);
+  --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--red:#FF6B6B;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"DM Serif Display",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:#10161F;color:var(--text);-webkit-font-smoothing:antialiased;font-feature-settings:"cv02","cv03","cv04","cv11";min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+
+/* ═══════════════ PLAYER FRAME ═══════════════ */
+.player{width:min(960px,100%);aspect-ratio:16/9;position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line2);box-shadow:0 40px 120px rgba(0,0,0,.55);background:
+  radial-gradient(circle at 80% 15%,rgba(0,213,255,.12),transparent 40%),
+  radial-gradient(circle at 12% 85%,rgba(30,144,255,.10),transparent 42%),
+  linear-gradient(180deg,#02050A 0%,#07111F 55%,#050B14 100%);isolation:isolate}
+.player::before{content:"";position:absolute;inset:0;background-image:
+  linear-gradient(rgba(0,213,255,.035) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(0,213,255,.035) 1px,transparent 1px);
+  background-size:56px 56px;mask:radial-gradient(circle at 50% 50%,black 25%,transparent 80%);pointer-events:none;z-index:0}
+
+.chrome-top{position:absolute;top:0;left:0;right:0;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;z-index:20;pointer-events:none}
+.chrome-brand{display:flex;align-items:center;gap:12px}
+.chrome-brand img{height:34px;filter:brightness(0) invert(1)}
+.chrome-ep{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);font-weight:700;border-left:1px solid var(--line2);padding-left:12px}
+.chrome-dur{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:600}
+
+.chrome-bot{position:absolute;bottom:0;left:0;right:0;padding:16px 24px 18px;z-index:20;background:linear-gradient(180deg,transparent,rgba(2,5,10,.72))}
+.progress{height:3px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;cursor:pointer;margin-bottom:12px}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:999px;box-shadow:0 0 12px rgba(0,213,255,.6)}
+.controls{display:flex;align-items:center;gap:14px}
+.ctrl-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}
+.ctrl-btn:hover{background:rgba(0,213,255,.16);border-color:var(--cyan)}
+.ctrl-btn svg{width:15px;height:15px;fill:#fff}
+.scene-dots{display:flex;gap:7px;align-items:center}
+.scene-dot{width:7px;height:7px;border-radius:999px;background:transparent;border:1px solid rgba(0,213,255,.4);cursor:pointer;padding:0;transition:all .25s}
+.scene-dot:hover{border-color:var(--cyan)}
+.scene-dot.active{background:var(--cyan);width:22px;box-shadow:0 0 10px var(--cyan);border-color:var(--cyan)}
+.scene-title{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:600}
+
+/* ═══════════════ SCENES ═══════════════ */
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:70px 60px 90px;opacity:0;pointer-events:none;transition:opacity .55s ease;z-index:5}
+.scene.active{opacity:1;pointer-events:auto}
+.player.paused .scene *{animation-play-state:paused!important}
+
+.s-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);font-weight:700;display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.s-eyebrow::before,.s-eyebrow::after{content:"";width:34px;height:1px;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.s-h{font-size:clamp(26px,4.2vw,48px);font-weight:600;line-height:1.08;letter-spacing:-.028em;color:#fff;max-width:760px}
+.s-h em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--cyan)}
+.s-sub{margin-top:16px;font-size:clamp(13px,1.7vw,17px);color:var(--muted);line-height:1.6;max-width:560px}
+
+.scene .anim{opacity:0;transform:translateY(22px)}
+.scene.active .anim{animation:rise .7s cubic-bezier(.22,.61,.36,1) forwards}
+.scene.active .anim.d1{animation-delay:.15s}
+.scene.active .anim.d2{animation-delay:.4s}
+.scene.active .anim.d3{animation-delay:.7s}
+.scene.active .anim.d4{animation-delay:1.0s}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* SCENE 1 · the old way — struck through */
+.old-way{display:flex;flex-direction:column;gap:9px;margin-top:30px;align-items:flex-start}
+.old-item{font-family:var(--mono);font-size:clamp(12px,1.6vw,15px);letter-spacing:.06em;color:var(--muted);position:relative;padding:4px 2px;opacity:0}
+.scene.active .old-item{animation:rise .5s forwards}
+.scene.active .old-item:nth-child(1){animation-delay:.9s}
+.scene.active .old-item:nth-child(2){animation-delay:1.3s}
+.scene.active .old-item:nth-child(3){animation-delay:1.7s}
+.scene.active .old-item:nth-child(4){animation-delay:2.1s}
+.old-item::after{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:var(--red);border-radius:999px;transform:scaleX(0);transform-origin:left}
+.scene.active .old-item:nth-child(1)::after{animation:strike .4s 2.9s cubic-bezier(.22,.61,.36,1) forwards}
+.scene.active .old-item:nth-child(2)::after{animation:strike .4s 3.2s cubic-bezier(.22,.61,.36,1) forwards}
+.scene.active .old-item:nth-child(3)::after{animation:strike .4s 3.5s cubic-bezier(.22,.61,.36,1) forwards}
+.scene.active .old-item:nth-child(4)::after{animation:strike .4s 3.8s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes strike{to{transform:scaleX(1)}}
+
+/* SCENE 2 · ROI calculator — animated slider + live output */
+.calc-mock{width:min(460px,88%);margin-top:28px;border:1px solid var(--line2);border-radius:18px;background:rgba(7,17,31,.72);padding:22px 24px;backdrop-filter:blur(6px);text-align:left}
+.calc-mock .cm-label{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:700;display:flex;justify-content:space-between;margin-bottom:8px}
+.calc-mock .cm-label b{color:var(--cyan)}
+.cm-track{height:5px;border-radius:999px;background:rgba(255,255,255,.10);position:relative;margin-bottom:20px}
+.cm-fill{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--cyan));width:0%}
+.scene.active .cm-fill.f1{animation:fill1 1.6s .9s cubic-bezier(.22,.61,.36,1) forwards}
+.scene.active .cm-fill.f2{animation:fill2 1.6s 1.4s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes fill1{to{width:72%}}
+@keyframes fill2{to{width:55%}}
+.cm-thumb{position:absolute;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan);left:0%}
+.scene.active .cm-thumb.t1{animation:thumb1 1.6s .9s cubic-bezier(.22,.61,.36,1) forwards}
+.scene.active .cm-thumb.t2{animation:thumb2 1.6s 1.4s cubic-bezier(.22,.61,.36,1) forwards}
+@keyframes thumb1{to{left:72%}}
+@keyframes thumb2{to{left:55%}}
+.cm-result{display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(255,255,255,.08);padding-top:16px;margin-top:2px}
+.cm-result small{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:700}
+.cm-result b{font-family:var(--mono);font-size:clamp(20px,2.6vw,28px);color:var(--green);font-weight:700;letter-spacing:-.01em;text-shadow:0 0 22px rgba(50,213,131,.35)}
+
+/* SCENE 3 · sketch drop */
+.dropzone-mock{width:min(420px,86%);margin-top:30px;border:2px dashed var(--line2);border-radius:18px;padding:30px 24px;display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;background:rgba(0,213,255,.03)}
+.doc-icon{width:58px;height:70px;border-radius:8px;background:#fff;position:relative;opacity:0;transform:translateY(-90px) rotate(-8deg);box-shadow:0 14px 34px rgba(0,0,0,.4)}
+.doc-icon::before{content:"";position:absolute;inset:12px 10px auto 10px;height:5px;border-radius:3px;background:#1E90FF;box-shadow:0 11px 0 rgba(11,22,38,.25),0 22px 0 rgba(11,22,38,.25),0 33px 0 rgba(11,22,38,.18)}
+.doc-icon::after{content:"";position:absolute;left:14px;bottom:9px;width:20px;height:14px;border:2px solid var(--red);border-radius:50%;transform:rotate(-12deg)}
+.scene.active .doc-icon{animation:docDrop .9s .8s cubic-bezier(.34,1.4,.5,1) forwards}
+@keyframes docDrop{to{opacity:1;transform:translateY(0) rotate(0)}}
+.drop-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:700}
+.drop-tick{position:absolute;top:-13px;right:-13px;width:34px;height:34px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.4);box-shadow:0 0 20px rgba(50,213,131,.5)}
+.drop-tick svg{width:16px;height:16px;stroke:#04250F;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.scene.active .drop-tick{animation:pop .5s 2.1s cubic-bezier(.34,1.56,.64,1) forwards}
+@keyframes pop{to{opacity:1;transform:scale(1)}}
+
+/* SCENE 4 · what you get back — result cards */
+.result-cards{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+.result-card{width:158px;padding:18px 14px;border-radius:14px;border:1px solid var(--line2);background:rgba(7,17,31,.72);opacity:0;transform:translateY(26px) scale(.92)}
+.scene.active .result-card{animation:cardUp .6s cubic-bezier(.22,.61,.36,1) forwards}
+.scene.active .result-card:nth-child(1){animation-delay:.8s}
+.scene.active .result-card:nth-child(2){animation-delay:1.15s}
+.scene.active .result-card:nth-child(3){animation-delay:1.5s}
+@keyframes cardUp{to{opacity:1;transform:none}}
+.result-card b{display:block;font-family:var(--mono);font-size:clamp(17px,2.2vw,23px);color:var(--cyan);font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+.result-card small{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600;line-height:1.5;display:block}
+.validate-note{margin-top:22px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700;display:inline-flex;align-items:center;gap:8px}
+.validate-note::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+
+/* SCENE 5 · close */
+.close-lines{display:flex;flex-direction:column;gap:6px;margin-bottom:26px}
+.close-lines .s-h{font-size:clamp(30px,5vw,56px)}
+.cta-row{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;justify-content:center}
+.cta{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;padding:15px 26px;border-radius:999px;text-decoration:none;transition:.15s}
+.cta.primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d}
+.cta.primary:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(0,213,255,.3)}
+.cta.line{border:1px solid rgba(255,255,255,.25);color:#fff}
+.cta.line:hover{background:rgba(255,255,255,.07)}
+
+.replay-overlay{position:absolute;inset:0;z-index:30;display:none;align-items:center;justify-content:center;background:rgba(2,5,10,.55);backdrop-filter:blur(4px)}
+.replay-overlay.show{display:flex}
+.replay-btn{width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.96);border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 44px rgba(0,0,0,.5);transition:transform .15s}
+.replay-btn:hover{transform:scale(1.07)}
+.replay-btn svg{width:34px;height:34px;fill:#07111F}
+
+@media(max-width:640px){
+  .scene{padding:56px 24px 82px}
+  .chrome-brand img{height:26px}
+  .scene-title{display:none}
+  .result-cards{gap:8px}
+  .result-card{width:130px;padding:14px 10px}
+}
+</style>
+</head>
+<body>
+
+<div class="player" id="player">
+
+  <div class="chrome-top">
+    <div class="chrome-brand">
+      <img src="https://www.orionmis.co.uk/front/images/comp/logo.png" alt="Orion MIS">
+      <span class="chrome-ep">Explainer · 02 · A price in minutes</span>
+    </div>
+    <span class="chrome-dur" id="clock">00:00 / 00:45</span>
+  </div>
+
+  <!-- ══ SCENE 1 · THE OLD WAY ══ -->
+  <section class="scene active" data-title="The old way">
+    <div class="s-eyebrow anim">Getting a price</div>
+    <h2 class="s-h anim d1">Automation pricing <em>shouldn't take months.</em></h2>
+    <div class="old-way">
+      <span class="old-item">× Three discovery calls</span>
+      <span class="old-item">× A site survey to get a number</span>
+      <span class="old-item">× A 40-page proposal</span>
+      <span class="old-item">× Six months of "scoping"</span>
+    </div>
+  </section>
+
+  <!-- ══ SCENE 2 · THE CALCULATOR ══ -->
+  <section class="scene" data-title="Route 1 · The calculator">
+    <div class="s-eyebrow anim">Route 1 · The ROI calculator</div>
+    <h2 class="s-h anim d1">Size your own system in <em>60 seconds.</em></h2>
+    <div class="calc-mock anim d2">
+      <div class="cm-label"><span>Peak throughput</span><b>7,000 pph</b></div>
+      <div class="cm-track"><div class="cm-fill f1"></div><div class="cm-thumb t1"></div></div>
+      <div class="cm-label"><span>Current manual sorters</span><b>12 people</b></div>
+      <div class="cm-track"><div class="cm-fill f2"></div><div class="cm-thumb t2"></div></div>
+      <div class="cm-result">
+        <small>Indicative monthly</small>
+        <b id="calcOut">£0/mo</b>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SCENE 3 · THE SKETCH TOOL ══ -->
+  <section class="scene" data-title="Route 2 · Send a sketch">
+    <div class="s-eyebrow anim">Route 2 · The sketch tool</div>
+    <h2 class="s-h anim d1">Or just <em>send us a sketch.</em></h2>
+    <p class="s-sub anim d2">A CAD screenshot. A phone photo. A biro drawing on a delivery note. Any of them works.</p>
+    <div class="dropzone-mock anim d2">
+      <div class="doc-icon"></div>
+      <span class="drop-label">Drop your sketch here</span>
+      <div class="drop-tick"><svg viewBox="0 0 24 24"><polyline points="5 13 10 18 20 7"/></svg></div>
+    </div>
+  </section>
+
+  <!-- ══ SCENE 4 · WHAT COMES BACK ══ -->
+  <section class="scene" data-title="What you get back">
+    <div class="s-eyebrow anim">What comes back</div>
+    <h2 class="s-h anim d1">A sized system. A monthly figure. <em>A payback case.</em></h2>
+    <div class="result-cards">
+      <div class="result-card"><b>Sized</b><small>System configured to your footprint</small></div>
+      <div class="result-card"><b>£/month</b><small>Indicative finance figure</small></div>
+      <div class="result-card"><b>Payback</b><small>Months to net positive</small></div>
+    </div>
+    <div class="validate-note anim d4">Validated by an Orion engineer · within 1 working day</div>
+  </section>
+
+  <!-- ══ SCENE 5 · CLOSE ══ -->
+  <section class="scene" data-title="A price in minutes">
+    <div class="close-lines">
+      <h2 class="s-h anim">A price in <em>minutes.</em></h2>
+      <h2 class="s-h anim d1">Not months.</h2>
+    </div>
+    <div class="cta-row anim d2">
+      <a class="cta primary" href="index.html#roi">Open the ROI engine →</a>
+      <a class="cta line" href="sketch.html?type=sketch">Send a sketch</a>
+    </div>
+  </section>
+
+  <div class="replay-overlay" id="replayOverlay">
+    <button class="replay-btn" id="replayBtn" aria-label="Replay">
+      <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+    </button>
+  </div>
+
+  <div class="chrome-bot">
+    <div class="progress" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="controls">
+      <button class="ctrl-btn" id="playPause" aria-label="Play / pause">
+        <svg id="iconPause" viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg id="iconPlay" viewBox="0 0 24 24" style="display:none"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="scene-dots" id="sceneDots"></div>
+      <span class="scene-title" id="sceneTitle">The old way</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// SCENE ENGINE — durations (ms) per scene
+// ════════════════════════════════════════════════════════════════
+const DUR = [9500, 10000, 9000, 9000, 7500];
+const scenes = [...document.querySelectorAll('.scene')];
+const total  = DUR.reduce((a,b)=>a+b,0);
+const player = document.getElementById('player');
+const fill   = document.getElementById('progressFill');
+const clock  = document.getElementById('clock');
+const dotsEl = document.getElementById('sceneDots');
+const titleEl= document.getElementById('sceneTitle');
+const replay = document.getElementById('replayOverlay');
+
+let idx = 0, elapsedBefore = 0, sceneStart = performance.now();
+let playing = true, raf = null, finished = false;
+
+scenes.forEach((s,i)=>{
+  const d=document.createElement('button');
+  d.className='scene-dot'+(i===0?' active':'');
+  d.setAttribute('aria-label','Scene '+(i+1));
+  d.addEventListener('click',()=>goto(i));
+  dotsEl.appendChild(d);
+});
+const dots=[...dotsEl.children];
+
+function fmt(ms){const s=Math.floor(ms/1000);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+clock.textContent='00:00 / '+fmt(total);
+
+function setScene(i){
+  idx=i;
+  scenes.forEach((s,n)=>s.classList.toggle('active',n===i));
+  dots.forEach((d,n)=>d.classList.toggle('active',n===i));
+  titleEl.textContent=scenes[i].dataset.title||'';
+  onSceneEnter(i);
+}
+
+function goto(i){
+  finished=false; replay.classList.remove('show');
+  elapsedBefore=DUR.slice(0,i).reduce((a,b)=>a+b,0);
+  sceneStart=performance.now();
+  setScene(i);
+  if(!playing) togglePlay(true);
+}
+
+function tick(now){
+  if(!playing){return;}
+  const inScene=now-sceneStart;
+  const elapsed=Math.min(elapsedBefore+inScene,total);
+  fill.style.width=(elapsed/total*100)+'%';
+  clock.textContent=fmt(elapsed)+' / '+fmt(total);
+  if(inScene>=DUR[idx]){
+    if(idx<scenes.length-1){
+      elapsedBefore+=DUR[idx];
+      sceneStart=now;
+      setScene(idx+1);
+    }else{
+      playing=false; finished=true;
+      replay.classList.add('show');
+      updatePlayIcon();
+      return;
+    }
+  }
+  raf=requestAnimationFrame(tick);
+}
+
+function updatePlayIcon(){
+  document.getElementById('iconPause').style.display=playing?'':'none';
+  document.getElementById('iconPlay').style.display=playing?'none':'';
+  player.classList.toggle('paused',!playing);
+}
+
+function togglePlay(force){
+  if(finished){goto(0);return;}
+  playing=(force!==undefined)?force:!playing;
+  if(playing){sceneStart=performance.now();raf=requestAnimationFrame(tick);}
+  updatePlayIcon();
+}
+
+document.getElementById('playPause').addEventListener('click',()=>togglePlay());
+document.getElementById('replayBtn').addEventListener('click',()=>goto(0));
+document.getElementById('progressBar').addEventListener('click',e=>{
+  const r=e.currentTarget.getBoundingClientRect();
+  const t=(e.clientX-r.left)/r.width*total;
+  let acc=0;
+  for(let i=0;i<DUR.length;i++){ if(t<acc+DUR[i]){goto(i);return;} acc+=DUR[i]; }
+  goto(DUR.length-1);
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing)togglePlay(false);});
+
+// ── Per-scene JS hooks ──
+let calcRun=null;
+function onSceneEnter(i){
+  if(i===1){
+    // animate the calculator output counting up, synced with the sliders
+    const el=document.getElementById('calcOut');
+    clearInterval(calcRun);
+    el.textContent='£0/mo';
+    const target=6507, dur=2200, t0=performance.now()+1200; // starts as sliders land
+    calcRun=setInterval(()=>{
+      const p=Math.min(Math.max((performance.now()-t0)/dur,0),1);
+      const eased=1-Math.pow(1-p,3);
+      el.textContent='£'+Math.round(target*eased).toLocaleString('en-GB')+'/mo';
+      if(p>=1)clearInterval(calcRun);
+    },30);
+  }
+}
+
+// go
+onSceneEnter(0);
+raf=requestAnimationFrame(tick);
+</script>
+</body>
+</html>

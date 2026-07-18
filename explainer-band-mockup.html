@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mockup · "Why Orion in 60 seconds" band placement</title>
+<meta name="robots" content="noindex,nofollow">
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  MOCKUP — how the animated explainer sits on the homepage as a band.
+  Shows: end of the Pain section (above) → THE NEW BAND → start of the
+  Helix section (below). The player is the real explainer-why-orion.html
+  running live in an iframe.
+  ════════════════════════════════════════════════════════════════════════
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --dark:#02050A;--bg2:#07111F;--panel:#0B1626;
+  --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
+  --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.32);
+  --blue:#1E90FF;--cyan:#00D5FF;
+  --paper:#FBFAF7;--ink:#1d1d1f;--mid:#6e6e73;--paperline:#d2d2d7;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"DM Serif Display",Georgia,serif;
+  --max:1280px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--dark);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;font-feature-settings:"cv02","cv03","cv04","cv11"}
+.mockup-banner{position:sticky;top:0;z-index:100;background:linear-gradient(90deg,#0066CC,#00D5FF);color:#00111d;padding:9px 16px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;text-align:center}
+
+/* ── context marker ── */
+.ctx{max-width:var(--max);margin:0 auto;padding:10px 36px;font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);display:flex;align-items:center;gap:12px}
+.ctx::before,.ctx::after{content:"";flex:1;height:1px;background:repeating-linear-gradient(90deg,rgba(0,213,255,.35) 0 8px,transparent 8px 16px)}
+
+/* ── PAIN SECTION SLICE (light, abbreviated) ── */
+.pain-slice{background:var(--paper);color:var(--ink);padding:44px 36px 60px}
+.pain-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pain{background:#fff;border:1px solid var(--paperline);border-radius:18px;padding:24px}
+.pain .role{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.pain h3{font-size:17px;margin-bottom:8px;font-weight:600;letter-spacing:-.012em}
+.pain p{font-size:13.5px;line-height:1.5;color:var(--mid)}
+@media(max-width:900px){.pain-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.pain-grid{grid-template-columns:1fr}}
+
+/* ══════════════════════════════════════════════════════
+   THE NEW BAND — "Why Orion in 60 seconds"
+   ══════════════════════════════════════════════════════ */
+.explainer-band{position:relative;overflow:hidden;padding:88px 36px 84px;background:
+  radial-gradient(circle at 82% 10%,rgba(0,213,255,.14),transparent 38%),
+  radial-gradient(circle at 8% 90%,rgba(30,144,255,.12),transparent 40%),
+  linear-gradient(180deg,#02050A 0%,#07111F 60%,#050B14 100%);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.eb-inner{max-width:var(--max);margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center}
+.eb-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:12px;margin-bottom:20px;font-weight:700}
+.eb-eyebrow::before,.eb-eyebrow::after{content:"";width:32px;height:1px;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+.eb-h2{font-size:clamp(28px,3.6vw,50px);font-weight:600;line-height:1.08;letter-spacing:-.024em;color:#fff;max-width:760px}
+.eb-h2 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--cyan)}
+.eb-sub{margin-top:16px;font-size:16px;color:var(--muted);max-width:600px;line-height:1.6}
+.eb-chapters{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap;justify-content:center}
+.eb-chip{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--cyan);background:rgba(0,213,255,.06);border:1px solid var(--line2);border-radius:999px;padding:7px 13px}
+.eb-player-wrap{margin-top:36px;width:min(960px,100%);position:relative}
+.eb-player-wrap::before{content:"";position:absolute;inset:-40px -60px;background:radial-gradient(closest-side,rgba(0,213,255,.14),transparent 70%);pointer-events:none;z-index:0}
+.eb-player-wrap iframe{position:relative;z-index:1;display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:22px;box-shadow:0 40px 120px rgba(0,0,0,.55)}
+.eb-note{margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+
+/* ── HELIX SECTION SLICE (dark, abbreviated) ── */
+.helix-slice{padding:60px 36px 44px;background:var(--dark)}
+.helix-inner{max-width:var(--max);margin:0 auto}
+.hx-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:12px;margin-bottom:18px;font-weight:700}
+.hx-eyebrow::before{content:"";width:32px;height:1px;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+.helix-slice h2{font-size:clamp(24px,3vw,40px);font-weight:600;letter-spacing:-.022em;line-height:1.12;max-width:640px}
+.helix-slice h2 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--cyan)}
+.helix-slice p{margin-top:12px;color:var(--muted);max-width:560px;font-size:15px}
+</style>
+</head>
+<body>
+
+<div class="mockup-banner">Mockup · homepage band placement — scroll to see the explainer in context</div>
+
+<!-- context: the section ABOVE (already on the homepage) -->
+<div class="ctx" style="margin-top:14px">Existing section · 01 · The pain (end of)</div>
+<section class="pain-slice">
+  <div class="pain-grid">
+    <div class="pain"><div class="role">Ops Director</div><h3>Labour dependency</h3><p>Every peak means more agency bodies, more overtime, more risk.</p></div>
+    <div class="pain"><div class="role">Finance Director</div><h3>CAPEX paralysis</h3><p>The board wants payback proof before a six-figure cheque.</p></div>
+    <div class="pain"><div class="role">Warehouse Manager</div><h3>Throughput ceiling</h3><p>The line maxes out exactly when the volume arrives.</p></div>
+    <div class="pain"><div class="role">Engineering</div><h3>Integration fear</h3><p>Nobody wants a two-year programme and a stack of vendors.</p></div>
+  </div>
+</section>
+
+<!-- ══════════════ THE NEW BAND ══════════════ -->
+<div class="ctx">NEW · The explainer band goes here</div>
+<section class="explainer-band" id="why-orion-60">
+  <div class="eb-inner">
+    <div class="eb-eyebrow">02 · Why Orion in 60 seconds</div>
+    <h2 class="eb-h2">Three fears keep operations manual. <em>Watch us kill all three.</em></h2>
+    <p class="eb-sub">The price. The complexity. The fear you won't understand it. Sixty seconds, no brochure theatre.</p>
+    <div class="eb-chapters">
+      <span class="eb-chip">01 · The price → pay monthly</span>
+      <span class="eb-chip">02 · Complexity → modular</span>
+      <span class="eb-chip">03 · Understanding → it runs itself</span>
+    </div>
+    <div class="eb-player-wrap">
+      <iframe src="explainer-why-orion.html" title="Why Orion — 60 second explainer" loading="lazy"></iframe>
+    </div>
+    <div class="eb-note">Animated · no sound needed · click a chapter dot to skip</div>
+  </div>
+</section>
+
+<!-- context: the section BELOW (already on the homepage) -->
+<div class="ctx">Existing section · 02 · Helix (start of)</div>
+<section class="helix-slice">
+  <div class="helix-inner">
+    <div class="hx-eyebrow">02 · Helix sortation</div>
+    <h2>Helix: modular sortation for <em>real freight</em>.</h2>
+    <p>Bags. Boxes. Awkward parcels. Uneven loads. Mixed sizes. Peak windows…</p>
+  </div>
+</section>
+
+</body>
+</html>
