@@ -249,6 +249,38 @@ padding:88px 36px 72px;border-bottom:1px solid var(--line)}
 .helix-dot{width:7px;height:7px;border-radius:50%;border:1px solid rgba(0,213,255,.45);background:transparent;cursor:pointer;padding:0;transition:all .2s}
 .helix-dot.active{background:var(--cyan);box-shadow:0 0 10px var(--cyan);border-color:var(--cyan)}
 
+/* ── HERO ANIMATION · Helix in motion (replaces YouTube embed) ── */
+.hero-media:has(.hero-anim){cursor:default}
+.hero-anim{position:absolute;inset:0;overflow:hidden;background:radial-gradient(circle at 72% 18%,rgba(0,213,255,.13),transparent 45%),radial-gradient(circle at 15% 85%,rgba(30,144,255,.10),transparent 40%),linear-gradient(180deg,#07111F,#050B14)}
+.ha-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,213,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,213,255,.05) 1px,transparent 1px);background-size:44px 44px;-webkit-mask:radial-gradient(circle at 50% 50%,black 30%,transparent 85%);mask:radial-gradient(circle at 50% 50%,black 30%,transparent 85%)}
+.ha-belt{position:absolute;left:5%;right:5%;top:50%;height:64px;transform:translateY(-50%);border:1px solid rgba(0,213,255,.28);border-radius:14px;background:linear-gradient(180deg,rgba(15,29,49,.85),rgba(7,17,31,.75));z-index:2}
+.ha-belt::after{content:"";position:absolute;inset:6px;border-radius:9px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 2px,transparent 2px 18px);animation:haRoll 1.1s linear infinite}
+@keyframes haRoll{to{background-position:18px 0}}
+.ha-branch{position:absolute;height:4px;width:34%;left:58%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:999px;box-shadow:0 0 14px rgba(0,213,255,.45);transform-origin:left center;z-index:1;opacity:.85}
+.ha-branch.up{top:47%;transform:rotate(-20deg)}
+.ha-branch.down{top:53%;transform:rotate(20deg)}
+.ha-gate{position:absolute;left:34%;top:50%;transform:translate(-50%,-50%);width:10px;height:128px;border:1px solid rgba(0,213,255,.5);border-radius:6px;background:rgba(0,213,255,.08);box-shadow:0 0 26px rgba(0,213,255,.35);z-index:3;overflow:hidden}
+.ha-gate::after{content:"";position:absolute;left:0;right:0;height:22px;background:linear-gradient(180deg,transparent,rgba(0,213,255,.85),transparent);animation:haScan 1.6s ease-in-out infinite}
+@keyframes haScan{0%,100%{top:-24px}50%{top:110%}}
+.ha-parcel{position:absolute;left:-48px;top:calc(50% - 11px);width:36px;height:22px;border-radius:5px;background:linear-gradient(180deg,#1E90FF,#0F5FA8);box-shadow:0 4px 14px rgba(0,0,0,.4),0 0 10px rgba(30,144,255,.3);z-index:4;animation:haStraight 8.5s linear infinite}
+.ha-parcel.amber{background:linear-gradient(180deg,#FDB022,#C77E08)}
+.ha-parcel.light{background:linear-gradient(180deg,#E8EEF5,#B9C4D0)}
+@keyframes haStraight{0%{transform:translate(0,0)}100%{transform:translate(1400px,0)}}
+@keyframes haUp{0%{transform:translate(0,0) rotate(0)}52%{transform:translate(700px,0) rotate(0)}100%{transform:translate(1250px,-300px) rotate(-14deg)}}
+@keyframes haDown{0%{transform:translate(0,0) rotate(0)}52%{transform:translate(700px,0) rotate(0)}100%{transform:translate(1250px,300px) rotate(14deg)}}
+.ha-parcel.p1{animation-delay:0s}
+.ha-parcel.p2{animation-name:haUp;animation-delay:1.3s}
+.ha-parcel.p3{animation-delay:2.5s}
+.ha-parcel.p4{animation-name:haDown;animation-delay:3.6s}
+.ha-parcel.p5{animation-delay:4.8s}
+.ha-parcel.p6{animation-name:haUp;animation-delay:6s}
+.ha-parcel.p7{animation-delay:7.1s}
+.ha-parcel.p8{animation-name:haDown;animation-delay:8.2s}
+.ha-chip{position:absolute;top:14px;right:14px;z-index:5;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#fff;background:rgba(0,0,0,.5);border:1px solid rgba(0,213,255,.3);border-radius:999px;padding:6px 12px;backdrop-filter:blur(6px)}
+.ha-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:haPulse 2s ease-in-out infinite}
+@keyframes haPulse{0%,100%{opacity:1}50%{opacity:.4}}
+@media (prefers-reduced-motion:reduce){.hero-anim *{animation:none!important}}
+
 /* ── WHY ORION · 60-SECOND EXPLAINER BAND ── */
 .explainer-band{position:relative;overflow:hidden;padding:88px 36px 84px;background:
   radial-gradient(circle at 82% 10%,rgba(0,213,255,.14),transparent 38%),
@@ -592,11 +624,24 @@ tr:last-child td{border-bottom:none}
 
     <!-- Hero media · YouTube embed · autoplay muted loop, no controls/branding -->
     <div class="hero-media">
-      <iframe id="heroVideo" src="https://www.youtube.com/embed/ZJhXlXHJ_5c?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=ZJhXlXHJ_5c&controls=0&modestbranding=1&rel=0&showinfo=0&playsinline=1"
-              title="Orion · Helix sortation"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowfullscreen></iframe>
-      <span class="label">Helix · live site footage</span>
+      <!-- Pure-CSS Helix sortation animation — no YouTube chrome, loops forever -->
+      <div class="hero-anim" aria-hidden="true">
+        <div class="ha-grid"></div>
+        <div class="ha-branch up"></div>
+        <div class="ha-branch down"></div>
+        <div class="ha-belt"></div>
+        <div class="ha-gate"></div>
+        <div class="ha-parcel p1"></div>
+        <div class="ha-parcel p2 amber"></div>
+        <div class="ha-parcel p3 light"></div>
+        <div class="ha-parcel p4"></div>
+        <div class="ha-parcel p5 amber"></div>
+        <div class="ha-parcel p6 light"></div>
+        <div class="ha-parcel p7"></div>
+        <div class="ha-parcel p8 amber"></div>
+        <div class="ha-chip"><span class="ha-dot"></span>Live · Helix · 3-way divert</div>
+      </div>
+      <span class="label">Helix · sortation in motion</span>
     </div>
   </div>
 </section>
@@ -1503,45 +1548,6 @@ tr:last-child td{border-bottom:none}
     window.onYouTubeIframeAPIReady = function () {
       if (typeof priorReady === 'function') { try { priorReady(); } catch (e) {} }
       initPlayers();
-    };
-    if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      document.head.appendChild(tag);
-    }
-  }
-})();
-</script>
-
-<script>
-// ════════════════════════════════════════════════════════════════
-// HERO VIDEO — bulletproof loop via YouTube IFrame API
-// YouTube's loop=1 param is unreliable; this restarts the video the
-// instant it ends, guaranteeing a seamless loop.
-// ════════════════════════════════════════════════════════════════
-(function(){
-  const iframe = document.getElementById('heroVideo');
-  if (!iframe) return;
-
-  function initHero() {
-    new YT.Player(iframe, {
-      events: {
-        onStateChange: function (e) {
-          if (e.data === YT.PlayerState.ENDED) {
-            try { e.target.seekTo(0); e.target.playVideo(); } catch (err) {}
-          }
-        }
-      }
-    });
-  }
-
-  if (window.YT && window.YT.Player) {
-    initHero();
-  } else {
-    const priorReady = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = function () {
-      if (typeof priorReady === 'function') { try { priorReady(); } catch (e) {} }
-      initHero();
     };
     if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
       const tag = document.createElement('script');
