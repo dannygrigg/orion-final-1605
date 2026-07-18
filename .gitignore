@@ -28,6 +28,11 @@ hero-intro.mp4
 *.sketch
 *.fig
 
+# Internal documents — must never be published to the public site
+incident-report-*.html
+rca-form.html
+sop-*.html
+
 # wrangler files
 .wrangler
 .dev.vars*
