@@ -244,6 +244,21 @@ input[type=file]{display:none}
 .pricing .final-card{display:none!important}
 .pricing .lease-card{display:none!important}
 
+/* ── CONTROLS & WCS TIER SELECTOR ── */
+.tier-card{border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03);padding:12px;margin-bottom:12px}
+.tier-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:700;margin-bottom:9px;padding-left:2px}
+.tier-opt{display:block;cursor:pointer;margin-bottom:6px}
+.tier-opt:last-child{margin-bottom:0}
+.tier-opt input{position:absolute;opacity:0;pointer-events:none}
+.tier-body{display:block;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.02);transition:border-color .15s,background .15s}
+.tier-opt:hover .tier-body{border-color:rgba(0,213,255,.4)}
+.tier-opt input:checked + .tier-body{border-color:var(--cyan);background:rgba(0,213,255,.08);box-shadow:inset 0 0 0 1px var(--cyan)}
+.tier-name{display:flex;align-items:center;gap:7px;margin-bottom:2px}
+.tier-name b{font-size:12.5px;font-weight:600;color:#fff;letter-spacing:-.005em}
+.tier-name em{margin-left:auto;font-family:var(--mono);font-style:normal;font-size:12px;font-weight:700;color:var(--cyan)}
+.tier-pop{font-family:var(--mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#00111d;background:var(--amber);border-radius:999px;padding:2px 7px}
+.tier-body small{display:block;font-size:10.5px;color:var(--soft);line-height:1.45}
+
 /* ── FROM-PER-MONTH hero card ── */
 .from-card{background:linear-gradient(135deg,rgba(30,144,255,.16),rgba(0,213,255,.08));border:1px solid var(--line2);border-radius:14px;padding:20px 16px;margin-bottom:14px;text-align:center;box-shadow:0 10px 30px rgba(0,213,255,.08)}
 .from-lbl{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:8px}
@@ -477,6 +492,32 @@ input[type=file]{display:none}
 
     <h2 class="p-h">Indicative price</h2>
     <div class="p-sub">Live · updates as you draw</div>
+
+    <!-- Controls & WCS tier selector (public build) — feeds the From figure -->
+    <div class="tier-card">
+      <div class="tier-lbl">Controls &amp; WCS · included in your figure</div>
+      <label class="tier-opt">
+        <input type="radio" name="ctier" value="15000" checked>
+        <span class="tier-body">
+          <span class="tier-name"><b>Basic</b><em>£15k</em></span>
+          <small>PLC controls · safety circuits · local HMI</small>
+        </span>
+      </label>
+      <label class="tier-opt">
+        <input type="radio" name="ctier" value="30000">
+        <span class="tier-body">
+          <span class="tier-name"><b>Advanced</b><span class="tier-pop">Most popular</span><em>£30k</em></span>
+          <small>+ Helios dashboards · live data · alerts · remote support</small>
+        </span>
+      </label>
+      <label class="tier-opt">
+        <input type="radio" name="ctier" value="50000">
+        <span class="tier-body">
+          <span class="tier-name"><b>Full stack</b><em>£50k</em></span>
+          <small>+ full Helios WCS · routing · WMS/ERP integration · reporting</small>
+        </span>
+      </label>
+    </div>
 
     <!-- car-sales hero figure (public build) — mirrors the 60-month lease -->
     <div class="from-card">
@@ -1804,7 +1845,7 @@ function recalc(){
   const contingency = raw * p.contingency / 100;
   const subPre = raw + controls + installation + contingency;
   const margin = subPre * p.margin / 100;
-  const finalROM = subPre + margin + p.delivery;
+  const finalROM = subPre + margin + p.delivery + (window.ORION_CONTROLS_TIER || 0);
   const lease = months => {
     if (finalROM <= 0) return 0;
     const r = 0.08 / 12, f = Math.pow(1+r, months);
@@ -3010,6 +3051,25 @@ window.addEventListener('DOMContentLoaded', () => {
       alert('That didn\'t send — please try again, or email info@orionmis.co.uk and we\'ll unlock you manually.');
     }
   });
+
+  // Controls & WCS tier — fixed sell-side amount added to the final figure.
+  // The internal 8% controls allowance is zeroed so it isn't double-counted.
+  window.ORION_CONTROLS_TIER = 15000;
+  function triggerRecalc(){
+    var d = document.getElementById('u-delivery');
+    if (d) d.dispatchEvent(new Event('input', { bubbles:true }));
+  }
+  var uc = document.getElementById('u-controls');
+  if (uc){ uc.value = 0; uc.dispatchEvent(new Event('input', { bubbles:true })); }
+  document.querySelectorAll('input[name="ctier"]').forEach(function(r){
+    r.addEventListener('change', function(){
+      if (r.checked){
+        window.ORION_CONTROLS_TIER = Number(r.value) || 0;
+        triggerRecalc();
+      }
+    });
+  });
+  triggerRecalc(); // fold the default Basic tier into the opening figure
 
   // "From £/mo" hero — mirrors the (hidden) 60-month lease figure live as the layout changes
   const leaseSrc = document.getElementById('lease-60');
