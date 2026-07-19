@@ -144,16 +144,20 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
 
 /* hand in glove */
 .glove-band{background:linear-gradient(180deg,#02050A,#07111F);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.glove-row{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:center}
-.glove-side{padding:30px 34px;border:1px solid var(--line2);border-radius:18px;background:rgba(15,29,49,.5);text-align:center}
-.glove-side.hw{border-color:rgba(255,255,255,.14)}
-.glove-side .g-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:10px;color:var(--soft)}
-.glove-side h3{font-size:22px;color:#fff;margin-bottom:8px}
-.glove-side.sw h3{color:var(--cyan)}
-.glove-side p{font-size:13.5px;line-height:1.55}
-.glove-join{width:70px;display:flex;align-items:center;justify-content:center;position:relative}
-.glove-join svg{width:40px;height:40px;stroke:var(--cyan);fill:none;stroke-width:1.6;filter:drop-shadow(0 0 8px rgba(0,213,255,.5))}
-@media(max-width:800px){.glove-row{grid-template-columns:1fr;gap:14px}.glove-join{width:auto;transform:rotate(90deg);padding:4px 0}}
+/* node-based architecture */
+.node-row{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;gap:22px;align-items:center}
+.node-col{display:flex;flex-direction:column;gap:10px}
+.node-col-tag{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:4px}
+.node-col-tag.native{color:var(--green)}
+.node-col-tag.connected{color:var(--cyan)}
+.node-chip{display:flex;align-items:center;gap:11px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:rgba(15,29,49,.5);font-size:13.5px;color:#fff;font-weight:500}
+.node-chip .nd{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.node-chip .nd.g{background:var(--green);box-shadow:0 0 10px rgba(50,213,131,.6)}
+.node-chip .nd.c{background:var(--cyan);box-shadow:0 0 10px rgba(0,213,255,.6)}
+.node-core{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:0 8px}
+.node-core-badge{width:118px;height:118px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:800;font-size:19px;letter-spacing:-.01em;color:#fff;background:radial-gradient(circle,rgba(0,213,255,.28),rgba(30,144,255,.08));border:1px solid var(--line2);box-shadow:0 0 60px rgba(0,213,255,.22),inset 0 0 22px rgba(0,213,255,.12)}
+.node-core-sub{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:700;margin-top:12px}
+@media(max-width:820px){.node-row{grid-template-columns:1fr;gap:16px}.node-core{padding:8px 0}.node-core-badge{width:96px;height:96px;font-size:17px}}
 
 /* feature grid */
 .feature-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -313,7 +317,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
       <span class="hero-badge"><span class="dot"></span>Live now · running on real sites</span>
       <h1><span class="helios-word">Orion Helios</span> — the warehouse <em>operating system.</em></h1>
       <p class="hero-lead">The intelligence layer for UK-built automation. Routing, live dashboards, fault detection and reporting — built by the same team that builds the machines, and already running on live Orion sites.</p>
-      <p class="hero-lead">Hardware and software, hand in glove. Not a bolted-on WCS from a third party. One system, one number, one UK facility.</p>
+      <p class="hero-lead">A node-based platform: native and deepest on Orion kit, and plugged straight into the third-party automation you already run. One intelligence layer across the whole operation.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#tiers">See the tiers →</a>
         <a class="btn btn-secondary" href="#features">What Helios does</a>
@@ -345,28 +349,38 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   </div>
 </section>
 
-<!-- ── HAND IN GLOVE ── -->
+<!-- ── NODE-BASED ARCHITECTURE ── -->
 <section class="section glove-band">
   <div class="section-head">
-    <div class="eyebrow" style="justify-content:center">Why Helios is different</div>
-    <h2>Built <em>hand in glove</em> with the hardware.</h2>
-    <p>Most warehouse software is a third-party layer, integrated after the fact — a translation problem waiting to happen. Helios is written by the same UK engineers who design the mechanical, electrical and controls. It speaks to the machine natively.</p>
+    <div class="eyebrow" style="justify-content:center">A node-based system</div>
+    <h2>Native on Orion. <em>Connects to everything else.</em></h2>
+    <p>Helios is built from nodes. Every conveyor, sorter, robot, PLC or scanner becomes a node on the platform — deepest and native on Orion's own kit, built by the same UK team, and plugged straight into third-party automation too. One intelligence layer across your whole operation, not just the Orion island.</p>
   </div>
-  <div class="glove-row">
-    <div class="glove-side hw">
-      <div class="g-tag">The machine</div>
-      <h3>Orion hardware</h3>
-      <p>Conveyors, Helix sortation, robotics, AMRs — mechanical, electrical and PLC, all built in Chichester.</p>
+  <div class="node-row">
+    <!-- Orion · native -->
+    <div class="node-col">
+      <div class="node-col-tag native">Orion · native nodes</div>
+      <div class="node-chip"><span class="nd g"></span>Helix sortation</div>
+      <div class="node-chip"><span class="nd g"></span>Conveyor systems</div>
+      <div class="node-chip"><span class="nd g"></span>Robotics &amp; AMRs</div>
+      <div class="node-chip"><span class="nd g"></span>Print &amp; apply · scan</div>
     </div>
-    <div class="glove-join">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12h8M8 12l3-3M8 12l3 3M16 12l-3-3M16 12l-3 3"/></svg>
+    <!-- Helios core -->
+    <div class="node-core">
+      <div class="node-core-badge">HELIOS</div>
+      <div class="node-core-sub">Node platform</div>
+      <div class="node-lines" aria-hidden="true"></div>
     </div>
-    <div class="glove-side sw">
-      <div class="g-tag">The intelligence</div>
-      <h3>Helios OS</h3>
-      <p>Routing, dashboards, alarms, live data and reporting — designed against the exact same machine, by the same team.</p>
+    <!-- Third-party · connected -->
+    <div class="node-col">
+      <div class="node-col-tag connected">Third-party · connected nodes</div>
+      <div class="node-chip"><span class="nd c"></span>Siemens · Beckhoff PLCs</div>
+      <div class="node-chip"><span class="nd c"></span>Interroll conveyor modules</div>
+      <div class="node-chip"><span class="nd c"></span>Keyence sensing &amp; vision</div>
+      <div class="node-chip"><span class="nd c"></span>AMR vendors · your WMS/ERP</div>
     </div>
   </div>
+  <p style="text-align:center;max-width:640px;margin:26px auto 0;font-size:14px;color:var(--muted);line-height:1.6">Land Helios on the Orion system you already run — then extend it, node by node, across the kit you already own. No rip-and-replace.</p>
 </section>
 
 <!-- ── FEATURES ── -->
