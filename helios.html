@@ -98,8 +98,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
 .hero-badge{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--cyan);background:rgba(0,213,255,.07);border:1px solid var(--line2);border-radius:999px;padding:8px 14px;margin-bottom:20px}
 .hero-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:newsPulse 2.4s ease-in-out infinite}
 .helios-word{font-family:var(--sans);font-weight:800;letter-spacing:-.02em}
-.helios-logo{height:54px;width:auto;display:block;margin-bottom:22px}
-@media(max-width:600px){.helios-logo{height:44px}}
+.helios-logo{height:clamp(64px,8.5vw,112px);width:auto;display:block;margin:-6px 0 24px;filter:drop-shadow(0 0 34px rgba(0,213,255,.28))}
+@media(max-width:600px){.helios-logo{height:clamp(56px,15vw,72px)}}
 
 /* product screenshot gallery */
 .shots{padding:88px 36px;background:linear-gradient(180deg,#02050A,#07111F);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
