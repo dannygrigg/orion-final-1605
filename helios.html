@@ -108,9 +108,15 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
 .shot.wide{grid-column:1;grid-row:1 / span 2}
 .shot img{width:100%;height:100%;object-fit:cover;display:block}
 .shot .shot-cap{position:absolute;left:14px;bottom:14px;z-index:2;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#fff;background:rgba(0,0,0,.55);border:1px solid var(--line2);border-radius:999px;padding:6px 12px;backdrop-filter:blur(6px)}
-.shot .shot-missing{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px;color:var(--soft);font-family:var(--mono);font-size:11px;letter-spacing:.1em}
-.shot .shot-missing b{color:#fff;font-size:13px;letter-spacing:.04em}
-.shot .shot-missing code{background:rgba(0,0,0,.4);padding:4px 9px;border-radius:6px;color:var(--cyan);font-size:11px}
+.shot .shot-missing{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:28px;background:
+  radial-gradient(circle at 70% 25%,rgba(0,213,255,.14),transparent 55%),
+  radial-gradient(circle at 20% 85%,rgba(30,144,255,.10),transparent 55%),
+  linear-gradient(180deg,#0B1626,#050B14)}
+.shot .shot-missing::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(0,213,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,213,255,.05) 1px,transparent 1px);background-size:34px 34px;-webkit-mask:radial-gradient(circle,black,transparent 78%);mask:radial-gradient(circle,black,transparent 78%);pointer-events:none}
+.shot .shot-missing .sm-badge{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--cyan);background:rgba(0,213,255,.07);border:1px solid var(--line2);border-radius:999px;padding:6px 12px}
+.shot .shot-missing .sm-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:newsPulse 2s ease-in-out infinite}
+.shot .shot-missing b{position:relative;z-index:1;color:#fff;font-size:17px;font-weight:600;letter-spacing:-.01em;font-family:var(--sans)}
+.shot .shot-missing span{position:relative;z-index:1;color:var(--muted);font-size:12.5px;line-height:1.5;max-width:220px}
 @media(max-width:820px){.shots-grid{grid-template-columns:1fr}.shot.wide{grid-column:1;grid-row:auto}}
 .hero h1{font-size:clamp(38px,5vw,66px);margin-bottom:20px;color:#fff;line-height:1.03}
 .hero-lead{font-size:17px;line-height:1.65;max-width:560px;color:var(--muted)}
@@ -499,22 +505,23 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   <div class="section-head">
     <div class="eyebrow" style="justify-content:center">See it live</div>
     <h2>The real thing, <em>running today.</em></h2>
-    <p>Screens from a live Orion Helios site — not mock-ups.</p>
+    <p>Live screens from Orion Helios — dropping in this week as the next site goes live.</p>
   </div>
   <div class="shots-grid">
+    <!-- Drop real screenshots into images/ to replace the placeholders -->
     <div class="shot wide">
       <img src="images/helios-scada.png" alt="Orion Helios SCADA — live 3D digital twin" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="shot-missing" style="display:none"><b>SCADA · digital twin</b><span>save as</span><code>images/helios-scada.png</code></div>
+      <div class="shot-missing" style="display:none"><span class="sm-badge">Live display · this week</span><b>SCADA · digital twin</b><span>Real-time 3D model of the sorter, parcels moving as they move on the floor</span></div>
       <span class="shot-cap">SCADA · live digital twin</span>
     </div>
     <div class="shot">
       <img src="images/helios-home.png" alt="Orion Helios home dashboard" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="shot-missing" style="display:none"><b>Home · dashboard</b><span>save as</span><code>images/helios-home.png</code></div>
+      <div class="shot-missing" style="display:none"><span class="sm-badge">Live display · this week</span><b>Home · dashboard</b><span>Customisable live widgets</span></div>
       <span class="shot-cap">Home · command surface</span>
     </div>
     <div class="shot">
       <img src="images/helios-reports.png" alt="Orion Helios reports & analytics" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="shot-missing" style="display:none"><b>Reports · analytics</b><span>save as</span><code>images/helios-reports.png</code></div>
+      <div class="shot-missing" style="display:none"><span class="sm-badge">Live display · this week</span><b>Reports · analytics</b><span>Insights &amp; leaderboards</span></div>
       <span class="shot-cap">Reports · analytics</span>
     </div>
   </div>
