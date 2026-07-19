@@ -624,24 +624,12 @@ tr:last-child td{border-bottom:none}
 
     <!-- Hero media · YouTube embed · autoplay muted loop, no controls/branding -->
     <div class="hero-media">
-      <!-- Pure-CSS Helix sortation animation — no YouTube chrome, loops forever -->
-      <div class="hero-anim" aria-hidden="true">
-        <div class="ha-grid"></div>
-        <div class="ha-branch up"></div>
-        <div class="ha-branch down"></div>
-        <div class="ha-belt"></div>
-        <div class="ha-gate"></div>
-        <div class="ha-parcel p1"></div>
-        <div class="ha-parcel p2 amber"></div>
-        <div class="ha-parcel p3 light"></div>
-        <div class="ha-parcel p4"></div>
-        <div class="ha-parcel p5 amber"></div>
-        <div class="ha-parcel p6 light"></div>
-        <div class="ha-parcel p7"></div>
-        <div class="ha-parcel p8 amber"></div>
-        <div class="ha-chip"><span class="ha-dot"></span>Live · Helix · 3-way divert</div>
-      </div>
-      <span class="label">Helix · sortation in motion</span>
+      <!-- Hero video · swap the ID below for live-site footage when ready -->
+      <iframe id="heroVideo" src="https://www.youtube.com/embed/ZJhXlXHJ_5c?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=ZJhXlXHJ_5c&controls=0&modestbranding=1&rel=0&showinfo=0&playsinline=1"
+              title="Orion · Helix sortation"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowfullscreen></iframe>
+      <span class="label">Helix · live site footage</span>
     </div>
   </div>
 </section>
@@ -1476,6 +1464,40 @@ tr:last-child td{border-bottom:none}
 </script>
 
 <script>
+// ════════════════════════════════════════════════════════════════
+// HERO VIDEO — reliable loop via the YouTube IFrame API.
+// YouTube's own loop=1 is flaky; this replays the instant it ends.
+// (Swap the video ID in the iframe src for live-site footage later.)
+// ════════════════════════════════════════════════════════════════
+(function(){
+  const iframe = document.getElementById('heroVideo');
+  if (!iframe) return;
+  function initHero(){
+    new YT.Player(iframe, {
+      events: {
+        onStateChange: function(e){
+          if (e.data === YT.PlayerState.ENDED){
+            try { e.target.seekTo(0); e.target.playVideo(); } catch(err){}
+          }
+        }
+      }
+    });
+  }
+  if (window.YT && window.YT.Player){ initHero(); }
+  else {
+    const prior = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function(){
+      if (typeof prior === 'function'){ try { prior(); } catch(e){} }
+      initHero();
+    };
+    if (!document.querySelector('script[src*="youtube.com/iframe_api"]')){
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    }
+  }
+})();
+
 // ════════════════════════════════════════════════════════════════
 // HELIX CAROUSEL — video showreel
 // Auto-advances to the next video when the current one finishes,
