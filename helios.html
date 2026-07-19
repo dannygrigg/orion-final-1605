@@ -194,7 +194,8 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
 @media(max-width:700px){.roadmap{grid-template-columns:1fr}}
 
 /* ── HELIOS TIERS ── */
-.tiers{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.tiers{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:stretch}
+@media(max-width:1050px){.tiers{grid-template-columns:1fr 1fr}}
 .tier{position:relative;border:1px solid var(--line);border-radius:20px;padding:28px 26px;background:linear-gradient(180deg,rgba(15,29,49,.5),rgba(7,17,31,.35));display:flex;flex-direction:column;text-align:left}
 .tier.featured{border-color:var(--cyan);background:linear-gradient(180deg,rgba(0,213,255,.09),rgba(7,17,31,.5));box-shadow:0 20px 60px rgba(0,213,255,.12)}
 .tier-flag{position:absolute;top:-11px;left:26px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#00111d;background:var(--amber);border-radius:999px;padding:5px 12px}
@@ -437,56 +438,70 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
 <section class="section launch" id="tiers">
   <div class="section-head">
     <div class="eyebrow" style="justify-content:center">Tiers &amp; models</div>
-    <h2>Three levels of <em>Helios.</em></h2>
-    <p>Every Orion system ships with Helios Core. Step up to Pro or Full as your operation needs more visibility, more automation and more integration. Indicative — final specification and price confirmed at site survey.</p>
+    <h2>Four levels of <em>intelligence.</em></h2>
+    <p>Land with visibility, scale into prediction, optimisation and full autonomy. A per-site monthly subscription — step up a tier as your operation is ready, no re-install.</p>
   </div>
   <div class="tiers">
     <div class="tier">
       <div class="tier-head">
-        <div class="tier-name">Helios Core</div>
-        <div class="tier-price">from £15k<span>controls &amp; WCS</span></div>
+        <div class="tier-name">Core</div>
+        <div class="tier-price">£1.5k<span>/site/mo</span></div>
       </div>
-      <p class="tier-sub">Included with every system.</p>
+      <p class="tier-sub">Operational visibility layer.</p>
       <ul class="tier-list">
-        <li>Live throughput &amp; uptime dashboard</li>
-        <li>Divert / lane status at a glance</li>
-        <li>Basic fault alerts</li>
-        <li>Local HMI &amp; safety circuits</li>
+        <li>Live dashboards</li>
+        <li>Throughput KPIs</li>
+        <li>Standard alerts</li>
+        <li>Monthly reports</li>
       </ul>
     </div>
     <div class="tier featured">
       <div class="tier-flag">Most popular</div>
       <div class="tier-head">
-        <div class="tier-name">Helios Pro</div>
-        <div class="tier-price">from £30k<span>controls &amp; WCS</span></div>
+        <div class="tier-name">Intelligent</div>
+        <div class="tier-price">£3.5k<span>/site/mo</span></div>
       </div>
-      <p class="tier-sub">The everyday operations tier.</p>
+      <p class="tier-sub">Prediction &amp; decision support.</p>
       <ul class="tier-list">
         <li>Everything in Core, plus:</li>
-        <li>Full live-data dashboards</li>
-        <li>Fault detection &amp; smart alerts</li>
-        <li>Predictive maintenance countdowns</li>
-        <li>Remote diagnostics &amp; Orion support</li>
+        <li>Bottleneck forecasts</li>
+        <li>Demand prediction</li>
+        <li>Smart alerts</li>
+        <li>Trend analytics</li>
       </ul>
     </div>
     <div class="tier">
       <div class="tier-head">
-        <div class="tier-name">Helios Full</div>
-        <div class="tier-price">from £50k<span>controls &amp; WCS</span></div>
+        <div class="tier-name">Autonomous</div>
+        <div class="tier-price">£7.5k<span>/site/mo</span></div>
       </div>
-      <p class="tier-sub">The full operating system.</p>
+      <p class="tier-sub">Optimisation &amp; AI actions.</p>
       <ul class="tier-list">
-        <li>Everything in Pro, plus:</li>
-        <li>Full WCS &amp; smart routing engine</li>
-        <li>WMS / ERP integration</li>
-        <li>Reporting &amp; audit suite</li>
-        <li>Multi-site estate view</li>
+        <li>Everything in Intelligent, plus:</li>
+        <li>Dynamic rerouting</li>
+        <li>Labour recommendations</li>
+        <li>AI Assistant</li>
+        <li>Root-cause analysis</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-head">
+        <div class="tier-name">Enterprise</div>
+        <div class="tier-price">£15k+<span>/month</span></div>
+      </div>
+      <p class="tier-sub">Network-wide intelligence.</p>
+      <ul class="tier-list">
+        <li>Everything in Autonomous, plus:</li>
+        <li>Multi-site control</li>
+        <li>Custom integrations</li>
+        <li>Executive analytics</li>
+        <li>Partner API access</li>
       </ul>
     </div>
   </div>
-  <p style="text-align:center;margin-top:22px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)">Full tier definitions being finalised · figures indicative, confirmed at survey</p>
+  <p style="text-align:center;margin-top:22px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)">Per-site software subscription · indicative, confirmed per site · full tier definitions being finalised</p>
   <div style="text-align:center;margin-top:26px">
-    <a class="btn btn-primary" href="sketch-tool.html">Price your system &amp; build it →</a>
+    <a class="btn btn-primary" href="#register">Book a Helios demo →</a>
   </div>
 </section>
 
