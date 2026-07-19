@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Orion Helios | The Warehouse Operating System — Launching 2026</title>
-<meta name="description" content="Orion Helios is the warehouse operating system built hand in glove with Orion hardware — routing, live dashboards, fault detection and reporting from one UK team. Launching 2026.">
+<title>Orion Helios | The Warehouse Operating System — Live Now</title>
+<meta name="description" content="Orion Helios is the warehouse operating system built hand in glove with Orion hardware — routing, live dashboards, fault detection and reporting from one UK team. Live now on UK sites.">
 <link rel="canonical" href="https://orionmis.co.uk/helios.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://orionmis.co.uk/helios.html">
 <meta property="og:title" content="Orion Helios | The Warehouse Operating System">
-<meta property="og:description" content="The intelligence layer for UK-built warehouse automation. Routing, live dashboards, fault detection and reporting — built by the team that builds the machines. Launching 2026.">
+<meta property="og:description" content="The intelligence layer for UK-built warehouse automation. Routing, live dashboards, fault detection and reporting — built by the team that builds the machines. Live now on UK sites.">
 <meta property="og:image" content="https://orionmis.co.uk/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Orion Helios | The Warehouse Operating System">
-<meta name="twitter:description" content="The intelligence layer for UK-built warehouse automation. Launching 2026.">
+<meta name="twitter:description" content="The intelligence layer for UK-built warehouse automation. Live now on UK sites.">
 <meta name="twitter:image" content="https://orionmis.co.uk/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -193,6 +193,24 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
 .rm p{font-size:12.5px;line-height:1.5;color:var(--muted)}
 @media(max-width:700px){.roadmap{grid-template-columns:1fr}}
 
+/* ── HELIOS TIERS ── */
+.tiers{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+.tier{position:relative;border:1px solid var(--line);border-radius:20px;padding:28px 26px;background:linear-gradient(180deg,rgba(15,29,49,.5),rgba(7,17,31,.35));display:flex;flex-direction:column;text-align:left}
+.tier.featured{border-color:var(--cyan);background:linear-gradient(180deg,rgba(0,213,255,.09),rgba(7,17,31,.5));box-shadow:0 20px 60px rgba(0,213,255,.12)}
+.tier-flag{position:absolute;top:-11px;left:26px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#00111d;background:var(--amber);border-radius:999px;padding:5px 12px}
+.tier-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:6px}
+.tier-name{font-family:var(--sans);font-size:19px;font-weight:700;color:#fff;letter-spacing:-.01em}
+.tier.featured .tier-name{color:var(--cyan)}
+.tier-price{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--cyan);text-align:right;white-space:nowrap;line-height:1.2}
+.tier-price span{display:block;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);font-weight:600;margin-top:3px}
+.tier-sub{font-size:13px;color:var(--muted);margin-bottom:16px;font-style:italic}
+.tier-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:auto}
+.tier-list li{position:relative;padding-left:22px;font-size:13.5px;color:var(--muted);line-height:1.45}
+.tier-list li::before{content:"";position:absolute;left:0;top:6px;width:12px;height:12px;border-radius:50%;background:rgba(0,213,255,.14);border:1px solid var(--line2)}
+.tier-list li:first-child{color:#fff;font-weight:600;padding-left:0}
+.tier-list li:first-child::before{display:none}
+@media(max-width:900px){.tiers{grid-template-columns:1fr;max-width:460px}}
+
 /* CTA / register */
 .final{background:radial-gradient(circle at 50% 30%,rgba(0,213,255,.16),transparent 42%),#02050A;text-align:center;padding:88px 36px;border-top:1px solid var(--line)}
 .final-inner{max-width:640px;margin:0 auto}
@@ -283,7 +301,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   <a href="news.html">News &amp; builds</a>
   <a href="sketch-tool.html">Solution builder</a>
   <a href="index.html#faq">FAQs</a>
-  <a href="#register" class="mobile-cta">Register interest</a>
+  <a href="#register" class="mobile-cta">Book a Helios demo</a>
 </div>
 
 <!-- ── HERO ── -->
@@ -291,13 +309,13 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   <div class="hero-grid"></div>
   <div class="hero-inner">
     <div>
-      <span class="hero-badge"><span class="dot"></span>Launching 2026 · early access open</span>
+      <span class="hero-badge"><span class="dot"></span>Live now · running on real sites</span>
       <h1><span class="helios-word">Orion Helios</span> — the warehouse <em>operating system.</em></h1>
-      <p class="hero-lead">The intelligence layer for UK-built automation. Routing, live dashboards, fault detection and reporting — built by the same team that builds the machines.</p>
+      <p class="hero-lead">The intelligence layer for UK-built automation. Routing, live dashboards, fault detection and reporting — built by the same team that builds the machines, and already running on live Orion sites.</p>
       <p class="hero-lead">Hardware and software, hand in glove. Not a bolted-on WCS from a third party. One system, one number, one UK facility.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#register">Register your interest →</a>
-        <a class="btn btn-secondary" href="#features">See what Helios does</a>
+        <a class="btn btn-primary" href="#tiers">See the tiers →</a>
+        <a class="btn btn-secondary" href="#features">What Helios does</a>
       </div>
     </div>
 
@@ -415,49 +433,80 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   </div>
 </section>
 
-<!-- ── LAUNCH / ROADMAP ── -->
-<section class="section launch">
+<!-- ── HELIOS TIERS / MODELS ── -->
+<section class="section launch" id="tiers">
   <div class="section-head">
-    <div class="eyebrow" style="justify-content:center">Roadmap</div>
-    <h2>Helios is <em>landing in 2026.</em></h2>
-    <p>The intelligence layer is being rolled into live Orion systems through the year. Register now for early access, pilot slots and launch pricing.</p>
+    <div class="eyebrow" style="justify-content:center">Tiers &amp; models</div>
+    <h2>Three levels of <em>Helios.</em></h2>
+    <p>Every Orion system ships with Helios Core. Step up to Pro or Full as your operation needs more visibility, more automation and more integration. Indicative — final specification and price confirmed at site survey.</p>
   </div>
-  <div class="roadmap">
-    <div class="rm now">
-      <div class="rm-when">Now · 2026</div>
-      <h4>Live on Orion systems</h4>
-      <p>Dashboards, routing and alarms running on installed Orion Helix and conveyor lines.</p>
+  <div class="tiers">
+    <div class="tier">
+      <div class="tier-head">
+        <div class="tier-name">Helios Core</div>
+        <div class="tier-price">from £15k<span>controls &amp; WCS</span></div>
+      </div>
+      <p class="tier-sub">Included with every system.</p>
+      <ul class="tier-list">
+        <li>Live throughput &amp; uptime dashboard</li>
+        <li>Divert / lane status at a glance</li>
+        <li>Basic fault alerts</li>
+        <li>Local HMI &amp; safety circuits</li>
+      </ul>
     </div>
-    <div class="rm">
-      <div class="rm-when">Mid 2026</div>
-      <h4>Helios platform launch</h4>
-      <p>The full operating system — predictive maintenance, reporting suite and WMS/ERP connectors.</p>
+    <div class="tier featured">
+      <div class="tier-flag">Most popular</div>
+      <div class="tier-head">
+        <div class="tier-name">Helios Pro</div>
+        <div class="tier-price">from £30k<span>controls &amp; WCS</span></div>
+      </div>
+      <p class="tier-sub">The everyday operations tier.</p>
+      <ul class="tier-list">
+        <li>Everything in Core, plus:</li>
+        <li>Full live-data dashboards</li>
+        <li>Fault detection &amp; smart alerts</li>
+        <li>Predictive maintenance countdowns</li>
+        <li>Remote diagnostics &amp; Orion support</li>
+      </ul>
     </div>
-    <div class="rm">
-      <div class="rm-when">Late 2026</div>
-      <h4>Remote &amp; multi-site</h4>
-      <p>Estate view across multiple sites, remote diagnostics and Orion support baked into the OS.</p>
+    <div class="tier">
+      <div class="tier-head">
+        <div class="tier-name">Helios Full</div>
+        <div class="tier-price">from £50k<span>controls &amp; WCS</span></div>
+      </div>
+      <p class="tier-sub">The full operating system.</p>
+      <ul class="tier-list">
+        <li>Everything in Pro, plus:</li>
+        <li>Full WCS &amp; smart routing engine</li>
+        <li>WMS / ERP integration</li>
+        <li>Reporting &amp; audit suite</li>
+        <li>Multi-site estate view</li>
+      </ul>
     </div>
+  </div>
+  <p style="text-align:center;margin-top:22px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft)">Full tier definitions being finalised · figures indicative, confirmed at survey</p>
+  <div style="text-align:center;margin-top:26px">
+    <a class="btn btn-primary" href="sketch-tool.html">Price your system &amp; build it →</a>
   </div>
 </section>
 
 <!-- ── REGISTER / FINAL CTA ── -->
 <section class="final" id="register">
   <div class="final-inner">
-    <div class="eyebrow" style="justify-content:center">Early access</div>
-    <h2>Get Helios <em>first.</em></h2>
-    <p>Register your interest and we'll be in touch about early access, pilot slots and what Helios can do for your site.</p>
+    <div class="eyebrow" style="justify-content:center">See it live</div>
+    <h2>Helios, running on <em>your operation.</em></h2>
+    <p>It's live on real sites today. Leave your details and an Orion engineer will show you Helios on a system like yours and talk through the right tier.</p>
     <form class="register" id="heliosForm" action="https://usebasin.com/f/d04288a27fc6" method="POST" novalidate>
-      <input type="hidden" name="_subject" value="Helios early-access interest — Orion website">
+      <input type="hidden" name="_subject" value="Helios enquiry — Orion website">
       <input type="hidden" name="source" value="Helios page">
       <input type="hidden" name="_honeypot" value="_hp">
       <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
       <input type="text" name="name" placeholder="Your name" required autocomplete="name">
       <input type="email" name="email" placeholder="you@company.co.uk" required autocomplete="email">
-      <button type="submit">Register interest →</button>
+      <button type="submit">Book a Helios demo →</button>
     </form>
     <div class="register-note">No spam · We'll only contact you about Helios · +44 333 335 5269</div>
-    <div class="register-success" id="heliosSuccess">✓ You're on the list. An Orion engineer will be in touch about early access.</div>
+    <div class="register-success" id="heliosSuccess">✓ Got it. An Orion engineer will be in touch to set up your Helios demo.</div>
   </div>
 </section>
 
@@ -498,7 +547,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   </div>
   <div class="footer-bottom">
     <span>© 2026 Orion MIS Ltd · Company no. 11735049</span>
-    <span>Helios · launching 2026 · early access open</span>
+    <span>Helios · live now</span>
   </div>
 </footer>
 
