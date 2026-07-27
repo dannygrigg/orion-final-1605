@@ -1,8 +1,18 @@
 User-agent: *
 Allow: /
+
+# Internal / mockup / engineering pages — not for public search
 Disallow: /admin-media.html
 Disallow: /email-assets/
 Disallow: /mockup-fonts.html
 Disallow: /mockup-fonts-v2.html
+Disallow: /helix-tech-drawing.html
+Disallow: /incident-report-ur20-expeditors.html
+Disallow: /sop-robot-cell-light-curtain.html
+Disallow: /rca-form.html
+Disallow: /ask-orion-mockup.html
+Disallow: /hero-mockup.html
+Disallow: /explainer-band-mockup.html
+Disallow: /linkedin-ad-pay-monthly.html
 
 Sitemap: https://orionmis.co.uk/sitemap.xml

@@ -3,8 +3,8 @@
 <title>Orion · Solution Builder — design your line, unlock a monthly price</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/konva@9.3.0/konva.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="js/konva.min.js"></script>
+<!-- xlsx (SheetJS) is loaded on demand by importPricingExcel() to keep the page light -->
 <style>
 :root{
   --bg:#050B14;--bg2:#07111F;--panel:#0B1626;--panel2:#0F1D31;
@@ -2308,6 +2308,7 @@ function importLayoutJson(file){
 // Expected columns (header row): type, name, base, perM, length, width, speed
 // Updates COMPONENT_DEFS entries that match `type`.
 function importPricingExcel(file){
+  if(!window.XLSX){ var s=document.createElement('script'); s.src='js/xlsx.full.min.js'; s.onload=function(){importPricingExcel(file);}; s.onerror=function(){alert('Could not load the spreadsheet library.');}; document.head.appendChild(s); return; }
   const reader = new FileReader();
   reader.onload = e => {
     try {
