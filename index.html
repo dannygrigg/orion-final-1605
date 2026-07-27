@@ -333,6 +333,13 @@ input[type=range].calc-slider::-webkit-slider-thumb{-webkit-appearance:none;appe
 input[type=range].calc-slider:hover::-webkit-slider-thumb{transform:scale(1.1)}
 input[type=range].calc-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--cyan);border:2px solid #07111F;box-shadow:0 0 16px rgba(0,213,255,.55);cursor:pointer}
 input[type=range].calc-slider::-moz-range-track{background:rgba(255,255,255,.08);height:5px;border-radius:999px}
+/* Bigger, easier-to-grab sliders on touch devices */
+@media(pointer:coarse){
+  input[type=range].calc-slider{height:32px;background:linear-gradient(rgba(255,255,255,.10),rgba(255,255,255,.10)) no-repeat center/100% 6px}
+  input[type=range].calc-slider::-webkit-slider-thumb{width:28px;height:28px}
+  input[type=range].calc-slider::-moz-range-thumb{width:26px;height:26px}
+  input[type=range].calc-slider::-moz-range-track{background:transparent}
+}
 .calc-output{margin-top:6px;position:relative}
 .calc-output-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
 .calc-out-cell{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);border-radius:12px;padding:10px 12px}
