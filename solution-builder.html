@@ -310,6 +310,7 @@ img{display:block;max-width:100%;height:auto}
 </footer>
 
 <script src="site.js" defer></script>
+<script src="js/sorter-model.js"></script>
 <script>
 const hamburger=document.getElementById('hamburger'),mobileNav=document.getElementById('mobileNav');
 hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileNav.classList.toggle('open');});
@@ -317,32 +318,35 @@ mobileNav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hambu
 const mainNav=document.getElementById('mainNav');addEventListener('scroll',()=>mainNav.classList.toggle('scrolled',scrollY>10),{passive:true});
 
 // ═══════════ COMET · scripted line designer ═══════════
-const S={sort:null,sizes:null,weights:null,throughput:null,destinations:null,shape:null,scan:false,printApply:false,induction:false,manifest:null};
-const LEASE=0.02028;
+const M=window.OrionSorter;
+const S={sort:null,sizeBand:null,maxLen:null,minLen:null,maxWidth:null,maxWeight:null,
+  targetTph:null,destinations:null,takeaway:null,scan:true,scanMulti:false,
+  shape:null,autoInduct:false,heliosTier:null,manifest:null};
 const fmt=n=>'£'+Math.round(n).toLocaleString('en-GB');
+const fmt0=n=>Math.round(n).toLocaleString('en-GB');
 const $=id=>document.getElementById(id);
-const SORTN={parcels:'Parcels & bags',boxes:'Boxes & cartons',mixed:'Mixed freight'};
-const shapeName=s=>s.shape==='straight'?'in-line':s.shape==='L'?'L-shape':s.shape==='U'?'U-shape':'—';
+const SORTN={parcels:'Parcels & bags',boxes:'Boxes & cartons',mixed:'Mixed freight',polybags:'Polybags & satchels'};
+const TAKEN={chute:'Chute to cage',powered:'Powered conveyor away',boom:'Boom to trailer'};
+const shapeName=sh=>sh==='L'?'L-shape':sh==='U'?'U-shape':'in-line';
+const LABOUR_FTE=28000;                 // indicative loaded cost per inducter / yr (single shift)
+const money50=n=>Math.round(n/50)*50;
 
-function breakdown(s){
-  const N=s.destinations||16, th=s.throughput||10000, it=[];
-  it.push(['Helix base — infeed, main drive, controls & Orion WCS',95000]);
-  it.push(['Sortation line — '+N+' destinations',N*11500]);
-  if(th>=20000)it.push(['High-throughput uplift (20,000+ pph)',140000]);
-  else if(th>=15000)it.push(['Throughput uplift (15,000 pph)',85000]);
-  else if(th>=10000)it.push(['Throughput uplift (10,000 pph)',40000]);
-  if(s.scan)it.push(['Scan tunnel + dimensioning',38000]);
-  if(s.printApply)it.push(['Print & apply',46000]);
-  if(s.induction)it.push(['Automated induction',32000]);
-  if(s.weights==='heavy')it.push(['Heavier-duty build (to 50 kg)',16000]);
-  else if(s.weights==='mid')it.push(['Uprated build (to 20 kg)',6000]);
-  if(s.sizes==='large')it.push(['Large-format handling',8000]);
-  if(s.shape==='L')it.push(['Layout — 90° transfer',18000]);
-  if(s.shape==='U')it.push(['Layout — U-shape transfers',34000]);
-  return it;
+// Map Barry's answers → the OrionSorter model input
+function answers(){
+  return {maxLen:S.maxLen||600, minLen:S.minLen||200, maxWidth:S.maxWidth||S.maxLen||600,
+    maxWeight:S.maxWeight||20, targetTph:S.targetTph||10000, destinations:S.destinations||16,
+    scan:true, scanMulti:!!S.scanMulti,
+    boomDestinations:    S.takeaway==='boom'    ? (S.destinations||16) : 0,
+    poweredDestinations: S.takeaway==='powered' ? (S.destinations||16) : 0,
+    shape:S.shape||'straight', autoInduct:!!S.autoInduct};
 }
-function capital(s){return breakdown(s).reduce((a,x)=>a+x[1],0);}
-const monthly=s=>Math.round(capital(s)*LEASE/50)*50;
+function build(){
+  const a=answers();
+  const cfg=M.configure(a);
+  const pr=M.price(cfg,{controlsTier:'baseline', heliosTier:S.heliosTier||undefined});
+  return {a,cfg,pr};
+}
+function autoPkgFor(maxLen){return maxLen>M.RULES.autoInductMax.len?M.RULES.autoInductPackage.large:M.RULES.autoInductPackage.standard;}
 
 // ── drawing ──
 function polyLen(p){let L=0;for(let i=1;i<p.length;i++)L+=Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]);return L;}
@@ -361,7 +365,7 @@ function drawLayout(s){
   const A=pointAt(spine,0);
   g+=`<circle cx="${A.x}" cy="${A.y}" r="16" fill="rgba(30,144,255,.18)" stroke="#1E90FF" stroke-width="1.5"/>`;
   g+=`<path d="M${A.x-34} ${A.y} h20 m-6 -5 l6 5 -6 5" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
-  g+=`<text x="${A.x}" y="${A.y-24}" fill="#8fb4e6" font-family="monospace" font-size="9" text-anchor="middle">${s.induction?'AUTO INDUCT':'INDUCTION'}</text>`;
+  g+=`<text x="${A.x}" y="${A.y-24}" fill="#8fb4e6" font-family="monospace" font-size="9" text-anchor="middle">${s.autoInduct?'AUTO INDUCT':'INDUCTION'}</text>`;
   if(s.scan){const P=pointAt(spine,0.12),px=-P.uy,py=P.ux;
     g+=`<path d="M${P.x+px*17} ${P.y+py*17} A17 17 0 0 1 ${P.x-px*17} ${P.y-py*17}" fill="none" stroke="#00D5FF" stroke-width="2.4"/>`;
     g+=`<line x1="${P.x+px*17}" y1="${P.y+py*17}" x2="${P.x-px*17}" y2="${P.y-py*17}" stroke="#00D5FF" stroke-width="2.4"/>`;
@@ -373,36 +377,62 @@ function drawLayout(s){
   for(let i=0;i<N;i++){const t=sf+(0.98-sf)*((i+0.5)/N),P=pointAt(spine,t),side=(i%2===0)?1:-1,px=-P.uy*side,py=P.ux*side,x2=P.x+px*stub,y2=P.y+py*stub;
     g+=`<line x1="${P.x}" y1="${P.y}" x2="${x2}" y2="${y2}" stroke="rgba(0,213,255,.45)" stroke-width="2"/>`;
     g+=`<rect x="${x2-box/2}" y="${y2-box/2}" width="${box}" height="${box}" rx="2" fill="rgba(0,213,255,.14)" stroke="#00D5FF" stroke-width="1.2"/>`;}
-  g+=`<text x="${W/2}" y="${H-14}" fill="rgba(247,250,255,.4)" font-family="monospace" font-size="9" text-anchor="middle" letter-spacing="1.2">${N} DEST · ${(s.shape||'straight').toUpperCase()==='STRAIGHT'?'IN-LINE':((s.shape||'')+'-SHAPE')}${s.throughput?' · '+(s.throughput/1000)+'K PPH':''}</text>`;
+  g+=`<text x="${W/2}" y="${H-14}" fill="rgba(247,250,255,.4)" font-family="monospace" font-size="9" text-anchor="middle" letter-spacing="1.2">${N} DEST · ${(s.shape||'straight').toUpperCase()==='STRAIGHT'?'IN-LINE':((s.shape||'')+'-SHAPE')}${s.targetTph?' · '+(s.targetTph/1000)+'K PPH':''}</text>`;
   return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${g}</svg>`;
 }
 function updatePreview(){
   if(S.destinations||S.shape){$('cbPh')&&$('cbPh').remove();$('cbDrawing').innerHTML=drawLayout(S);}
-  if(S.destinations&&S.throughput){$('cbPrice').innerHTML=fmt(monthly(S))+'<small>/mo</small>';}
+  if(S.destinations&&S.targetTph){const{pr}=build();$('cbPrice').innerHTML=fmt(money50(pr.lease))+'<small>/mo</small>';}
   const lines=[];
   if(S.sort)lines.push(['Sorting',SORTN[S.sort]||S.sort]);
-  if(S.sizes)lines.push(['Sizes',{small:'Under 300mm',medium:'300–600mm',large:'Over 600mm',mixed:'Mixed'}[S.sizes]]);
-  if(S.weights)lines.push(['Weights',{light:'Under 5kg',mid:'Up to 20kg',heavy:'Up to 50kg',mixed:'Mixed'}[S.weights]]);
-  if(S.throughput)lines.push(['Throughput','up to '+S.throughput.toLocaleString('en-GB')+' pph']);
-  if(S.destinations)lines.push(['Destinations',S.destinations+' · '+shapeName(S)]);
-  const opt=[S.scan&&'Scan',S.printApply&&'Print&apply',S.induction&&'Auto induction'].filter(Boolean).join(', ');
-  if(S.destinations)lines.push(['In the line',opt||'Sorter only']);
+  if(S.maxLen)lines.push(['Parcel size','up to '+S.maxLen+'×'+(S.maxWidth||S.maxLen)+'mm']);
+  if(S.maxWeight)lines.push(['Weight','up to '+S.maxWeight+'kg']);
+  if(S.targetTph)lines.push(['Throughput','up to '+fmt0(S.targetTph)+' pph']);
+  if(S.destinations)lines.push(['Destinations',S.destinations+' · '+shapeName(S.shape)]);
+  if(S.takeaway)lines.push(['Takeaway',TAKEN[S.takeaway]]);
+  if(S.autoInduct)lines.push(['Induction','Auto-induction']);
+  if(S.heliosTier)lines.push(['Helios',M.HELIOS_TIERS[S.heliosTier].name+' · '+fmt(M.HELIOS_TIERS[S.heliosTier].mo)+'/mo']);
   $('cbSpec').innerHTML=lines.map(([k,v])=>`<li><span>${k}</span><b>${v}</b></li>`).join('');
 }
 function renderSheet(){
-  const it=breakdown(S), cap=capital(S), mo=monthly(S);
-  const SZ={small:'Under 300mm',medium:'300–600mm',large:'Over 600mm',mixed:'Mixed'},WT={light:'Under 5kg',mid:'Up to 20kg',heavy:'Up to 50kg',mixed:'Mixed'};
-  const opt=[S.scan&&'Scan tunnel',S.printApply&&'Print & apply',S.induction&&'Auto induction'].filter(Boolean).join(', ')||'Sorter only';
-  const spec=[['Sorting',SORTN[S.sort]||'—'],['Parcel size',SZ[S.sizes]||'—'],['Weight',WT[S.weights]||'—'],['Throughput','up to '+S.throughput.toLocaleString('en-GB')+' pph'],['Destinations',S.destinations+' · '+shapeName(S)],['In the line',opt],['WCS / controls','Orion WCS included']];
+  const {a,cfg,pr}=build(), m=cfg.metrics;
+  const spec=[
+    ['Sorting',SORTN[S.sort]||'—'],
+    ['Parcel size','up to '+a.maxLen+' × '+a.maxWidth+' mm'],
+    ['Heaviest','up to '+a.maxWeight+' kg'],
+    ['Throughput','up to '+fmt0(a.targetTph)+' pph'],
+    ['Destinations',a.destinations+' · '+shapeName(a.shape)],
+    ['Deck','Helix '+m.helixLen+' m ('+m.banks+' banks, L+R) in a '+m.deckLen+' m line'],
+    ['Takeaway',TAKEN[S.takeaway]||'Chute to cage'],
+    ['Induction', S.autoInduct ? ('Auto — '+m.autoLanes+' lane(s) @ '+fmt0(m.autoRate)+'/hr') : (m.operators+' operators @ '+m.opRate+'/hr, '+m.opProfile+' parcels')],
+    ['Scan', S.scanMulti?'Scan + weigh & dimension':'Standard scan tunnel'],
+    ['Controls','Routing & SCADA — standard'],
+    ['Helios', S.heliosTier ? (M.HELIOS_TIERS[S.heliosTier].name+' — '+fmt(pr.helios)+'/site/mo') : 'Standard (routing + SCADA)']
+  ];
+  const incl=cfg.modules.map(x=>`<li>${x.label}${x.pass?' <em>(quoted separately)</em>':''}</li>`).join('');
+  const leaseMo=money50(pr.lease);
+  const rows=[['Indicative system budget',fmt(pr.finalROM),'tot'],
+              ['From · 60-month lease · 0 deposit',fmt(leaseMo)+'/mo','mo']];
+  if(pr.helios){rows.push(['Helios '+M.HELIOS_TIERS[S.heliosTier].name+' subscription','+ '+fmt(pr.helios)+'/mo','']);
+                rows.push(['Total monthly',fmt(leaseMo+pr.helios)+'/mo','mo']);}
+  const removed=Math.max(0,m.operators-m.autoResidual);
+  let note;
+  if(S.autoInduct){
+    const pkg=autoPkgFor(a.maxLen),saveYr=removed*LABOUR_FTE,pbMo=saveYr>0?(pkg/saveYr*12):0;
+    note=`<div class="sheet-note" style="margin:12px 0;padding:11px 13px;background:#eef6ff;border:1px solid #cfe4fb;border-radius:8px;font-size:11.5px;line-height:1.55;color:#123"><b>Auto-induction.</b> Replaces roughly ${removed} people inducting by hand — about ${fmt(saveYr)} a year in wages (single shift). The package pays for itself in around ${pbMo.toFixed(0)} months, and on the lease it's cash-positive from month one.</div>`;
+  }else{
+    note=`<div class="sheet-note" style="margin:12px 0;padding:11px 13px;background:#eef6ff;border:1px solid #cfe4fb;border-radius:8px;font-size:11.5px;line-height:1.55;color:#123"><b>Feeding it by hand.</b> A line this size needs about ${m.operators} people inducting — roughly ${fmt(m.operators*LABOUR_FTE)} a year in wages. Auto-induction takes that down to a handful and typically pays for itself inside a year.</div>`;
+  }
+  const warns=cfg.warnings.length?`<div style="margin:10px 0;padding:10px 12px;background:#fff6e8;border:1px solid #f2d9a8;border-radius:8px;font-size:11px;line-height:1.5;color:#5a4a26">${cfg.warnings.map(w=>'• '+w).join('<br>')}</div>`:'';
   document.querySelector('.cb-preview').innerHTML=`<div class="sheet" id="sheet">`
     +`<div class="sheet-head"><img src="images/orion-logo.png" alt="Orion MIS"><div class="r">Indicative Helix design<br>prepared by Barry</div></div>`
     +`<div class="sheet-draw">${drawLayout(S)}</div>`
     +`<h4>Your line</h4><table class="sheet-spec">${spec.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</table>`
-    +`<h4>Indicative investment</h4><table>${it.map(([l,v])=>`<tr><td>${l}</td><td>${fmt(v)}</td></tr>`).join('')}`
-    +`<tr class="tot"><td>Indicative system total</td><td>${fmt(cap)}</td></tr>`
-    +`<tr class="mo"><td>From &middot; 60-mo lease &middot; 0 deposit</td><td>${fmt(mo)}/mo</td></tr></table>`
+    +`<h4>What's included</h4><ul class="sheet-incl" style="margin:4px 0 14px;padding-left:18px;font-size:12px;line-height:1.75;color:#2a3138">${incl}</ul>`
+    +`<h4>Indicative investment</h4><table>${rows.map(([k,v,c])=>`<tr class="${c}"><td>${k}</td><td>${v}</td></tr>`).join('')}</table>`
+    +note+warns
     +`<div class="sheet-foot"><b>Orion MIS Ltd</b> &middot; 1 Fontwell Avenue, Fontwell, Chichester PO20 3RU &middot; +44 333 335 5269 &middot; info@orionmis.co.uk &middot; Company 11735049 &middot; VAT GB 318 1797 83 &middot; orionmis.co.uk</div>`
-    +`<div class="sheet-disc">Indicative only — not a quotation. Final specification and price are confirmed after a site survey. Finance subject to status &amp; approval.</div>`
+    +`<div class="sheet-disc">Indicative only — not a quotation. Final specification and price are confirmed after a site survey. Lease &amp; payback figures are illustrations, subject to finance approval. Helios is a per-site monthly subscription.</div>`
     +`<button class="sheet-print" onclick="window.print()">Print / save this sheet</button></div>`;
 }
 
@@ -416,22 +446,24 @@ function untyping(){const t=$('typ');if(t)t.remove();}
 function say(html,cb){typing();setTimeout(()=>{untyping();bot(html);if(cb)cb();},Math.min(1100,420+html.length*7));}
 
 const REACT={
-  parcels:'Parcels and bags — bread and butter, that.',boxes:'Cartons, nice and steady — no surprises.',mixed:"Mixed freight, the awkward stuff — don't you fret, that's exactly what Helix chews through.",
-  small:"Little 'uns, nice and nippy.",medium:'Standard sort of size — grand.',large:"Big 'uns — right, we'll build it good and stout.",
-  light:'Light and quick, that.',mid:'Up to 20 kilo — bread and butter.',heavy:"Up to 50 kilo — we'll spec it proper sturdy for that.",
-  straight:'A nice straight run — simplest thing going.',L:'An L to turn the corner — no bother at all.',U:'A U to bring dispatch back round — tidy, that.'
+  parcels:'Parcels and bags — bread and butter.',
+  boxes:'Cartons — nice and steady.',
+  mixed:"Mixed freight, the awkward stuff — that's exactly what Helix is built for.",
+  polybags:'Polybags and satchels — Helix handles those a treat.'
 };
 function react(v){return REACT[v]?REACT[v]+' ':'';}
 
 const STEPS=[
- {q:s=>"Right then — get the kettle on and let's put our heads together. I'm <em>Barry</em>, I design the Helix and sorters here at Orion — been at it longer than I'll own up to. Don't you fret, you're in safe hands. A few quick questions and I'll sketch yours out with a monthly figure. Nowt to it."},
- {key:'sort',q:s=>"First off then — what are you running through it?",opts:[['parcels','Parcels & bags'],['boxes','Boxes & cartons'],['mixed','Mixed freight']],manifest:true},
- {key:'sizes',q:s=>react(s.sort)+"What sort of sizes are we talking?",opts:[['small','Small · <300mm'],['medium','Medium · 300–600mm'],['large','Large · >600mm'],['mixed','A real mix']]},
- {key:'weights',q:s=>react(s.sizes)+"And how heavy do they get?",opts:[['light','Light · <5kg'],['mid','Up to 20kg'],['heavy','Up to 50kg'],['mixed','All sorts']]},
- {key:'throughput',q:s=>react(s.weights)+"How many an hour when it's going flat out?",opts:[[5000,'~5,000'],[10000,'~10,000'],[15000,'~15,000'],[20000,'20,000+']],num:true,type:'a number, e.g. 12000'},
- {key:'destinations',q:s=>"How many destinations — dispatch lanes or chutes?",opts:[[8,'8'],[16,'16'],[24,'24'],[32,'32'],[48,'48']],num:true,type:'a number, e.g. 20'},
- {key:'shape',q:s=>"What's the floor like where it's going in?",opts:[['straight','Straight run'],['L','L-shape · one bend'],['U','U-shape · return loop']]},
- {opts_multi:true,q:s=>"Last one — what do you fancy riding in the line? Tap any that apply.",opts:[['scan','Scan tunnel + dims'],['printApply','Print & apply'],['induction','Auto induction']]},
+ {q:s=>"Right, let's get the kettle on and put our heads together. I'm <em>Barry</em> — I design the Helix lines here at Orion, have done longer than I care to admit. A few quick questions and I'll draw yours up with an honest monthly figure. You're in safe hands — let's crack on."},
+ {key:'sort',manifest:true,q:s=>"First things first — what are you running through it?",opts:[['parcels','Parcels & bags'],['boxes','Boxes & cartons'],['mixed','Mixed freight'],['polybags','Polybags & satchels']]},
+ {key:'sizeBand',apply:v=>{const map={s:[300,300,100],m:[600,500,200],l:[900,700,300],xl:[1200,900,300]};const t=map[v];S.maxLen=t[0];S.maxWidth=t[1];S.minLen=t[2];},q:s=>react(s.sort)+"Roughly how big do they get?",opts:[['s','Small · up to 300mm'],['m','Medium · 300–600mm'],['l','Large · 600–900mm'],['xl','Extra large · up to 1.2m']]},
+ {key:'maxWeight',num:true,type:'weight in kg, e.g. 25',q:s=>"And the heaviest — what are we lifting?",opts:[[5,'Up to 5kg'],[20,'Up to 20kg'],[30,'Up to 30kg'],[50,'Up to 50kg'],[70,'Up to 70kg']]},
+ {key:'targetTph',num:true,type:'parcels per hour, e.g. 12000',q:s=>"When it's flat out, how many parcels an hour?",opts:[[5000,'~5,000'],[10000,'~10,000'],[15000,'~15,000'],[20000,'20,000+']]},
+ {key:'destinations',num:true,type:'a number, e.g. 24',q:s=>"How many destinations — chutes or dispatch points?",opts:[[8,'8'],[16,'16'],[24,'24'],[32,'32'],[48,'48']]},
+ {key:'takeaway',q:s=>"And how do parcels come off the sorter at each one?",opts:[['chute','Chute to a cage'],['powered','Powered conveyor away'],['boom','Boom into a trailer']]},
+ {key:'scanMode',apply:v=>{S.scan=true;S.scanMulti=(v==='dims');},q:s=>"For reading them in — just barcodes, or weigh and dimension too?",opts:[['std','Just barcodes'],['dims','Barcode + weigh & dimension']]},
+ {key:'shape',q:s=>"What's the floor like where it's going?",opts:[['straight','Straight run'],['L','L-shape · one corner'],['U','U-shape · dispatch back round']]},
+ {key:'heliosTier',q:s=>"Routing and SCADA come as standard — that's in the box. The clever bit is <em>Helios</em> on top: live dashboards, AI that spots your bottlenecks before they bite, alerts, dashboards that diagnose themselves. Fancy any of that?",opts:[['','Just the standard, thanks'],['core','Core · dashboards &amp; reports · £1.5k/mo'],['intelligent','Intelligent · + AI prediction · £3.5k/mo'],['autonomous','Autonomous · + self-optimising · £7.5k/mo']]},
  {reveal:true},
  {capture:true}
 ];
@@ -441,38 +473,47 @@ function run(){
   foot.innerHTML='';
   if(st.reveal){
     updatePreview(); renderSheet();
-    say(`There we go — I've drawn you up a little sheet, over on the right 👉. <em>${S.destinations} destinations</em>, ${shapeName(S)}, up to ${S.throughput.toLocaleString('en-GB')} an hour — from <em>${fmt(monthly(S))} a month</em> on a sixty-month lease. Print it if you fancy, and I'll get it over to you proper.`,()=>{i++;run();});
+    const {cfg,pr}=build(), m=cfg.metrics;
+    say(`There we go — drawn up on the right 👉. <em>${S.destinations} destinations</em>, ${shapeName(S.shape)}, up to ${fmt0(S.targetTph)} an hour, from <em>${fmt(money50(pr.lease))} a month</em> on a sixty-month lease. Mind you — feeding it by hand takes about <em>${m.operators} people</em>. Want to see it with auto-induction?`,()=>revealButtons());
     return;
   }
   if(st.capture){
-    say("Want your sheet emailed over with a firmer figure? Pop your details down and one of the team'll pick it up — no hard sell, you have my word.",()=>renderCapture());
+    say("Want your sheet emailed over with a firmer figure? Pop your details down and one of the team will pick it up — no hard sell, you have my word.",()=>renderCapture());
     return;
   }
-  say(st.q(S),()=>{ if(st.opts||st.opts_multi) renderControls(st); else { i++; run(); } });
+  say(st.q(S),()=>{ if(st.opts) renderControls(st); else { i++; run(); } });
 }
 function renderControls(st){
-  if(st.opts_multi){
-    const wrap=document.createElement('div');wrap.className='quick';
-    st.opts.forEach(([k,l])=>{const b=document.createElement('button');b.textContent=l;
-      b.onclick=()=>{S[k]=!S[k];b.classList.toggle('sel',S[k]);updatePreview();};wrap.appendChild(b);});
-    const done=document.createElement('button');done.className='done';done.textContent='That’s it →';
-    done.onclick=()=>{const picked=[S.scan&&'Scan tunnel',S.printApply&&'Print & apply',S.induction&&'Auto induction'].filter(Boolean);
-      me(picked.length?picked.join(', '):'Just the sorter');i++;run();};
-    wrap.appendChild(done);foot.appendChild(wrap);return;
-  }
   const wrap=document.createElement('div');wrap.className='quick';
-  st.opts.forEach(([v,l])=>{const b=document.createElement('button');b.textContent=l;
-    b.onclick=()=>{S[st.key]=v;me(l);updatePreview();i++;run();};wrap.appendChild(b);});
+  st.opts.forEach(([v,l])=>{const b=document.createElement('button');b.innerHTML=l;
+    b.onclick=()=>{S[st.key]=v; if(st.apply)st.apply(v); me(b.textContent); updatePreview(); i++; run();};
+    wrap.appendChild(b);});
   foot.appendChild(wrap);
   if(st.num){
     const row=document.createElement('div');row.className='cb-type';
     row.innerHTML=`<input type="number" inputmode="numeric" placeholder="${st.type||'or type a number'}"><button title="Send">→</button>`;
     const inp=row.querySelector('input'),snd=row.querySelector('button');
-    const go=()=>{const n=parseInt((inp.value||'').replace(/[^0-9]/g,''),10);if(!n)return;S[st.key]=n;me(n.toLocaleString('en-GB'));updatePreview();i++;run();};
+    const go=()=>{const n=parseInt((inp.value||'').replace(/[^0-9]/g,''),10);if(!n)return;S[st.key]=n;me(fmt0(n));updatePreview();i++;run();};
     snd.onclick=go;inp.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
     foot.appendChild(row);
   }
   if(st.manifest)renderDrop(st);
+}
+function revealButtons(){
+  const wrap=document.createElement('div');wrap.className='quick';
+  const b1=document.createElement('button');b1.textContent='Show me auto-induction';
+  b1.onclick=()=>{S.autoInduct=true;me('Show me auto-induction');updatePreview();renderSheet();
+    const {a,cfg}=build(),m=cfg.metrics,pkg=autoPkgFor(a.maxLen),removed=Math.max(0,m.operators-m.autoResidual),pb=removed>0?(pkg/(removed*LABOUR_FTE)*12):0;
+    say(`Here you are — ${m.autoLanes} auto-induct lane${m.autoLanes>1?'s':''} feeding it instead of ${m.operators} bodies. It puts a bit on the lease, but it saves you the best part of <em>${fmt(removed*LABOUR_FTE)} a year</em> in wages and pays for itself in about <em>${pb.toFixed(0)} months</em>. Easiest yes on the sheet, that.`,()=>afterButtons());};
+  const b2=document.createElement('button');b2.className='done';b2.textContent='Happy with this →';
+  b2.onclick=()=>{me('Happy with this');i++;run();};
+  wrap.appendChild(b1);wrap.appendChild(b2);foot.appendChild(wrap);
+}
+function afterButtons(){
+  const wrap=document.createElement('div');wrap.className='quick';
+  const b=document.createElement('button');b.className='done';b.textContent='Get my sheet →';
+  b.onclick=()=>{me('Get my sheet');i++;run();};
+  wrap.appendChild(b);foot.appendChild(wrap);
 }
 function renderDrop(st){
   const dz=document.createElement('label');dz.className='cb-drop';
@@ -507,20 +548,19 @@ async function handleManifest(file){
     }else{await ensureXLSX();const buf=await file.arrayBuffer();const wb=XLSX.read(buf,{type:'array'});rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);}
     const a=analyseRows(rows);untyping();
     if(a&&a.count){
-      // set inferred profile
-      if(a.maxW){S.weights=a.maxW>30?'heavy':a.maxW>10?'mid':'light';}
-      if(a.maxD){S.sizes=a.maxD>600?'large':a.maxD>300?'medium':'small';}
+      // infer the real envelope straight off the manifest
+      if(a.maxW){S.maxWeight=Math.max(1,Math.ceil(a.maxW));}
+      if(a.maxD){S.maxLen=Math.max(100,Math.ceil(a.maxD));S.maxWidth=Math.min(S.maxLen,1050);S.minLen=200;}
       if(!S.sort)S.sort='mixed';
-      let m=`Ey up — read <em>${a.count.toLocaleString('en-GB')}</em> rows off that.`;
-      if(a.avgW)m+=` Average weight's about ${a.avgW.toFixed(1)} kilo, up to ${a.maxW.toFixed(0)}.`;
-      if(a.avgD)m+=` Sizes up to about ${a.maxD.toFixed(0)} mil.`;
-      m+=" I'll factor that in — let's crack on.";
+      let m=`Right — read <em>${a.count.toLocaleString('en-GB')}</em> rows off that.`;
+      if(a.avgW)m+=` Average weight's about ${a.avgW.toFixed(1)}kg, up to ${a.maxW.toFixed(0)}.`;
+      if(a.avgD)m+=` Biggest's around ${a.maxD.toFixed(0)}mm.`;
+      m+=" I'll factor that in — let's carry on.";
       updatePreview();
       bot(m);
-      // jump to throughput (index of throughput step)
-      i=STEPS.findIndex(s=>s.key==='throughput');run();
-    }else{untyping();bot("Got your manifest — couldn't make clean sense of the numbers, but I'll pass it to the lads. Let's carry on.");run();}
-  }catch(err){untyping();bot("Got your manifest — I'll get one of the team to read it proper. Let's carry on for now.");run();}
+      i=STEPS.findIndex(s=>s.key==='targetTph');run();
+    }else{untyping();bot("Got your manifest — couldn't make clean sense of the numbers, but I'll pass it to the team. Let's carry on.");run();}
+  }catch(err){untyping();bot("Got your manifest — I'll get one of the team to read it properly. Let's carry on for now.");run();}
 }
 function renderCapture(){
   const box=document.createElement('div');box.className='cb-cap';
@@ -537,11 +577,14 @@ function renderCapture(){
     <button type="submit" class="btn btn-primary" id="cSub" style="width:100%;margin-top:10px">Send my design →</button>
   </form>`;
   foot.appendChild(box);
-  const spec=[['Sorting',SORTN[S.sort]||S.sort],['Sizes',S.sizes],['Weights',S.weights],['Throughput',S.throughput+' pph'],['Destinations',S.destinations],['Shape',shapeName(S)],['Options',[S.scan&&'Scan',S.printApply&&'Print&apply',S.induction&&'Auto induct'].filter(Boolean).join(', ')||'sorter only'],['Manifest',S.manifest||'none']];
-  const bd=breakdown(S);
+  const {a,cfg,pr}=build(), m=cfg.metrics;
+  const spec=[['Sorting',SORTN[S.sort]||S.sort],['Parcel','up to '+a.maxLen+'x'+a.maxWidth+'mm, '+a.maxWeight+'kg'],['Throughput',fmt0(a.targetTph)+' pph (window '+fmt0(m.tphMin)+'-'+fmt0(m.tphMax)+')'],['Destinations',a.destinations+' · '+shapeName(a.shape)],['Deck','Helix '+m.helixLen+'m / '+m.banks+' banks / '+m.deckLen+'m line'],['Takeaway',TAKEN[S.takeaway]||'chute'],['Induction',S.autoInduct?('auto '+m.autoLanes+' lanes @ '+fmt0(m.autoRate)+'/hr'):(m.operators+' ops @ '+m.opRate+'/hr, '+m.opProfile)],['Scan',S.scanMulti?'+weigh&dims':'standard'],['Controls','baseline (routing+SCADA)'],['Helios',S.heliosTier?(M.HELIOS_TIERS[S.heliosTier].name+' '+fmt(pr.helios)+'/mo'):'standard only'],['Manifest',S.manifest||'none']];
+  const bd=cfg.modules.map(x=>x.label+' '+fmt(x.cost)+(x.pass?' (sep)':'')).join('; ');
+  const totalMo=money50(pr.lease)+(pr.helios||0);
   $('cd').value=spec.map(([k,v])=>k+': '+v).join(' | ')
-    +'  ||  BREAKDOWN: '+bd.map(([l,v])=>l+' '+fmt(v)).join('; ')
-    +'; System total '+fmt(capital(S))+'; Indicative monthly from '+fmt(monthly(S))+'/mo';
+    +'  ||  BOM: '+bd
+    +'; Controls '+fmt(pr.controls_scada)+'; System budget '+fmt(pr.finalROM)+'; Lease '+fmt(money50(pr.lease))+'/mo'+(pr.helios?('; Helios '+fmt(pr.helios)+'/mo; Total '+fmt(totalMo)+'/mo'):'')
+    +(cfg.warnings.length?('  ||  FLAGS: '+cfg.warnings.join(' / ')):'');
   $('cbForm').addEventListener('submit',async e=>{
     e.preventDefault();
     const n=$('cn'),c=$('cc'),em=$('ce');let ok=true;
