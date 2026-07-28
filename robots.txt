@@ -15,4 +15,7 @@ Disallow: /hero-mockup.html
 Disallow: /explainer-band-mockup.html
 Disallow: /linkedin-ad-pay-monthly.html
 
+Disallow: /lemon.html
+Disallow: /sketch-tool.html
+
 Sitemap: https://orionmis.co.uk/sitemap.xml

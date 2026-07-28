@@ -137,7 +137,7 @@ img{display:block;max-width:100%;height:auto}
 
 /* PREVIEW */
 .cb-preview{position:sticky;top:calc(var(--nav-h) + 46px);display:grid;gap:14px}
-.cb-drawing{background:linear-gradient(180deg,#081222,#050b14);border:1px solid var(--line2);border-radius:20px;padding:12px;aspect-ratio:520/380;overflow:hidden;position:relative}
+.cb-drawing{background:linear-gradient(180deg,#081222,#050b14);border:1px solid var(--line2);border-radius:20px;padding:12px;aspect-ratio:3/2;overflow:hidden;position:relative}
 .cb-drawing svg{width:100%;height:100%;display:block}
 .cb-draw-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:24px;color:var(--soft)}
 .cb-draw-ph svg{width:46px;height:46px;opacity:.5}
@@ -152,6 +152,32 @@ img{display:block;max-width:100%;height:auto}
 .cb-spec li:last-child{border-bottom:none}
 .cb-spec li b{color:#fff;font-weight:600;text-align:right}
 .cb-disc{font-size:11px;color:var(--soft);text-align:center;font-family:var(--mono);line-height:1.5}
+/* design sheet */
+.sheet{background:#FBFAF7;color:#1d1d1f;border-radius:16px;padding:20px 20px 16px;box-shadow:0 26px 60px rgba(0,0,0,.45);font-size:12.5px}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #1d1d1f;padding-bottom:11px;margin-bottom:12px}
+.sheet-head img{height:24px;width:auto}
+.sheet-head .r{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:#6e6e73;text-align:right;line-height:1.5}
+.sheet-draw{background:#081222;border:1px solid #0f2438;border-radius:10px;padding:8px;margin-bottom:6px}
+.sheet-draw svg{width:100%;display:block}
+.sheet h4{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#1E90FF;margin:12px 0 5px;font-weight:700}
+.sheet table{width:100%;border-collapse:collapse}
+.sheet td{padding:5px 0;border-bottom:1px solid #e8e6e0;color:#4a4a4c;vertical-align:top}
+.sheet td:last-child{text-align:right;font-weight:600;color:#1d1d1f;white-space:nowrap;padding-left:10px}
+.sheet .tot td{border-top:2px solid #1d1d1f;border-bottom:none;font-weight:800;padding-top:8px;color:#1d1d1f}
+.sheet .mo td{border-bottom:none;color:#0a7d3f;font-weight:800;font-size:15px}
+.sheet-foot{margin-top:14px;padding-top:10px;border-top:1px solid #d2d2d7;font-size:9.5px;color:#6e6e73;line-height:1.55}
+.sheet-foot b{color:#1d1d1f}
+.sheet-disc{margin-top:7px;font-size:9px;color:#9a9a9e;line-height:1.45}
+.sheet-print{margin-top:12px;width:100%;background:#1d1d1f;color:#fff;border:none;border-radius:999px;padding:11px;font-weight:700;font-size:13px;cursor:pointer;transition:.15s}
+.sheet-print:hover{background:#000}
+@media print{
+  .top-banner,.nav,.mobile-nav,.cb-head,.cb-chat,.sheet-print,#ask-orion-launcher,#cc-banner{display:none!important}
+  body{padding:0!important;background:#fff!important}
+  .cb-wrap{padding:0!important;max-width:none!important}
+  .cb-grid{display:block!important}
+  .cb-preview{position:static!important}
+  .sheet{box-shadow:none!important;border:1px solid #ddd;border-radius:0}
+}
 
 /* CAPTURE */
 .cb-cap{background:rgba(0,213,255,.04);border:1px solid var(--line2);border-radius:16px;padding:16px;margin-top:6px}
@@ -298,15 +324,24 @@ const $=id=>document.getElementById(id);
 const SORTN={parcels:'Parcels & bags',boxes:'Boxes & cartons',mixed:'Mixed freight'};
 const shapeName=s=>s.shape==='straight'?'in-line':s.shape==='L'?'L-shape':s.shape==='U'?'U-shape':'—';
 
-function capital(s){let c=95000;
-  c+=(s.destinations||16)*11500;
-  const th=s.throughput||10000;
-  if(th>=20000)c+=140000; else if(th>=15000)c+=85000; else if(th>=10000)c+=40000;
-  if(s.weights==='heavy')c+=16000; else if(s.weights==='mid')c+=6000;
-  if(s.sizes==='large')c+=8000;
-  if(s.scan)c+=38000; if(s.printApply)c+=46000; if(s.induction)c+=32000;
-  if(s.shape==='L')c+=18000; if(s.shape==='U')c+=34000;
-  return c;}
+function breakdown(s){
+  const N=s.destinations||16, th=s.throughput||10000, it=[];
+  it.push(['Helix base — infeed, main drive, controls & Orion WCS',95000]);
+  it.push(['Sortation line — '+N+' destinations',N*11500]);
+  if(th>=20000)it.push(['High-throughput uplift (20,000+ pph)',140000]);
+  else if(th>=15000)it.push(['Throughput uplift (15,000 pph)',85000]);
+  else if(th>=10000)it.push(['Throughput uplift (10,000 pph)',40000]);
+  if(s.scan)it.push(['Scan tunnel + dimensioning',38000]);
+  if(s.printApply)it.push(['Print & apply',46000]);
+  if(s.induction)it.push(['Automated induction',32000]);
+  if(s.weights==='heavy')it.push(['Heavier-duty build (to 50 kg)',16000]);
+  else if(s.weights==='mid')it.push(['Uprated build (to 20 kg)',6000]);
+  if(s.sizes==='large')it.push(['Large-format handling',8000]);
+  if(s.shape==='L')it.push(['Layout — 90° transfer',18000]);
+  if(s.shape==='U')it.push(['Layout — U-shape transfers',34000]);
+  return it;
+}
+function capital(s){return breakdown(s).reduce((a,x)=>a+x[1],0);}
 const monthly=s=>Math.round(capital(s)*LEASE/50)*50;
 
 // ── drawing ──
@@ -354,6 +389,22 @@ function updatePreview(){
   if(S.destinations)lines.push(['In the line',opt||'Sorter only']);
   $('cbSpec').innerHTML=lines.map(([k,v])=>`<li><span>${k}</span><b>${v}</b></li>`).join('');
 }
+function renderSheet(){
+  const it=breakdown(S), cap=capital(S), mo=monthly(S);
+  const SZ={small:'Under 300mm',medium:'300–600mm',large:'Over 600mm',mixed:'Mixed'},WT={light:'Under 5kg',mid:'Up to 20kg',heavy:'Up to 50kg',mixed:'Mixed'};
+  const opt=[S.scan&&'Scan tunnel',S.printApply&&'Print & apply',S.induction&&'Auto induction'].filter(Boolean).join(', ')||'Sorter only';
+  const spec=[['Sorting',SORTN[S.sort]||'—'],['Parcel size',SZ[S.sizes]||'—'],['Weight',WT[S.weights]||'—'],['Throughput','up to '+S.throughput.toLocaleString('en-GB')+' pph'],['Destinations',S.destinations+' · '+shapeName(S)],['In the line',opt],['WCS / controls','Orion WCS included']];
+  document.querySelector('.cb-preview').innerHTML=`<div class="sheet" id="sheet">`
+    +`<div class="sheet-head"><img src="images/orion-logo.png" alt="Orion MIS"><div class="r">Indicative Helix design<br>prepared by Barry</div></div>`
+    +`<div class="sheet-draw">${drawLayout(S)}</div>`
+    +`<h4>Your line</h4><table class="sheet-spec">${spec.map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}</table>`
+    +`<h4>Indicative investment</h4><table>${it.map(([l,v])=>`<tr><td>${l}</td><td>${fmt(v)}</td></tr>`).join('')}`
+    +`<tr class="tot"><td>Indicative system total</td><td>${fmt(cap)}</td></tr>`
+    +`<tr class="mo"><td>From &middot; 60-mo lease &middot; 0 deposit</td><td>${fmt(mo)}/mo</td></tr></table>`
+    +`<div class="sheet-foot"><b>Orion MIS Ltd</b> &middot; 1 Fontwell Avenue, Fontwell, Chichester PO20 3RU &middot; +44 333 335 5269 &middot; info@orionmis.co.uk &middot; Company 11735049 &middot; VAT GB 318 1797 83 &middot; orionmis.co.uk</div>`
+    +`<div class="sheet-disc">Indicative only — not a quotation. Final specification and price are confirmed after a site survey. Finance subject to status &amp; approval.</div>`
+    +`<button class="sheet-print" onclick="window.print()">Print / save this sheet</button></div>`;
+}
 
 // ── chat engine ──
 const msgs=$('cbMsgs'),foot=$('cbFoot');
@@ -389,12 +440,12 @@ function run(){
   const st=STEPS[i];
   foot.innerHTML='';
   if(st.reveal){
-    updatePreview();
-    say(`There we go — <em>${S.destinations} destinations</em>, ${shapeName(S)}, up to ${S.throughput.toLocaleString('en-GB')} an hour. I'd say that's from <em>${fmt(monthly(S))} a month</em> on a sixty-month lease. Have a gander at the drawing there 👉 — owt you're not sure on, just holler.`,()=>{i++;run();});
+    updatePreview(); renderSheet();
+    say(`There we go — I've drawn you up a little sheet, over on the right 👉. <em>${S.destinations} destinations</em>, ${shapeName(S)}, up to ${S.throughput.toLocaleString('en-GB')} an hour — from <em>${fmt(monthly(S))} a month</em> on a sixty-month lease. Print it if you fancy, and I'll get it over to you proper.`,()=>{i++;run();});
     return;
   }
   if(st.capture){
-    say("Want me to send this over with a firmer figure? Pop your details down and one of the team'll pick it up — no hard sell, you have my word.",()=>renderCapture());
+    say("Want your sheet emailed over with a firmer figure? Pop your details down and one of the team'll pick it up — no hard sell, you have my word.",()=>renderCapture());
     return;
   }
   say(st.q(S),()=>{ if(st.opts||st.opts_multi) renderControls(st); else { i++; run(); } });
@@ -486,8 +537,11 @@ function renderCapture(){
     <button type="submit" class="btn btn-primary" id="cSub" style="width:100%;margin-top:10px">Send my design →</button>
   </form>`;
   foot.appendChild(box);
-  const spec=[['Sorting',SORTN[S.sort]||S.sort],['Sizes',S.sizes],['Weights',S.weights],['Throughput',S.throughput+' pph'],['Destinations',S.destinations],['Shape',shapeName(S)],['Options',[S.scan&&'Scan',S.printApply&&'Print&apply',S.induction&&'Auto induct'].filter(Boolean).join(', ')||'sorter only'],['Manifest',S.manifest||'none'],['Indicative',fmt(monthly(S))+'/mo']];
-  $('cd').value=spec.map(([k,v])=>k+': '+v).join(' | ');
+  const spec=[['Sorting',SORTN[S.sort]||S.sort],['Sizes',S.sizes],['Weights',S.weights],['Throughput',S.throughput+' pph'],['Destinations',S.destinations],['Shape',shapeName(S)],['Options',[S.scan&&'Scan',S.printApply&&'Print&apply',S.induction&&'Auto induct'].filter(Boolean).join(', ')||'sorter only'],['Manifest',S.manifest||'none']];
+  const bd=breakdown(S);
+  $('cd').value=spec.map(([k,v])=>k+': '+v).join(' | ')
+    +'  ||  BREAKDOWN: '+bd.map(([l,v])=>l+' '+fmt(v)).join('; ')
+    +'; System total '+fmt(capital(S))+'; Indicative monthly from '+fmt(monthly(S))+'/mo';
   $('cbForm').addEventListener('submit',async e=>{
     e.preventDefault();
     const n=$('cn'),c=$('cc'),em=$('ce');let ok=true;
@@ -496,7 +550,7 @@ function renderCapture(){
     if(!ok)return;
     const b=$('cSub');b.disabled=true;b.textContent='Sending…';
     try{const r=await fetch('https://usebasin.com/f/d04288a27fc6',{method:'POST',headers:{'Accept':'application/json'},body:new FormData($('cbForm'))});
-      if(!r.ok)throw 0;box.remove();say("Champion — that's with us. We'll be back within a working day with your layout and a proper figure. Want us sooner? Give us a bell on <em>+44 333 335 5269</em>. ☕");
+      if(!r.ok)throw 0;box.remove();say("Champion — your sheet's with us and we'll email it over with a firmer figure inside a working day. Want it now? Hit <em>Print / save this sheet</em> on the right. Owt urgent, give us a bell — <em>+44 333 335 5269</em>. ☕");
     }catch(err){b.disabled=false;b.textContent='Send my design →';alert("Couldn't send — email info@orionmis.co.uk and we'll come straight back.");}
   });
 }
