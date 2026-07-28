@@ -314,6 +314,7 @@
 
     /* ASK ORION LAUNCHER (floating button) */
     + '#ask-orion-launcher{position:fixed;right:20px;bottom:20px;z-index:9500;display:inline-flex;align-items:center;gap:12px;padding:12px 18px 12px 12px;background:linear-gradient(180deg,#111926,#07111F);border:1px solid rgba(0,213,255,.32);border-radius:999px;color:#F7FAFF;font-family:Inter,system-ui,sans-serif;cursor:pointer;box-shadow:0 12px 32px rgba(0,0,0,.45);transition:transform .18s,box-shadow .18s,border-color .18s;font-size:14px;line-height:1.2}'
+    + 'body:has(#cc-banner) #ask-orion-launcher{display:none}'
     + '#ask-orion-launcher:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(0,213,255,.18);border-color:#00D5FF}'
     + '#ask-orion-launcher .ao-icon{flex-shrink:0;width:38px;height:38px;border-radius:50%;background:#02050A;display:inline-flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(0,213,255,.24)}'
     + '#ask-orion-launcher .ao-icon svg{width:24px;height:24px;display:block}'
