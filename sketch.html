@@ -125,7 +125,7 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
 
 /* Adaptive form — show/hide fields based on selected enquiry type.
    Elements with data-show-for="callback visit sketch" appear only for matching types. */
-[data-show-for]{display:none}
+#sketchForm:not(.sf-ready) [data-show-for]{display:none}
 
 .fieldset{margin-bottom:32px;border:none;padding:0}
 .fieldset:last-of-type{margin-bottom:0}
@@ -855,12 +855,8 @@ const submitBtn = document.getElementById('submitBtn');
 
 // Helper: is this element currently visible (not hidden by any data-show-for ancestor)?
 function isFieldVisible(el) {
-  let node = el;
-  while (node && node !== form) {
-    if (node.dataset && node.dataset.showFor && node.style.display === 'none') return false;
-    node = node.parentElement;
-  }
-  return true;
+  // Reliable render check: offsetParent is null when the element (or any ancestor) is display:none.
+  return !!(el && el.offsetParent !== null);
 }
 
 function validate() {
@@ -889,17 +885,17 @@ function validate() {
   // ── Phone: required for callback + visit ──
   if (type === 'callback' || type === 'visit') {
     const phoneEl = document.getElementById('f-phone');
-    if (phoneEl) {
+    if (phoneEl && isFieldVisible(phoneEl)) {
       const valid = phoneEl.value.trim().length > 0;
       phoneEl.closest('.field').classList.toggle('has-error', !valid);
       if (!valid) ok = false;
     }
   }
 
-  // ── Best time: required for callback ──
+  // ── Best time: required for callback (only when the field is actually visible) ──
   if (type === 'callback') {
     const btEl = document.getElementById('f-besttime');
-    if (btEl) {
+    if (btEl && isFieldVisible(btEl)) {
       const valid = btEl.value.trim().length > 0;
       btEl.closest('.field').classList.toggle('has-error', !valid);
       if (!valid) ok = false;
@@ -908,7 +904,7 @@ function validate() {
 
   // ── Description: required for visit + sketch, optional for callback ──
   const descEl = document.getElementById('f-description');
-  if (descEl) {
+  if (descEl && isFieldVisible(descEl)) {
     const required = (type === 'visit' || type === 'sketch');
     const valid = !required || descEl.value.trim().length > 0;
     descEl.closest('.field').classList.toggle('has-error', !valid);
@@ -989,6 +985,7 @@ document.querySelectorAll('input[name="enquiry_type"]').forEach(r => {
     startingType = (checked && checked.dataset.type) || 'callback';
   }
   applyEnquiryType(startingType);
+  form.classList.add('sf-ready'); // reveal adaptive fields now that inline display states are set
 
   // Smooth-scroll the form into view if the user arrived with an explicit ?type=
   if (validTypes.includes(urlType) && urlType !== 'callback') {
