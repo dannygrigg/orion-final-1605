@@ -49,7 +49,7 @@
   // ── RULES / CONSTRAINTS (the machine physics) ──────────────────────────────
   const RULES = {
     speedFast: 3.0, speedStd: 2.5,     // m/s — faster for small/light parcels        [DANNY]
-    gapFactor: 1.5,                    // gap between items = 1.5 × largest parcel      [DANNY]
+    sortGap: 200,                      // mm — Helix sorts on only a 200mm gap (USP)    [DANNY]
     gappingBelts: 3,                   // number of gapping conveyors up front          [DANNY]
     gappingBeltFactor: 2,              // each gapping/transfer belt = 2 × max parcel    [DANNY]
     bankFactor: 0.75,                  // divert bank length = ¾ × max parcel...         [DANNY]
@@ -69,15 +69,27 @@
     pricing: { controls: 8, installation: 12, contingency: 5, margin: 30, delivery: 2500, apr: 0.08 } // % [LEMON]
   };
 
+  // Helix sorter USP — the pivot-wheel divert differentiator, for Barry's pitch  [DANNY]
+  const HELIX = {
+    type: 'Steerable pivot-wheel divert',
+    motor: '48V DC high-torque encoder motor',
+    linkage: 'patented mechanical linkage',
+    flipDeg: 180,                 // wheels swivel 180° — the speed of this is what sets it apart
+    minGapMm: 200,                // sorts on only a 200mm gap between parcels
+    conventionalGap: '~1.5 × parcel length'
+  };
+
   const r0 = n => Math.round(n);
   const money = n => '£' + Math.round(n).toLocaleString('en-GB');
 
   function speedFor(maxLen, maxWeight) {
     return (maxLen <= 400 && (maxWeight || 0) <= 10) ? RULES.speedFast : RULES.speedStd; // [SEED] band
   }
-  // Peak items/hr the sorter can gap at, for a given largest-parcel length
+  // Peak items/hr, for a given largest-parcel length. Pitch = parcel + a fixed 200mm gap —
+  // the Helix USP: the fast 180° wheel flip lets it sort on a tight gap that conventional
+  // sorters (needing ~1.5× the parcel) can't, so parcels pack far tighter = more per hour.
   function sorterCeiling(maxLen, maxWeight) {
-    const pitch = RULES.gapFactor * maxLen / 1000;     // m, centre-to-centre
+    const pitch = (maxLen + RULES.sortGap) / 1000;     // m, centre-to-centre
     return r0(speedFor(maxLen, maxWeight) / pitch * 3600);
   }
   function modulesPerBank(maxLen) {

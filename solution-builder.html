@@ -348,38 +348,79 @@ function build(){
 }
 function autoPkgFor(maxLen){return maxLen>M.RULES.autoInductMax.len?M.RULES.autoInductPackage.large:M.RULES.autoInductPackage.standard;}
 
-// ── drawing ──
-function polyLen(p){let L=0;for(let i=1;i<p.length;i++)L+=Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1]);return L;}
-function pointAt(p,t){const T=polyLen(p);let tg=t*T;for(let i=1;i<p.length;i++){const dx=p[i][0]-p[i-1][0],dy=p[i][1]-p[i-1][1],sg=Math.hypot(dx,dy);if(tg<=sg||i===p.length-1){const f=sg?tg/sg:0;return{x:p[i-1][0]+dx*f,y:p[i-1][1]+dy*f,ux:dx/sg,uy:dy/sg};}tg-=sg;}}
-function spineFor(shape){const W=520,H=380,m=64;
-  if(shape==='L')return[[m,H*0.30],[W-m-6,H*0.30],[W-m-6,H-m]];
-  if(shape==='U')return[[m,H*0.28],[W-m,H*0.28],[W-m,H-m],[m+70,H-m]];
-  return[[m,H*0.46],[W-m,H*0.46]];}
-function drawLayout(s){
-  const W=520,H=380,spine=spineFor(s.shape||'straight');
-  const N=s.destinations||12,stub=N>28?18:24,box=N>28?8:11;let g='';
-  const path='M'+spine.map(p=>p[0]+' '+p[1]).join(' L');
-  g+=`<path d="${path}" fill="none" stroke="#3c5680" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>`;
-  g+=`<path d="${path}" fill="none" stroke="#5f86bf" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>`;
-  g+=`<path d="${path}" fill="none" stroke="rgba(0,213,255,.6)" stroke-width="1.4" stroke-dasharray="2 7"/>`;
-  const A=pointAt(spine,0);
-  g+=`<circle cx="${A.x}" cy="${A.y}" r="16" fill="rgba(30,144,255,.18)" stroke="#1E90FF" stroke-width="1.5"/>`;
-  g+=`<path d="M${A.x-34} ${A.y} h20 m-6 -5 l6 5 -6 5" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
-  g+=`<text x="${A.x}" y="${A.y-24}" fill="#8fb4e6" font-family="monospace" font-size="9" text-anchor="middle">${s.autoInduct?'AUTO INDUCT':'INDUCTION'}</text>`;
-  if(s.scan){const P=pointAt(spine,0.12),px=-P.uy,py=P.ux;
-    g+=`<path d="M${P.x+px*17} ${P.y+py*17} A17 17 0 0 1 ${P.x-px*17} ${P.y-py*17}" fill="none" stroke="#00D5FF" stroke-width="2.4"/>`;
-    g+=`<line x1="${P.x+px*17}" y1="${P.y+py*17}" x2="${P.x-px*17}" y2="${P.y-py*17}" stroke="#00D5FF" stroke-width="2.4"/>`;
-    g+=`<text x="${P.x}" y="${P.y-24}" fill="#00D5FF" font-family="monospace" font-size="9" text-anchor="middle">SCAN</text>`;}
-  if(s.printApply){const P=pointAt(spine,0.18);
-    g+=`<rect x="${P.x-9}" y="${P.y-9}" width="18" height="18" rx="3" fill="rgba(253,176,34,.18)" stroke="#FDB022" stroke-width="1.4"/>`;
-    g+=`<text x="${P.x}" y="${P.y+26}" fill="#FDB022" font-family="monospace" font-size="8" text-anchor="middle">P&amp;A</text>`;}
-  const sf=s.scan||s.printApply?0.24:0.18;
-  for(let i=0;i<N;i++){const t=sf+(0.98-sf)*((i+0.5)/N),P=pointAt(spine,t),side=(i%2===0)?1:-1,px=-P.uy*side,py=P.ux*side,x2=P.x+px*stub,y2=P.y+py*stub;
-    g+=`<line x1="${P.x}" y1="${P.y}" x2="${x2}" y2="${y2}" stroke="rgba(0,213,255,.45)" stroke-width="2"/>`;
-    g+=`<rect x="${x2-box/2}" y="${y2-box/2}" width="${box}" height="${box}" rx="2" fill="rgba(0,213,255,.14)" stroke="#00D5FF" stroke-width="1.2"/>`;}
-  g+=`<text x="${W/2}" y="${H-14}" fill="rgba(247,250,255,.4)" font-family="monospace" font-size="9" text-anchor="middle" letter-spacing="1.2">${N} DEST · ${(s.shape||'straight').toUpperCase()==='STRAIGHT'?'IN-LINE':((s.shape||'')+'-SHAPE')}${s.targetTph?' · '+(s.targetTph/1000)+'K PPH':''}</text>`;
-  return `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${g}</svg>`;
-}
+// ── drawing · parametric Helix general arrangement (self-contained white GA) ──
+const drawLayout = (function(){
+  var D2=Math.PI/180;
+  var BLU='#1c35c8',WHB='#cfe0f7',GRY='#d7d7d7',SLA='#111',ROL='#9aa0a8',RED='#ee1c1c',AMB='#e0a12a',GRN='#7ab51d',INK='#141a22',CEN='#3a3f46',PAR='#c9a46a';
+  var W=1000,Hh=560,cy=256,dh=17,tk=80;
+  function T(x,y,s,o){o=o||{};return '<text x="'+x+'" y="'+y+'" fill="'+(o.f||INK)+'" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="'+(o.s||9)+'" text-anchor="'+(o.a||'start')+'"'+(o.w?' font-weight="bold"':'')+(o.r?' transform="rotate(-90 '+x+' '+y+')"':'')+'>'+s+'</text>';}
+  function convH(x,y,w,h){var g='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="#fff" stroke="'+BLU+'" stroke-width="1.4"/>';for(var rx=x+4;rx<x+w-1;rx+=6)g+='<line x1="'+rx+'" y1="'+(y+1)+'" x2="'+rx+'" y2="'+(y+h-1)+'" stroke="'+ROL+'" stroke-width=".5"/>';return g;}
+  function parcel(x,y,s){return '<rect x="'+x+'" y="'+y+'" width="'+s+'" height="'+s+'" fill="'+PAR+'" stroke="#8a6a3a" stroke-width=".7"/><line x1="'+(x+s/2)+'" y1="'+y+'" x2="'+(x+s/2)+'" y2="'+(y+s)+'" stroke="#8a6a3a" stroke-width=".5"/>';}
+  function dimV(x,y1,y2,t){var g='<line x1="'+x+'" y1="'+y1+'" x2="'+x+'" y2="'+y2+'" stroke="'+GRN+'" stroke-width=".8"/>';g+='<path d="M'+x+' '+y1+' l-2.5 6 l5 0 Z" fill="'+GRN+'"/><path d="M'+x+' '+y2+' l-2.5 -6 l5 0 Z" fill="'+GRN+'"/>';g+='<rect x="'+(x-7)+'" y="'+((y1+y2)/2-t.length*3.1)+'" width="13" height="'+(t.length*6.2)+'" fill="#fff"/>'+T(x+3.5,(y1+y2)/2,t,{a:'middle',s:8,f:'#4f7d15',r:1});return g;}
+  function dimH(x1,x2,y,t){var g='<line x1="'+x1+'" y1="'+y+'" x2="'+x2+'" y2="'+y+'" stroke="'+GRN+'" stroke-width=".8"/>';g+='<path d="M'+x1+' '+y+' l6 -2.5 l0 5 Z" fill="'+GRN+'"/><path d="M'+x2+' '+y+' l-6 -2.5 l0 5 Z" fill="'+GRN+'"/>';g+='<rect x="'+((x1+x2)/2-t.length*3.1)+'" y="'+(y-6.5)+'" width="'+(t.length*6.2)+'" height="12" fill="#fff"/>'+T((x1+x2)/2,y+3.5,t,{a:'middle',s:8,f:'#4f7d15'});return g;}
+  function bank(bx,bankLen,mods){var g='<rect x="'+bx+'" y="'+(cy-dh)+'" width="'+bankLen+'" height="'+(2*dh)+'" fill="#fff" stroke="'+BLU+'" stroke-width="1.6"/>';
+    var nx=Math.max(mods,Math.round(bankLen/6)),ny=Math.max(5,Math.round(2*dh/6)),r=Math.min(bankLen/nx,2*dh/ny)/2*0.82;
+    for(var i=0;i<nx;i++)for(var j=0;j<ny;j++){var cxp=bx+bankLen*(i+0.5)/nx,cyp=cy-dh+2*dh*(j+0.5)/ny;g+='<circle cx="'+cxp.toFixed(1)+'" cy="'+cyp.toFixed(1)+'" r="'+r.toFixed(1)+'" fill="'+WHB+'" stroke="'+BLU+'" stroke-width=".5"/><line x1="'+(cxp-r*0.6).toFixed(1)+'" y1="'+cyp.toFixed(1)+'" x2="'+(cxp+r*0.6).toFixed(1)+'" y2="'+cyp.toFixed(1)+'" stroke="'+SLA+'" stroke-width="'+(r*0.5).toFixed(1)+'" stroke-linecap="round"/>';}
+    for(var k=1;k<mods;k++){var sx=bx+bankLen*k/mods;g+='<line x1="'+sx+'" y1="'+(cy-dh)+'" x2="'+sx+'" y2="'+(cy+dh)+'" stroke="'+BLU+'" stroke-width=".7"/>';}
+    return g;}
+  function divert(xd,side,lbl){var Wc=2*dh,Lm=1.25*Wc,Rc=1.45*Wc,th=side*30,aEnd=side*90;
+    var cx=[],cyy=[],ang=[],x=xd,y=cy+side*dh,a=th;
+    var M1=5,dsM=Lm/M1;for(var i=0;i<M1;i++){cx.push(x);cyy.push(y);ang.push(a);x+=dsM*Math.cos(a*D2);y+=dsM*Math.sin(a*D2);}
+    var M2=12,da=(aEnd-th)/M2,dsC=Rc*Math.abs(da*D2);for(var j=0;j<M2;j++){cx.push(x);cyy.push(y);ang.push(a);a+=da;x+=dsC*Math.cos(a*D2);y+=dsC*Math.sin(a*D2);}
+    cx.push(x);cyy.push(y);ang.push(aEnd);
+    var iX=[],iY=[],oX=[],oY=[];for(var k=0;k<cx.length;k++){var pa=(ang[k]+90)*D2,nx=Math.cos(pa),ny=Math.sin(pa);iX.push(cx[k]-Wc/2*nx);iY.push(cyy[k]-Wc/2*ny);oX.push(cx[k]+Wc/2*nx);oY.push(cyy[k]+Wc/2*ny);}
+    var g='',fp='M';for(var k=0;k<oX.length;k++)fp+=oX[k].toFixed(1)+' '+oY[k].toFixed(1)+' L';for(var k=iX.length-1;k>=0;k--)fp+=iX[k].toFixed(1)+' '+iY[k].toFixed(1)+(k?' L':'');fp+=' Z';
+    g+='<path d="'+fp+'" fill="#fdfdfd"/>';
+    for(var k=1;k<cx.length-1;k++)g+='<line x1="'+iX[k].toFixed(1)+'" y1="'+iY[k].toFixed(1)+'" x2="'+oX[k].toFixed(1)+'" y2="'+oY[k].toFixed(1)+'" stroke="'+SLA+'" stroke-width=".5"/>';
+    var op='M'+oX[0].toFixed(1)+' '+oY[0].toFixed(1),ip='M'+iX[0].toFixed(1)+' '+iY[0].toFixed(1);for(var k=1;k<oX.length;k++){op+=' L'+oX[k].toFixed(1)+' '+oY[k].toFixed(1);ip+=' L'+iX[k].toFixed(1)+' '+iY[k].toFixed(1);}
+    g+='<path d="'+op+'" fill="none" stroke="'+BLU+'" stroke-width="1.5"/><path d="'+ip+'" fill="none" stroke="'+BLU+'" stroke-width="1.5"/>';
+    g+='<line x1="'+iX[M1].toFixed(1)+'" y1="'+iY[M1].toFixed(1)+'" x2="'+oX[M1].toFixed(1)+'" y2="'+oY[M1].toFixed(1)+'" stroke="'+RED+'" stroke-width="2.6"/>';
+    var apth='M'+cx[1].toFixed(1)+' '+cyy[1].toFixed(1);for(var k=2;k<cx.length-1;k++)apth+=' L'+cx[k].toFixed(1)+' '+cyy[k].toFixed(1);g+='<path d="'+apth+'" fill="none" stroke="'+AMB+'" stroke-width="3" stroke-linecap="round"/>';
+    var pe=[cx[cx.length-2],cyy[cyy.length-2]],pb=[cx[cx.length-3],cyy[cyy.length-3]],an=Math.atan2(pe[1]-pb[1],pe[0]-pb[0]);
+    g+='<path d="M'+pe[0].toFixed(1)+' '+pe[1].toFixed(1)+' L'+(pe[0]-7*Math.cos(an-0.5)).toFixed(1)+' '+(pe[1]-7*Math.sin(an-0.5)).toFixed(1)+' L'+(pe[0]-7*Math.cos(an+0.5)).toFixed(1)+' '+(pe[1]-7*Math.sin(an+0.5)).toFixed(1)+' Z" fill="'+AMB+'"/>';
+    var lx=cx[cx.length-1],ly=cyy[cyy.length-1],txx=lx-Wc/2,tyy=side>0?ly:ly-tk;
+    g+='<rect x="'+txx.toFixed(1)+'" y="'+tyy.toFixed(1)+'" width="'+Wc+'" height="'+tk+'" fill="#fff" stroke="'+BLU+'" stroke-width="1.5"/>';
+    for(var rr=tyy+4;rr<tyy+tk-1;rr+=5)g+='<line x1="'+(txx+1).toFixed(1)+'" y1="'+rr.toFixed(1)+'" x2="'+(txx+Wc-1).toFixed(1)+'" y2="'+rr.toFixed(1)+'" stroke="'+SLA+'" stroke-width=".45"/>';
+    g+=T(cx[2]+7,cyy[2]+side*2,'30°',{s:7,f:'#7a4b12'});
+    if(lbl){g+=T(cx[2]-4,cyy[2]+side*13,'MERGE',{s:6.5,f:'#5b6f84',a:'end'});g+=T(cx[M1+6]+9,cyy[M1+6],'CURVE',{s:6.5,f:'#5b6f84'});g+=T(txx+Wc+4,tyy+tk*0.5,'TAKEAWAY',{s:6.5,f:'#5b6f84'});}
+    return g;}
+  return function(S){
+    S=S||{};
+    var dest=S.destinations||16,maxLen=S.maxLen||600,sides=S.sides||2,autoInduct=!!S.autoInduct;
+    var mods=Math.max(1,Math.round(0.75*maxLen/200)),bankMm=mods*200;
+    var bankLen=Math.max(18,Math.round(mods*7.5)),belt=80,pitch=bankLen+belt;
+    var nBanks=Math.ceil(dest/sides),bx0=396,maxR=782,drawN=Math.min(nBanks,Math.max(2,Math.floor((maxR-bx0)/pitch)),4);
+    var spineEnd=bx0+drawN*pitch,g='<rect x="0" y="0" width="'+W+'" height="'+Hh+'" fill="#fff"/>';
+    var dWx=0;for(var i=0;i<drawN;i++){var bx=bx0+pitch*i,xd=bx+bankLen;g+=divert(xd,1,i===0);if(sides===2)g+=divert(xd,-1,false);if(i===0)dWx=bx+bankLen*0.5;}
+    var inX=26,inW=88;g+=convH(inX,cy-dh,inW,2*dh);
+    g+='<path d="M12 '+cy+' h12 m-4 -4 l4 4 -4 4" fill="none" stroke="'+INK+'" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>';
+    if(autoInduct){g+='<rect x="'+inX+'" y="'+(cy-dh-6)+'" width="'+inW+'" height="'+(2*dh+12)+'" fill="none" stroke="'+BLU+'" stroke-width="1.1" stroke-dasharray="4 3"/>';g+=T(inX+inW/2,cy-dh-16,'AUTO-INDUCTION',{a:'middle',s:8,w:1})+T(inX+inW/2,cy+dh+18,'lights-out feed',{a:'middle',s:7,f:'#5b6f84'});}
+    else{[0.28,0.55,0.82].forEach(function(f){var ox=inX+inW*f;g+='<circle cx="'+ox+'" cy="'+(cy-dh-8)+'" r="5" fill="'+WHB+'" stroke="'+BLU+'" stroke-width="1"/><rect x="'+(ox-4)+'" y="'+(cy-dh-4)+'" width="8" height="4" rx="1.5" fill="'+WHB+'" stroke="'+BLU+'" stroke-width=".7"/>';});g+=T(inX+inW/2,cy-dh-20,'INDUCTION',{a:'middle',s:8,w:1})+T(inX+inW/2,cy+dh+14,'operators load on',{a:'middle',s:7,f:'#5b6f84'});}
+    var gpX=inX+inW+8,gpW=34;for(var s2=0;s2<3;s2++){var gx=gpX+s2*(gpW+3);g+=convH(gx,cy-dh,gpW,2*dh);g+='<path d="M'+(gx+gpW*0.3)+' '+(cy-6)+' l6 6 -6 6 m6 -6 h'+(gpW*0.3)+'" fill="none" stroke="'+AMB+'" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>';}
+    var gpEnd=gpX+3*(gpW+3);
+    g+=parcel(gpX+8,cy-6,12)+parcel(gpX+58,cy-6,12)+dimH(gpX+20,gpX+58,cy+dh+16,'200')+T((gpX+gpEnd)/2,cy-dh-9,'GAPPING × 3  (GAPPEX)',{a:'middle',s:8,w:1})+T((gpX+gpEnd)/2,cy+dh+27,'accelerate · open 200mm gap',{a:'middle',s:7,f:'#5b6f84'});
+    var SP0=gpEnd+6,scanW=60;
+    g+='<rect x="'+SP0+'" y="'+(cy-dh)+'" width="'+(spineEnd-SP0)+'" height="'+(2*dh)+'" fill="'+GRY+'"/>';
+    g+='<rect x="'+SP0+'" y="'+(cy-dh-12)+'" width="'+scanW+'" height="'+(2*dh+24)+'" fill="none" stroke="'+RED+'" stroke-width="1.3"/><rect x="'+(SP0+scanW/2-11)+'" y="'+(cy-6)+'" width="22" height="12" rx="1.5" fill="none" stroke="'+RED+'" stroke-width="1.3"/>';
+    g+=T(SP0+scanW/2,cy-dh-18,'SCAN TUNNEL',{a:'middle',s:8,w:1,f:'#a01414'});
+    g+='<line x1="'+SP0+'" y1="'+cy+'" x2="'+spineEnd+'" y2="'+cy+'" stroke="'+CEN+'" stroke-width=".7"/><line x1="'+SP0+'" y1="'+(cy-dh)+'" x2="'+spineEnd+'" y2="'+(cy-dh)+'" stroke="'+BLU+'" stroke-width="1.7"/><line x1="'+SP0+'" y1="'+(cy+dh)+'" x2="'+spineEnd+'" y2="'+(cy+dh)+'" stroke="'+BLU+'" stroke-width="1.7"/>';
+    for(var i2=0;i2<drawN;i2++){var bx2=bx0+pitch*i2;g+=bank(bx2,bankLen,mods)+T(bx2+bankLen/2,cy-dh-7,'SORT BANK',{a:'middle',s:6,f:'#5b6f84'});}
+    g+=dimV(SP0-10,cy-dh,cy+dh,'1050');
+    var dx=W-88,dy=372,R=30;
+    g+='<line x1="'+dWx+'" y1="'+(cy-dh+6)+'" x2="'+(dx-36)+'" y2="'+(dy-20)+'" stroke="'+INK+'" stroke-width=".6" stroke-dasharray="3 3"/>';
+    g+='<circle cx="'+dx+'" cy="'+dy+'" r="'+(R+8)+'" fill="none" stroke="'+INK+'" stroke-width=".7" stroke-dasharray="4 3"/><circle cx="'+dx+'" cy="'+dy+'" r="'+R+'" fill="'+WHB+'" stroke="'+BLU+'" stroke-width="1.6"/>';
+    g+='<rect x="'+(dx-R*0.66)+'" y="'+(dy-R*0.26)+'" width="'+(R*1.32)+'" height="'+(R*0.52)+'" rx="'+(R*0.26)+'" fill="#1a1a1a" transform="rotate(30 '+dx+' '+dy+')"/>';
+    g+='<path d="M'+(dx+R*0.9)+' '+(dy-6)+' A '+(R+5)+' '+(R+5)+' 0 0 1 '+(dx+R*0.55)+' '+(dy+R*0.8)+'" fill="none" stroke="'+AMB+'" stroke-width="1.6"/>';
+    g+=T(dx,dy+R+18,'DETAIL A — PIVOT WHEEL',{a:'middle',s:8,w:1})+T(dx,dy+R+29,'48V DC encoder · patented',{a:'middle',s:6.5,f:'#5b6f84'})+T(dx,dy+R+38,'linkage · 180° flip · 200mm gap',{a:'middle',s:6.5,f:'#5b6f84'});
+    var vx=W-186,vy=44,vw=170,vars=[['Sorter','Pivot-wheel divert'],['Max parcel',maxLen+' mm'],['Modules / bank',mods+' ('+bankMm+'mm)'],['Sides',sides+(sides===2?' · L+R':' · one')],['Divert banks',nBanks+''],['Destinations',dest+''],['Sort gap','200 mm'],['Gapping','×3 (gappex)']];
+    g+='<rect x="'+vx+'" y="'+vy+'" width="'+vw+'" height="'+(18+vars.length*15)+'" fill="#fff" stroke="'+INK+'" stroke-width="1"/><rect x="'+vx+'" y="'+vy+'" width="'+vw+'" height="17" fill="#16273a"/>'+T(vx+7,vy+12,'VARIABLES',{f:'#fff',s:8.5,w:1});
+    for(var vI=0;vI<vars.length;vI++){var ry=vy+17+vI*15;g+=T(vx+7,ry+11,vars[vI][0],{s:7.5,f:'#5b6f84'})+T(vx+vw-7,ry+11,vars[vI][1],{s:7.5,a:'end',w:1});if(vI<vars.length-1)g+='<line x1="'+vx+'" y1="'+(ry+15)+'" x2="'+(vx+vw)+'" y2="'+(ry+15)+'" stroke="#eef1f5" stroke-width=".5"/>';}
+    g+=T(20,22,'ORION HELIX — PIVOT-WHEEL SORTER · GENERAL ARRANGEMENT',{s:11,w:1,ls:'.3'});
+    g+=T(20,35,'induction → gapping ×3 → scan → '+(sides===2?'double':'single')+'-sided sort banks → merge (30°) → curve → takeaway'+(nBanks>drawN?' · '+drawN+' of '+nBanks+' banks':''),{s:8,f:'#5b6f84'});
+    g+=T(W-20,Hh-12,'INDICATIVE — NOT FOR CONSTRUCTION · NTS',{a:'end',s:7.5,f:'#a01414',w:1});
+    return '<svg viewBox="0 0 '+W+' '+Hh+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">'+g+'</svg>';
+  };
+})();
 function updatePreview(){
   if(S.destinations||S.shape){$('cbPh')&&$('cbPh').remove();$('cbDrawing').innerHTML=drawLayout(S);}
   if(S.destinations&&S.targetTph){const{pr}=build();$('cbPrice').innerHTML=fmt(money50(pr.lease))+'<small>/mo</small>';}
