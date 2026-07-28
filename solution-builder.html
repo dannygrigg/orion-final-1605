@@ -389,7 +389,7 @@ function run(){
     say("Want me to send this over with a firmer figure? Pop your details in and one of our engineers picks it up — no hard sell.",()=>renderCapture());
     return;
   }
-  say(st.q(S),()=>renderControls(st));
+  say(st.q(S),()=>{ if(st.opts||st.opts_multi) renderControls(st); else { i++; run(); } });
 }
 function renderControls(st){
   if(st.opts_multi){
