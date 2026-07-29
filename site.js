@@ -155,29 +155,52 @@
       .catch(function () { openAskOrionModal(); });
   };
 
-  // Page-aware nudges: the right guide asks one good question on the right page.
+  // Page-aware nudges: the right guide offers a hand on the right page.
   // One per visit, dismiss = 14 days off, any nudge = 3 days before the next.
-  function scheduleNudge() {
-    var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    var cfg = null;
-    if (path === 'helios.html') {
-      cfg = { guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' };
-    } else if (/finance|roi/.test(path)) {
-      cfg = { guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' };
-    }
-    if (!cfg) return;
+  //   Helix section (home)  → Barry, 5s after the section scrolls into view
+  //   Products              → Liam
+  //   Finance / ROI pages   → Penny
+  //   Helios                → Comet
+  function nudgeAllowed() {
     try {
       var now = Date.now();
       var off = parseInt(localStorage.getItem('og-nudge-off') || '0', 10);
-      if (off && now - off < 14 * 864e5) return;
+      if (off && now - off < 14 * 864e5) return false;
       var last = parseInt(localStorage.getItem('og-nudge-last') || '0', 10);
-      if (last && now - last < 3 * 864e5) return;
-      if (sessionStorage.getItem('og-nudged')) return;
-    } catch (e) { return; }
-    setTimeout(function () {
-      try { sessionStorage.setItem('og-nudged', '1'); localStorage.setItem('og-nudge-last', String(Date.now())); } catch (e) {}
-      loadGuides().then(function () { window.OrionGuides.nudge(cfg); }).catch(function () {});
-    }, 8000);
+      if (last && now - last < 3 * 864e5) return false;
+      if (sessionStorage.getItem('og-nudged')) return false;
+      return true;
+    } catch (e) { return false; }
+  }
+  function fireNudge(cfg) {
+    if (!nudgeAllowed()) return;
+    try { sessionStorage.setItem('og-nudged', '1'); localStorage.setItem('og-nudge-last', String(Date.now())); } catch (e) {}
+    loadGuides().then(function () { window.OrionGuides.nudge(cfg); }).catch(function () {});
+  }
+  function scheduleNudge() {
+    if (!nudgeAllowed()) return;
+    var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    if (path === 'helios.html') {
+      setTimeout(function () { fireNudge({ guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' }); }, 8000);
+    } else if (/finance|roi/.test(path)) {
+      setTimeout(function () { fireNudge({ guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' }); }, 8000);
+    } else if (path === 'products.html') {
+      setTimeout(function () { fireNudge({ guide: 'liam', q: 'Anything here you want a straight answer on? Happy to get you a word with one of the team.', yes: 'Yes — quick word' }); }, 8000);
+    } else if (path === 'index.html' || path === '') {
+      // Barry offers a hand 5s after the Helix section comes into view
+      var helix = document.getElementById('helix');
+      if (!helix || !('IntersectionObserver' in window)) return;
+      var armed = false;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting && !armed) {
+            armed = true; io.disconnect();
+            setTimeout(function () { fireNudge({ guide: 'barry', q: 'This is the Helix. Want a hand designing yours? A few questions and I’ll draw it up with a monthly figure.', yes: 'Go on then, Barry' }); }, 5000);
+          }
+        });
+      }, { threshold: 0.35 });
+      io.observe(helix);
+    }
   }
 
   function askOrionModalHTML() {

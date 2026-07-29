@@ -534,6 +534,21 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
           <legend>03 · The site visit</legend>
           <div class="field-row">
             <div class="field">
+              <label for="f-where">Our place or yours?</label>
+              <select id="f-where" name="visit_location">
+                <option value="">Choose…</option>
+                <option>Your facility — come to us in Chichester</option>
+                <option>Our site — you come to us</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-siteaddr">Your site address / postcode <span style="opacity:.6">(if at yours)</span></label>
+              <input id="f-siteaddr" type="text" name="site_address" placeholder="e.g. Unit 4, ... , M17 1AB">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
               <label for="f-visitdate">Preferred date / week</label>
               <input id="f-visitdate" type="text" name="preferred_visit_date" placeholder="e.g. w/c 9 June, or Tue 17 June PM">
             </div>
