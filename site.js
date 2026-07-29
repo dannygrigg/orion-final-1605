@@ -88,24 +88,43 @@
   // ──────────────────────────────────────────────────────────────
   // 6. ASK ORION launcher + modal (replaces Tawk)
   // ──────────────────────────────────────────────────────────────
+  // Context-aware launcher: the right guide "lives" on the right page.
+  // Penny sits on ROI/finance pages, Comet on Helios; everywhere else the
+  // generic Ask Orion star opens the team router (all guides one tap away).
+  function launcherContext() {
+    var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    if (path === 'helios.html') return { guide: 'comet', img: 'images/comet-head.png', name: 'Comet', tag: 'Your Helios guide' };
+    if (/finance|roi/.test(path)) return { guide: 'penny', img: 'images/penny-head.png', name: 'Penny', tag: 'Run the numbers' };
+    return null;
+  }
   function showAskOrionLauncher() {
     if (document.getElementById('ask-orion-launcher')) return;
+    var ctx = launcherContext();
     var btn = document.createElement('button');
     btn.id = 'ask-orion-launcher';
     btn.type = 'button';
-    btn.setAttribute('aria-label', 'Ask Orion — talk to an engineer');
-    btn.innerHTML = ''
-      + '<span class="ao-icon" aria-hidden="true">'
-      +   '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'
-      +     '<defs><linearGradient id="aog" x1="0" y1="0" x2="1" y2="1">'
-      +       '<stop offset="0" stop-color="#1E90FF"/><stop offset="1" stop-color="#00D5FF"/>'
-      +     '</linearGradient></defs>'
-      +     '<circle cx="50" cy="50" r="48" fill="none" stroke="url(#aog)" stroke-width="6"/>'
-      +     '<path fill="url(#aog)" d="M50 18 L60 42 L86 42 L65 58 L73 84 L50 68 L27 84 L35 58 L14 42 L40 42 Z"/>'
-      +   '</svg>'
-      + '</span>'
-      + '<span class="ao-text"><b>Ask Orion</b><span>Talk to the team</span></span>';
-    btn.addEventListener('click', openGuides);
+    btn.setAttribute('aria-label', ctx ? ('Chat to ' + ctx.name + ' — ' + ctx.tag) : 'Ask Orion — talk to the team');
+    if (ctx) {
+      btn.innerHTML = ''
+        + '<span class="ao-icon" aria-hidden="true" style="overflow:hidden">'
+        +   '<img src="' + ctx.img + '" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:50%">'
+        + '</span>'
+        + '<span class="ao-text"><b>' + ctx.name + '</b><span>' + ctx.tag + '</span></span>';
+      btn.addEventListener('click', function () { window.askOrion(ctx.guide); });
+    } else {
+      btn.innerHTML = ''
+        + '<span class="ao-icon" aria-hidden="true">'
+        +   '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'
+        +     '<defs><linearGradient id="aog" x1="0" y1="0" x2="1" y2="1">'
+        +       '<stop offset="0" stop-color="#1E90FF"/><stop offset="1" stop-color="#00D5FF"/>'
+        +     '</linearGradient></defs>'
+        +     '<circle cx="50" cy="50" r="48" fill="none" stroke="url(#aog)" stroke-width="6"/>'
+        +     '<path fill="url(#aog)" d="M50 18 L60 42 L86 42 L65 58 L73 84 L50 68 L27 84 L35 58 L14 42 L40 42 Z"/>'
+        +   '</svg>'
+        + '</span>'
+        + '<span class="ao-text"><b>Ask Orion</b><span>Talk to the team</span></span>';
+      btn.addEventListener('click', openGuides);
+    }
     document.body.appendChild(btn);
     scheduleNudge();
   }

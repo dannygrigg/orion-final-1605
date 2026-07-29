@@ -185,8 +185,20 @@
   }
   function pennyROI() {
     bot("Then the <em>ROI model</em> is where we start — and it matters more than any brochure. It takes your throughput, your headcount and your wage bill and shows the month the machine has paid for itself. If those numbers don’t work, I’ll tell you straight — but on most sorting operations the labour saving covers the lease with room to spare.");
-    ctas('<a class="og-cta" href="index.html#roi">Run my numbers — ROI calculator →</a><button class="og-cta sec" data-og="next">Then how would I fund it?</button>');
-    var b = body.querySelector('[data-og="next"]'); if (b) b.onclick = function () { me('Then how would I fund it?'); pennyCashflow(); };
+    chips([
+      ['Walk me through the calculator', pennyWalk, 'Wanted the ROI calc walked through'],
+      ['I’ll run it myself', function () {
+        bot("Go on then — it’s two minutes. I’m here if a number surprises you.");
+        ctas('<a class="og-cta" href="index.html#roi">Open the ROI calculator →</a><button class="og-cta sec" data-og="next">How would I fund it?</button>');
+        var b = body.querySelector('[data-og="next"]'); if (b) b.onclick = function () { me('How would I fund it?'); pennyCashflow(); };
+      }]
+    ]);
+  }
+  function pennyWalk() {
+    feat('how to read it', 'The ROI calculator, in plain English', '<b style="color:#8fe9ff">You put in</b> — parcels per hour, how many people currently sort them, and your loaded wage cost (salary + NI + pension + cover; ~£28k is typical). <b style="color:#8fe9ff">It gives you</b> — your current annual labour cost, the projected saving with a Helix line, the monthly lease comparison, and the payback month. The one that matters is the last one: the month the machine has paid for itself and everything after is saving.');
+    bot("Be honest with the inputs — undercook your wage cost and you only cheat yourself. Ready?");
+    ctas('<a class="og-cta" href="index.html#roi">Open the calculator →</a><button class="og-cta sec" data-og="next">And how would I fund it?</button>');
+    var b = body.querySelector('[data-og="next"]'); if (b) b.onclick = function () { me('And how would I fund it?'); pennyCashflow(); };
   }
   function pennyCashflow() {
     bot("Here’s the question I’d ask any owner: <em>what else could that capital be doing?</em> Stock, people, growth, cushion — if a few hundred grand earns you more working in the business than it costs to lease the machine, writing a cheque for steel is the expensive option.");
