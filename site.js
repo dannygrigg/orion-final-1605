@@ -181,11 +181,11 @@
     if (!nudgeAllowed()) return;
     var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (path === 'helios.html') {
-      setTimeout(function () { fireNudge({ guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' }); }, 8000);
+      setTimeout(function () { fireNudge({ guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' }); }, 5000);
     } else if (/finance|roi/.test(path)) {
-      setTimeout(function () { fireNudge({ guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' }); }, 8000);
+      setTimeout(function () { fireNudge({ guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' }); }, 5000);
     } else if (path === 'products.html') {
-      setTimeout(function () { fireNudge({ guide: 'liam', q: 'Anything here you want a straight answer on? Happy to get you a word with one of the team.', yes: 'Yes — quick word' }); }, 8000);
+      setTimeout(function () { fireNudge({ guide: 'liam', q: 'Anything here you want a straight answer on? Happy to get you a word with one of the team.', yes: 'Yes — quick word' }); }, 5000);
     } else if (path === 'index.html' || path === '') {
       // Barry offers a hand 5s after the Helix section comes into view
       var helix = document.getElementById('helix');
