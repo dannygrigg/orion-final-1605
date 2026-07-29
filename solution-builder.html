@@ -448,7 +448,8 @@ function renderSheet(){
     ['Induction', S.autoInduct ? ('Auto — '+m.autoLanes+' lane(s) @ '+fmt0(m.autoRate)+'/hr') : (m.operators+' operators @ '+m.opRate+'/hr, '+m.opProfile+' parcels')],
     ['Scan', S.scanMulti?'Scan + weigh & dimension':'Standard scan tunnel'],
     ['Controls','Routing & SCADA — standard'],
-    ['Helios', S.heliosTier ? (M.HELIOS_TIERS[S.heliosTier].name+' — '+fmt(pr.helios)+'/site/mo') : 'Standard (routing + SCADA)']
+    ['Helios', S.heliosTier ? (M.HELIOS_TIERS[S.heliosTier].name+' — '+fmt(pr.helios)+'/site/mo') : 'Standard (routing + SCADA)'],
+    ['Warranty','2 years — parts & labour, UK support']
   ];
   const incl=cfg.modules.map(x=>`<li>${x.label}${x.pass?' <em>(quoted separately)</em>':''}</li>`).join('');
   const leaseMo=money50(pr.lease);
@@ -515,7 +516,11 @@ function run(){
   if(st.reveal){
     updatePreview(); renderSheet();
     const {cfg,pr}=build(), m=cfg.metrics;
-    say(`There we go — drawn up on the right 👉. <em>${S.destinations} destinations</em>, ${shapeName(S.shape)}, up to ${fmt0(S.targetTph)} an hour, from <em>${fmt(money50(pr.lease))} a month</em> on a sixty-month lease. Mind you — feeding it by hand takes about <em>${m.operators} people</em>. Want to see it with auto-induction?`,()=>revealButtons());
+    // Barry's design joins the shared team notes (one cohesive visitor document)
+    try{const p=JSON.parse(sessionStorage.getItem('og-profile')||'[]');
+      const entry='Barry: designed line — '+S.destinations+' dest, '+(S.maxLen||600)+'mm max, '+fmt0(S.targetTph)+' pph, from '+fmt(money50(pr.lease))+'/mo';
+      if(p.indexOf(entry)===-1){p.push(entry);sessionStorage.setItem('og-profile',JSON.stringify(p));}}catch(e){}
+    say(`There we go — drawn up on the right 👉. <em>${S.destinations} destinations</em>, ${shapeName(S.shape)}, up to ${fmt0(S.targetTph)} an hour, from <em>${fmt(money50(pr.lease))} a month</em> on a sixty-month lease — and the lot comes with a <em>two-year warranty</em>, however you pay. Mind you — feeding it by hand takes about <em>${m.operators} people</em>. Want to see it with auto-induction?`,()=>revealButtons());
     return;
   }
   if(st.capture){

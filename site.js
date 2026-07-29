@@ -104,9 +104,59 @@
       +     '<path fill="url(#aog)" d="M50 18 L60 42 L86 42 L65 58 L73 84 L50 68 L27 84 L35 58 L14 42 L40 42 Z"/>'
       +   '</svg>'
       + '</span>'
-      + '<span class="ao-text"><b>Ask Orion</b><span>Talk to an engineer</span></span>';
-    btn.addEventListener('click', openAskOrionModal);
+      + '<span class="ao-text"><b>Ask Orion</b><span>Talk to the team</span></span>';
+    btn.addEventListener('click', openGuides);
     document.body.appendChild(btn);
+    scheduleNudge();
+  }
+
+  // Lazy-load the guides panel (Barry/Penny/Comet/Liam router); fall back to the classic modal.
+  var guidesLoading = null;
+  function loadGuides() {
+    if (window.OrionGuides) return Promise.resolve();
+    if (guidesLoading) return guidesLoading;
+    guidesLoading = new Promise(function (resolve, reject) {
+      var s = document.createElement('script');
+      s.src = 'js/guides.js';
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+    return guidesLoading;
+  }
+  function openGuides() {
+    loadGuides().then(function () { window.OrionGuides.open(); })
+      .catch(function () { openAskOrionModal(); });
+  }
+  // Page hooks: any element can open a specific guide — e.g. onclick="askOrion('penny')"
+  window.askOrion = function (guide) {
+    loadGuides().then(function () { window.OrionGuides.open(guide || null); })
+      .catch(function () { openAskOrionModal(); });
+  };
+
+  // Page-aware nudges: the right guide asks one good question on the right page.
+  // One per visit, dismiss = 14 days off, any nudge = 3 days before the next.
+  function scheduleNudge() {
+    var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    var cfg = null;
+    if (path === 'helios.html') {
+      cfg = { guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' };
+    } else if (/finance|roi/.test(path)) {
+      cfg = { guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' };
+    }
+    if (!cfg) return;
+    try {
+      var now = Date.now();
+      var off = parseInt(localStorage.getItem('og-nudge-off') || '0', 10);
+      if (off && now - off < 14 * 864e5) return;
+      var last = parseInt(localStorage.getItem('og-nudge-last') || '0', 10);
+      if (last && now - last < 3 * 864e5) return;
+      if (sessionStorage.getItem('og-nudged')) return;
+    } catch (e) { return; }
+    setTimeout(function () {
+      try { sessionStorage.setItem('og-nudged', '1'); localStorage.setItem('og-nudge-last', String(Date.now())); } catch (e) {}
+      loadGuides().then(function () { window.OrionGuides.nudge(cfg); }).catch(function () {});
+    }, 8000);
   }
 
   function askOrionModalHTML() {
@@ -130,7 +180,7 @@
       +     '<div class="ao-eyebrow">Ask Orion · engineering</div>'
       +     '<h3 id="ao-title">Talk to an <em>engineer</em>.</h3>'
       +     statusBlock
-      +     '<a class="ao-build" href="sketch-tool.html">'
+      +     '<a class="ao-build" href="solution-builder.html">'
       +       '<span class="ao-build-icon">⚡</span>'
       +       '<span class="ao-build-txt"><b>Price your system &amp; build it</b><small>Draw your line · get a from-£/month figure</small></span>'
       +       '<span class="ao-build-arr">→</span>'
