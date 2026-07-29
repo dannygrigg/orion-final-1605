@@ -9,10 +9,12 @@
   if (window.OrionGuides) return;
 
   var BASIN = 'https://usebasin.com/f/d04288a27fc6';
-  // Microsoft Bookings — per-service links (Orion Engineering page, engineers' Outlook diaries)
+  // Microsoft Bookings — Orion Engineering page, straight into engineers' Outlook diaries.
+  // Per-service deep links preselect the service; BOOKINGS.page is the always-works fallback.
   var BOOKINGS = {
-    call:  'https://outlook.office.com/book/OrionEngineering@orionmis.co.uk/s/WTMUWcpupEGBhwzCQ3sB4w2?ismsaljsauthenabled',
-    visit: 'https://outlook.office.com/book/OrionEngineering@orionmis.co.uk/s/331W92_7x0OUMjXDK3higA2?ismsaljsauthenabled'
+    page:  'https://bookings.cloud.microsoft/book/OrionEngineering@orionmis.co.uk/?ismsaljsauthenabled=true',
+    call:  'https://bookings.cloud.microsoft/book/OrionEngineering@orionmis.co.uk/s/WTMUWcpupEGBhwzCQ3sB4w2?ismsaljsauthenabled=true',
+    visit: 'https://bookings.cloud.microsoft/book/OrionEngineering@orionmis.co.uk/s/331W92_7x0OUMjXDK3higA2?ismsaljsauthenabled=true'
   };
   function bookingUrl(kind) {
     var k = (kind || '').toLowerCase();
@@ -354,7 +356,8 @@
     bot("Pick a slot that suits and it drops straight into an engineer’s diary — you’ll get a calendar invite and a reminder.");
     ctas('<div class="og-book"><iframe src="' + url + '" title="Book with Orion engineering" loading="lazy"></iframe></div>'
       + '<div class="og-note">Runs on Microsoft Bookings — straight into our engineers’ Outlook diaries. Calendar not loading? '
-      + '<a href="' + url + '" target="_blank" rel="noopener" style="color:#8fe9ff">Open it in a new tab →</a></div>');
+      + '<a href="' + url + '" target="_blank" rel="noopener" style="color:#8fe9ff">Open it in a new tab →</a> or use the '
+      + '<a href="' + BOOKINGS.page + '" target="_blank" rel="noopener" style="color:#8fe9ff">full booking page</a>.</div>');
   }
 
   // ── shared capture form (posts to Basin, carries the discovery profile) ──
