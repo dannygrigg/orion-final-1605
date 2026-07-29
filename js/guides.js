@@ -9,7 +9,16 @@
   if (window.OrionGuides) return;
 
   var BASIN = 'https://usebasin.com/f/d04288a27fc6';
-  var BOOKINGS_URL = ''; // ← Microsoft Bookings page URL goes here when created
+  // Microsoft Bookings — per-service links (Orion Engineering page, engineers' Outlook diaries)
+  var BOOKINGS = {
+    call:  'https://outlook.office.com/book/OrionEngineering@orionmis.co.uk/s/WTMUWcpupEGBhwzCQ3sB4w2?ismsaljsauthenabled',
+    visit: 'https://outlook.office.com/book/OrionEngineering@orionmis.co.uk/s/331W92_7x0OUMjXDK3higA2?ismsaljsauthenabled'
+  };
+  function bookingUrl(kind) {
+    var k = (kind || '').toLowerCase();
+    if (k.indexOf('visit') > -1) return BOOKINGS.visit;
+    return BOOKINGS.call; // calls + Helios demos use the 15-minute call service
+  }
 
   var GUIDES = {
     barry: { name: 'Barry', role: 'Helix & sorter designer', img: 'images/barrie-head.png' },
@@ -332,13 +341,12 @@
     ]);
   }
   function booking(kind) {
-    if (BOOKINGS_URL) {
-      bot("Pick a slot that suits and it drops straight into an engineer’s diary — you’ll get a calendar invite and a reminder.");
-      ctas('<div class="og-book"><iframe src="' + BOOKINGS_URL + '" title="Book with Orion engineering"></iframe></div><div class="og-note">Booking runs on Microsoft Bookings — straight into our engineers’ Outlook diaries.</div>');
-    } else {
-      bot("Pop your details down for your <em>" + kind + "</em> and an engineer will come back within a working day to fix a time. Or just ring us — <a href=\"tel:+443333355269\" style=\"color:#8fe9ff\">+44 333 335 5269</a>.");
-      capture(kind + ' — request', 'Liam');
-    }
+    var url = bookingUrl(kind);
+    addProf('Opened booking — ' + kind);
+    bot("Pick a slot that suits and it drops straight into an engineer’s diary — you’ll get a calendar invite and a reminder.");
+    ctas('<div class="og-book"><iframe src="' + url + '" title="Book with Orion engineering" loading="lazy"></iframe></div>'
+      + '<div class="og-note">Runs on Microsoft Bookings — straight into our engineers’ Outlook diaries. Calendar not loading? '
+      + '<a href="' + url + '" target="_blank" rel="noopener" style="color:#8fe9ff">Open it in a new tab →</a></div>');
   }
 
   // ── shared capture form (posts to Basin, carries the discovery profile) ──
