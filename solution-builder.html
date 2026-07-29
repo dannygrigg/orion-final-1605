@@ -310,7 +310,7 @@ img{display:block;max-width:100%;height:auto}
 </footer>
 
 <script src="site.js" defer></script>
-<script src="js/sorter-model.js"></script>
+<script src="js/sorter-model.js?v=2"></script><!-- bump ?v= on model changes: /js/* is immutable-cached -->
 <script>
 const hamburger=document.getElementById('hamburger'),mobileNav=document.getElementById('mobileNav');
 hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileNav.classList.toggle('open');});
