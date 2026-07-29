@@ -947,6 +947,29 @@ tr:last-child td{border-bottom:none}
       </div><!-- /tab-general -->
     </div><!-- /calculator -->
   </div>
+
+  <!-- ── MEET PENNY · resident on the ROI section ── -->
+  <style>
+    .roi-penny{max-width:var(--max);margin:26px auto 0;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;background:linear-gradient(180deg,#0B1626,#081120);border:1px solid rgba(0,213,255,.18);border-radius:22px;padding:26px 34px;overflow:hidden}
+    .roi-penny img.fig{height:280px;width:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.45));justify-self:center}
+    .roi-penny .t .eyebrow{margin-bottom:8px}
+    .roi-penny .t h3{font-size:clamp(20px,2.2vw,28px);letter-spacing:-.02em;color:#F7FAFF;font-weight:600;margin:0 0 10px;line-height:1.15}
+    .roi-penny .t h3 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--cyan)}
+    .roi-penny .t p{color:rgba(247,250,255,.68);font-size:14.5px;line-height:1.6;max-width:560px;margin:0 0 16px}
+    .roi-penny .pb{display:inline-flex;align-items:center;gap:9px;background:linear-gradient(180deg,#00D5FF,#1E90FF);color:#02121a;border:none;border-radius:12px;padding:12px 18px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;transition:transform .15s}
+    .roi-penny .pb:hover{transform:translateY(-2px)}
+    .roi-penny .pb img{width:24px;height:24px;border-radius:50%}
+    @media(max-width:860px){.roi-penny{grid-template-columns:1fr;text-align:center;gap:18px;padding:24px 20px}.roi-penny img.fig{height:220px}.roi-penny .t p{margin-left:auto;margin-right:auto}}
+  </style>
+  <div class="roi-penny">
+    <img class="fig" src="images/penny-hero.png" alt="Penny — Orion's ROI and finance guide" loading="lazy">
+    <div class="t">
+      <div class="eyebrow">Meet Penny · ROI &amp; finance</div>
+      <h3>Run it yourself, or <em>let Penny talk you through it.</em></h3>
+      <p>Penny walks the calculator with you — what to put in, what the outputs mean, and which number actually matters. Then she&rsquo;ll show you how to fund it without touching your capital: opex versus capex, straight answers.</p>
+      <button class="pb" type="button" onclick="askOrion('penny')"><img src="images/penny-head.png" alt="">Talk it through with Penny →</button>
+    </div>
+  </div>
 </section>
 
 <!-- ── 04 · FINANCE / PAY MONTHLY ── -->
