@@ -153,7 +153,15 @@
   // ── router ──────────────────────────────────────────────────────────────
   function router() {
     injectCSS(); ensurePanel();
-    head.innerHTML = '<span class="og-star">✦</span><div><b>Ask Orion</b><small>talk to the team</small></div><button class="og-x" data-og="close">×</button>';
+    head.innerHTML = '<span class="og-star" aria-hidden="true">'
+      + '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;display:block">'
+      +   '<defs><linearGradient id="aog2" x1="0" y1="0" x2="1" y2="1">'
+      +     '<stop offset="0" stop-color="#1E90FF"/><stop offset="1" stop-color="#00D5FF"/>'
+      +   '</linearGradient></defs>'
+      +   '<circle cx="50" cy="50" r="48" fill="none" stroke="url(#aog2)" stroke-width="6"/>'
+      +   '<path fill="url(#aog2)" d="M50 18 L60 42 L86 42 L65 58 L73 84 L50 68 L27 84 L35 58 L14 42 L40 42 Z"/>'
+      + '</svg></span>'
+      + '<div><b>Ask Orion</b><small>talk to the team</small></div><button class="og-x" data-og="close">×</button>';
     wireHeader();
     var items = [
       ['barry', 'Design a line & get a price', 'with <em>Barry</em> · our Helix designer'],
