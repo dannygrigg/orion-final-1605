@@ -50,6 +50,8 @@
   var css = ''
     + '#og-panel{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:100vw;z-index:9600;background:linear-gradient(180deg,#0b1626,#081120);border-left:1px solid rgba(0,213,255,.2);box-shadow:-20px 0 60px rgba(0,0,0,.5);display:flex;flex-direction:column;transform:translateX(102%);transition:transform .3s cubic-bezier(.4,0,.2,1);font-family:Inter,system-ui,sans-serif}'
     + '#og-panel.show{transform:none}'
+    + '#og-panel{transition:transform .3s cubic-bezier(.4,0,.2,1),width .25s ease}'
+    + '#og-panel.og-wide{width:560px}'
     + '.og-h{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}'
     + '.og-h img,.og-h .og-star{width:34px;height:34px;border-radius:50%;object-fit:cover;background:#02050A;box-shadow:inset 0 0 0 1px rgba(0,213,255,.26)}'
     + '.og-h .og-star{display:flex;align-items:center;justify-content:center;color:#00D5FF;font-size:16px}'
@@ -88,8 +90,9 @@
     + '.og-cap input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:9px 11px;color:#fff;font-size:13px;margin-bottom:8px;font-family:inherit;outline:none}'
     + '.og-cap input:focus{border-color:#00D5FF}'
     + '.og-cap input.err{border-color:#ff5a6a}'
-    + '.og-book{margin-top:12px;border-radius:12px;overflow:hidden;border:1px solid rgba(0,213,255,.3)}'
-    + '.og-book iframe{width:100%;height:420px;border:0;display:block;background:#fff}'
+    + '.og-book{margin:12px -16px 0;overflow:hidden;border-top:1px solid rgba(0,213,255,.3);border-bottom:1px solid rgba(0,213,255,.3)}'
+    + '.og-book iframe{width:100%;height:600px;border:0;display:block;background:#fff}'
+    + '@media(max-height:760px){.og-book iframe{height:70vh}}'
     + '.og-note{color:rgba(231,238,247,.45);font-size:10.5px;margin-top:10px;line-height:1.5}'
     + '#og-nudge{position:fixed;right:20px;bottom:88px;z-index:9550;max-width:296px;background:linear-gradient(180deg,#101c2e,#0a1524);border:1px solid rgba(0,213,255,.4);border-radius:16px 16px 4px 16px;padding:13px 15px;box-shadow:0 16px 44px rgba(0,0,0,.55);opacity:0;transform:translateY(14px);transition:.35s;font-family:Inter,system-ui,sans-serif}'
     + '#og-nudge.show{opacity:1;transform:none}'
@@ -126,6 +129,7 @@
 
   function shell(key) {
     currentGuide = key;
+    if (panel) panel.classList.remove('og-wide');
     var g = GUIDES[key];
     head.innerHTML = '<button class="og-bk" data-og="home">‹ Back</button>'
       + '<img src="' + g.img + '" alt="' + g.name + '">'
@@ -155,6 +159,7 @@
   // ── router ──────────────────────────────────────────────────────────────
   function router() {
     injectCSS(); ensurePanel();
+    panel.classList.remove('og-wide');
     head.innerHTML = '<span class="og-star" aria-hidden="true">'
       + '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;display:block">'
       +   '<defs><linearGradient id="aog2" x1="0" y1="0" x2="1" y2="1">'
@@ -353,6 +358,7 @@
   function booking(kind) {
     var url = bookingUrl(kind);
     addProf('Opened booking — ' + kind);
+    if (panel) panel.classList.add('og-wide'); // give the calendar room to breathe
     bot("Pick a slot that suits and it drops straight into an engineer’s diary — you’ll get a calendar invite and a reminder.");
     ctas('<div class="og-book"><iframe src="' + url + '" title="Book with Orion engineering" loading="lazy"></iframe></div>'
       + '<div class="og-note">Runs on Microsoft Bookings — straight into our engineers’ Outlook diaries. Calendar not loading? '
