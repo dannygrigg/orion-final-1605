@@ -130,7 +130,7 @@
   }
 
   // Lazy-load the guides panel (Barry/Penny/Comet/Liam router); fall back to the classic modal.
-  var GUIDES_V = 5; // ← bump whenever js/guides.js changes (immutable cache)
+  var GUIDES_V = 6; // ← bump whenever js/guides.js changes (immutable cache)
   var guidesLoading = null;
   function loadGuides() {
     if (window.OrionGuides) return Promise.resolve();
@@ -156,37 +156,29 @@
   };
 
   // Page-aware nudges: the right guide offers a hand on the right page.
-  // One per visit, dismiss = 14 days off, any nudge = 3 days before the next.
-  //   Helix section (home)  → Barry, 5s after the section scrolls into view
-  //   Products              → Liam
-  //   Finance / ROI pages   → Penny
-  //   Helios                → Comet
-  // Caps: each guide nudges once per browsing session; "No thanks" = 7 quiet days.
-  // Add ?nudge (or #nudge) to any URL to bypass caps for testing/demos.
-  function nudgeAllowed(guide) {
-    try {
-      if (/[?&#]nudge/.test(location.search + location.hash)) return true;
-      var off = parseInt(localStorage.getItem('og-nudge-off2') || '0', 10);
-      if (off && Date.now() - off < 7 * 864e5) return false;
-      if (sessionStorage.getItem('og-nudged-' + guide)) return false;
-      return true;
-    } catch (e) { return false; }
-  }
+  // No caps, no cross-page memory — every qualifying page load gets one nudge,
+  // 5s in (or 5s after the Helix section scrolls into view on the homepage).
+  //   Home (Helix section)  → Barry     Products   → Liam
+  //   Helios                → Comet     News       → Barry
+  //   Finance / ROI pages   → Penny     Sketch     → Liam
+  // solution-builder.html is skipped — Barry already IS that whole page, a nudge
+  // to talk to Barry while mid-chat with Barry would be the exact gimmick this
+  // was built to avoid. Legal pages (privacy/terms) and internal/dev pages are
+  // skipped too — not customer-facing, no sales nudge belongs there.
   function fireNudge(cfg) {
-    if (!nudgeAllowed(cfg.guide)) return;
-    try { sessionStorage.setItem('og-nudged-' + cfg.guide, '1'); } catch (e) {}
+    if (document.getElementById('og-nudge')) return; // don't stack two nudges
     loadGuides().then(function () { window.OrionGuides.nudge(cfg); }).catch(function () {});
   }
+  var NUDGES = {
+    'helios.html': { guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' },
+    'products.html': { guide: 'liam', q: 'Anything here you want a straight answer on? Happy to get you a word with one of the team.', yes: 'Yes — quick word' },
+    'news.html': { guide: 'barry', q: 'Seen a build like yours? I can size something similar for your operation.', yes: 'Go on then, Barry' },
+    'sketch.html': { guide: 'liam', q: 'Forms are fine — but a two-minute chat is usually faster. Fancy it?', yes: 'Go on then' }
+  };
   function scheduleNudge() {
     var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    if (path === 'helios.html') {
-      setTimeout(function () { fireNudge({ guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' }); }, 5000);
-    } else if (/finance|roi/.test(path)) {
-      setTimeout(function () { fireNudge({ guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' }); }, 5000);
-    } else if (path === 'products.html') {
-      setTimeout(function () { fireNudge({ guide: 'liam', q: 'Anything here you want a straight answer on? Happy to get you a word with one of the team.', yes: 'Yes — quick word' }); }, 5000);
-    } else if (path === 'index.html' || path === '') {
-      // Barry offers a hand 5s after the Helix section comes into view
+    if (path === 'index.html' || path === '') {
+      // Barry offers a hand 5s after the Helix section scrolls into view
       var helix = document.getElementById('helix');
       if (!helix || !('IntersectionObserver' in window)) return;
       var armed = false;
@@ -199,7 +191,14 @@
         });
       }, { threshold: 0.35 });
       io.observe(helix);
+      return;
     }
+    if (/finance|roi/.test(path)) {
+      setTimeout(function () { fireNudge({ guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' }); }, 5000);
+      return;
+    }
+    var cfg = NUDGES[path];
+    if (cfg) setTimeout(function () { fireNudge(cfg); }, 5000);
   }
 
   function askOrionModalHTML() {
