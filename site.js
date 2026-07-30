@@ -130,7 +130,7 @@
   }
 
   // Lazy-load the guides panel (Barry/Penny/Comet/Liam router); fall back to the classic modal.
-  var GUIDES_V = 4; // ← bump whenever js/guides.js changes (immutable cache)
+  var GUIDES_V = 5; // ← bump whenever js/guides.js changes (immutable cache)
   var guidesLoading = null;
   function loadGuides() {
     if (window.OrionGuides) return Promise.resolve();
@@ -161,24 +161,23 @@
   //   Products              → Liam
   //   Finance / ROI pages   → Penny
   //   Helios                → Comet
-  function nudgeAllowed() {
+  // Caps: each guide nudges once per browsing session; "No thanks" = 7 quiet days.
+  // Add ?nudge (or #nudge) to any URL to bypass caps for testing/demos.
+  function nudgeAllowed(guide) {
     try {
-      var now = Date.now();
-      var off = parseInt(localStorage.getItem('og-nudge-off') || '0', 10);
-      if (off && now - off < 14 * 864e5) return false;
-      var last = parseInt(localStorage.getItem('og-nudge-last') || '0', 10);
-      if (last && now - last < 3 * 864e5) return false;
-      if (sessionStorage.getItem('og-nudged')) return false;
+      if (/[?&#]nudge/.test(location.search + location.hash)) return true;
+      var off = parseInt(localStorage.getItem('og-nudge-off2') || '0', 10);
+      if (off && Date.now() - off < 7 * 864e5) return false;
+      if (sessionStorage.getItem('og-nudged-' + guide)) return false;
       return true;
     } catch (e) { return false; }
   }
   function fireNudge(cfg) {
-    if (!nudgeAllowed()) return;
-    try { sessionStorage.setItem('og-nudged', '1'); localStorage.setItem('og-nudge-last', String(Date.now())); } catch (e) {}
+    if (!nudgeAllowed(cfg.guide)) return;
+    try { sessionStorage.setItem('og-nudged-' + cfg.guide, '1'); } catch (e) {}
     loadGuides().then(function () { window.OrionGuides.nudge(cfg); }).catch(function () {});
   }
   function scheduleNudge() {
-    if (!nudgeAllowed()) return;
     var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (path === 'helios.html') {
       setTimeout(function () { fireNudge({ guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' }); }, 5000);

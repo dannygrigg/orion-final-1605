@@ -415,8 +415,8 @@
     requestAnimationFrame(function () { nudgeEl.classList.add('show'); });
     // there if you want them, gone if you don't — quietly fades if ignored
     var fade = setTimeout(hideNudge, 14000);
-    nudgeEl.querySelector('.yes').onclick = function () { clearTimeout(fade); try { localStorage.setItem('og-nudge-last', String(Date.now())); } catch (e) {} open(cfg.guide, { fromNudge: true }); };
-    nudgeEl.querySelector('.no').onclick = function () { clearTimeout(fade); try { localStorage.setItem('og-nudge-off', String(Date.now())); } catch (e) {} hideNudge(); };
+    nudgeEl.querySelector('.yes').onclick = function () { clearTimeout(fade); open(cfg.guide, { fromNudge: true }); };
+    nudgeEl.querySelector('.no').onclick = function () { clearTimeout(fade); try { localStorage.setItem('og-nudge-off2', String(Date.now())); } catch (e) {} hideNudge(); };
   }
 
   var FLOWS = { barry: barry, penny: penny, comet: comet, liam: liam };
