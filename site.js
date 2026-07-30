@@ -130,7 +130,7 @@
   }
 
   // Lazy-load the guides panel (Barry/Penny/Comet/Liam router); fall back to the classic modal.
-  var GUIDES_V = 7; // ← bump whenever js/guides.js changes (immutable cache)
+  var GUIDES_V = 8; // ← bump whenever js/guides.js changes (immutable cache)
   var guidesLoading = null;
   function loadGuides() {
     if (window.OrionGuides) return Promise.resolve();
@@ -160,9 +160,13 @@
   // No caps, no cross-page memory — every qualifying page load gets one nudge
   // per section, 5s after that section scrolls into view.
   //   Home: Helix section → Barry · ROI section → Penny · Case studies → Liam
-  //   Helios      → Comet         Products   → Liam
-  //   Finance/ROI → Penny         News       → Barry
-  //   Sketch      → Liam
+  //   Helios: Features → Comet · Tiers → Comet
+  //   Products: Unit handling / Sortation / Robotics / ASRS → Liam
+  //   Why-finance: Cash flow / Tax / Objections → Penny
+  //   Finance/ROI (other pages, no sub-sections) → Penny
+  //   News → Barry · Sketch → Liam
+  // Products (11 categories) and why-finance (8 sections) have more sections than
+  // are worth nudging on — picked the highest-intent ones below, not literally all.
   // solution-builder.html is skipped — Barry already IS that whole page, a nudge
   // to talk to Barry while mid-chat with Barry would be the exact gimmick this
   // was built to avoid. Legal pages (privacy/terms) and internal/dev pages are
@@ -185,21 +189,39 @@
     }, { threshold: 0.35 });
     io.observe(el);
   }
+  // Flat, page-level nudges — pages with no distinct sub-sections worth splitting.
   var NUDGES = {
-    'helios.html': { guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' },
-    'products.html': { guide: 'liam', q: 'Anything here you want a straight answer on? Happy to get you a word with one of the team.', yes: 'Yes — quick word' },
     'news.html': { guide: 'barry', q: 'Seen a build like yours? I can size something similar for your operation.', yes: 'Go on then, Barry' },
     'sketch.html': { guide: 'liam', q: 'Forms are fine — but a two-minute chat is usually faster. Fancy it?', yes: 'Go on then' }
   };
+  // Section-level nudges — one per meaningful section, fires as each scrolls into view.
+  var SECTION_NUDGES = {
+    'index.html': [
+      { id: 'helix', guide: 'barry', q: 'This is the Helix. Want a hand designing yours? A few questions and I’ll draw it up with a monthly figure.', yes: 'Go on then, Barry' },
+      { id: 'roi', guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' },
+      { id: 'proof', guide: 'liam', q: 'Want to talk through a build closest to your own operation? I know these sites first-hand.', yes: 'Go on then' }
+    ],
+    'helios.html': [
+      { id: 'features', guide: 'comet', q: 'Which of this actually matters for your floor — dashboards, routing, or the self-diagnosing kit?', yes: 'Ask me about it' },
+      { id: 'tiers', guide: 'comet', q: 'Not sure which tier fits? I can match one to your operation in about 30 seconds.', yes: 'Go on then' }
+    ],
+    'products.html': [
+      { id: 'unit-handling', guide: 'liam', q: 'Unit handling for your line — want a straight steer on what fits?', yes: 'Yes — quick word' },
+      { id: 'sortation', guide: 'liam', q: 'This is closest to what we do best. Want it sized for your throughput?', yes: 'Go on then' },
+      { id: 'robotics', guide: 'liam', q: 'Robotics on top of a Helix line — worth a chat about where it fits?', yes: 'Yes — quick word' },
+      { id: 'asrs', guide: 'liam', q: 'ASRS is a bigger conversation — want an engineer to talk it through?', yes: 'Go on then' }
+    ],
+    'why-finance.html': [
+      { id: 'cash-flow', guide: 'penny', q: 'Quick one — what else could that capital be doing if it wasn’t sat in steel?', yes: 'Go on, Penny' },
+      { id: 'tax', guide: 'penny', q: 'Want me to walk through what this does to your tax position?', yes: 'Go on then' },
+      { id: 'objections', guide: 'penny', q: 'Got a worry about finance I haven’t covered? Ask me straight.', yes: 'Go on then' }
+    ]
+  };
   function scheduleNudge() {
     var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    if (path === 'index.html' || path === '') {
-      nudgeOnScrollTo(document.getElementById('helix'),
-        { guide: 'barry', q: 'This is the Helix. Want a hand designing yours? A few questions and I’ll draw it up with a monthly figure.', yes: 'Go on then, Barry' });
-      nudgeOnScrollTo(document.getElementById('roi'),
-        { guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' });
-      nudgeOnScrollTo(document.getElementById('proof'),
-        { guide: 'liam', q: 'Want to talk through a build closest to your own operation? I know these sites first-hand.', yes: 'Go on then' });
+    var sections = SECTION_NUDGES[path];
+    if (sections) {
+      sections.forEach(function (s) { nudgeOnScrollTo(document.getElementById(s.id), s); });
       return;
     }
     if (/finance|roi/.test(path)) {
