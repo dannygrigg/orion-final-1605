@@ -130,7 +130,7 @@
   }
 
   // Lazy-load the guides panel (Barry/Penny/Comet/Liam router); fall back to the classic modal.
-  var GUIDES_V = 6; // ← bump whenever js/guides.js changes (immutable cache)
+  var GUIDES_V = 7; // ← bump whenever js/guides.js changes (immutable cache)
   var guidesLoading = null;
   function loadGuides() {
     if (window.OrionGuides) return Promise.resolve();
@@ -155,12 +155,14 @@
       .catch(function () { openAskOrionModal(); });
   };
 
-  // Page-aware nudges: the right guide offers a hand on the right page.
-  // No caps, no cross-page memory — every qualifying page load gets one nudge,
-  // 5s in (or 5s after the Helix section scrolls into view on the homepage).
-  //   Home (Helix section)  → Barry     Products   → Liam
-  //   Helios                → Comet     News       → Barry
-  //   Finance / ROI pages   → Penny     Sketch     → Liam
+  // Page-aware nudges: the right guide offers a hand on the right page —
+  // or the right SECTION, on pages long enough to have several.
+  // No caps, no cross-page memory — every qualifying page load gets one nudge
+  // per section, 5s after that section scrolls into view.
+  //   Home: Helix section → Barry · ROI section → Penny · Case studies → Liam
+  //   Helios      → Comet         Products   → Liam
+  //   Finance/ROI → Penny         News       → Barry
+  //   Sketch      → Liam
   // solution-builder.html is skipped — Barry already IS that whole page, a nudge
   // to talk to Barry while mid-chat with Barry would be the exact gimmick this
   // was built to avoid. Legal pages (privacy/terms) and internal/dev pages are
@@ -168,6 +170,20 @@
   function fireNudge(cfg) {
     if (document.getElementById('og-nudge')) return; // don't stack two nudges
     loadGuides().then(function () { window.OrionGuides.nudge(cfg); }).catch(function () {});
+  }
+  // Fire once, 5s after `el` first scrolls into view (per page load — no cross-load memory).
+  function nudgeOnScrollTo(el, cfg) {
+    if (!el || !('IntersectionObserver' in window)) return;
+    var armed = false;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && !armed) {
+          armed = true; io.disconnect();
+          setTimeout(function () { fireNudge(cfg); }, 5000);
+        }
+      });
+    }, { threshold: 0.35 });
+    io.observe(el);
   }
   var NUDGES = {
     'helios.html': { guide: 'comet', q: 'Quick one — do your ops managers get the visibility they actually need?', yes: 'Not really, no' },
@@ -178,19 +194,12 @@
   function scheduleNudge() {
     var path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
     if (path === 'index.html' || path === '') {
-      // Barry offers a hand 5s after the Helix section scrolls into view
-      var helix = document.getElementById('helix');
-      if (!helix || !('IntersectionObserver' in window)) return;
-      var armed = false;
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting && !armed) {
-            armed = true; io.disconnect();
-            setTimeout(function () { fireNudge({ guide: 'barry', q: 'This is the Helix. Want a hand designing yours? A few questions and I’ll draw it up with a monthly figure.', yes: 'Go on then, Barry' }); }, 5000);
-          }
-        });
-      }, { threshold: 0.35 });
-      io.observe(helix);
+      nudgeOnScrollTo(document.getElementById('helix'),
+        { guide: 'barry', q: 'This is the Helix. Want a hand designing yours? A few questions and I’ll draw it up with a monthly figure.', yes: 'Go on then, Barry' });
+      nudgeOnScrollTo(document.getElementById('roi'),
+        { guide: 'penny', q: 'Quick one — do you know what your induction labour costs you a year?', yes: 'Show me' });
+      nudgeOnScrollTo(document.getElementById('proof'),
+        { guide: 'liam', q: 'Want to talk through a build closest to your own operation? I know these sites first-hand.', yes: 'Go on then' });
       return;
     }
     if (/finance|roi/.test(path)) {
