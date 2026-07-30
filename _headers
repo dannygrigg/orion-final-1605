@@ -12,3 +12,8 @@
   Cache-Control: public, max-age=31536000, immutable
 /js/*
   Cache-Control: public, max-age=31536000, immutable
+
+# site.js boots the launcher + nudges on every page and is edited often —
+# force a revalidate on every load so fixes go live without a stale 4h cache.
+/site.js
+  Cache-Control: public, max-age=0, must-revalidate
