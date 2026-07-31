@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="color-scheme" content="only light">
-<meta name="supported-color-schemes" content="only light">
-<title>Danny Grigg — Orion MIS · Email Signature</title>
+<meta name="color-scheme" content="dark light">
+<meta name="supported-color-schemes" content="dark light">
+<title>Danny Grigg — Orion MIS · Email Signature (Dark)</title>
 <style>
 /* PREVIEW PAGE ONLY — strip away when copying into Outlook */
 body{margin:0;padding:40px 20px;background:#e9eaee;font-family:Arial,sans-serif;color:#1d1d1f}
-.preview-frame{max-width:780px;margin:0 auto}
+.preview-frame{max-width:840px;margin:0 auto}
 .preview-note{background:#fff;border-radius:10px;padding:18px 22px;margin-bottom:24px;border:1px solid #d2d2d7;font-size:13px;line-height:1.6;color:#444}
 .preview-note strong{color:#1d1d1f}
 .preview-note code{background:#f5f5f7;padding:2px 6px;border-radius:4px;font-family:Consolas,Monaco,monospace;font-size:12px;color:#1E90FF}
@@ -22,8 +22,9 @@ body{margin:0;padding:40px 20px;background:#e9eaee;font-family:Arial,sans-serif;
 <div class="preview-frame">
 
   <div class="preview-note">
-    <strong>Light theme v5 — Outlook bulletproof, on-brand colours, Helios/Helix banner.</strong> Same light-theme approach as before (no dark blocks anywhere, so Outlook's automatic colour inversion has nothing to invert). Colours and type now match the live site exactly: <code>#00D5FF</code> cyan for labels/eyebrows/emphasis, <code>#1E90FF</code> blue for links and buttons, italic serif (DM Serif Display, falling back to Georgia) for the "Helios"/"Helix" emphasis — the same treatment the site uses on every &lt;em&gt; in a heading. Logo points at the live orionmis.co.uk site.<br><br>
-    To install: open in Chrome/Edge → select the signature card → Ctrl+C → paste into Outlook signature editor.
+    <strong>Dark theme v1 — matches the live site.</strong> Deliberately dark, on the same basis the site uses: hero gradient, twin cyan/blue radial glow, <code>#00D5FF</code>/<code>#1E90FF</code> exact brand values, italic serif for "Helix"/"Helios" matching every &lt;em&gt; on the site. Leads with the pitch (20,000 pph / built in Britain / run by Helios) before the name.<br><br>
+    <strong>Known trade-off:</strong> Outlook desktop doesn't respect dark-mode meta tags and may apply its own colour handling to a dark background — most other clients (Gmail, Apple Mail, mobile, Outlook.com) render this exactly as shown. Structural fallbacks are in place (solid colours behind the gradients, table layout) so a worst case is "flatter", not broken.<br><br>
+    To install: open in Chrome/Edge → select the signature card → Ctrl+C → paste into Outlook's signature editor.
   </div>
 
   <div class="reply-context">
@@ -35,56 +36,83 @@ body{margin:0;padding:40px 20px;background:#e9eaee;font-family:Arial,sans-serif;
     <!-- ════════════════════════════════════════════════════════════════ -->
     <!-- ── SIGNATURE START · Copy from here ──                           -->
     <!-- ════════════════════════════════════════════════════════════════ -->
-    <table cellpadding="0" cellspacing="0" border="0" role="presentation" width="620" bgcolor="#FBFAF7" style="border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0;background-color:#FBFAF7;color:#1d1d1f;font-family:'Inter',Arial,Helvetica,sans-serif;width:620px;max-width:620px;border:1px solid #D2D2D7;border-radius:14px;overflow:hidden">
+    <table cellpadding="0" cellspacing="0" border="0" role="presentation" width="680" bgcolor="#050B14" style="border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0;background-color:#050B14;background-image:linear-gradient(180deg,#07111F 0%,#050B14 70%,#02050A 100%);color:#F7FAFF;font-family:'Inter',Arial,Helvetica,sans-serif;width:680px;max-width:680px;border:1px solid #123049;border-radius:16px;overflow:hidden">
 
-      <!-- ── ROW 1: Logo + contact ── -->
+      <!-- ── ROW 1: Headline / pitch ── -->
       <tr>
-        <td bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding:26px 30px;border-bottom:1px solid #E2E2E7">
+        <td bgcolor="#07111F" style="background-color:#07111F;padding:28px 32px 26px;border-bottom:1px solid #16283C">
+          <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0;margin-bottom:12px">
+            <tr>
+              <td valign="bottom" style="font-family:'DM Serif Display',Georgia,'Times New Roman',serif;font-style:italic;font-size:42px;line-height:1;color:#00D5FF;padding-right:14px">20,000</td>
+              <td valign="bottom" style="font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:#A9B8C9;font-weight:700;line-height:1.5;padding-bottom:5px">parcels<br>an hour</td>
+            </tr>
+          </table>
+          <div style="font-family:'Inter',Arial,Helvetica,sans-serif;font-weight:800;font-size:15px;letter-spacing:0.03em;text-transform:uppercase;color:#F7FAFF;margin-bottom:14px">Built in Britain. <span style="color:#00D5FF">Run by Helios.</span></div>
+          <div style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#C6D2E0;margin-bottom:10px">
+            <b style="color:#F7FAFF">Helix</b> delivers the speed. <b style="color:#F7FAFF">Helios</b> delivers the intelligence — monitoring performance, predicting problems and continuously improving your warehouse operation.
+          </div>
+          <div style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#F7FAFF;font-weight:700;margin-bottom:18px">
+            Finance the complete system — the labour it saves pays for it, from month one.
+          </div>
+          <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0">
+            <tr>
+              <td align="center" bgcolor="#1E90FF" style="background-color:#1E90FF;background-image:linear-gradient(135deg,#1E90FF,#00D5FF);border-radius:999px;mso-padding-alt:14px 22px">
+                <a href="https://orionmis.co.uk" style="color:#00111D;display:inline-block;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;line-height:1;padding:14px 22px;text-decoration:none;border-radius:999px">Find out more &rarr;</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- ── ROW 2: Logo + contact ── -->
+      <tr>
+        <td bgcolor="#0B1626" style="background-color:#0B1626;padding:24px 32px;border-bottom:1px solid #16283C">
           <table cellpadding="0" cellspacing="0" border="0" role="presentation" width="100%" style="border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0">
             <tr>
-              <!-- LEFT: Real Orion logo, native rendering on white -->
-              <td valign="top" width="170" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding-right:26px;border-right:3px solid #00D5FF">
-                <a href="https://orionmis.co.uk" style="text-decoration:none;display:block;line-height:0">
-                  <img src="https://orionmis.co.uk/images/orion-logo.png" alt="Orion MIS" width="128" style="display:block;width:128px;height:auto;border:0;outline:none;text-decoration:none">
-                </a>
-                <div style="margin-top:18px;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#00A6C8;line-height:1.6;font-weight:700">UK&nbsp;built<br>warehouse<br>automation</div>
-              </td>
-
-              <!-- RIGHT: Contact block -->
-              <td valign="top" bgcolor="#FFFFFF" style="background-color:#FFFFFF;padding-left:26px">
-
-                <!-- Eyebrow -->
-                <div style="font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#00A6C8;margin-bottom:8px;font-weight:700">— Director · Orion MIS</div>
-
-                <!-- Name -->
-                <div style="font-family:'DM Serif Display',Georgia,'Times New Roman',serif;font-size:28px;line-height:1.05;letter-spacing:-0.01em;color:#1d1d1f;font-weight:400;margin-bottom:2px">Danny Grigg</div>
-                <div style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;color:#86868B;margin-bottom:18px">Director, Orion MIS Limited</div>
-
-                <!-- Contact rows -->
-                <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13.5px;line-height:1.75;mso-table-lspace:0;mso-table-rspace:0">
+              <td valign="top">
+                <table cellpadding="0" cellspacing="0" border="0" role="presentation" width="100%" style="border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0;margin-bottom:20px">
                   <tr>
-                    <td valign="top" width="22" style="padding-right:8px;color:#00A6C8;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.08em;font-weight:700">T</td>
-                    <td valign="top"><a href="tel:+443333355269" style="color:#1d1d1f;text-decoration:none">+44 3333 355 269</a></td>
-                  </tr>
-                  <tr>
-                    <td valign="top" width="22" style="padding-right:8px;color:#00A6C8;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.08em;font-weight:700">M</td>
-                    <td valign="top"><a href="tel:+447923913445" style="color:#1d1d1f;text-decoration:none">07923 913 445</a></td>
-                  </tr>
-                  <tr>
-                    <td valign="top" width="22" style="padding-right:8px;color:#00A6C8;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.08em;font-weight:700">E</td>
-                    <td valign="top"><a href="mailto:Danny.Grigg@orionmis.co.uk" style="color:#1E90FF;text-decoration:none">Danny.Grigg@orionmis.co.uk</a></td>
-                  </tr>
-                  <tr>
-                    <td valign="top" width="22" style="padding-right:8px;color:#00A6C8;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.08em;font-weight:700">W</td>
-                    <td valign="top"><a href="https://orionmis.co.uk" style="color:#1E90FF;text-decoration:none">orionmis.co.uk</a></td>
+                    <td valign="middle">
+                      <a href="https://orionmis.co.uk" style="text-decoration:none;display:block;line-height:0">
+                        <img src="https://orionmis.co.uk/images/orion-logo-white.png" alt="Orion MIS" width="112" style="display:block;width:112px;height:auto;border:0;outline:none;text-decoration:none">
+                      </a>
+                    </td>
+                    <td valign="middle" align="right" style="font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:#7D8CA0;line-height:1.6">UK built<br>warehouse automation</td>
                   </tr>
                 </table>
 
-                <!-- ── BULLETPROOF SOLID-COLOUR BUTTON ── -->
+                <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0;margin-bottom:9px">
+                  <tr>
+                    <td valign="middle" width="32" style="border-top:1px solid #00D5FF;font-size:0;line-height:0">&nbsp;</td>
+                    <td valign="middle" style="padding-left:12px;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#00D5FF">Director · Orion MIS</td>
+                  </tr>
+                </table>
+                <div style="font-family:'DM Serif Display',Georgia,'Times New Roman',serif;font-size:28px;line-height:1.05;letter-spacing:-0.01em;color:#F7FAFF;font-weight:400;margin-bottom:3px">Danny Grigg</div>
+                <div style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;color:#8FA0B5;margin-bottom:18px">Director, Orion MIS Limited</div>
+
+                <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13.5px;line-height:1.85;mso-table-lspace:0;mso-table-rspace:0">
+                  <tr>
+                    <td valign="top" width="22" style="padding-right:8px;color:#00D5FF;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.08em;font-weight:700">T</td>
+                    <td valign="top"><a href="tel:+443333355269" style="color:#F7FAFF;text-decoration:none">+44 3333 355 269</a></td>
+                  </tr>
+                  <tr>
+                    <td valign="top" width="22" style="padding-right:8px;color:#00D5FF;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.08em;font-weight:700">M</td>
+                    <td valign="top"><a href="tel:+447923913445" style="color:#F7FAFF;text-decoration:none">07923 913 445</a></td>
+                  </tr>
+                  <tr>
+                    <td valign="top" width="22" style="padding-right:8px;color:#00D5FF;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.08em;font-weight:700">E</td>
+                    <td valign="top"><a href="mailto:Danny.Grigg@orionmis.co.uk" style="color:#7FE9FF;text-decoration:none">Danny.Grigg@orionmis.co.uk</a></td>
+                  </tr>
+                  <tr>
+                    <td valign="top" width="22" style="padding-right:8px;color:#00D5FF;font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.08em;font-weight:700">W</td>
+                    <td valign="top"><a href="https://orionmis.co.uk" style="color:#7FE9FF;text-decoration:none">orionmis.co.uk</a></td>
+                  </tr>
+                </table>
+
                 <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0;margin-top:18px">
                   <tr>
-                    <td align="center" bgcolor="#1E90FF" style="background-color:#1E90FF;border-radius:999px;mso-padding-alt:11px 22px">
-                      <a href="https://linktr.ee/danny.griggORION" style="background-color:#1E90FF;color:#FFFFFF;display:inline-block;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.08em;line-height:1;padding:11px 22px;text-decoration:none;text-transform:uppercase;border-radius:999px">All my links &rarr;</a>
+                    <td align="center" bgcolor="#070C14" style="background-color:#070C14;border:1px solid #405670;border-radius:999px;mso-padding-alt:14px 22px">
+                      <a href="https://linktr.ee/danny.griggORION" style="color:#FFFFFF;display:inline-block;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:14px;font-weight:800;line-height:1;padding:14px 22px;text-decoration:none;border-radius:999px">All my links &rarr;</a>
                     </td>
                   </tr>
                 </table>
@@ -94,68 +122,45 @@ body{margin:0;padding:40px 20px;background:#e9eaee;font-family:Arial,sans-serif;
         </td>
       </tr>
 
-      <!-- ── ROW 1.5: Helios / Helix / pay-monthly banner ── -->
+      <!-- ── ROW 3: Address ── -->
       <tr>
-        <td bgcolor="#F0F9FF" style="background-color:#F0F9FF;padding:16px 30px;border-bottom:1px solid #E2E2E7">
-          <table cellpadding="0" cellspacing="0" border="0" role="presentation" width="100%" style="border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0">
-            <tr>
-              <td valign="middle" style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:12.5px;line-height:1.5;color:#1d1d1f">
-                <span style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-weight:400;color:#00A6C8;font-size:14px">Helios</span> runs the warehouse.&nbsp; <span style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-weight:400;color:#00A6C8;font-size:14px">Helix</span> sorts the parcels.&nbsp; Zero capital outlay — just one monthly number.
-              </td>
-              <td valign="middle" align="right" width="128" style="padding-left:14px">
-                <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:separate;mso-table-lspace:0;mso-table-rspace:0">
-                  <tr>
-                    <td align="center" bgcolor="#1E90FF" style="background-color:#1E90FF;border-radius:999px;mso-padding-alt:9px 15px">
-                      <a href="https://orionmis.co.uk/solution-builder.html" style="background-color:#1E90FF;color:#FFFFFF;display:inline-block;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:11px;font-weight:700;letter-spacing:0.02em;line-height:1;padding:9px 15px;text-decoration:none;white-space:nowrap;border-radius:999px">See your price &rarr;</a>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-
-      <!-- ── ROW 2: Address ── -->
-      <tr>
-        <td bgcolor="#FBFAF7" style="background-color:#FBFAF7;padding:14px 30px;border-bottom:1px solid #E2E2E7">
-          <div style="font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#00A6C8;font-weight:700;margin-bottom:4px">Head office</div>
-          <div style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;color:#1d1d1f;line-height:1.5">
-            <a href="https://maps.google.com/?q=Orion+MIS+Fontwell+Chichester" style="color:#1d1d1f;text-decoration:none">1 Fontwell Avenue, Chichester, West Sussex, PO20 3RU</a>
+        <td bgcolor="#0B1626" style="background-color:#0B1626;padding:14px 32px;border-bottom:1px solid #16283C">
+          <div style="font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#00D5FF;font-weight:700;margin-bottom:4px">Head office</div>
+          <div style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;color:#C6D2E0;line-height:1.5">
+            <a href="https://maps.google.com/?q=Orion+MIS+Fontwell+Chichester" style="color:#C6D2E0;text-decoration:none">1 Fontwell Avenue, Chichester, West Sussex, PO20 3RU</a>
           </div>
         </td>
       </tr>
 
-      <!-- ── ROW 3: Certifications ── -->
+      <!-- ── ROW 4: Certifications ── -->
       <tr>
-        <td bgcolor="#FBFAF7" style="background-color:#FBFAF7;padding:16px 30px;border-bottom:1px solid #E2E2E7">
-          <div style="font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#86868B;margin-bottom:10px;font-weight:700">Accredited &amp; recognised</div>
-
+        <td bgcolor="#0B1626" style="background-color:#0B1626;padding:16px 32px;border-bottom:1px solid #16283C">
+          <div style="font-family:'JetBrains Mono',Consolas,Monaco,'Courier New',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:#7D8CA0;margin-bottom:10px;font-weight:700">Accredited &amp; recognised</div>
           <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;mso-table-lspace:0;mso-table-rspace:0">
             <tr>
-              <td bgcolor="#F0F9FF" style="background-color:#F0F9FF;padding:7px 13px;border:1px solid #BFE7F5;border-radius:999px;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:11px;color:#1d1d1f;line-height:1.2;mso-padding-alt:7px 13px">
-                <span style="color:#1E90FF;font-weight:700">ISO 9001 : 2015</span> &nbsp;·&nbsp; Registered
+              <td bgcolor="#0D1420" style="background-color:#0D1420;background-image:none;padding:8px 11px;border:1px solid rgba(255,255,255,.10);border-radius:999px;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;color:rgba(247,250,255,.45);line-height:1.2;mso-padding-alt:8px 11px">
+                <span style="color:#00D5FF;font-weight:700">ISO 9001 : 2015</span> &nbsp;·&nbsp; Registered
               </td>
               <td width="8" style="font-size:0;line-height:0">&nbsp;</td>
-              <td bgcolor="#F0F9FF" style="background-color:#F0F9FF;padding:7px 13px;border:1px solid #BFE7F5;border-radius:999px;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:11px;color:#1d1d1f;line-height:1.2;mso-padding-alt:7px 13px">
-                <span style="color:#1E90FF;font-weight:700">Avetta</span> &nbsp;·&nbsp; Approved
+              <td bgcolor="#0D1420" style="background-color:#0D1420;padding:8px 11px;border:1px solid rgba(255,255,255,.10);border-radius:999px;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;color:rgba(247,250,255,.45);line-height:1.2;mso-padding-alt:8px 11px">
+                <span style="color:#00D5FF;font-weight:700">Avetta</span> &nbsp;·&nbsp; Approved
               </td>
               <td width="8" style="font-size:0;line-height:0">&nbsp;</td>
-              <td bgcolor="#F0F9FF" style="background-color:#F0F9FF;padding:7px 13px;border:1px solid #BFE7F5;border-radius:999px;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:11px;color:#1d1d1f;line-height:1.2;mso-padding-alt:7px 13px">
-                <span style="color:#1E90FF;font-weight:700">IPN</span> &nbsp;·&nbsp; Company of the Year 2022
+              <td bgcolor="#0D1420" style="background-color:#0D1420;padding:8px 11px;border:1px solid rgba(255,255,255,.10);border-radius:999px;font-family:'Inter',Arial,Helvetica,sans-serif;font-size:13px;color:rgba(247,250,255,.45);line-height:1.2;mso-padding-alt:8px 11px">
+                <span style="color:#00D5FF;font-weight:700">IPN</span> &nbsp;·&nbsp; Company of the Year 2022
               </td>
             </tr>
           </table>
         </td>
       </tr>
 
-      <!-- ── ROW 4: Legal footer ── -->
+      <!-- ── ROW 5: Legal footer ── -->
       <tr>
-        <td bgcolor="#FBFAF7" style="background-color:#FBFAF7;padding:14px 30px 16px">
-          <div style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:10.5px;line-height:1.55;color:#86868B">
-            This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error please notify the sender. Orion MIS Limited is a company registered in England and Wales. Registration Number: <span style="color:#1d1d1f;font-weight:700">11735049</span>. Registered Office: 1 Fontwell Avenue, Chichester, PO20 3RU.
+        <td bgcolor="#0B1626" style="background-color:#0B1626;padding:14px 32px 18px">
+          <div style="font-family:'Inter',Arial,Helvetica,sans-serif;font-size:10.5px;line-height:1.55;color:#7D8CA0">
+            This email and any files transmitted with it are confidential and intended solely for the use of the individual or entity to whom they are addressed. If you have received this email in error please notify the sender. Orion MIS Limited is a company registered in England and Wales. Registration Number: <span style="color:#C6D2E0;font-weight:700">11735049</span>. Registered Office: 1 Fontwell Avenue, Chichester, PO20 3RU.
             <br><br>
-            <span style="color:#0F9F6E;font-weight:700">&#127793; Please consider the environment before printing this email.</span>
+            <span style="color:#32D583;font-weight:700">&#127793; Please consider the environment before printing this email.</span>
           </div>
         </td>
       </tr>
