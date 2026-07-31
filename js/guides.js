@@ -9,17 +9,21 @@
   if (window.OrionGuides) return;
 
   var BASIN = 'https://usebasin.com/f/d04288a27fc6';
-  // Microsoft Bookings — Orion Engineering page, straight into engineers' Outlook diaries.
-  // Per-service deep links preselect the service; BOOKINGS.page is the always-works fallback.
+  // Calendly — Danny's scheduling page. Per-event deep links preselect the event type;
+  // BOOKINGS.page (the profile page) is the always-works fallback.
+  // Query params: hide_gdpr_banner (no cookie notice in the embed), hide_event_type_details
+  // (saves vertical space — Liam's chat already explains what's being booked), primary_color
+  // tints buttons/selections to match the Orion brand cyan.
+  var CAL_PARAMS = 'hide_gdpr_banner=1&hide_event_type_details=1&primary_color=00d5ff';
   var BOOKINGS = {
-    page:  'https://bookings.cloud.microsoft/book/OrionEngineering@orionmis.co.uk/?ismsaljsauthenabled=true',
-    call:  'https://bookings.cloud.microsoft/book/OrionEngineering@orionmis.co.uk/s/WTMUWcpupEGBhwzCQ3sB4w2?ismsaljsauthenabled=true',
-    visit: 'https://bookings.cloud.microsoft/book/OrionEngineering@orionmis.co.uk/s/331W92_7x0OUMjXDK3higA2?ismsaljsauthenabled=true'
+    page:  'https://calendly.com/danny-grigg-orionmis',
+    call:  'https://calendly.com/danny-grigg-orionmis/30min?' + CAL_PARAMS,
+    visit: 'https://calendly.com/danny-grigg-orionmis/process-review?' + CAL_PARAMS
   };
   function bookingUrl(kind) {
     var k = (kind || '').toLowerCase();
     if (k.indexOf('visit') > -1) return BOOKINGS.visit;
-    return BOOKINGS.call; // calls + Helios demos use the 15-minute call service
+    return BOOKINGS.call; // calls + Helios demos use the 15-minute discovery call
   }
 
   var GUIDES = {
@@ -361,7 +365,7 @@
     if (panel) panel.classList.add('og-wide'); // give the calendar room to breathe
     bot("Pick a slot that suits and it drops straight into an engineer’s diary — you’ll get a calendar invite and a reminder.");
     ctas('<div class="og-book"><iframe src="' + url + '" title="Book with Orion engineering" loading="lazy"></iframe></div>'
-      + '<div class="og-note">Runs on Microsoft Bookings — straight into our engineers’ Outlook diaries. Calendar not loading? '
+      + '<div class="og-note">Runs on Calendly — drops straight into the diary. Calendar not loading? '
       + '<a href="' + url + '" target="_blank" rel="noopener" style="color:#8fe9ff">Open it in a new tab →</a> or use the '
       + '<a href="' + BOOKINGS.page + '" target="_blank" rel="noopener" style="color:#8fe9ff">full booking page</a>.</div>');
   }
