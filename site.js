@@ -130,7 +130,7 @@
   }
 
   // Lazy-load the guides panel (Barry/Penny/Comet/Liam router); fall back to the classic modal.
-  var GUIDES_V = 9; // ← bump whenever js/guides.js changes (immutable cache)
+  var GUIDES_V = 10; // ← bump whenever js/guides.js changes (immutable cache)
   var guidesLoading = null;
   function loadGuides() {
     if (window.OrionGuides) return Promise.resolve();
