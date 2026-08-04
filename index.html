@@ -453,6 +453,7 @@ tr:last-child td{border-bottom:none}
 .case-img::after{content:"";position:absolute;inset:24px;border:1px solid rgba(0,213,255,.22);border-radius:14px;background:radial-gradient(circle,rgba(0,213,255,.12),transparent 60%)}
 .case-img span{position:absolute;top:16px;left:16px;background:rgba(0,0,0,.55);color:#fff;border-radius:999px;padding:6px 12px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;z-index:2;backdrop-filter:blur(6px)}
 .case-img iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;z-index:1}
+.case-img>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1}
 .case-img.has-video::after{display:none}
 .case-body{padding:26px}
 .case h3{font-size:19px;margin-bottom:10px;color:var(--ink);line-height:1.25;font-weight:600;letter-spacing:-.015em}
@@ -1126,7 +1127,7 @@ tr:last-child td{border-bottom:none}
     <p>Case studies from live UK automation projects across parcel handling, fulfilment, freight forwarding, healthcare logistics and food manufacturing. Where a customer name is public, we show it. Where it is not, we show the sector, problem and result without dressing it up.</p>
   </div>
   <div class="case-carousel" id="caseCarousel" aria-roledescription="carousel" aria-label="Case studies">
-    <span class="case-counter" id="caseCounter">01 / 05</span>
+    <span class="case-counter" id="caseCounter">01 / 07</span>
     <div class="case-track" id="caseTrack">
 
       <!-- Slide 1 · Octopus Energy -->
@@ -1151,7 +1152,45 @@ tr:last-child td{border-bottom:none}
         </div>
       </div>
 
-      <!-- Slide 2 · Gompels Healthcare -->
+      <!-- Slide 2 · National Composites Centre -->
+      <div class="case-slide">
+        <div class="case featured reveal">
+          <div class="case-img">
+            <span>Advanced manufacturing · National Composites Centre</span>
+            <img src="images/case-studies/ncc-robot-cell.jpg" alt="Orion engineer shaking hands with an NCC engineer in front of the moveable KUKA robot cell for carbon-fibre cutting" loading="lazy">
+          </div>
+          <div class="case-body">
+            <h3>A robot cell that <em>moves to the work</em></h3>
+            <p>The National Composites Centre — the UK's national centre for composites R&amp;D — engaged Orion to design and implement a fully moveable robot cell for precision carbon-fibre cutting. A six-axis KUKA arm carries a combined force-torque and ultrasonic cutting head, so the cell senses the material as it cuts — clean edges on composite plies without hard tooling. Built on a relocatable base with a laser-scanned safety perimeter, it wheels between bays and is cutting again in hours, not weeks.</p>
+            <div class="case-stats">
+              <div class="case-stat"><b>6-axis</b><small>KUKA robot cell</small></div>
+              <div class="case-stat"><b>2</b><small>Cutting technologies · ultrasonic &amp; force-torque</small></div>
+              <div class="case-stat"><b>0</b><small>Fixed footprint — fully moveable</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 3 · Expeditors palletising cell -->
+      <div class="case-slide">
+        <div class="case featured reveal">
+          <div class="case-img">
+            <span>Logistics · Expeditors</span>
+            <img src="images/case-studies/expeditors-palletising-cell.jpg" alt="Expeditors palletising cell — Orion plug-and-play upgrade sorting parcels by carrier straight to pallet" loading="lazy">
+          </div>
+          <div class="case-body">
+            <h3>Plug &amp; play <em>palletising</em> — sorted by carrier</h3>
+            <p>A plug-and-play upgrade to Expeditors' palletising cell — built and tested at Orion, then dropped into the live operation on a fast install. Parcels now sort by carrier straight to pallet, taking four people off the cell across two shifts and putting them to better use elsewhere.</p>
+            <div class="case-stats">
+              <div class="case-stat"><b>4</b><small>Operators freed · across two shifts</small></div>
+              <div class="case-stat"><b>Carrier</b><small>Sortation straight to pallet</small></div>
+              <div class="case-stat"><b>Plug &amp; play</b><small>Pre-built · fast install</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4 · Gompels Healthcare -->
       <div class="case-slide">
         <div class="case featured reveal">
           <div class="case-img has-video">
@@ -1173,7 +1212,7 @@ tr:last-child td{border-bottom:none}
         </div>
       </div>
 
-      <!-- Slide 3 · Expeditors -->
+      <!-- Slide 5 · Expeditors pick-to-light -->
       <div class="case-slide">
         <div class="case featured reveal">
           <div class="case-img has-video">
@@ -1194,7 +1233,7 @@ tr:last-child td{border-bottom:none}
         </div>
       </div>
 
-      <!-- Slide 4 · Tate & Lyle -->
+      <!-- Slide 6 · Tate & Lyle -->
       <div class="case-slide">
         <div class="case featured reveal">
           <div class="case-img has-video">
@@ -1215,7 +1254,7 @@ tr:last-child td{border-bottom:none}
         </div>
       </div>
 
-      <!-- Slide 5 · Plug & play QC -->
+      <!-- Slide 7 · Plug & play QC -->
       <div class="case-slide">
         <div class="case featured reveal">
           <div class="case-img has-video">
@@ -1249,10 +1288,12 @@ tr:last-child td{border-bottom:none}
 
   <div class="case-dots" id="caseDots" role="tablist" aria-label="Case study selector">
     <button type="button" class="case-dot active" data-i="0" aria-label="Octopus Energy"></button>
-    <button type="button" class="case-dot" data-i="1" aria-label="Gompels Healthcare"></button>
-    <button type="button" class="case-dot" data-i="2" aria-label="Expeditors"></button>
-    <button type="button" class="case-dot" data-i="3" aria-label="Tate &amp; Lyle"></button>
-    <button type="button" class="case-dot" data-i="4" aria-label="Plug &amp; play · QC automation"></button>
+    <button type="button" class="case-dot" data-i="1" aria-label="National Composites Centre"></button>
+    <button type="button" class="case-dot" data-i="2" aria-label="Expeditors palletising cell"></button>
+    <button type="button" class="case-dot" data-i="3" aria-label="Gompels Healthcare"></button>
+    <button type="button" class="case-dot" data-i="4" aria-label="Expeditors pick-to-light"></button>
+    <button type="button" class="case-dot" data-i="5" aria-label="Tate &amp; Lyle"></button>
+    <button type="button" class="case-dot" data-i="6" aria-label="Plug &amp; play · QC automation"></button>
   </div>
 
 
