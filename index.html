@@ -1540,6 +1540,54 @@ tr:last-child td{border-bottom:none}
   });
 
   if (counter) counter.textContent = '01 / ' + pad(total);
+
+  // ── AUTO-ADVANCE ─────────────────────────────────────────────
+  // Rotates continuously so the section always has motion. Pauses when:
+  //   · the pointer is over the carousel (someone's reading)
+  //   · a case video is actually playing (YouTube postMessage state)
+  //   · the tab is hidden or the carousel is off-screen
+  // Manual nav (arrows/dots/swipe/keys) restarts the clock so it never
+  // yanks the slide away right after someone chooses one.
+  const ROTATE_MS = 2000;
+  let timer = null, hovering = false, videoPlaying = false, inView = true;
+
+  function tick() { if (!hovering && !videoPlaying && inView && !document.hidden) go(i + 1); }
+  function restart() { if (timer) clearInterval(timer); timer = setInterval(tick, ROTATE_MS); }
+
+  const carousel = document.getElementById('caseCarousel');
+  carousel.addEventListener('pointerenter', () => { hovering = true; });
+  carousel.addEventListener('pointerleave', () => { hovering = false; });
+  carousel.addEventListener('touchstart', () => { hovering = true; restart(); }, { passive: true });
+
+  [prev, next, ...dots].forEach(el => el.addEventListener('click', restart));
+  track.addEventListener('touchend', restart, { passive: true });
+
+  // Track YouTube play state (iframes already load with enablejsapi=1)
+  window.addEventListener('message', (e) => {
+    if (typeof e.data !== 'string' || e.origin.indexOf('youtube') === -1) return;
+    try {
+      const d = JSON.parse(e.data);
+      if (d.event === 'infoDelivery' && d.info && typeof d.info.playerState === 'number') {
+        videoPlaying = (d.info.playerState === 1 || d.info.playerState === 3);
+      }
+    } catch (err) {}
+  });
+  // Ask the iframes to start sending state events
+  function subscribeVideos() {
+    track.querySelectorAll('iframe').forEach(f => {
+      try { f.contentWindow.postMessage('{"event":"listening","id":"case"}', '*'); } catch (e) {}
+    });
+  }
+  setTimeout(subscribeVideos, 1500);
+  setTimeout(subscribeVideos, 5000);
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach(en => { inView = en.isIntersecting; });
+    }, { threshold: 0.25 }).observe(carousel);
+  }
+
+  restart();
 })();
 </script>
 
