@@ -85,18 +85,21 @@ tracked(d, (cx - sub_w / 2, stat_y + 20 * S * 1.15 + 3 * S), sub, mono_b(7), MUT
 CARD_MAIN = int(main_bottom)
 d.rectangle([0, CARD_MAIN, W, CARD_MAIN + 1 * S], fill=LINE)
 
-# ═══ PITCH STRIP ══════════════════════════════════════════════════
+# ═══ PITCH STRIP (two lines) ══════════════════════════════════════
 sy = CARD_MAIN + 1 * S
-strip_h = 34 * S
+strip_h = 48 * S
 d.rectangle([0, sy, W, sy + strip_h], fill=BG1)
-ty = sy + (strip_h - 11 * S) / 2
+line_gap = 6 * S
+ty = sy + (strip_h - (11 * S * 2 + line_gap)) / 2
 x = PAD
-x = d.textlength("", font=inter_b(11)) + x
 d.text((x, ty), "Built in Britain. ", font=inter_b(11), fill=WHITE)
 x += d.textlength("Built in Britain. ", font=inter_b(11))
-d.text((x, ty), "Run by Helios. ", font=inter_b(11), fill=CYAN)
-x += d.textlength("Run by Helios. ", font=inter_b(11))
-d.text((x, ty), "Financed by the labour it saves.", font=inter(11), fill=BODY)
+d.text((x, ty), "Run by Helios.", font=inter_b(11), fill=CYAN)
+ty2 = ty + 11 * S + line_gap
+x = PAD
+d.text((x, ty2), "Pay monthly", font=inter_b(11), fill=WHITE)
+x += d.textlength("Pay monthly", font=inter_b(11))
+d.text((x, ty2), " — the labour it saves covers the payment.", font=inter(11), fill=BODY)
 
 cta = "Find out more  →"
 cta_f = inter_eb(11)
@@ -136,5 +139,5 @@ out = Image.new("RGB", (W, CARD_H), "#FFFFFF")
 out.paste(card, (0, 0), m)
 ImageDraw.Draw(out).rounded_rectangle([0, 0, W - 1, CARD_H - 1], radius=R, outline=BORD, width=1 * S)
 
-out.save("signature-card-compact.png", optimize=True)
+out.save("signature-card-compact-v2.png", optimize=True)
 print("saved", out.size, "logical:", W // S, "x", CARD_H // S)
