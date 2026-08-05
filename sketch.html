@@ -1033,17 +1033,6 @@ document.querySelectorAll('input[name="enquiry_type"]').forEach(r => {
   }
   applyEnquiryType(startingType);
   form.classList.add('sf-ready'); // reveal adaptive fields now that inline display states are set
-
-  // Smooth-scroll the form into view if the user arrived with an explicit ?type=
-  if (validTypes.includes(urlType) && urlType !== 'callback') {
-    setTimeout(() => {
-      const card = document.getElementById('formCard');
-      if (card) {
-        const y = card.getBoundingClientRect().top + window.scrollY - 90;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    }, 300);
-  }
 }
 
 // Submit via Basin AJAX — supports file attachments on free tier (unlike FormSubmit/Web3Forms).
