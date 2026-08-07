@@ -24,6 +24,24 @@ const SERVE_HOSTS = new Set([
   'www.helixsorter.co.uk',
 ]);
 
+// Campaign/brand domains: homepage requests land on the most relevant page.
+// Deep links (any path other than "/") still carry their path to the canonical host.
+const HOST_LANDING = {
+  'aiwarehouse.online':        '/helios.html',
+  'aiwarehouse.uk':            '/helios.html',
+  'orionhelios.co.uk':         '/helios.html',
+  'orionhelios.uk':            '/helios.html',
+  'automationfinance.co.uk':   '/warehouse-automation-finance.html',
+  'automationfinance.uk':      '/warehouse-automation-finance.html',
+  'financemyconveyor.co.uk':   '/conveyor-system-finance.html',
+  'financemyconveyor.uk':      '/conveyor-system-finance.html',
+  'financemyconveyor.info':    '/conveyor-system-finance.html',
+  'financemyconveyor.store':   '/conveyor-system-finance.html',
+  'financerobots.co.uk':       '/robotics-automation-finance.html',
+  'financerobots.uk':          '/robotics-automation-finance.html',
+  'helixsorter.uk':            '/',
+};
+
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const host = url.hostname.toLowerCase();
@@ -33,6 +51,13 @@ export async function onRequest(context) {
 
   // Serve directly for the canonical host and any allow-listed hosts.
   if (host === CANONICAL || SERVE_HOSTS.has(host)) return context.next();
+
+  // Brand domains: send the homepage to a targeted landing page.
+  const bare = host.replace(/^www\./, '');
+  const landing = HOST_LANDING[bare];
+  if (landing && (url.pathname === '/' || url.pathname === '')) {
+    return Response.redirect(`https://${CANONICAL}${landing}`, 301);
+  }
 
   // Everything else (www.orionmis.co.uk + every spare/brand domain) → 301 to canonical.
   const dest = `https://${CANONICAL}${url.pathname}${url.search}`;
