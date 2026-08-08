@@ -585,6 +585,10 @@ tr:last-child td{border-bottom:none}
   /* trusted-by logos: phone-sized */
   .trusted-row{gap:12px}
   .trusted-row img{height:54px;padding:12px 18px;max-width:200px}
+
+  /* finance route: stack the how-it-works card above the finance-catalogue card
+     (outer grid is inline-styled, hence the !important) */
+  #finance > div[style*="display:grid"]{grid-template-columns:1fr!important;gap:16px!important}
 }
 </style>
 </head>
