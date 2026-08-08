@@ -639,3 +639,38 @@
     init();
   }
 })();
+
+// ── MOBILE AUTO-STACK ──────────────────────────────────────────────
+// On phones, no two cards sit side-by-side anywhere on the site.
+// mobile.css catches inline-styled grids; this catches class-defined ones:
+// any grid whose every column is card-sized (>=110px) collapses to one
+// column. Small gutter columns (icons, "01" numbers) are left alone.
+(function () {
+  if (window.innerWidth > 700) return;
+  if (/lemon|mockup|admin|incident|rca-|sop-|explainer-/.test(location.pathname)) return;
+  function stack() {
+    var els = document.querySelectorAll('body *');
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.closest && el.closest('#og-panel,.ao-modal-backdrop,.nav,.mobile-nav,#og-nudge')) continue;
+      var cs = getComputedStyle(el);
+      if (cs.display !== 'grid' && cs.display !== 'inline-grid') continue;
+      var tracks = cs.gridTemplateColumns.split(' ').filter(Boolean);
+      if (tracks.length < 2) continue;
+      var min = Infinity;
+      for (var t = 0; t < tracks.length; t++) {
+        var w = parseFloat(tracks[t]);
+        if (isNaN(w)) { min = NaN; break; }
+        if (w < min) min = w;
+      }
+      if (isNaN(min) || min < 110) continue;
+      el.style.setProperty('grid-template-columns', '1fr', 'important');
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { stack(); setTimeout(stack, 700); });
+  } else {
+    stack();
+    setTimeout(stack, 700);
+  }
+})();

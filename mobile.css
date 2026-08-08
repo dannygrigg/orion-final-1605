@@ -1,0 +1,32 @@
+/* ── ORION MOBILE LAYER ─────────────────────────────────────────────
+   Loaded by every public page AFTER the page's own styles.
+   ≤700px: slim chrome, ticker off, and every side-by-side card layout
+   stacks to a single column. Inline-styled grids are caught here;
+   class-defined grids are caught by the auto-stacker in site.js.
+   Desktop (>700px): this file does nothing. */
+
+@media(max-width:700px){
+  /* chrome: no ticker, short nav, small logo */
+  :root{--nav-h:64px}
+  .top-banner{display:none!important}
+  .nav{top:0!important}
+  body{padding-top:var(--nav-h)!important}
+  .mobile-nav{top:var(--nav-h)!important}
+  .logo img{height:40px!important}
+  .nav .quote{display:none!important} /* CTA lives in the burger menu on phones */
+
+  /* stack side-by-side inline grids (multi-column patterns only —
+     icon/number gutters like "36px 1fr" deliberately not matched) */
+  [style*="grid-template-columns:1fr "],
+  [style*="grid-template-columns:1fr 1fr"],
+  [style*="grid-template-columns:repeat(2"],
+  [style*="grid-template-columns:repeat(3"],
+  [style*="grid-template-columns:repeat(4"],
+  [style*="grid-template-columns:repeat(5"],
+  [style*="grid-template-columns:repeat(6"],
+  [style*="grid-template-columns:1."],
+  [style*="grid-template-columns:."],
+  [style*="grid-template-columns:2fr"]{
+    grid-template-columns:1fr!important;
+  }
+}
