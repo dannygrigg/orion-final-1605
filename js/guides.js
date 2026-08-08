@@ -108,7 +108,9 @@
     + '#og-nudge .row{display:flex;gap:7px}'
     + '#og-nudge .yes{flex:1;background:linear-gradient(180deg,#00D5FF,#1E90FF);border:none;color:#02121a;font-weight:700;border-radius:8px;padding:8px;font-size:12.5px;cursor:pointer;font-family:inherit}'
     + '#og-nudge .no{background:none;border:none;color:rgba(231,238,247,.5);font-size:12px;cursor:pointer;padding:8px 6px;font-family:inherit}'
-    + '@media(max-width:520px){#og-panel{width:100vw}#og-nudge{right:12px;left:12px;max-width:none;bottom:84px}}';
+    + '@media(max-width:520px){#og-panel{width:100vw}}'
+    /* phones: compact nudge card above the icon-only launcher, not a full-width banner */
+    + '@media(max-width:700px){#og-nudge{right:12px;left:auto;max-width:248px;bottom:72px;padding:11px 12px}#og-nudge .who img{width:24px;height:24px}#og-nudge p{font-size:12px;margin:0 0 8px}#og-nudge .yes{padding:7px;font-size:12px}}';
 
   function injectCSS() {
     if (document.getElementById('og-css')) return;

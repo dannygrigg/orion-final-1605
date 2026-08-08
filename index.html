@@ -546,6 +546,46 @@ tr:last-child td{border-bottom:none}
   .final{padding:52px 16px}
   .nav,.footer,.proof-strip{padding-left:16px;padding-right:16px}
 }
+
+/* ── MOBILE SIMPLIFICATION PASS ── phone-only overrides; desktop untouched ── */
+.eb-watch-mobile{display:none}
+@media(max-width:700px){
+  /* slim chrome: ticker off, shorter nav, smaller logo */
+  :root{--nav-h:64px}
+  .top-banner{display:none}
+  .nav{top:0}
+  body{padding-top:var(--nav-h)}
+  .mobile-nav{top:var(--nav-h)}
+  .logo img{height:40px}
+
+  /* explainer: the 16:9 iframe is unreadable at 335px — swap for a full-screen link */
+  .eb-player-wrap{display:none}
+  .eb-watch-mobile{display:inline-flex;margin-top:26px}
+  .eb-note{margin-top:14px}
+
+  /* compare table -> stacked cards, Orion column only */
+  .compare .tablewrap{border:none;background:transparent;border-radius:0;overflow:visible}
+  .compare table{min-width:0;display:block}
+  .compare tbody{display:block}
+  .compare tr{display:block;border:1px solid var(--line2);border-radius:14px;background:rgba(255,255,255,.03);padding:14px 16px;margin-bottom:10px}
+  .compare tr:first-child{display:none}
+  .compare td{display:block;border:none;padding:0}
+  .compare td:nth-child(2),.compare td:nth-child(3){display:none}
+  .compare td:first-child{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:6px}
+  .compare td:last-child{color:var(--muted);font-size:14px;line-height:1.55}
+
+  /* case carousel: arrows out of the copy, long stories clamped */
+  .case-nav{top:auto;bottom:14px;transform:none}
+  .case-nav:hover{transform:scale(1.06)}
+  .case-nav.prev{left:auto;right:74px}
+  .case-nav.next{right:18px}
+  .case.featured .case-body{padding-bottom:70px}
+  .case.featured .case-body > p{display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+
+  /* trusted-by logos: phone-sized */
+  .trusted-row{gap:12px}
+  .trusted-row img{height:54px;padding:12px 18px;max-width:200px}
+}
 </style>
 </head>
 <body>
@@ -733,6 +773,7 @@ tr:last-child td{border-bottom:none}
     <div class="eb-player-wrap">
       <iframe src="explainer-why-orion.html" title="Why Orion — 60 second explainer" loading="lazy"></iframe>
     </div>
+    <a class="btn btn-primary eb-watch-mobile" href="explainer-why-orion.html">▶&nbsp; Watch the 60-second explainer</a>
     <div class="eb-note">Animated · no sound needed · <a href="explainer-the-process.html">next up: a price in minutes →</a></div>
   </div>
 </section>

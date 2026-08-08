@@ -130,7 +130,7 @@
   }
 
   // Lazy-load the guides panel (Barry/Penny/Comet/Liam router); fall back to the classic modal.
-  var GUIDES_V = 10; // ← bump whenever js/guides.js changes (immutable cache)
+  var GUIDES_V = 11; // ← bump whenever js/guides.js changes (immutable cache)
   var guidesLoading = null;
   function loadGuides() {
     if (window.OrionGuides) return Promise.resolve();
@@ -445,6 +445,8 @@
     + '#ask-orion-launcher .ao-text b{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.01em}'
     + '#ask-orion-launcher .ao-text span{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(247,250,255,.6);margin-top:2px}'
     + '@media(max-width:520px){#ask-orion-launcher{right:14px;bottom:14px;padding:10px 16px 10px 10px;gap:10px}#ask-orion-launcher .ao-icon{width:34px;height:34px}#ask-orion-launcher .ao-icon svg{width:20px;height:20px}#ask-orion-launcher .ao-text b{font-size:13px}#ask-orion-launcher .ao-text span{font-size:9px}}'
+    /* phones: icon-only launcher — the text pill ate too much viewport */
+    + '@media(max-width:700px){#ask-orion-launcher{padding:9px;gap:0;border-radius:50%}#ask-orion-launcher .ao-text{display:none}#ask-orion-launcher .ao-icon{width:40px;height:40px}#ask-orion-launcher .ao-icon svg{width:24px;height:24px}}'
 
     /* ASK ORION MODAL */
     + '.ao-modal-backdrop{position:fixed;inset:0;background:rgba(2,5,10,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:9600;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;transition:opacity .25s;font-family:Inter,system-ui,sans-serif}'
