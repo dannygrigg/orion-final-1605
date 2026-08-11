@@ -1,0 +1,5 @@
+# Short links for posts, DMs and print — clean URLs that survive rebrands.
+# /call  → 30-min call booking (Calendly)
+# /visit → site-visit / process-review booking (Calendly)
+/call  https://calendly.com/danny-grigg-orionmis/30min  302
+/visit https://calendly.com/danny-grigg-orionmis/process-review  302
