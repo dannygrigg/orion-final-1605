@@ -3,3 +3,19 @@
 # /visit → site-visit / process-review booking (Calendly)
 /call  https://calendly.com/danny-grigg-orionmis/30min  302
 /visit https://calendly.com/danny-grigg-orionmis/process-review  302
+
+# ── Legacy URLs from the old site ──────────────────────────────────────
+# Search engines and AI crawlers still hold the old site's URLs (blog
+# posts, sector pages, /public/ and /front/ asset paths) and were burning
+# ~200 crawls/day on 404s. 301 them to the nearest live equivalent so
+# crawlers index real content and legacy link equity transfers.
+# Order matters: most specific rules first.
+/public/blog/* /news.html 301
+/blog/* /news.html 301
+/public/* / 301
+/front/* / 301
+/about-us / 301
+/about-us/* / 301
+/food-manufacturing /products.html 301
+/e-commerce-logistics /products.html 301
+/maintenance-support /products.html 301
