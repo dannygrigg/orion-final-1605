@@ -7,13 +7,15 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/* Size-matched fallback: Arial adjusted to Inter's metrics so text renders at final width before the webfont loads (kills nav CLS) */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}</style>
 <style>
 :root{
   --bg:#050B14;--bg2:#07111F;--dark:#02050A;--panel:#0B1626;
   --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
   --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
   --blue:#1E90FF;--cyan:#00D5FF;
-  --serif:"DM Serif Display",Georgia,serif;--sans:"Inter",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"DM Serif Display",Georgia,serif;--sans:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
   --max:1280px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -140,7 +142,7 @@ strong{font-weight:700;color:#fff}
       </div>
       <div class="media">
         <div class="ratio">16:9 · YouTube native</div>
-        <img src="images/hero-wcs-dashboard.png" alt="">
+        <img src="images/hero-wcs-dashboard.webp" alt="">
         <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="label">Helix · live site footage</div>
       </div>
@@ -172,7 +174,7 @@ strong{font-weight:700;color:#fff}
       </div>
       <div class="media">
         <div class="ratio">16:9 · YouTube native</div>
-        <img src="images/hero-wcs-dashboard.png" alt="">
+        <img src="images/hero-wcs-dashboard.webp" alt="">
         <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="label">Helix · live site footage</div>
       </div>
@@ -204,7 +206,7 @@ strong{font-weight:700;color:#fff}
       </div>
       <div class="media">
         <div class="ratio">4:3 · video letterboxes</div>
-        <img src="images/hero-wcs-dashboard.png" alt="">
+        <img src="images/hero-wcs-dashboard.webp" alt="">
         <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="label">Helix · live site footage</div>
       </div>
@@ -235,7 +237,7 @@ strong{font-weight:700;color:#fff}
       </div>
       <div class="media">
         <div class="ratio">16:9 · YouTube native</div>
-        <img src="images/hero-wcs-dashboard.png" alt="">
+        <img src="images/hero-wcs-dashboard.webp" alt="">
         <div class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
         <div class="label">Helix · live site footage</div>
       </div>

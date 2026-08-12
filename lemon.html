@@ -13,6 +13,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>/* Size-matched fallback: Arial adjusted to Inter's metrics so text renders at final width before the webfont loads (kills nav CLS) */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}</style>
 <script src="js/konva.min.js"></script>
 <!-- xlsx (SheetJS) is loaded on demand by importPricingExcel() to keep the page light -->
 <style>
@@ -21,7 +23,7 @@
   --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
   --text:#F7FAFF;--muted:rgba(247,250,255,.66);--soft:rgba(247,250,255,.42);
   --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--amber:#FDB022;--red:#F97066;
-  --sans:"Inter",system-ui,sans-serif;--serif:"DM Serif Display",Georgia,serif;
+  --sans:"Inter","Inter Fallback",system-ui,sans-serif;--serif:"DM Serif Display",Georgia,serif;
   --mono:"JetBrains Mono",ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:var(--sans)}
@@ -2412,7 +2414,7 @@ function exportQuote(){
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#0e1626;--ink2:#2a3447;--mute:#5b6878;--soft:#8a93a3;--line:#e4e8ee;--line2:#cfd6df;--accent:#0066CC;--accent-soft:#e7f0fb;--amber:#d97706;--mono:"JetBrains Mono",monospace;--serif:"DM Serif Display",serif;--sans:"Inter",sans-serif}
+:root{--ink:#0e1626;--ink2:#2a3447;--mute:#5b6878;--soft:#8a93a3;--line:#e4e8ee;--line2:#cfd6df;--accent:#0066CC;--accent-soft:#e7f0fb;--amber:#d97706;--mono:"JetBrains Mono",monospace;--serif:"DM Serif Display",serif;--sans:"Inter","Inter Fallback",sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--sans);color:var(--ink);background:#fafbfc;line-height:1.55;font-size:14px;letter-spacing:-.003em;-webkit-font-smoothing:antialiased}
 em{font-family:var(--serif);font-style:italic;color:var(--accent);font-weight:400}

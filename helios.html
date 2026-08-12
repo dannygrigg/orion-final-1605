@@ -20,13 +20,15 @@
 <meta name="twitter:image" content="https://orionmis.co.uk/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/* Size-matched fallback: Arial adjusted to Inter's metrics so text renders at final width before the webfont loads (kills nav CLS) */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}</style>
 <style>
 :root{
   --bg:#050B14;--bg2:#07111F;--dark:#02050A;--panel:#0B1626;--panel2:#0F1D31;
   --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
   --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
   --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--amber:#FDB022;--red:#F97066;--violet:#8B7CF6;
-  --serif:"DM Serif Display",Georgia,serif;--sans:"Inter",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"DM Serif Display",Georgia,serif;--sans:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
   --max:1280px;--nav-h:88px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -354,7 +356,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   <div class="hero-grid"></div>
   <div class="hero-inner">
     <div>
-      <img src="images/orion-helios-logo.png" alt="Orion Helios" class="helios-logo">
+      <img src="images/orion-helios-logo.webp" alt="Orion Helios" class="helios-logo" width="486" height="160" fetchpriority="high">
       <span class="hero-badge"><span class="dot"></span>Live now · running on real sites</span>
       <h1>The warehouse <em>operating system.</em></h1>
       <p class="hero-lead">The intelligence layer for UK-built automation. Routing, live dashboards, fault detection and reporting — built by the same team that builds the machines, and already running on live Orion sites.</p>
@@ -412,7 +414,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
 @media(max-width:860px){.gb-inner{grid-template-columns:1fr;gap:26px;text-align:center}.gb-fig{height:300px}.gb-txt p{margin-left:auto;margin-right:auto}.gb-actions{justify-content:center}}
 </style>
   <div class="gb-inner">
-    <img class="gb-fig" src="images/comet-hero.png" alt="Comet — Orion's Helios guide" loading="lazy">
+    <img class="gb-fig" src="images/comet-hero.webp" alt="Comet — Orion's Helios guide" width="473" height="1100">
     <div class="gb-txt">
       <div class="gb-eyebrow">Meet Comet · your Helios guide</div>
       <h2>Not sure what fits? <em>Ask the machine.</em></h2>

@@ -9,11 +9,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/* Size-matched fallback: Arial adjusted to Inter's metrics so text renders at final width before the webfont loads (kills nav CLS) */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}</style>
 <style>
 :root{
   --paper:#FFFFFF;--paperline:#1A2433;--ink:#0B1626;--mid:#3F4A5A;--soft:#7A8597;
   --cyan:#00B8E6;--cyan-light:#7FDFF5;--blue:#0066CC;--yellow:#FFD400;--red:#D93838;
-  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --sans:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif;
   --mono:"JetBrains Mono",ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}

@@ -19,6 +19,8 @@
 <meta name="twitter:image" content="https://orionmis.co.uk/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/* Size-matched fallback: Arial adjusted to Inter's metrics so text renders at final width before the webfont loads (kills nav CLS) */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}</style>
 <style>
 :root{
   --bg:#050B14;--bg2:#07111F;--dark:#02050A;--panel:#0B1626;--panel2:#0F1D31;
@@ -26,7 +28,7 @@
   --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
   --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--amber:#FDB022;--red:#F97066;
   --paper:#FBFAF7;--ink:#1d1d1f;--mid:#6e6e73;--paperline:#d2d2d7;
-  --serif:"DM Serif Display",Georgia,serif;--sans:"Inter",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"DM Serif Display",Georgia,serif;--sans:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
   --max:1280px;
   --nav-h:88px;
 }
@@ -379,7 +381,7 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
 @media(max-width:860px){.gb-inner{grid-template-columns:1fr;gap:26px;text-align:center}.gb-fig{height:300px}.gb-txt p{margin-left:auto;margin-right:auto}.gb-actions{justify-content:center}}
 </style>
   <div class="gb-inner">
-    <img class="gb-fig" src="images/liam-hero.png" alt="Liam — Orion engineer" loading="lazy">
+    <img class="gb-fig" src="images/liam-hero.webp" alt="Liam — Orion engineer" loading="lazy">
     <div class="gb-txt">
       <div class="gb-eyebrow">Meet Liam · straight-talking engineer</div>
       <h2>Forms are fine. <em>A chat is faster.</em></h2>

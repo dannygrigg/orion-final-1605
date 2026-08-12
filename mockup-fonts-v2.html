@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>/* Size-matched fallback: Arial adjusted to Inter's metrics so text renders at final width before the webfont loads (kills nav CLS) */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}</style>
 <style>
 /* ─────────────────────────────────────────────────────────
    FONT MOCKUP v2 — Hybrid approach.
@@ -22,7 +24,7 @@
   --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
   --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
   --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;
-  --sans:"Inter",system-ui,-apple-system,sans-serif;
+  --sans:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif;
   --serif:"DM Serif Display",Georgia,serif;
   --mono:"JetBrains Mono",ui-monospace,monospace;
   --max:1280px;
@@ -209,7 +211,7 @@ h2 em{font-family:var(--serif);font-style:italic;color:var(--cyan);font-weight:4
       </div>
     </div>
     <div class="hero-image">
-      <img src="images/hero-wcs-dashboard.png" alt="Orion WCS — live operations dashboard">
+      <img src="images/hero-wcs-dashboard.webp" alt="Orion WCS — live operations dashboard">
     </div>
   </div>
 </section>

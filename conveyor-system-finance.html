@@ -20,8 +20,10 @@
 <meta name="twitter:image" content="https://orionmis.co.uk/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/* Size-matched fallback: Arial adjusted to Inter's metrics so text renders at final width before the webfont loads (kills nav CLS) */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}</style>
 <style>
-:root{--bg:#050B14;--bg2:#07111F;--dark:#02050A;--text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);--line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);--blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--paper:#FBFAF7;--ink:#1d1d1f;--mid:#6e6e73;--paperline:#d2d2d7;--serif:"DM Serif Display",Georgia,serif;--sans:"Inter",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--max:1280px;--nav-h:88px}
+:root{--bg:#050B14;--bg2:#07111F;--dark:#02050A;--text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);--line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);--blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--paper:#FBFAF7;--ink:#1d1d1f;--mid:#6e6e73;--paperline:#d2d2d7;--serif:"DM Serif Display",Georgia,serif;--sans:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--max:1280px;--nav-h:88px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--dark);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:calc(var(--nav-h) + 34px);letter-spacing:-.005em;font-feature-settings:"cv02","cv03","cv04","cv11";font-weight:400}

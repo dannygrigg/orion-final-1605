@@ -22,6 +22,8 @@
 <meta name="twitter:image" content="https://orionmis.co.uk/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/* Size-matched fallback: Arial adjusted to Inter's metrics so text renders at final width before the webfont loads (kills nav CLS) */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}</style>
 <style>
 :root{
   --bg:#050B14;--bg2:#07111F;--dark:#02050A;--panel:#0B1626;--panel2:#0F1D31;
@@ -29,7 +31,7 @@
   --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
   --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--amber:#FDB022;--red:#F97066;
   --paper:#FBFAF7;--ink:#1d1d1f;--mid:#6e6e73;--paperline:#d2d2d7;
-  --serif:"DM Serif Display",Georgia,serif;--sans:"Inter",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+  --serif:"DM Serif Display",Georgia,serif;--sans:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
   --max:1280px;
   --nav-h:88px;
 }
@@ -1010,7 +1012,7 @@ tr:last-child td{border-bottom:none}
     @media(max-width:860px){.roi-penny{grid-template-columns:1fr;text-align:center;gap:18px;padding:24px 20px}.roi-penny img.fig{height:220px}.roi-penny .t p{margin-left:auto;margin-right:auto}}
   </style>
   <div class="roi-penny">
-    <img class="fig" src="images/penny-hero.png" alt="Penny — Orion's ROI and finance guide" loading="lazy">
+    <img class="fig" src="images/penny-hero.webp" alt="Penny — Orion's ROI and finance guide" loading="lazy">
     <div class="t">
       <div class="eyebrow">Meet Penny · ROI &amp; finance</div>
       <h3>Run it yourself, or <em>let Penny talk you through it.</em></h3>
@@ -1223,7 +1225,7 @@ tr:last-child td{border-bottom:none}
         <div class="case featured reveal">
           <div class="case-img">
             <span>E-commerce · Amazon</span>
-            <img src="images/case-studies/amazon-picktower.jpg" alt="Multi-level Amazon pick tower with Orion replenishment and takeaway conveyors running the face of the structure" loading="lazy">
+            <img src="images/case-studies/amazon-picktower.webp" alt="Multi-level Amazon pick tower with Orion replenishment and takeaway conveyors running the face of the structure" loading="lazy">
           </div>
           <div class="case-body">
             <h3>Pick tower live in <em>three days</em></h3>
@@ -1242,7 +1244,7 @@ tr:last-child td{border-bottom:none}
         <div class="case featured reveal">
           <div class="case-img">
             <span>Advanced manufacturing · National Composites Centre</span>
-            <img src="images/case-studies/ncc-robot-cell.jpg" alt="Orion engineer shaking hands with an NCC engineer in front of the moveable KUKA robot cell for carbon-fibre cutting" loading="lazy">
+            <img src="images/case-studies/ncc-robot-cell.webp" alt="Orion engineer shaking hands with an NCC engineer in front of the moveable KUKA robot cell for carbon-fibre cutting" loading="lazy">
           </div>
           <div class="case-body">
             <h3>A robot cell that <em>moves to the work</em></h3>
@@ -1261,7 +1263,7 @@ tr:last-child td{border-bottom:none}
         <div class="case featured reveal">
           <div class="case-img">
             <span>Logistics · Expeditors</span>
-            <img src="images/case-studies/expeditors-palletising-cell.jpg" alt="Expeditors palletising cell — Orion plug-and-play upgrade sorting parcels by carrier straight to pallet" loading="lazy">
+            <img src="images/case-studies/expeditors-palletising-cell.webp" alt="Expeditors palletising cell — Orion plug-and-play upgrade sorting parcels by carrier straight to pallet" loading="lazy">
           </div>
           <div class="case-body">
             <h3>Plug &amp; play <em>palletising</em> — sorted by carrier</h3>
@@ -1321,7 +1323,7 @@ tr:last-child td{border-bottom:none}
         <div class="case featured reveal">
           <div class="case-img">
             <span>Automotive · BMW</span>
-            <img src="images/case-studies/bmw-platen-kitting-line.jpg" alt="New bespoke platen kitting line for BMW with pick-to-light and bypass loop, introduced into live production" loading="lazy">
+            <img src="images/case-studies/bmw-platen-kitting-line.webp" alt="New bespoke platen kitting line for BMW with pick-to-light and bypass loop, introduced into live production" loading="lazy">
           </div>
           <div class="case-body">
             <h3>A bespoke kitting line, <em>built into live production</em></h3>
