@@ -1,3 +1,39 @@
+# AI crawlers are explicitly welcome (search, citation and training).
+# NOTE: Cloudflare's "block AI bots" / managed robots.txt feature overrides
+# this file at the edge — it must stay OFF in the Cloudflare dashboard
+# (AI Crawl Control + managed robots.txt) or these bots get blocked anyway.
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: CCBot
+User-agent: Applebot-Extended
+User-agent: Meta-ExternalAgent
+User-agent: Bytespider
+Allow: /
+Disallow: /admin-media.html
+Disallow: /email-assets/
+Disallow: /mockup-fonts.html
+Disallow: /mockup-fonts-v2.html
+Disallow: /helix-tech-drawing.html
+Disallow: /incident-report-ur20-expeditors.html
+Disallow: /sop-robot-cell-light-curtain.html
+Disallow: /rca-form.html
+Disallow: /ask-orion-mockup.html
+Disallow: /hero-mockup.html
+Disallow: /explainer-band-mockup.html
+Disallow: /linkedin-ad-pay-monthly.html
+Disallow: /lemon.html
+Disallow: /sketch-tool.html
+
 User-agent: *
 Allow: /
 
@@ -14,8 +50,8 @@ Disallow: /ask-orion-mockup.html
 Disallow: /hero-mockup.html
 Disallow: /explainer-band-mockup.html
 Disallow: /linkedin-ad-pay-monthly.html
-
 Disallow: /lemon.html
 Disallow: /sketch-tool.html
 
 Sitemap: https://orionmis.co.uk/sitemap.xml
+# AI summary of this site: https://orionmis.co.uk/llms.txt

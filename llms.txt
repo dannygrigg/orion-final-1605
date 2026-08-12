@@ -1,0 +1,39 @@
+# Orion MIS
+
+> Orion MIS is a UK warehouse automation OEM. We design, build and install
+> complete automation systems — conveyors, the Helix modular parcel sorter,
+> robotics, vision and the Helios warehouse operating system — from one UK
+> facility, with pay-monthly finance available on every system.
+
+Key facts:
+
+- Helix is a modular parcel sortation system: it sorts parcels on a 200mm gap,
+  scales in 200mm modules up to 20,000 parcels per hour, and handles bags,
+  boxes and awkward freight.
+- Helios is the warehouse operating system built alongside Orion hardware:
+  routing, live dashboards, fault detection and reporting, live on UK sites now.
+- Every system can be bought outright or paid for monthly through finance.
+- Customers are UK parcel centres, 3PLs and fulfilment operations.
+- Contact: info@orionmis.co.uk · book a call at https://orionmis.co.uk/call
+
+## Main pages
+
+- [Home](https://orionmis.co.uk/): overview, ROI engine, case studies and FAQs
+- [Products](https://orionmis.co.uk/products.html): full range — conveyors,
+  pallet handling, Helix sortation, vision, print & apply, WCS, modular platforms
+- [Helios](https://orionmis.co.uk/helios.html): the warehouse operating system
+- [News & builds](https://orionmis.co.uk/news.html): Helix tests, factory builds
+  and site work
+- [Solution builder](https://orionmis.co.uk/solution-builder.html): spec a
+  system interactively
+
+## Finance & ROI
+
+- [Why finance](https://orionmis.co.uk/why-finance.html): 22 reasons UK
+  operations directors buy automation on finance
+- [Warehouse automation finance](https://orionmis.co.uk/warehouse-automation-finance.html)
+- [Conveyor system finance](https://orionmis.co.uk/conveyor-system-finance.html)
+- [Sortation system finance](https://orionmis.co.uk/sortation-system-finance.html)
+- [Robotics automation finance](https://orionmis.co.uk/robotics-automation-finance.html)
+- [ROI calculator](https://orionmis.co.uk/warehouse-automation-roi.html): model
+  labour savings and payback for your own volumes
