@@ -12,10 +12,12 @@
 # Order matters: most specific rules first.
 /public/blog/* /news.html 301
 /blog/* /news.html 301
+/blogs /news.html 301
+/public/parcel /parcel-centres 301
 /public/* / 301
 /front/* / 301
 /about-us / 301
 /about-us/* / 301
-/food-manufacturing /products.html 301
-/e-commerce-logistics /products.html 301
+/parcel /parcel-centres 301
+/e-commerce-logistics /fulfilment-automation 301
 /maintenance-support /products.html 301

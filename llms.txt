@@ -27,6 +27,17 @@ Key facts:
 - [Solution builder](https://orionmis.co.uk/solution-builder.html): spec a
   system interactively
 
+## Sectors
+
+- [Parcel centres](https://orionmis.co.uk/parcel-centres): parcel sortation for
+  parcel centres and postal operators — Helix, Ori-Sort, An Post case study
+- [3PL automation](https://orionmis.co.uk/3pl-automation): multi-client routing,
+  modular expansion and an ROI-led commercial case — Expeditors case studies
+- [Fulfilment & e-commerce](https://orionmis.co.uk/fulfilment-automation): SLAM
+  lines, pick towers, multipack lines and AMR fleets — Amazon, Gompels, Octopus
+- [Food & beverage manufacturing](https://orionmis.co.uk/food-manufacturing):
+  food-grade conveyors and end-of-line palletising — Tate & Lyle, Denso
+
 ## Finance & ROI
 
 - [Why finance](https://orionmis.co.uk/why-finance.html): 22 reasons UK
