@@ -10,6 +10,8 @@
 # ~200 crawls/day on 404s. 301 them to the nearest live equivalent so
 # crawlers index real content and legacy link equity transfers.
 # Order matters: most specific rules first.
+/blog/what-are-automated-warehouse-systems-benefits-and-features-explained /warehouse-automation-cost-uk 301
+/public/blog/what-are-automated-warehouse-systems-benefits-and-features-explained /warehouse-automation-cost-uk 301
 /public/blog/* /news.html 301
 /blog/* /news.html 301
 /blogs /news.html 301

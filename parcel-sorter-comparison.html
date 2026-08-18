@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Cross-Belt vs Tilt-Tray vs Wheel Sorters: Which Parcel Sorter Fits Your Operation? | Orion MIS</title>
+<meta name="description" content="Cross-belt, tilt-tray and wheel-divert parcel sorters compared: how each works, throughput ranges, footprint, parcel tolerance, cost profile and maintenance — and how to choose for a UK operation.">
+<link rel="canonical" href="https://orionmis.co.uk/parcel-sorter-comparison">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://orionmis.co.uk/#org","name":"Orion MIS","url":"https://orionmis.co.uk/","logo":"https://orionmis.co.uk/images/orion-logo-square.png","image":"https://orionmis.co.uk/og-image.png","telephone":"+44 333 335 5269","email":"info@orionmis.co.uk","address":{"@type":"PostalAddress","streetAddress":"1 Fontwell Avenue","addressLocality":"Chichester","addressRegion":"West Sussex","postalCode":"PO20 3RU","addressCountry":"GB"},"sameAs":["https://www.linkedin.com/in/dannygriggorion/","https://www.instagram.com/orionmis_ltd/","https://www.tiktok.com/@orionautomation","https://www.youtube.com/@orionautomation1"]}</script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orionmis.co.uk/parcel-sorter-comparison">
+<meta property="og:title" content="Cross-Belt vs Tilt-Tray vs Wheel Sorters: Which Parcel Sorter Fits Your Operation? | Orion MIS">
+<meta property="og:description" content="How each parcel sortation technology works, where each honestly wins and loses, and how to choose on destination count, parcel mix, footprint and budget.">
+<meta property="og:image" content="https://orionmis.co.uk/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cross-Belt vs Tilt-Tray vs Wheel Sorters | Orion MIS">
+<meta name="twitter:description" content="The three parcel sortation technologies compared honestly — throughput, footprint, parcel tolerance, cost and maintenance.">
+<meta name="twitter:image" content="https://orionmis.co.uk/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>/* Size-matched fallback: Arial adjusted to Inter's metrics so text renders at final width before the webfont loads (kills nav CLS) */
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}</style>
+<style>
+:root{--bg:#050B14;--bg2:#07111F;--dark:#02050A;--text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);--line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);--blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--paper:#FBFAF7;--ink:#1d1d1f;--mid:#6e6e73;--paperline:#d2d2d7;--serif:"DM Serif Display",Georgia,serif;--sans:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--max:1280px;--nav-h:88px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--dark);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-top:calc(var(--nav-h) + 34px);letter-spacing:-.005em;font-feature-settings:"cv02","cv03","cv04","cv11";font-weight:400}
+@media(max-width:600px){body{padding-top:calc(var(--nav-h) + 30px)}}
+a{text-decoration:none;color:inherit}
+h1,h2,h3{font-family:var(--sans);font-weight:600;line-height:1.1;letter-spacing:-.022em}h1 em,h2 em,h3 em,em{font-family:var(--sans);font-style:italic;font-weight:400;letter-spacing:-.015em}
+p{color:var(--muted);font-weight:300}
+strong{font-weight:800;color:#fff}
+button{font-family:inherit;cursor:pointer}
+img{display:block;max-width:100%;height:auto}
+section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.eyebrow:before{content:"";width:32px;height:1px;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:14px 22px;font-size:14px;font-weight:800;border:1px solid transparent;transition:.15s;text-decoration:none}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#00111d}
+.btn-secondary{border-color:rgba(255,255,255,.25);color:#fff;background:rgba(255,255,255,.03)}
+.btn-secondary:hover{background:rgba(255,255,255,.08)}
+
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:60;height:34px;background:linear-gradient(90deg,#0066CC,#00D5FF);color:#00111d;overflow:hidden;display:flex;align-items:center;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(0,0,0,.18)}
+.top-banner-track{display:flex;gap:0;align-items:center;animation:topBanner 48s linear infinite;white-space:nowrap}
+.top-banner-track:hover{animation-play-state:paused}
+.top-banner-content{display:flex;align-items:center;gap:0;flex-shrink:0;padding-right:56px}
+.tb-item{flex-shrink:0;padding:0 18px}
+.tb-sep{flex-shrink:0;opacity:.45}
+.tb-item a{color:#00111d;text-decoration:none;border-bottom:1px solid rgba(0,17,29,.4);padding-bottom:1px}
+@keyframes topBanner{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:600px){.top-banner{height:30px;font-size:10px}.tb-item{padding:0 12px}}
+
+.nav{position:fixed;top:34px;left:0;right:0;z-index:50;height:var(--nav-h);background:rgba(5,11,20,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:0 36px;display:flex;align-items:center;justify-content:space-between;transition:box-shadow .2s}
+@media(max-width:600px){.nav{top:30px}}
+.nav.scrolled{box-shadow:0 8px 28px rgba(0,0,0,.4)}
+.logo img{height:64px;filter:brightness(0) invert(1);display:block}
+.news-dot{display:inline-block;width:8px;height:8px;background:var(--cyan);border-radius:50%;margin-left:7px;box-shadow:0 0 10px var(--cyan),0 0 3px rgba(0,213,255,.7);animation:newsPulse 2.4s ease-in-out infinite;vertical-align:super;position:relative;top:-3px}
+@keyframes newsPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.45}}
+.nav ul{display:flex;gap:26px;list-style:none;font-size:13px;color:var(--muted)}
+.nav li a{padding:6px 0;position:relative;transition:color .2s}
+.nav li a:hover{color:#fff}
+.nav-actions{display:flex;align-items:center;gap:14px}
+.nav .phone{font-family:var(--mono);font-size:10px;letter-spacing:.11em;color:var(--soft);text-transform:uppercase}@media(max-width:1360px){.nav .phone{display:none}}
+.nav .quote{background:#fff;color:#07111F;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;gap:6px;transition:transform .15s,background .2s}
+.nav .quote:hover{transform:translateY(-1px);background:var(--cyan);color:#00111d}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:calc(var(--nav-h) + 34px);left:0;right:0;background:rgba(5,11,20,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--line2);padding:18px 24px 24px;z-index:49;flex-direction:column;gap:2px}
+@media(max-width:600px){.mobile-nav{top:calc(var(--nav-h) + 30px)}}
+.mobile-nav.open{display:flex}
+.mobile-nav a{font-size:16px;color:#fff;padding:14px 0;border-bottom:1px solid var(--line)}
+.mobile-nav a:last-of-type{border-bottom:none}
+.mobile-nav a.mobile-cta{background:#fff;color:#07111F!important;border-radius:999px;padding:14px;margin-top:10px;font-weight:800;text-align:center}
+
+.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 78% 12%,rgba(0,213,255,.16),transparent 30%),radial-gradient(circle at 20% 0,rgba(30,144,255,.14),transparent 32%),linear-gradient(180deg,#07111F 0%,#050B14 70%,#02050A 100%);padding:80px 36px 60px;border-bottom:1px solid var(--line)}
+.hero-inner{position:relative;z-index:1;max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.breadcrumb{display:flex;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:18px;flex-wrap:wrap}
+.breadcrumb a{color:var(--soft);transition:color .2s}
+.breadcrumb a:hover{color:var(--cyan)}
+.breadcrumb .sep{color:var(--line)}
+.breadcrumb .current{color:var(--cyan)}
+.hero h1{font-size:clamp(32px,4.2vw,54px);margin-bottom:20px;color:#fff}
+.hero h1 em{font-style:italic;color:var(--cyan)}
+.hero-lead{font-size:16.5px;line-height:1.65;max-width:560px;margin-bottom:14px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.hero-card{border:1px solid var(--line2);border-radius:28px;background:linear-gradient(180deg,rgba(15,29,49,.82),rgba(7,17,31,.72));box-shadow:0 30px 90px rgba(0,0,0,.42);padding:36px;position:relative;overflow:hidden}
+.hero-card::before{content:"";position:absolute;top:-100px;right:-100px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(0,213,255,.18),transparent 70%);pointer-events:none}
+.hero-card .he{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;font-weight:700;position:relative}
+.hero-card h2{font-family:var(--sans);font-size:22px;color:#fff;line-height:1.15;margin-bottom:16px;font-weight:600;position:relative}
+.hero-card h2 em{font-style:italic;color:var(--cyan)}
+.hero-card ul{list-style:none;padding:0;margin:0;position:relative;display:grid;gap:10px}
+.hero-card li{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);border-radius:12px;padding:12px 14px;font-size:13.5px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:14px}
+.hero-card li b{font-family:var(--sans);font-size:15px;color:#fff;font-weight:600;white-space:nowrap}
+
+/* ARTICLE PROSE */
+.article{background:var(--paper);padding:72px 36px}
+.article-inner{max-width:860px;margin:0 auto}
+.article-inner h2{color:var(--ink);font-size:clamp(24px,2.8vw,36px);margin:48px 0 16px;letter-spacing:-.02em}
+.article-inner h2:first-child{margin-top:0}
+.article-inner h2 em{font-style:italic;color:var(--blue)}
+.article-inner h3{color:var(--ink);font-size:19px;margin:28px 0 10px;letter-spacing:-.015em}
+.article-inner p{font-size:16px;line-height:1.72;color:#3c3c43;margin-bottom:16px}
+.article-inner ul{margin:0 0 18px 20px;color:#3c3c43;font-size:15.5px;line-height:1.7;display:grid;gap:8px}
+.article-inner li strong{color:var(--ink);font-weight:600}
+.article-inner p a,.article-inner li a{color:var(--blue);border-bottom:1px solid rgba(30,144,255,.3)}
+.article-inner p a:hover,.article-inner li a:hover{border-bottom-color:var(--blue)}
+.key-answer{background:#fff;border:1px solid var(--paperline);border-left:3px solid var(--blue);border-radius:14px;padding:22px 24px;margin:0 0 28px;font-size:16.5px;line-height:1.7;color:var(--ink)}
+.key-answer strong{color:var(--ink);font-weight:700}
+.table-wrap{overflow-x:auto;border:1px solid var(--paperline);border-radius:16px;background:#fff;margin:8px 0 28px}
+table.spec{width:100%;border-collapse:collapse;min-width:760px;font-size:14px}
+table.spec th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);text-align:left;padding:14px 16px;border-bottom:1px solid var(--paperline);background:#fafaf7}
+table.spec td{padding:14px 16px;border-bottom:1px solid #eceae4;color:#3c3c43;vertical-align:top;line-height:1.55}
+table.spec tr:last-child td{border-bottom:0}
+table.spec td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+.article-fig{margin:8px 0 28px}
+.article-fig img{border-radius:16px;border:1px solid var(--paperline);width:100%;object-fit:cover;aspect-ratio:16/10}
+.article-fig figcaption{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-top:10px}
+.article-note{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--mid);line-height:1.6;margin:-16px 0 24px}
+
+.faq-section{background:var(--paper);padding:24px 36px 80px}
+.faq-head{max-width:860px;margin:0 auto 28px}
+.faq-head h2{color:var(--ink);font-size:clamp(24px,2.8vw,36px)}
+.faq-head h2 em{font-style:italic;color:var(--blue)}
+.faq-grid{max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:14px}
+.faq{border:1px solid var(--paperline);background:#fff;border-radius:18px;overflow:hidden;transition:border-color .2s}
+.faq[open]{border-color:rgba(30,144,255,.35)}
+.faq summary{padding:20px 22px;font-size:16px;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;list-style:none;letter-spacing:-.005em;font-family:var(--sans);font-weight:600;line-height:1.35}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--sans);font-size:24px;color:var(--blue);font-weight:300;flex-shrink:0;line-height:1}
+.faq[open] summary::after{content:"−"}
+.faq p{padding:0 24px 22px;font-size:14.5px;line-height:1.65;color:var(--mid)}
+.faq p a{color:var(--blue)}
+
+.final{background:radial-gradient(circle at 50% 30%,rgba(0,213,255,.18),transparent 42%),#02050A;text-align:center;padding:88px 36px;border-top:1px solid var(--line);position:relative;overflow:hidden}
+.final-inner{position:relative;z-index:1;max-width:880px;margin:0 auto}
+.final h2{font-size:clamp(30px,3.8vw,52px);margin:0 auto 20px;max-width:760px;color:#fff}
+.final h2 em{font-style:italic;color:var(--cyan)}
+.final p{max-width:620px;margin:0 auto 28px;font-size:17px;line-height:1.65}
+.final-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.compliance{margin-top:32px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);line-height:1.55;max-width:680px;margin-left:auto;margin-right:auto}
+
+.footer{background:#02050A;border-top:1px solid var(--line);padding:50px 36px;color:var(--soft)}
+.footer-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.2fr 2fr;gap:40px}
+.footer img{height:34px;filter:brightness(0) invert(1);margin-bottom:18px;opacity:.8}
+.footer-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.footer h4{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px}
+.footer ul{list-style:none;display:grid;gap:8px;font-size:13px;color:var(--muted)}
+.footer ul a:hover{color:#fff}
+.footer-bottom{max-width:var(--max);margin:32px auto 0;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:12px;color:var(--soft);flex-wrap:wrap;gap:8px}
+
+@media(max-width:1100px){
+  .hero{padding:64px 28px 50px}
+  .article{padding:56px 28px}
+  .faq-section{padding:20px 28px 64px}
+  .final{padding:72px 28px}
+}
+@media(max-width:1050px){
+  .hero-inner,.footer-inner{grid-template-columns:1fr}
+  .nav ul,.nav .phone{display:none}
+  .hamburger{display:flex}
+  .nav .quote{display:none}
+}
+@media(max-width:700px){
+  .hero,.nav,.article,.faq-section,.final,.footer{padding-left:20px;padding-right:20px}
+  .hero{padding-top:44px;padding-bottom:40px}
+  .article{padding-top:44px;padding-bottom:44px}
+  .final{padding-top:60px;padding-bottom:60px}
+  .faq-section{padding-bottom:52px}
+  .footer-cols{grid-template-columns:1fr}
+  .hero-card{padding:28px 24px}
+  .hero-card h2{font-size:20px}
+  .hero-lead{font-size:16px}
+}
+@media(max-width:430px){
+  .hero,.nav,.article,.faq-section,.final,.footer{padding-left:16px;padding-right:16px}
+  .hero{padding-top:36px;padding-bottom:32px}
+  .final{padding-top:52px;padding-bottom:52px}
+  .hero-card{padding:24px 20px}
+}
+</style>
+<link rel="stylesheet" href="mobile.css?v=1">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://orionmis.co.uk/parcel-sorter-comparison#article","headline":"Cross-Belt vs Tilt-Tray vs Wheel Sorters: Which Parcel Sorter Fits Your Operation?","description":"Cross-belt, tilt-tray and wheel-divert parcel sorters compared: how each works, throughput ranges, footprint, parcel tolerance, cost profile and maintenance — and how to choose for a UK operation.","image":"https://orionmis.co.uk/og-image.png","datePublished":"2026-08-18","dateModified":"2026-08-18","inLanguage":"en-GB","author":{"@type":"Organization","name":"Orion MIS","@id":"https://orionmis.co.uk/#org"},"publisher":{"@id":"https://orionmis.co.uk/#org"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://orionmis.co.uk/parcel-sorter-comparison"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://orionmis.co.uk/"},{"@type":"ListItem","position":2,"name":"Insights","item":"https://orionmis.co.uk/news"},{"@type":"ListItem","position":3,"name":"Cross-belt vs tilt-tray vs wheel sorters","item":"https://orionmis.co.uk/parcel-sorter-comparison"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which type of parcel sorter is cheapest?","acceptedAnswer":{"@type":"Answer","text":"Wheel-divert sorters typically carry the lowest entry cost of the three technologies, because they are linear machines that scale in modules rather than loops that must be bought at full size on day one. Orion entry systems are typically available from £4,000 per month on a 60-month finance term, subject to specification and finance approval."}},{"@type":"Question","name":"What throughput can each sorter type handle?","acceptedAnswer":{"@type":"Answer","text":"In most installations, cross-belt loops run from roughly 10,000 to 40,000+ parcels per hour, tilt-tray loops from roughly 10,000 to 30,000, and wheel-divert sorters from around 2,000 to 20,000. Orion's Helix wheel sorter scales from 4,000 to 20,000 parcels per hour by adding 200mm cassette modules. Real throughput always depends on parcel mix, induction and destination count — model it, don't take a brochure number."}},{"@type":"Question","name":"Can a wheel sorter handle polybags and awkward parcels?","acceptedAnswer":{"@type":"Answer","text":"Yes — this is where wheel-divert sorters are typically strongest. The parcel never leaves the conveying surface, so bags, boxes, uneven loads and mixed sizes divert reliably where a gravity tilt discharge can stall or tumble. Helix is designed specifically for bags, boxes and awkward freight, and Orion profiles sample parcels through a live Helix before signing scope."}},{"@type":"Question","name":"When does a loop sorter (cross-belt or tilt-tray) make sense?","acceptedAnswer":{"@type":"Answer","text":"When throughput demand sits well above 20,000 parcels per hour, when destination counts run into the hundreds, and when the building is purpose-built for a sorter loop with the height and floor area to feed it. Below those thresholds, a linear wheel sorter usually delivers the sort at a lower cost per destination and fits an existing building. Orion supplies cross-belt and tilt-tray sorters as well as Helix, so the recommendation follows the numbers, not the product list."}}]}]}</script>
+</head>
+<body>
+
+<div class="top-banner" aria-label="Key messages">
+  <div class="top-banner-track">
+    <div class="top-banner-content">
+      <span class="tb-item">Reduce labour</span><span class="tb-sep">·</span><span class="tb-item">Increase capacity</span><span class="tb-sep">·</span><span class="tb-item">Pay monthly</span><span class="tb-sep">·</span><span class="tb-item">Prove the payback</span><span class="tb-sep">·</span><span class="tb-item">UK-built warehouse automation</span><span class="tb-sep">·</span><span class="tb-item"><a href="index.html#finance">Get a monthly automation quote →</a></span><span class="tb-sep">·</span><span class="tb-item">Finance options subject to specification &amp; approval</span><span class="tb-sep">·</span><span class="tb-item"><a href="index.html#roi">Open the ROI engine →</a></span><span class="tb-sep">·</span><span class="tb-item">Mechanical · electrical · controls · WCS · support, one UK facility</span><span class="tb-sep">·</span>
+    </div>
+    <div class="top-banner-content" aria-hidden="true">
+      <span class="tb-item">Reduce labour</span><span class="tb-sep">·</span><span class="tb-item">Increase capacity</span><span class="tb-sep">·</span><span class="tb-item">Pay monthly</span><span class="tb-sep">·</span><span class="tb-item">Prove the payback</span><span class="tb-sep">·</span><span class="tb-item">UK-built warehouse automation</span><span class="tb-sep">·</span><span class="tb-item"><a href="index.html#finance">Get a monthly automation quote →</a></span><span class="tb-sep">·</span><span class="tb-item">Finance options subject to specification &amp; approval</span><span class="tb-sep">·</span><span class="tb-item"><a href="index.html#roi">Open the ROI engine →</a></span><span class="tb-sep">·</span><span class="tb-item">Mechanical · electrical · controls · WCS · support, one UK facility</span><span class="tb-sep">·</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav" id="mainNav">
+  <a class="logo" href="index.html"><img src="images/orion-logo.png" alt="Orion MIS"></a>
+  <ul>
+    <li><a href="index.html#helix">Helix</a></li><li><a href="helios.html">Helios</a></li>
+    <li><a href="index.html#roi">ROI</a></li>
+    <li><a href="warehouse-automation-finance.html">Finance</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="index.html#proof">Case studies</a></li>
+    <li><a href="news.html">News &amp; builds<span class="news-dot" aria-label="new updates"></span></a></li>
+    <li><a href="sketch.html?type=sketch">Send a sketch</a></li><li><a href="solution-builder.html">Solution builder</a></li>
+    <li><a href="index.html#faq">FAQs</a></li>
+  </ul>
+  <div class="nav-actions">
+    <span class="phone">UK-built automation</span>
+    <a class="quote" href="sketch.html?type=visit">Book a site visit<svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html#helix">Helix</a>
+  <a href="helios.html">Helios</a>
+  <a href="index.html#roi">ROI</a>
+  <a href="warehouse-automation-finance.html">Finance</a>
+  <a href="products.html">Products</a>
+  <a href="index.html#proof">Case studies</a>
+  <a href="news.html">News &amp; builds<span class="news-dot" aria-label="new updates"></span></a>
+  <a href="sketch.html?type=sketch">Send a sketch</a>
+  <a href="solution-builder.html">Solution builder</a>
+  <a href="index.html#faq">FAQs</a>
+  <a href="sketch.html?type=visit" class="mobile-cta">Book a site visit</a>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a><span class="sep">›</span><a href="news.html">Insights</a><span class="sep">›</span><span class="current">Cross-belt vs tilt-tray vs wheel sorters</span>
+      </nav>
+      <div class="eyebrow">Insights · Sortation technology · 18 Aug 2026</div>
+      <h1>Cross-belt vs tilt-tray vs wheel sorters: which parcel sorter <em>fits your operation</em>?</h1>
+      <p class="hero-lead">Cross-belt, tilt-tray and wheel-divert sorters are the three technologies behind most automated parcel sortation. A cross-belt sorter carries each parcel on its own short belt and ejects it sideways at the chute; a tilt-tray sorter tips a carrier tray so the parcel slides off; a wheel sorter steers parcels off a straight conveyor line using pivoting powered wheels. The right choice comes down to four variables — destination count, parcel mix, footprint and budget — not to which brochure shouts loudest.</p>
+      <p class="hero-lead">This guide covers how each technology works, where each honestly wins and loses, and how to choose.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/call">Book a call →</a>
+        <a class="btn btn-secondary" href="warehouse-automation-roi.html">Run the ROI calculator</a>
+        <a class="btn btn-secondary" href="parcel-centres.html">Parcel centre automation</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="he">Three sorter families · at a glance</div>
+      <h2>Same job, <em>different machines</em></h2>
+      <ul>
+        <li><span>Cross-belt (loop)</span><b>~10,000–40,000+ pph</b></li>
+        <li><span>Tilt-tray (loop)</span><b>~10,000–30,000 pph</b></li>
+        <li><span>Wheel divert (linear)</span><b>~2,000–20,000 pph</b></li>
+        <li><span>Helix wheel sorter</span><b>4,000–20,000 pph</b></li>
+        <li><span>Entry systems on finance</span><b>from ~£4,000/mo</b></li>
+      </ul>
+      <p style="margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);position:relative">Market-typical ranges · every system is specification-dependent</p>
+    </div>
+  </div>
+</section>
+
+<article class="article">
+  <div class="article-inner">
+
+    <h2>How a cross-belt sorter <em>works</em></h2>
+    <p>A cross-belt sorter is a continuous loop of carriers, each fitted with its own short belt mounted at 90 degrees to the direction of travel. Parcels are inducted onto individual carriers, tracked around the loop by the control system, and when a carrier passes the correct chute its belt runs sideways and ejects the parcel. Because every parcel sits on its own actively driven cell, discharge is precise, repeatable and gentle.</p>
+    <p><strong>Where it wins.</strong> Throughput, above all. A loop runs continuously, multiple induction lines can feed it at once, and in most installations cross-belt systems run from roughly 10,000 to well over 40,000 parcels per hour. The powered discharge handles small items, flats and fragile goods that gravity-based machines treat roughly, and loops routinely serve hundreds of destinations.</p>
+    <p><strong>Where it loses.</strong> Cost and footprint. Cross-belt is typically the most expensive of the three technologies to buy, and the loop demands a large, often purpose-built hall with recirculation space and generous headroom. Capacity also arrives in one big step: you buy the whole loop on day one, sized for a peak you may not hit for years. The carrier fleet and its power-transfer system generally need specialist maintenance cover.</p>
+    <p><strong>Typical home.</strong> National parcel hubs and high-volume e-commerce sortation centres — tens of thousands of items per hour into very high destination counts.</p>
+
+    <h2>How a tilt-tray sorter <em>works</em></h2>
+    <p>A tilt-tray sorter is also a loop, but the carrier is a tray rather than a powered belt. Each parcel rides its tray around the loop until it reaches the correct chute, where the tray tips and gravity slides the parcel off. It is the older, mechanically simpler loop technology, and it has sorted post and parcels for decades.</p>
+    <p><strong>Where it wins.</strong> Proven robustness at high volume. Tilt-tray systems typically run from roughly 10,000 to 30,000 parcels per hour, handle rigid goods and heavier items confidently, and in many cases come in somewhat cheaper than a cross-belt of similar scale because the discharge mechanism is simpler.</p>
+    <p><strong>Where it loses.</strong> Discharge control. Because the parcel leaves the tray under gravity, the outcome depends on friction — polybags and deformable bags can stick, slide late or tumble, and item orientation at the chute is less predictable than a driven discharge. It shares the loop family's other characteristics too: a big footprint, a big day-one capital step and tipping mechanisms that are genuine wear items.</p>
+    <p><strong>Typical home.</strong> Postal hubs, returns processing and high-volume operations dominated by rigid, conveyable goods.</p>
+
+    <h2>How a wheel-divert sorter <em>works</em></h2>
+    <p>A wheel sorter takes a different shape entirely: it is linear, not a loop. Parcels travel along a straight conveyor line, and at each divert point a bank of powered wheels pivots to steer the parcel off to a chute or spur — left, right or straight on. On a servo-driven machine the wheels both steer and accelerate the parcel through the divert, so the transfer is fast and controlled.</p>
+    <p><strong>Where it wins.</strong> Fit and flexibility. A linear sorter runs along a wall, down the spine of an existing building or between dock doors — no loop, no recirculation hall, no building extension. It typically carries the lowest entry cost of the three and grows incrementally: add divert modules as destination counts rise, rather than buying peak capacity up front. And because the parcel never leaves the conveying surface, bags, boxes, uneven loads and mixed sizes divert reliably. Mechanically it is the simplest family, with maintenance at module level rather than fleet level.</p>
+    <p><strong>Where it loses.</strong> The throughput ceiling. In most installations wheel sorters run from around 2,000 to 20,000 parcels per hour — a wide band, but below what a large loop delivers. And at very high destination counts (well into the hundreds) a linear machine gets long, so loops start to make more sense. Very small or flat items need the right wheel pitch and belt selection, which is a specification job, not an afterthought.</p>
+    <p><strong>Typical home.</strong> Regional parcel depots, 3PL sortation, retail and fulfilment DCs — operations sorting into roughly 10 to 100 destinations inside a building that already exists.</p>
+
+    <h2>Side by side: the honest <em>comparison</em></h2>
+    <p>The table below sets out market-typical characteristics for new installations. Every real project moves within these bands depending on parcel profile, induction design and controls scope.</p>
+    <div class="table-wrap">
+      <table class="spec">
+        <thead>
+          <tr><th>Criterion</th><th>Cross-belt</th><th>Tilt-tray</th><th>Wheel divert</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Throughput range</td><td>~10,000–40,000+ pph</td><td>~10,000–30,000 pph</td><td>~2,000–20,000 pph (Helix: 4,000–20,000)</td></tr>
+          <tr><td>Footprint</td><td>Loop — large hall, recirculation space, generous headroom</td><td>Loop — similar demands to cross-belt</td><td>Linear — fits existing buildings, runs along walls and spines</td></tr>
+          <tr><td>Parcel tolerance</td><td>Excellent, including small items and flats; very long or heavy freight needs care</td><td>Good for rigid goods; polybags and deformable bags can misbehave on gravity discharge</td><td>Strong on bags, boxes and awkward freight; very small or flat items need correct wheel pitch</td></tr>
+          <tr><td>Cost profile</td><td>Typically highest capital cost; full loop bought on day one</td><td>Typically high, often below cross-belt at similar scale</td><td>Typically lowest entry cost; modular growth spreads spend</td></tr>
+          <tr><td>Maintenance</td><td>Large carrier fleet and power transfer — usually specialist cover</td><td>Tipping mechanisms are wear items; established spares market</td><td>Module-level swaps; Helix targets a 15-minute module change</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="article-note">pph = parcels per hour. Ranges are market-typical, not quotations. Real capacity is set by parcel mix, induction and destination count.</p>
+
+    <h2>How to choose: four questions that <em>settle it</em></h2>
+    <h3>1. How many sort destinations?</h3>
+    <p>Below roughly 50 destinations, a linear wheel sorter almost always wins on cost per destination and buildability. Between about 50 and 150, either family can be right and throughput becomes the tiebreaker. Into the hundreds, loop sorters earn their footprint — that is what they were built for.</p>
+    <h3>2. What does your parcel mix look like?</h3>
+    <p>A clean, conveyable, rigid mix suits any of the three. Heavy polybag and mixed-freight profiles push you towards driven-discharge machines — cross-belt or wheel divert — and away from gravity tilt. Small flats and jiffy-bag volume at very high rates favours cross-belt. If your freight is genuinely ugly, insist on a live test with your parcels before you sign anything.</p>
+    <h3>3. What building do you actually have?</h3>
+    <p>Loops want purpose-built space: floor area for the ring, height for chutes and induction mezzanines. If you are automating inside an existing shed — with its columns, doors and low steel — a linear machine that follows the building usually beats a loop that fights it. Orion's <a href="parcel-centres.html">An Post project</a> fitted 32 destinations and 2,000 parcels per hour, including induction, into a footprint most sorters couldn't touch, precisely by designing the machine around the building.</p>
+    <h3>4. What budget and growth curve?</h3>
+    <p>A loop is a large single capital event sized for your busiest future year. A modular linear sorter lets you buy this year's capacity now and bolt on more when volume justifies it — which also suits monthly finance, where entry systems typically start from £4,000 per month on a 60-month term, subject to specification and approval. Our guide to <a href="warehouse-automation-cost-uk.html">what warehouse automation costs in the UK</a> puts full worked numbers on this.</p>
+
+    <h2>Where Helix <em>sits</em></h2>
+    <p>Helix is Orion's wheel-divert sorter, designed and built in Chichester. It sorts on a 200mm gap between parcels, scales from 4,000 to 20,000 parcels per hour in 200mm cassette modules, and diverts with servo-driven wheels in three sort directions at transfer speeds up to 2.5 m/s. Orion WCS is included as standard, critical modules swap out in 15 minutes without specialist tools, and the machine carries a 24-month warranty.</p>
+    <p>We position it honestly. If you need 35,000 sorts an hour into 300 chutes in a purpose-built hub, a cross-belt loop is the right machine — and Orion supplies cross-belt and tilt-tray sorters where the numbers point that way. Helix is the right answer when the freight is mixed and awkward — bags, boxes, uneven loads — when the building already exists, and when you want capacity that grows in modules rather than arriving as one enormous cheque. That describes most UK <a href="parcel-centres.html">parcel centres</a>, <a href="3pl-automation.html">3PLs</a> and <a href="fulfilment-automation.html">fulfilment operations</a> we meet.</p>
+    <figure class="article-fig">
+      <img src="images/case-studies/anpost-induction.webp" alt="Parcel induction on the An Post sorter built and tested at Orion's Chichester facility" loading="lazy" width="1126" height="2000">
+      <figcaption>An Post induction — 32 destinations, 2,000 pph including induction, in a tight footprint</figcaption>
+    </figure>
+    <p>Whichever family fits, the commercial test is the same: does the monthly cost of the machine sit comfortably inside the labour it removes? The <a href="warehouse-automation-roi.html">ROI calculator</a> answers that with your own volumes, and the full <a href="products.html">product range</a> — conveyors, sortation, robotics and palletising, AMRs, print &amp; apply, scan tunnels and ASRS — covers everything around the sorter too.</p>
+
+  </div>
+</article>
+
+<section class="faq-section">
+  <div class="faq-head">
+    <div class="eyebrow" style="color:var(--blue)">FAQs</div>
+    <h2>Sorter selection, <em>asked directly</em>.</h2>
+  </div>
+  <div class="faq-grid">
+    <details class="faq" open>
+      <summary>Which type of parcel sorter is cheapest?</summary>
+      <p>Wheel-divert sorters typically carry the lowest entry cost of the three technologies, because they are linear machines that scale in modules rather than loops that must be bought at full size on day one. Orion entry systems are typically available from £4,000 per month on a 60-month finance term, subject to specification and finance approval.</p>
+    </details>
+    <details class="faq" open>
+      <summary>What throughput can each sorter type handle?</summary>
+      <p>In most installations, cross-belt loops run from roughly 10,000 to 40,000+ parcels per hour, tilt-tray loops from roughly 10,000 to 30,000, and wheel-divert sorters from around 2,000 to 20,000. Orion's Helix wheel sorter scales from 4,000 to 20,000 parcels per hour by adding 200mm cassette modules. Real throughput always depends on parcel mix, induction and destination count — model it, don't take a brochure number.</p>
+    </details>
+    <details class="faq" open>
+      <summary>Can a wheel sorter handle polybags and awkward parcels?</summary>
+      <p>Yes — this is where wheel-divert sorters are typically strongest. The parcel never leaves the conveying surface, so bags, boxes, uneven loads and mixed sizes divert reliably where a gravity tilt discharge can stall or tumble. Helix is designed specifically for bags, boxes and awkward freight, and Orion profiles sample parcels through a live Helix before signing scope.</p>
+    </details>
+    <details class="faq" open>
+      <summary>When does a loop sorter (cross-belt or tilt-tray) make sense?</summary>
+      <p>When throughput demand sits well above 20,000 parcels per hour, when destination counts run into the hundreds, and when the building is purpose-built for a sorter loop with the height and floor area to feed it. Below those thresholds, a linear wheel sorter usually delivers the sort at a lower cost per destination and fits an existing building. Orion supplies cross-belt and tilt-tray sorters as well as Helix, so the recommendation follows the numbers, not the product list.</p>
+    </details>
+  </div>
+</section>
+
+<section class="final">
+  <div class="final-inner">
+    <div class="eyebrow" style="justify-content:center">Next step</div>
+    <h2>Not sure which sorter your numbers <em>point to</em>?</h2>
+    <p>Send your destination count, parcel profile and throughput target. We'll tell you which technology fits — including when it isn't ours — with a sized system and an indicative monthly figure.</p>
+    <div class="final-actions">
+      <a class="btn btn-primary" href="/call">Book a call →</a>
+      <a class="btn btn-secondary" href="warehouse-automation-roi.html">Run the ROI calculator</a>
+      <a class="btn btn-secondary" href="parcel-centres.html">Parcel centre automation</a>
+    </div>
+    <p class="compliance">Finance options available subject to specification and approval. Throughput ranges for non-Orion technologies are market-typical figures, not quotations.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <a href="index.html"><img src="images/orion-logo.png" alt="Orion MIS"></a>
+      <p>UK-built warehouse automation for parcel centres, 3PLs and fulfilment operations. Conveyors, Helix sortation, robotics, AMRs and turnkey systems — designed, manufactured and supported from our UK facility.</p>
+    </div>
+    <div class="footer-cols">
+      <div><h4>Sectors</h4><ul>
+        <li><a href="parcel-centres.html">Parcel centres</a></li>
+        <li><a href="3pl-automation.html">3PL automation</a></li>
+        <li><a href="fulfilment-automation.html">Fulfilment &amp; e-commerce</a></li>
+        <li><a href="food-manufacturing.html">Food &amp; beverage manufacturing</a></li>
+      </ul></div>
+      <div><h4>Site</h4><ul>
+        <li><a href="index.html">Home</a></li><li><a href="products.html">Products</a></li><li><a href="index.html#proof">Case studies</a></li><li><a href="warehouse-automation-finance.html">Finance</a></li><li><a href="warehouse-automation-roi.html">ROI calculator</a></li><li><a href="news.html">News &amp; builds</a></li><li><a href="sketch.html?type=sketch">Send a sketch</a></li><li><a href="solution-builder.html">Solution builder</a></li>
+      </ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="tel:+443333355269">+44 333 335 5269</a></li><li><a href="mailto:info@orionmis.co.uk">info@orionmis.co.uk</a></li><li><a href="https://maps.google.com/?q=Orion+MIS+Fontwell+Chichester" target="_blank" rel="noopener">Fontwell, Chichester PO20 3RU</a></li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Orion MIS Ltd · Fontwell, Chichester PO20 3RU · Company no. <strong>11735049</strong> · VAT <strong>GB 318 1797 83</strong></span>
+    <span style="display:flex;gap:14px;flex-wrap:wrap">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="#" onclick="if(window.openCookieSettings)window.openCookieSettings();return false;">Cookie settings</a>
+      <span>Designed &amp; manufactured in the UK</span>
+    </span>
+  </div>
+</footer>
+
+<script src="site.js" defer></script>
+<script>
+const hamburger=document.getElementById('hamburger'),mobileNav=document.getElementById('mobileNav');
+hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileNav.classList.toggle('open')});
+mobileNav.querySelectorAll('a').forEach(a=>{a.addEventListener('click',()=>{hamburger.classList.remove('open');mobileNav.classList.remove('open')})});
+document.addEventListener('click',(e)=>{if(mobileNav.classList.contains('open')&&!mobileNav.contains(e.target)&&!hamburger.contains(e.target)){hamburger.classList.remove('open');mobileNav.classList.remove('open')}});
+const nav=document.getElementById('mainNav');window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>10)},{passive:true});
+</script>
+</body>
+</html>

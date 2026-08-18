@@ -38,6 +38,17 @@ Key facts:
 - [Food & beverage manufacturing](https://orionmis.co.uk/food-manufacturing):
   food-grade conveyors and end-of-line palletising — Tate & Lyle, Denso
 
+## Insights
+
+- [Cross-belt vs tilt-tray vs wheel sorters](https://orionmis.co.uk/parcel-sorter-comparison):
+  how the three parcel sortation technologies work, honest strengths and
+  weaknesses, and how to choose on destination count, parcel mix, footprint
+  and budget
+- [What does warehouse automation cost in the UK?](https://orionmis.co.uk/warehouse-automation-cost-uk):
+  2026 cost guide — entry systems from ~£4,000/month financed, a worked
+  £320.9k sorter example with 4-month payback, hidden costs and install
+  timelines
+
 ## Finance & ROI
 
 - [Why finance](https://orionmis.co.uk/why-finance.html): 22 reasons UK
