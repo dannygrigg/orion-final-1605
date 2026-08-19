@@ -48,6 +48,14 @@ Key facts:
   2026 cost guide — entry systems from ~£4,000/month financed, a worked
   £320.9k sorter example with 4-month payback, hidden costs and install
   timelines
+- [Print & apply labelling systems: a UK buyer's guide](https://orionmis.co.uk/print-and-apply-labelling-guide):
+  how print & apply works — print engine, tamp/blow/wipe applicators,
+  verification scanning — a buyer's checklist, and the ten Amazon SLAM lines
+  as proof
+- [The real cost of manual parcel sortation (UK, 2026)](https://orionmis.co.uk/cost-of-manual-sortation):
+  the wage-bill maths of a manual sort line at £16.30/hr all-in, the invisible
+  costs of agency, overtime and rework, and what the same money buys in
+  automation
 
 ## Finance & ROI
 

@@ -109,6 +109,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://orionmis.co.uk/print-and-apply-labelling-guide</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://orionmis.co.uk/cost-of-manual-sortation</loc>
+    <lastmod>2026-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://orionmis.co.uk/privacy</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>yearly</changefreq>
