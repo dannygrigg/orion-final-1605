@@ -40,6 +40,8 @@ Key facts:
 
 ## Insights
 
+- [All insights & guides](https://orionmis.co.uk/insights): the hub for every
+  Orion guide — engineering-led, no gated PDFs
 - [Cross-belt vs tilt-tray vs wheel sorters](https://orionmis.co.uk/parcel-sorter-comparison):
   how the three parcel sortation technologies work, honest strengths and
   weaknesses, and how to choose on destination count, parcel mix, footprint
