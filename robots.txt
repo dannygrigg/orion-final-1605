@@ -33,6 +33,8 @@ Disallow: /explainer-band-mockup.html
 Disallow: /linkedin-ad-pay-monthly.html
 Disallow: /lemon.html
 Disallow: /sketch-tool.html
+Disallow: /apc-p1-
+Disallow: /daily-report-worker/
 
 User-agent: *
 Allow: /
@@ -52,6 +54,8 @@ Disallow: /explainer-band-mockup.html
 Disallow: /linkedin-ad-pay-monthly.html
 Disallow: /lemon.html
 Disallow: /sketch-tool.html
+Disallow: /apc-p1-
+Disallow: /daily-report-worker/
 
 Sitemap: https://orionmis.co.uk/sitemap.xml
 # AI summary of this site: https://orionmis.co.uk/llms.txt

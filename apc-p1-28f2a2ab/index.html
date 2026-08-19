@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>APC Phase 1 — Snag List</title>
+<link rel="icon" href="/favicon.svg">
+<style>
+  :root {
+    --bg: #0f1419; --panel: #1a2129; --panel2: #232c37; --line: #2e3a47;
+    --text: #e8edf2; --dim: #8b98a5; --accent: #f59e0b;
+    --p1: #ef4444; --p2: #f59e0b; --p3: #3b82f6;
+    --open: #ef4444; --progress: #f59e0b; --done: #22c55e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--bg); color: var(--text); font: 16px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); min-height: 100vh; }
+  button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+  input, textarea, select { font: inherit; color: var(--text); background: var(--panel2); border: 1px solid var(--line); border-radius: 10px; padding: 12px; width: 100%; }
+  input:focus, textarea:focus, select:focus { outline: 2px solid var(--accent); border-color: transparent; }
+  h1 { font-size: 17px; font-weight: 700; }
+
+  header { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 16px calc(10px); display: flex; align-items: center; gap: 10px; }
+  header .sub { font-size: 12px; color: var(--dim); }
+  .counts { margin-left: auto; display: flex; gap: 6px; }
+  .chip { font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--panel2); }
+  .chip.o { color: var(--open); } .chip.p { color: var(--progress); } .chip.d { color: var(--done); }
+
+  main { padding: 14px 14px 20px; max-width: 640px; margin: 0 auto; }
+  .view { display: none; } .view.active { display: block; }
+
+  /* ── PIN gate ── */
+  #pinView { display: none; padding: 18vh 28px 0; text-align: center; max-width: 420px; margin: 0 auto; }
+  #pinView.active { display: block; }
+  #pinView h2 { font-size: 20px; margin-bottom: 4px; }
+  #pinView p { color: var(--dim); font-size: 14px; margin-bottom: 22px; }
+  #pinInput { text-align: center; font-size: 28px; letter-spacing: 10px; }
+  #pinErr { color: var(--p1); font-size: 14px; margin-top: 10px; min-height: 20px; }
+
+  .btn { display: block; width: 100%; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 16px; text-align: center; background: var(--accent); color: #14100a; margin-top: 14px; }
+  .btn:active { transform: scale(.98); }
+  .btn.ghost { background: var(--panel2); color: var(--text); border: 1px solid var(--line); }
+  .btn.wa { background: #25d366; color: #06130a; text-decoration: none; }
+
+  /* ── filters + cards ── */
+  .filters { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters button { flex: 0 0 auto; padding: 7px 14px; border-radius: 999px; background: var(--panel2); border: 1px solid var(--line); font-size: 14px; font-weight: 600; color: var(--dim); }
+  .filters button.on { background: var(--accent); border-color: var(--accent); color: #14100a; }
+
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 10px; overflow: hidden; }
+  .card .head { display: flex; gap: 10px; padding: 12px 14px; align-items: flex-start; width: 100%; text-align: left; }
+  .pbar { flex: 0 0 4px; align-self: stretch; border-radius: 2px; }
+  .pbar.P1 { background: var(--p1); } .pbar.P2 { background: var(--p2); } .pbar.P3 { background: var(--p3); }
+  .card .meta { font-size: 12px; color: var(--dim); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+  .card .desc { font-size: 15px; font-weight: 600; }
+  .stale { color: var(--p1); font-weight: 700; }
+  .status { flex: 0 0 auto; margin-left: auto; font-size: 12px; font-weight: 800; padding: 4px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: .4px; }
+  .status.open { background: rgba(239,68,68,.15); color: var(--open); }
+  .status.progress { background: rgba(245,158,11,.15); color: var(--progress); }
+  .status.done { background: rgba(34,197,94,.15); color: var(--done); }
+
+  .card .body { display: none; border-top: 1px solid var(--line); padding: 12px 14px; }
+  .card.expanded .body { display: block; }
+  .actions { display: flex; gap: 8px; margin-bottom: 12px; }
+  .actions button { flex: 1; padding: 11px 4px; border-radius: 10px; font-weight: 700; font-size: 14px; background: var(--panel2); border: 1px solid var(--line); }
+  .actions button.start { color: var(--progress); } .actions button.finish { color: var(--done); }
+  .hist { font-size: 13px; color: var(--dim); }
+  .hist div { padding: 5px 0; border-top: 1px dashed var(--line); }
+  .hist b { color: var(--text); font-weight: 600; }
+
+  /* ── add form ── */
+  form label { display: block; font-size: 13px; font-weight: 700; color: var(--dim); margin: 16px 0 6px; text-transform: uppercase; letter-spacing: .5px; }
+  .seg { display: flex; gap: 8px; }
+  .seg button { flex: 1; padding: 12px 4px; border-radius: 10px; background: var(--panel2); border: 1px solid var(--line); font-weight: 800; color: var(--dim); }
+  .seg button.on.P1 { background: rgba(239,68,68,.18); border-color: var(--p1); color: var(--p1); }
+  .seg button.on.P2 { background: rgba(245,158,11,.18); border-color: var(--p2); color: var(--p2); }
+  .seg button.on.P3 { background: rgba(59,130,246,.18); border-color: var(--p3); color: var(--p3); }
+  .seg .lbl { display: block; font-size: 11px; font-weight: 600; margin-top: 2px; }
+
+  /* ── report ── */
+  .stat-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+  .stat .n { font-size: 28px; font-weight: 800; }
+  .stat .l { font-size: 12px; color: var(--dim); }
+  .rep-area { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; }
+  .rep-area h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .6px; color: var(--accent); margin-bottom: 6px; }
+  .rep-area li { list-style: none; font-size: 14px; padding: 4px 0; border-top: 1px dashed var(--line); }
+  .rep-area li:first-of-type { border-top: none; }
+
+  /* ── bottom nav ── */
+  nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 10; display: flex; background: var(--panel); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+  nav button { flex: 1; padding: 12px 0 10px; font-size: 13px; font-weight: 700; color: var(--dim); }
+  nav button.on { color: var(--accent); }
+  nav .ico { display: block; font-size: 20px; line-height: 1.1; }
+
+  .toast { position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%); background: var(--done); color: #06130a; font-weight: 700; padding: 10px 18px; border-radius: 999px; z-index: 20; opacity: 0; transition: opacity .25s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+  .empty { text-align: center; color: var(--dim); padding: 40px 20px; font-size: 15px; }
+</style>
+</head>
+<body>
+
+<div id="pinView" class="active">
+  <h2>APC Phase 1 — Snag List</h2>
+  <p>Orion MIS site tool. Enter the crew PIN.</p>
+  <input id="pinInput" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="••••••">
+  <div id="pinErr"></div>
+  <button class="btn" onclick="login()">Unlock</button>
+</div>
+
+<div id="app" style="display:none">
+  <header>
+    <div>
+      <h1>APC Phase 1 · Snags</h1>
+      <div class="sub">Fragile &amp; Security Sorter — Stage 1</div>
+    </div>
+    <div class="counts" id="counts"></div>
+  </header>
+
+  <main>
+    <section id="listView" class="view active">
+      <div class="filters" id="filters"></div>
+      <div id="cards"></div>
+    </section>
+
+    <section id="addView" class="view">
+      <form id="addForm" onsubmit="return addSnag(event)">
+        <label for="fDesc">What's the snag?</label>
+        <textarea id="fDesc" rows="3" required placeholder="e.g. Guard rail bolt missing at Helix 2 outfeed"></textarea>
+        <label for="fArea">Area / zone</label>
+        <select id="fArea" required></select>
+        <label>Priority</label>
+        <div class="seg" id="fPrio"></div>
+        <label for="fName">Your name</label>
+        <input id="fName" required placeholder="First name" maxlength="60">
+        <button class="btn" type="submit">Raise snag</button>
+      </form>
+    </section>
+
+    <section id="reportView" class="view">
+      <div id="repBody" class="empty">Loading…</div>
+      <a id="waBtn" class="btn wa" style="display:none" target="_blank" rel="noopener">Share to WhatsApp</a>
+      <button class="btn ghost" onclick="loadReport()">Refresh report</button>
+    </section>
+  </main>
+
+  <nav>
+    <button id="nav-list" class="on" onclick="show('list')"><span class="ico">☰</span>Snags</button>
+    <button id="nav-add" onclick="show('add')"><span class="ico">＋</span>Add</button>
+    <button id="nav-report" onclick="show('report')"><span class="ico">📋</span>Report</button>
+  </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+// Zone names taken from APC_STAGE 1 electrical GA (Rev 3.0) — edit here if site naming changes.
+const ZONES = [
+  'Infeed Line', 'Main Line (Spine)',
+  'Helix 1', 'Helix 2', 'Helix 3', 'Helix 4', 'Helix 5', 'Helix 6',
+  'Lane 1', 'Lane 2', 'Lane 3', 'Lane 4', 'Lane 5',
+  'Gate Entry', 'Panels & Electrical', 'Controls & Comms', 'General / Site',
+];
+const PRIOS = { P1: 'Safety / stops work', P2: 'Fix before go-live', P3: 'Snag / cosmetic' };
+const STATUS_LABEL = { open: 'Open', progress: 'In progress', done: 'Done' };
+
+const API = location.pathname.replace(/\/?(index\.html)?$/, '') + '/api/';
+let token = localStorage.getItem('snagToken') || '';
+let snags = [], events = [], filter = 'notdone', prio = 'P3', expanded = null;
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+async function api(path, opts = {}) {
+  const res = await fetch(API + path, {
+    ...opts,
+    headers: { 'Content-Type': 'application/json', 'X-Auth': token, ...(opts.headers || {}) },
+  });
+  if (res.status === 401 && path !== 'login') { logout(); throw new Error('Not authorised'); }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || res.statusText);
+  return data;
+}
+
+function toast(msg) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ── auth ──
+async function login() {
+  $('pinErr').textContent = '';
+  try {
+    const r = await api('login', { method: 'POST', body: JSON.stringify({ pin: $('pinInput').value }) });
+    token = r.token; localStorage.setItem('snagToken', token);
+    boot();
+  } catch (e) { $('pinErr').textContent = e.message; }
+}
+function logout() {
+  token = ''; localStorage.removeItem('snagToken');
+  $('app').style.display = 'none'; $('pinView').classList.add('active');
+}
+$('pinInput').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+
+async function boot() {
+  try { await load(); } catch { return; }
+  $('pinView').classList.remove('active');
+  $('app').style.display = 'block';
+}
+
+// ── data ──
+async function load() {
+  const r = await api('snags');
+  snags = r.snags; events = r.events;
+  renderCounts(); renderFilters(); renderCards();
+}
+
+const dayMs = 864e5;
+const isStale = s => s.status !== 'done' && (Date.now() - Date.parse(s.created_at)) >= 3 * dayMs;
+const ageDays = s => Math.floor((Date.now() - Date.parse(s.created_at)) / dayMs);
+const fmt = iso => new Date(iso).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+
+function renderCounts() {
+  const o = snags.filter(s => s.status === 'open').length;
+  const p = snags.filter(s => s.status === 'progress').length;
+  const d = snags.filter(s => s.status === 'done').length;
+  $('counts').innerHTML =
+    `<span class="chip o">${o} open</span><span class="chip p">${p}</span><span class="chip d">${d} ✓</span>`;
+}
+
+function renderFilters() {
+  const defs = [['notdone', 'Outstanding'], ['open', 'Open'], ['progress', 'In progress'], ['done', 'Done'], ['all', 'All']];
+  $('filters').innerHTML = defs.map(([k, l]) =>
+    `<button class="${filter === k ? 'on' : ''}" onclick="setFilter('${k}')">${l}</button>`).join('');
+}
+function setFilter(k) { filter = k; expanded = null; renderFilters(); renderCards(); }
+
+function renderCards() {
+  const list = snags.filter(s =>
+    filter === 'all' ? true : filter === 'notdone' ? s.status !== 'done' : s.status === filter);
+  if (!list.length) { $('cards').innerHTML = '<div class="empty">Nothing here 🎉</div>'; return; }
+  $('cards').innerHTML = list.map(s => {
+    const hist = events.filter(e => e.snag_id === s.id).map(e =>
+      `<div><b>${esc(e.actor || '—')}</b> · ${esc(e.action.replace('status:', ''))}${e.detail ? ' — ' + esc(e.detail) : ''} <span>· ${fmt(e.at)}</span></div>`).join('');
+    const stale = isStale(s) ? ` <span class="stale">⚠ ${ageDays(s)}d open</span>` : '';
+    const acts =
+      (s.status === 'open' ? `<button class="start" onclick="setStatus(${s.id},'progress')">▶ Start</button>` : '') +
+      (s.status !== 'done' ? `<button class="finish" onclick="setStatus(${s.id},'done')">✓ Done</button>` : '') +
+      (s.status === 'progress' ? `<button onclick="setStatus(${s.id},'open')">↩ Back to open</button>` : '') +
+      (s.status === 'done' ? `<button onclick="setStatus(${s.id},'open')">↩ Reopen</button>` : '') +
+      `<button onclick="addNote(${s.id})">✎ Note</button>`;
+    return `<div class="card ${expanded === s.id ? 'expanded' : ''}">
+      <button class="head" onclick="toggle(${s.id})">
+        <span class="pbar ${s.priority}"></span>
+        <span style="flex:1">
+          <span class="desc">${esc(s.description)}</span>
+          <span class="meta"><span>#${s.id}</span><span>${esc(s.area)}</span><span>${s.priority}</span><span>${esc(s.raised_by)}</span><span>${fmt(s.created_at)}</span>${stale}</span>
+        </span>
+        <span class="status ${s.status}">${STATUS_LABEL[s.status]}</span>
+      </button>
+      <div class="body"><div class="actions">${acts}</div><div class="hist">${hist}</div></div>
+    </div>`;
+  }).join('');
+}
+function toggle(id) { expanded = expanded === id ? null : id; renderCards(); }
+
+function whoAmI() {
+  let name = localStorage.getItem('snagName') || '';
+  if (!name) {
+    name = (prompt('Your name (first time only):') || '').trim();
+    if (name) localStorage.setItem('snagName', name);
+  }
+  return name;
+}
+
+async function setStatus(id, status) {
+  const actor = whoAmI(); if (!actor) return;
+  const note = prompt(status === 'done' ? 'Closure note (optional):' : 'Note (optional):') || '';
+  try {
+    await api(`snags/${id}/status`, { method: 'POST', body: JSON.stringify({ status, note, actor }) });
+    toast(status === 'done' ? 'Closed ✓' : 'Updated');
+    await load();
+  } catch (e) { alert(e.message); }
+}
+
+async function addNote(id) {
+  const actor = whoAmI(); if (!actor) return;
+  const note = (prompt('Note:') || '').trim(); if (!note) return;
+  try {
+    await api(`snags/${id}/note`, { method: 'POST', body: JSON.stringify({ note, actor }) });
+    toast('Note added'); await load();
+  } catch (e) { alert(e.message); }
+}
+
+// ── add form ──
+function initForm() {
+  $('fArea').innerHTML = '<option value="" disabled selected>Choose area…</option>' +
+    ZONES.map(z => `<option>${z}</option>`).join('');
+  $('fPrio').innerHTML = Object.entries(PRIOS).map(([k, l]) =>
+    `<button type="button" class="${k}${k === prio ? ' on' : ''}" onclick="setPrio('${k}')">${k}<span class="lbl">${l}</span></button>`).join('');
+  $('fName').value = localStorage.getItem('snagName') || '';
+}
+function setPrio(k) { prio = k; [...$('fPrio').children].forEach(b => b.classList.toggle('on', b.textContent.startsWith(k))); }
+
+async function addSnag(e) {
+  e.preventDefault();
+  const body = {
+    description: $('fDesc').value.trim(),
+    area: $('fArea').value,
+    priority: prio,
+    raised_by: $('fName').value.trim(),
+  };
+  localStorage.setItem('snagName', body.raised_by);
+  try {
+    await api('snags', { method: 'POST', body: JSON.stringify(body) });
+    $('fDesc').value = ''; prio = 'P3'; initForm();
+    toast('Snag raised ✓'); show('list'); await load();
+  } catch (err) { alert(err.message); }
+  return false;
+}
+
+// ── report ──
+async function loadReport() {
+  $('repBody').className = 'empty'; $('repBody').textContent = 'Loading…';
+  let r;
+  try { r = await api('report'); } catch (e) { $('repBody').textContent = e.message; return; }
+
+  $('repBody').className = '';
+  $('repBody').innerHTML = `
+    <div class="stat-row">
+      <div class="stat"><div class="n">${r.outstanding}</div><div class="l">Outstanding (${r.in_progress} in progress)</div></div>
+      <div class="stat"><div class="n" style="color:var(--p1)">${r.stale_count}</div><div class="l">Open 3+ days ⚠</div></div>
+      <div class="stat"><div class="n">${r.new_today}</div><div class="l">New today</div></div>
+      <div class="stat"><div class="n" style="color:var(--done)">${r.closed_today}</div><div class="l">Closed today</div></div>
+    </div>` +
+    Object.entries(r.by_area).map(([area, items]) => `<div class="rep-area"><h3>${esc(area)} (${items.length})</h3><ul>` +
+      items.map(s => `<li>[${s.priority}] #${s.id} ${esc(s.description)} — ${STATUS_LABEL[s.status]}${r.stale_ids.includes(s.id) ? ' ⚠' : ''}</li>`).join('') +
+      '</ul></div>').join('');
+
+  // WhatsApp text is built server-side (same formatter feeds the 7am email)
+  const wa = $('waBtn');
+  wa.href = 'https://wa.me/?text=' + encodeURIComponent(r.wa_text);
+  wa.style.display = 'block';
+}
+
+// ── nav ──
+function show(v) {
+  for (const k of ['list', 'add', 'report']) {
+    $(k + 'View').classList.toggle('active', k === v);
+    $('nav-' + k).classList.toggle('on', k === v);
+  }
+  if (v === 'report') loadReport();
+  if (v === 'list') load().catch(() => {});
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && token && $('app').style.display !== 'none') load().catch(() => {});
+});
+
+initForm();
+if (token) boot();
+</script>
+</body>
+</html>
