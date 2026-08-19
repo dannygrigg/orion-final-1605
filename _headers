@@ -17,3 +17,9 @@
 # force a revalidate on every load so fixes go live without a stale 4h cache.
 /site.js
   Cache-Control: public, max-age=0, must-revalidate
+
+# APC Phase 1 snag tool — private site tool, keep out of every index
+# and never cache (live job data behind a PIN).
+/apc-p1-28f2a2ab/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
