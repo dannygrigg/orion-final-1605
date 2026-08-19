@@ -114,7 +114,7 @@
   <header>
     <div>
       <h1>APC Phase 1 · Snags</h1>
-      <div class="sub">Fragile &amp; Security Sorter — Stage 1</div>
+      <div class="sub">Fragile &amp; Security Sorter — Stage 1 · <span id="live" style="color:var(--done)">●</span> <span id="liveAt">live</span></div>
     </div>
     <div class="counts" id="counts"></div>
   </header>
@@ -216,6 +216,8 @@ async function load() {
   const r = await api('snags');
   snags = r.snags; events = r.events;
   renderCounts(); renderFilters(); renderCards();
+  const el = $('liveAt');
+  if (el) el.textContent = 'live ' + new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 }
 
 const dayMs = 864e5;
@@ -323,8 +325,8 @@ async function addSnag(e) {
 }
 
 // ── report ──
-async function loadReport() {
-  $('repBody').className = 'empty'; $('repBody').textContent = 'Loading…';
+async function loadReport(quiet) {
+  if (!quiet) { $('repBody').className = 'empty'; $('repBody').textContent = 'Loading…'; }
   let r;
   try { r = await api('report'); } catch (e) { $('repBody').textContent = e.message; return; }
 
@@ -359,6 +361,14 @@ function show(v) {
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden && token && $('app').style.display !== 'none') load().catch(() => {});
 });
+
+// Live board: poll every 30s while the page is visible, so a phone or an
+// office screen left open on the app always shows the current state.
+setInterval(() => {
+  if (document.hidden || !token || $('app').style.display === 'none') return;
+  load().catch(() => {});
+  if ($('reportView').classList.contains('active')) loadReport(true);
+}, 30000);
 
 initForm();
 if (token) boot();
