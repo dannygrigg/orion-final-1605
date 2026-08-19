@@ -11,7 +11,7 @@
 // No hard deletes anywhere — every change is a row in snag_events.
 // ─────────────────────────────────────────────────────────────────────────
 
-const DEFAULT_PIN = '576689';
+const DEFAULT_PIN = '122333';
 const TOKEN_SALT = 'orion-apc-snag-v1';
 
 const STATUSES = ['open', 'progress', 'done'];
