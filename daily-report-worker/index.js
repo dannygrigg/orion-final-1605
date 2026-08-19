@@ -19,7 +19,7 @@
 const REPORT_URL = 'https://orionmis.co.uk/apc-p1-28f2a2ab/api/report?format=wa';
 
 async function sendReport(env) {
-  const res = await fetch(REPORT_URL, { headers: { 'X-Auth': env.SNAG_TOKEN } });
+  const res = await fetch(REPORT_URL, { headers: { 'X-Auth': (env.SNAG_TOKEN || '').trim() } });
   if (!res.ok) throw new Error(`Report fetch failed: ${res.status} ${await res.text()}`);
   const text = await res.text();
 
@@ -62,8 +62,10 @@ export default {
   // Manual test: GET the worker URL with ?key=<SNAG_TOKEN> to trigger one send.
   async fetch(request, env) {
     const url = new URL(request.url);
-    if (url.searchParams.get('key') !== env.SNAG_TOKEN) {
-      return new Response('Not authorised', { status: 401 });
+    const key = (url.searchParams.get('key') || '').trim();
+    const expected = (env.SNAG_TOKEN || '').trim();
+    if (!expected || key !== expected) {
+      return new Response(expected ? 'Not authorised' : 'SNAG_TOKEN secret not set', { status: 401 });
     }
     try {
       const r = await sendReport(env);
