@@ -58,6 +58,14 @@ Key facts:
   the wage-bill maths of a manual sort line at £16.30/hr all-in, the invisible
   costs of agency, overtime and rework, and what the same money buys in
   automation
+- [How long does warehouse automation take to install?](https://orionmis.co.uk/warehouse-automation-installation-time):
+  UK timelines phase by phase — conveyor packages 6–10 weeks to site, full
+  sortation 12–25 weeks order-to-live, on-site install under 4 weeks, and the
+  order-by dates for peak
+- [Powered roller vs belt conveyors](https://orionmis.co.uk/powered-roller-vs-belt-conveyors):
+  how the two conveyor families work, where each honestly wins,
+  zero-line-pressure accumulation explained, and why most real systems mix
+  both
 
 ## Finance & ROI
 
