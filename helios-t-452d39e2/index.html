@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0E1318">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Helios tariff">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAABqUlEQVR42u3csQmEQBBA0VUuMjAxMTA4EGzHPqzB0Brsw3aEgwuswdhYQ8HB4L0GFobPbDZZWdUJ7sqNAAEhIASEgEBACAgBISAQEAJCQAgIBISAEBACAgEhIASEgBAQCAgBISAEBAJCQAgIAYGAEBACQkAgIASEgBAQAgIBISAEhIBAQAgIASEgEBACQkAICM4+Mc9sc2vW8ZrhZwPhC0NAICAEhIAQEAgIASEgBISAQEAICAEhIBAQAkJACAgEhIB4o6ysalPABkJACAgBgYAQEAJCQCAgnhN0YGrsC7Oelt0GAgEhIASEgBCQESAgBISAEBAICAEhIAQEAkJACAgBgYAQEAJCQJCSA1PYQAgIASEgEBACQkAICATE04IOTDXf7s1T2P6rFGwgBISAEBAICAEhIAQEAkJACAgBgYAQEAJCQAgIBISAEBACAgERx4EpbCAEhIAQEAgIASEgBAQCQkAICAGBgBAQAkJAICAEhIAQEAICASEgBISAQEAICAEhIBAQAkJACAgEhIAQEAJCQCAgBISAEBAICAEhIAQEAkJACAgBwcUBG7oLZzvmHDsAAAAASUVORK5CYII=">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAABqUlEQVR42u3csQmEQBBA0VUuMjAxMTA4EGzHPqzB0Brsw3aEgwuswdhYQ8HB4L0GFobPbDZZWdUJ7sqNAAEhIASEgEBACAgBISAQEAJCQAgIBISAEBACAgEhIASEgBAQCAgBISAEBAJCQAgIAYGAEBACQkAgIASEgBAQAgIBISAEhIBAQAgIASEgEBACQkAICM4+Mc9sc2vW8ZrhZwPhC0NAICAEhIAQEAgIASEgBISAQEAICAEhIBAQAkJACAgEhIB4o6ysalPABkJACAgBgYAQEAJCQCAgnhN0YGrsC7Oelt0GAgEhIASEgBCQESAgBISAEBAICAEhIAQEAkJACAgBgYAQEAJCQJCSA1PYQAgIASEgEBACQkAICATE04IOTDXf7s1T2P6rFGwgBISAEBAICAEhIAQEAkJACAgBgYAQEAJCQAgIBISAEBACAgERx4EpbCAEhIAQEAgIASEgBAQCQkAICAGBgBAQAkJAICAEhIAQEAICASEgBISAQEAICAEhIBAQAkJACAgEhIAQEAJCQCAgBISAEBAICAEhIAQEAkJACAgBwcUBG7oLZzvmHDsAAAAASUVORK5CYII=">
+<title>Helios — tariff model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--slate-900:#0E1318;
+--slate-800:#151B22;
+--slate-700:#1D242D;
+--slate-600:#2A333E;
+--line:#323C48;
+--ink:#E7EBEF;
+--ink-dim:#93A0AE;
+--ink-faint:#5F6C7B;
+--amber:#F2A93B;
+--amber-dim:#8A6222;
+--teal:#4CB79C;
+--rose:#D9705E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+background:var(--slate-900);
+color:var(--ink);
+font-family:'Barlow',system-ui,sans-serif;
+font-size:16px;
+line-height:1.55;
+padding:0 0 4rem;
+}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+
+header{
+border-bottom:1px solid var(--line);
+padding:18px 0;
+margin-bottom:28px;
+}
+.head-in{max-width:860px;margin:0 auto;padding:0 20px;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.mark{
+font-family:'Barlow Semi Condensed',sans-serif;
+font-weight:600;
+font-size:23px;
+letter-spacing:0.14em;
+color:var(--ink);
+}
+.mark span{color:var(--amber)}
+.head-meta{font-size:13px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace}
+
+h1{
+font-family:'Barlow Semi Condensed',sans-serif;
+font-weight:600;
+font-size:clamp(28px,6vw,40px);
+line-height:1.1;
+letter-spacing:-0.01em;
+margin-bottom:8px;
+}
+.lede{color:var(--ink-dim);font-size:16px;max-width:56ch;margin-bottom:32px}
+
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.preset{
+background:transparent;
+border:1px solid var(--line);
+color:var(--ink-dim);
+font-family:'Barlow',sans-serif;
+font-size:14px;
+padding:7px 14px;
+border-radius:2px;
+cursor:pointer;
+transition:border-color .12s,color .12s,background .12s;
+}
+.preset:hover{border-color:var(--amber-dim);color:var(--ink)}
+.preset.on{background:var(--amber);border-color:var(--amber);color:#241704;font-weight:500}
+.preset:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+.stage{
+background:var(--slate-800);
+border:1px solid var(--line);
+border-radius:3px;
+padding:24px 22px 22px;
+margin-bottom:14px;
+}
+
+.vol-row{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:6px}
+.vol-lab{font-size:14px;color:var(--ink-dim)}
+.vol-num{font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:500;color:var(--ink);letter-spacing:-0.02em}
+.vol-num em{font-style:normal;font-size:15px;color:var(--ink-faint);margin-left:5px}
+
+input[type=range]{
+-webkit-appearance:none;appearance:none;
+width:100%;height:26px;background:transparent;cursor:pointer;margin:2px 0 20px;
+}
+input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--slate-600)}
+input[type=range]::-moz-range-track{height:2px;background:var(--slate-600)}
+input[type=range]::-webkit-slider-thumb{
+-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+background:var(--amber);margin-top:-8px;border:3px solid var(--slate-800);
+}
+input[type=range]::-moz-range-thumb{
+width:18px;height:18px;border-radius:50%;background:var(--amber);border:3px solid var(--slate-800);
+}
+input[type=range]:focus-visible{outline:2px solid var(--amber);outline-offset:4px}
+
+.bandbar{display:flex;height:46px;border-radius:2px;overflow:hidden;background:var(--slate-700);margin-bottom:9px}
+.seg{
+display:flex;align-items:center;justify-content:center;
+font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+overflow:hidden;white-space:nowrap;
+transition:flex-grow .18s ease;
+}
+.seg-1{background:var(--amber);color:#241704}
+.seg-2{background:var(--amber-dim);color:#FBE6C4}
+.seg-3{background:var(--slate-600);color:var(--ink-dim)}
+.seg-4{background:var(--slate-700);color:var(--ink-faint);box-shadow:inset 0 0 0 1px var(--line)}
+.seg-empty{background:var(--slate-700)}
+
+.bandkey{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace}
+.bandkey i{display:inline-block;width:9px;height:9px;margin-right:6px;border-radius:1px;vertical-align:baseline}
+
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:3px;margin-bottom:14px}
+.met{background:var(--slate-800);padding:17px 18px}
+.met-l{font-size:13px;color:var(--ink-faint);margin-bottom:3px}
+.met-v{font-family:'IBM Plex Mono',monospace;font-size:25px;font-weight:500;letter-spacing:-0.02em}
+.met-s{font-size:12px;color:var(--ink-faint);margin-top:2px;font-family:'IBM Plex Mono',monospace}
+.tealv{color:var(--teal)}
+.amberv{color:var(--amber)}
+.rosev{color:var(--rose)}
+
+.roi{margin-top:-4px}
+.roi .met-v{font-size:22px}
+tr.lump td{color:var(--amber)}
+.verdict{
+border-left:3px solid var(--line);
+padding:12px 0 12px 16px;
+margin-bottom:26px;
+font-size:15px;
+color:var(--ink-dim);
+}
+.verdict strong{color:var(--ink);font-weight:600}
+
+details{border:1px solid var(--line);border-radius:3px;margin-bottom:10px;background:var(--slate-800)}
+summary{
+padding:14px 18px;cursor:pointer;list-style:none;
+display:flex;justify-content:space-between;align-items:center;gap:12px;
+font-weight:500;font-size:15px;
+}
+summary::-webkit-details-marker{display:none}
+summary:focus-visible{outline:2px solid var(--amber);outline-offset:-2px}
+.sum-note{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-faint);font-weight:400}
+summary::after{content:"+";color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:17px;line-height:1}
+details[open] summary::after{content:"–"}
+.panel{padding:4px 18px 20px;border-top:1px solid var(--line);margin-top:0}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;padding-top:16px}
+.f label{display:block;font-size:13px;color:var(--ink-dim);margin-bottom:5px}
+.f input{
+width:100%;background:var(--slate-900);border:1px solid var(--line);
+color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:15px;
+padding:8px 10px;border-radius:2px;
+}
+.f input:focus{outline:none;border-color:var(--amber)}
+
+.tenyr{margin-top:30px;border-top:1px solid var(--line);padding-top:24px}
+h2{font-family:'Barlow Semi Condensed',sans-serif;font-weight:600;font-size:21px;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono',monospace;font-size:13.5px}
+th{text-align:right;font-weight:500;color:var(--ink-faint);padding:7px 8px;border-bottom:1px solid var(--line);font-size:12.5px}
+th:first-child{text-align:left}
+td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--slate-700);color:var(--ink-dim)}
+td:first-child{text-align:left;color:var(--ink-faint)}
+tr:last-child td{border-bottom:none;color:var(--ink);font-weight:500;border-top:1px solid var(--line)}
+
+footer{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-faint);max-width:62ch}
+
+.explain{margin-top:26px}
+.explain h3{font-family:'Barlow',sans-serif;font-weight:600;font-size:16px;margin:22px 0 6px;color:var(--ink)}
+.explain h3:first-of-type{margin-top:16px}
+.explain p{font-size:15px;color:var(--ink-dim);max-width:60ch;margin-bottom:10px}
+.explain .note{font-size:14px;color:var(--ink-faint);border-left:2px solid var(--line);padding-left:12px;margin-top:10px}
+.calc{
+background:var(--slate-900);border:1px solid var(--line);border-radius:2px;
+padding:12px 14px;font-family:'IBM Plex Mono',monospace;font-size:13px;
+line-height:1.9;color:var(--ink-dim);overflow-x:auto;
+}
+.calc b{color:var(--amber);font-weight:500}
+.calc u{color:var(--teal);text-decoration:none;font-weight:500}
+tr.over td{opacity:.55}
+tr.over td:first-child::after{content:" \26A0";color:var(--amber)}
+.capwarn{margin-top:14px;font-size:14px;color:var(--ink-dim);border-left:2px solid var(--amber-dim);padding-left:12px;display:none}
+.capwarn b{color:var(--amber);font-weight:500}
+td.neg{color:var(--rose)}
+td.pos{color:var(--teal)}
+@media (max-width:560px){
+table{font-size:11px}
+th,td{padding:6px 3px}
+.metrics{grid-template-columns:repeat(2,1fr)}
+.vol-num{font-size:26px}
+.seg{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="head-in">
+<div class="mark">HELIOS<span>.</span></div>
+<div class="head-meta">tariff model · Orion MIS</div>
+</div>
+</header>
+
+<div class="wrap">
+
+<h1>What one site earns</h1>
+<p class="lede">Banded per-parcel pricing, modelled per site. Move the volume and watch the bands fill — the marginal rate drops as a site consolidates, which is the whole argument.</p>
+
+<div class="presets" id="presets">
+<button class="preset" data-v="2000">Small depot</button>
+<button class="preset" data-v="5000">Mid depot</button>
+<button class="preset on" data-v="10000">Good depot</button>
+<button class="preset" data-v="20000">Regional sort</button>
+<button class="preset" data-v="45000">Main hub</button>
+</div>
+
+<div class="stage">
+<div class="vol-row">
+<span class="vol-lab">Parcels per night</span>
+<span class="vol-num" id="volOut">10,000<em>/ night</em></span>
+</div>
+<input type="range" id="vol" min="500" max="60000" step="250" value="10000" aria-label="Parcels per night">
+
+<div class="bandbar" id="bar">
+<div class="seg seg-1" id="s1"></div>
+<div class="seg seg-2" id="s2"></div>
+<div class="seg seg-3" id="s3"></div>
+<div class="seg seg-4" id="s4"></div>
+<div class="seg seg-empty" id="s0"></div>
+</div>
+<div class="bandkey">
+<span><i style="background:var(--amber)"></i><span id="k1">first 5,000 at 50p</span></span>
+<span><i style="background:var(--amber-dim)"></i><span id="k2">next 2,500 at 40p</span></span>
+<span><i style="background:var(--slate-600)"></i><span id="k3">next 2,500 at 30p</span></span>
+<span><i style="background:var(--slate-700);border:1px solid var(--line)"></i><span id="k4">balance at 25p</span></span>
+</div>
+</div>
+
+<div class="metrics">
+<div class="met"><div class="met-l">Revenue a year</div><div class="met-v tealv" id="rev">£1.07m</div><div class="met-s" id="revN">£4,125 a night</div></div>
+<div class="met"><div class="met-l">Blended rate</div><div class="met-v amberv" id="blend">41.3p</div><div class="met-s">what they pay per parcel</div></div>
+<div class="met"><div class="met-l">Capex payback</div><div class="met-v" id="pay">4 mo</div><div class="met-s" id="payN">on £300,000</div></div>
+<div class="met"><div class="met-l">Machine load</div><div class="met-v" id="util">38%</div><div class="met-s" id="utilN">of a 4h sort window</div></div>
+</div>
+
+<p class="verdict" id="verdict"></p>
+
+<div class="metrics roi">
+<div class="met"><div class="met-l">Return on capital</div><div class="met-v tealv" id="roi">—</div><div class="met-s">net of capex, 10 years</div></div>
+<div class="met"><div class="met-l">IRR</div><div class="met-v" id="irr">—</div><div class="met-s">annualised</div></div>
+<div class="met"><div class="met-l">NPV</div><div class="met-v" id="npv">—</div><div class="met-s" id="npvN">at 10%</div></div>
+<div class="met"><div class="met-l">Business breakeven</div><div class="met-v" id="bkev">—</div><div class="met-s">recovers the capex</div></div>
+<div class="met"><div class="met-l">Your breakeven</div><div class="met-v" id="bkevMe">—</div><div class="met-s" id="bkevMeN">your share of it</div></div>
+</div>
+
+<details>
+<summary>Deal shape <span class="sum-note" id="dsum">no lump sum</span></summary>
+<div class="panel"><div class="fields">
+<div class="f"><label for="lump">Mobilisation fee (£)</label><input type="number" id="lump" value="0"></div>
+<div class="f"><label for="disc">Discount rate (%)</label><input type="number" id="disc" value="10"></div>
+<div class="f"><label for="grow">Volume growth (% a year)</label><input type="number" id="grow" value="0"></div>
+</div></div>
+</details>
+
+<details>
+<summary>Tariff bands <span class="sum-note" id="tsum">50p / 40p / 30p / 25p</span></summary>
+<div class="panel"><div class="fields">
+<div class="f"><label for="b1c">Band 1 up to</label><input type="number" id="b1c" value="5000"></div>
+<div class="f"><label for="b1r">Band 1 rate (p)</label><input type="number" id="b1r" value="50"></div>
+<div class="f"><label for="b2c">Band 2 next</label><input type="number" id="b2c" value="2500"></div>
+<div class="f"><label for="b2r">Band 2 rate (p)</label><input type="number" id="b2r" value="40"></div>
+<div class="f"><label for="b3c">Band 3 next</label><input type="number" id="b3c" value="2500"></div>
+<div class="f"><label for="b3r">Band 3 rate (p)</label><input type="number" id="b3r" value="30"></div>
+<div class="f"><label for="b4r">Balance rate (p)</label><input type="number" id="b4r" value="25"></div>
+<div class="f"><label for="nights">Nights a week</label><input type="number" id="nights" value="5"></div>
+</div></div>
+</details>
+
+<details>
+<summary>Asset and running cost <span class="sum-note" id="csum">£300k · £35k a year</span></summary>
+<div class="panel"><div class="fields">
+<div class="f"><label for="capex">Capex a machine (£)</label><input type="number" id="capex" value="300000"></div>
+<div class="f"><label for="cost">Cost to serve (£/yr)</label><input type="number" id="cost" value="35000"></div>
+<div class="f"><label for="cap">Throughput (parcels/hr)</label><input type="number" id="cap" value="6500"></div>
+<div class="f"><label for="win">Sort window (hours)</label><input type="number" id="win" value="4"></div>
+</div></div>
+</details>
+
+<details>
+<summary>Your side <span class="sum-note" id="osum">37% · 25% tax</span></summary>
+<div class="panel"><div class="fields">
+<div class="f"><label for="own">Your stake (%)</label><input type="number" id="own" value="37"></div>
+<div class="f"><label for="tax">Corporation tax (%)</label><input type="number" id="tax" value="25"></div>
+<div class="f"><label for="sites">Sites at this volume</label><input type="number" id="sites" value="1"></div>
+<div class="f"><label for="idx">Indexation (% a year)</label><input type="number" id="idx" value="3"></div>
+</div></div>
+</details>
+
+<div class="tenyr">
+<h2>Ten-year view</h2>
+<table>
+<thead><tr><th>Year</th><th>Revenue</th><th>Gross cum.</th><th>After tax</th><th>Net cum.</th><th>Yours cum.</th></tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+<p class="capwarn" id="capwarn"></p>
+</div>
+
+<details class="explain">
+<summary>How the maths works <span class="sum-note">with your numbers</span></summary>
+<div class="panel">
+
+<h3>Blended rate</h3>
+<p>Each night's parcels are split across the bands and priced separately, then divided back out.</p>
+<div class="calc" id="ex-blend"></div>
+<p class="note">This is the number APC will look at. It falls as volume rises, which is what makes concentrating volume worth their while.</p>
+
+<h3>Payback</h3>
+<p>How long the site takes to earn back the machine. Annual revenue less running cost, divided into twelve, then divided into the capex.</p>
+<div class="calc" id="ex-pay"></div>
+
+<h3>Return on capital</h3>
+<p>Everything the site makes after tax across ten years, less what the machine cost, expressed against that cost.</p>
+<div class="calc" id="ex-roi"></div>
+
+<h3>NPV — net present value</h3>
+<p>Money arriving in year 8 is worth less than money today, because today's money could be earning elsewhere. NPV discounts every future year back to today, then subtracts what you put in.</p>
+<div class="calc" id="ex-npv"></div>
+<p class="note">Positive means the site beats the return you set as your hurdle. The discount rate should be what capital actually costs you — around 8% on asset finance, more if it's equity.</p>
+
+<h3>IRR — internal rate of return</h3>
+<p>The same sum run backwards: the rate at which NPV would come out at exactly zero. It's the annual return the site generates on its own.</p>
+<div class="calc" id="ex-irr"></div>
+<p class="note">Compare it straight to what money costs you. Borrow at 8% against a site returning more, and the gap is yours. A mobilisation fee lifts IRR sharply because early cash is worth far more to the calculation than the same amount in year six.</p>
+
+<h3>Which one to trust</h3>
+<p>IRR gives you the rate, NPV gives you the size. A small depot can show a spectacular IRR and still be worth little in absolute terms. A hub may return a lower percentage but far more money. NPV is what ends up in the bank.</p>
+
+</div>
+</details>
+
+<footer>Indicative only. Growth is held flat — indexation is the only uplift applied. Cost to serve assumes the client carries spares, wear parts and the controls refresh; if that moves to Orion, raise it before relying on any of this.</footer>
+
+</div>
+
+<script>
+var els = {};
+["vol","volOut","s1","s2","s3","s4","s0","k1","k2","k3","k4","rev","revN","blend","pay","payN","util","utilN","verdict","tsum","csum","osum","dsum","tbody","roi","irr","npv","npvN","bkev","bkevMe","bkevMeN"].forEach(function(i){els[i]=document.getElementById(i)});
+var F=["b1c","b1r","b2c","b2r","b3c","b3r","b4r","nights","capex","cost","cap","win","own","tax","sites","idx","lump","disc","grow"];
+function irrOf(cf){
+  var lo=-0.95, hi=10, f=function(r){var s=0;for(var i=0;i<cf.length;i++)s+=cf[i]/Math.pow(1+r,i);return s};
+  if(f(lo)*f(hi)>0) return null;
+  for(var k=0;k<200;k++){var mid=(lo+hi)/2; if(f(lo)*f(mid)<=0) hi=mid; else lo=mid}
+  return (lo+hi)/2;
+}
+function v(i){var n=parseFloat(document.getElementById(i).value);return isNaN(n)?0:n}
+function gbp(n){
+  if(Math.abs(n)>=1e6) return "£"+(n/1e6).toFixed(2)+"m";
+  if(Math.abs(n)>=1e4) return "£"+Math.round(n/1000)+"k";
+  return "£"+Math.round(n).toLocaleString("en-GB");
+}
+function nightRev(p){
+  var c1=v("b1c"), c2=v("b2c"), c3=v("b3c");
+  var b1=Math.min(p,c1),
+      b2=Math.min(Math.max(p-c1,0),c2),
+      b3=Math.min(Math.max(p-c1-c2,0),c3),
+      b4=Math.max(p-c1-c2-c3,0);
+  return {t:(b1*v("b1r")+b2*v("b2r")+b3*v("b3r")+b4*v("b4r"))/100,b1:b1,b2:b2,b3:b3,b4:b4};
+}
+function calc(){
+  var p=parseFloat(els.vol.value), s=Math.max(v("sites"),1);
+  els.volOut.innerHTML=p.toLocaleString("en-GB")+"<em>/ night</em>";
+
+  var r=nightRev(p), span=Math.max(p,v("b1c")+v("b2c")+v("b3c"));
+  els.s1.style.flexGrow=r.b1; els.s2.style.flexGrow=r.b2; els.s3.style.flexGrow=r.b3; els.s4.style.flexGrow=r.b4;
+  els.s0.style.flexGrow=Math.max(span-p,0);
+  els.s1.textContent=r.b1>=900?r.b1.toLocaleString("en-GB"):"";
+  els.s2.textContent=r.b2>=900?r.b2.toLocaleString("en-GB"):"";
+  els.s3.textContent=r.b3>=900?r.b3.toLocaleString("en-GB"):"";
+  els.s4.textContent=r.b4>=900?r.b4.toLocaleString("en-GB"):"";
+  els.k1.textContent="first "+v("b1c").toLocaleString("en-GB")+" at "+v("b1r")+"p";
+  els.k2.textContent="next "+v("b2c").toLocaleString("en-GB")+" at "+v("b2r")+"p";
+  els.k3.textContent="next "+v("b3c").toLocaleString("en-GB")+" at "+v("b3r")+"p";
+  els.k4.textContent="balance at "+v("b4r")+"p";
+
+  var yr=r.t*v("nights")*52*s;
+  var costs=v("cost")*s, capex=v("capex")*s;
+  var profit=(yr-costs)*(1-v("tax")/100);
+  var mine=profit*v("own")/100;
+  var load=p/(Math.max(v("cap"),1)*Math.max(v("win"),0.1))*100;
+
+  els.rev.textContent=gbp(yr);
+  els.revN.textContent=gbp(r.t*s)+" a night"+(s>1?" · "+s+" sites":"");
+  els.blend.textContent=(r.t/p*100).toFixed(1)+"p";
+  els.pay.textContent=(yr>costs)?Math.round(capex/((yr-costs)/12))+" mo":"never";
+  els.payN.textContent="on "+gbp(capex);
+  els.util.textContent=Math.round(load)+"%";
+  els.utilN.textContent="of a "+v("win")+"h sort window";
+  els.util.className="met-v "+(load<20?"rosev":load>90?"amberv":"");
+
+  var msg;
+  if(load<15) msg="<strong>Badly underloaded.</strong> This site uses a fraction of the machine. Consolidating two or three of these into one sort earns the same revenue on a third of the capital.";
+  else if(load<35) msg="<strong>Works, but leaves money on the table.</strong> There's room for another site's volume on this asset without buying a second one.";
+  else if(load<80) msg="<strong>Well matched.</strong> The machine is sized to the site, with headroom for their growth.";
+  else if(load<100) msg="<strong>Near capacity.</strong> Little headroom left — plan the next machine or a longer window before volume grows again.";
+  else msg="<strong>Over capacity.</strong> This volume won't clear in the window. Needs a second machine or a longer sort.";
+  els.verdict.innerHTML=msg;
+
+  els.tsum.textContent=v("b1r")+"p / "+v("b2r")+"p / "+v("b3r")+"p / "+v("b4r")+"p";
+  els.csum.textContent=gbp(v("capex"))+" · "+gbp(v("cost"))+" a year";
+  els.osum.textContent=v("own")+"% · "+v("tax")+"% tax";
+
+  var rows="",cum=0,cumCo=0,idx=1+v("idx")/100,lump=v("lump")*s,cf=[-capex];
+  var run=-capex, runMe=-capex*v("own")/100, bk="", bkMe="", gross=0;
+  var gr=1+v("grow")/100, capNight=Math.max(v("cap"),1)*Math.max(v("win"),0.1), over="";
+  for(var y=1;y<=10;y++){
+    var vy=p*Math.pow(gr,y-1), ry=nightRev(vy), fx=Math.pow(idx,y-1);
+    var rv=ry.t*v("nights")*52*s*fx+(y===1?lump:0);
+    var pf=(rv-costs)*(1-v("tax")/100), ms=pf*v("own")/100;
+    cum+=ms; cumCo+=pf; gross+=rv; cf.push(pf);
+    run+=pf; runMe+=ms;
+    if(!bk&&run>=0) bk=(y===1?"< 1 yr":"yr "+y);
+    if(!bkMe&&runMe>=0) bkMe=(y===1?"< 1 yr":"yr "+y);
+    if(!over&&vy>capNight) over="yr "+y;
+    rows+="<tr"+(y===1&&lump>0?" class='lump'":"")+(vy>capNight?" class='over'":"")+"><td>Year "+y+"</td><td>"+gbp(rv)+"</td><td>"+gbp(gross)+"</td><td>"+gbp(pf)+"</td><td class='"+(run<0?"neg":"pos")+"'>"+gbp(run)+"</td><td class='"+(runMe<0?"neg":"pos")+"'>"+gbp(runMe)+"</td></tr>";
+  }
+  rows+="<tr><td>Total</td><td>"+gbp(gross)+"</td><td></td><td>"+gbp(cumCo)+"</td><td>"+gbp(run)+"</td><td>"+gbp(runMe)+"</td></tr>";
+  els.tbody.innerHTML=rows;
+
+  var d=v("disc")/100, npv=-capex;
+  for(var i=1;i<cf.length;i++) npv+=cf[i]/Math.pow(1+d,i);
+  var irrVal=irrOf(cf);
+  els.roi.textContent=capex>0?Math.round((cumCo-capex)/capex*100).toLocaleString("en-GB")+"%":"—";
+  els.irr.textContent=(irrVal===null)?"—":Math.round(irrVal*100)+"%";
+  els.npv.textContent=gbp(npv);
+  els.npvN.textContent="at "+v("disc")+"%";
+  els.bkev.textContent=bk||"beyond 10y";
+  els.bkev.className="met-v "+(bk?"tealv":"rosev");
+  els.bkevMe.textContent=bkMe||"beyond 10y";
+  els.bkevMe.className="met-v "+(bkMe?"tealv":"rosev");
+  els.bkevMeN.textContent="on "+gbp(capex*v("own")/100)+" of capex";
+  els.dsum.textContent=(lump>0?gbp(lump)+" up front":"no lump sum")+(v("grow")?" · +"+v("grow")+"% a year":"");
+  var cw=document.getElementById("capwarn");
+  if(over){cw.innerHTML="Volume outgrows the machine in <b>"+over+"</b> at "+v("grow")+"% growth. Those years need a second machine, a longer window, or the volume moving to a bigger site &mdash; revenue above the line isn't deliverable on this asset.";cw.style.display="block"}
+  else cw.style.display="none";
+
+  var ex=function(i,h){document.getElementById(i).innerHTML=h};
+  var n0=function(x){return Math.round(x).toLocaleString("en-GB")};
+  ex("ex-blend",
+    n0(r.b1)+" &times; "+v("b1r")+"p = £"+n0(r.b1*v("b1r")/100)+"<br>"+
+    n0(r.b2)+" &times; "+v("b2r")+"p = £"+n0(r.b2*v("b2r")/100)+"<br>"+
+    n0(r.b3)+" &times; "+v("b3r")+"p = £"+n0(r.b3*v("b3r")/100)+"<br>"+
+    n0(r.b4)+" &times; "+v("b4r")+"p = £"+n0(r.b4*v("b4r")/100)+"<br>"+
+    "night total <b>£"+n0(r.t)+"</b> &divide; "+n0(p)+" parcels = <u>"+(r.t/p*100).toFixed(1)+"p</u><br>"+
+    "next parcel earns <b>"+(p<v("b1c")?v("b1r"):p<v("b1c")+v("b2c")?v("b2r"):p<v("b1c")+v("b2c")+v("b3c")?v("b3r"):v("b4r"))+"p</b> &mdash; the marginal rate");
+  ex("ex-pay",
+    "revenue "+gbp(yr)+" &minus; costs "+gbp(costs)+" = "+gbp(yr-costs)+" a year<br>"+
+    "&divide; 12 = <b>"+gbp((yr-costs)/12)+"</b> a month<br>"+
+    "capex "+gbp(capex)+" &divide; that = <u>"+(yr>costs?Math.round(capex/((yr-costs)/12))+" months":"never")+"</u>");
+  ex("ex-roi",
+    "ten years after tax = "+gbp(cumCo)+"<br>"+
+    "&minus; capex "+gbp(capex)+" = "+gbp(cumCo-capex)+"<br>"+
+    "&divide; capex "+gbp(capex)+" = <u>"+(capex>0?Math.round((cumCo-capex)/capex*100).toLocaleString("en-GB")+"%":"—")+"</u>");
+  var y1=cf[1]||0, y5=cf[5]||0, y10=cf[10]||0;
+  ex("ex-npv",
+    "year 1 &nbsp;"+gbp(y1)+" &divide; 1."+String(Math.round(v("disc"))).padStart(2,"0")+"<sup>1</sup> = "+gbp(y1/Math.pow(1+d,1))+"<br>"+
+    "year 5 &nbsp;"+gbp(y5)+" &divide; 1."+String(Math.round(v("disc"))).padStart(2,"0")+"<sup>5</sup> = "+gbp(y5/Math.pow(1+d,5))+"<br>"+
+    "year 10 "+gbp(y10)+" &divide; 1."+String(Math.round(v("disc"))).padStart(2,"0")+"<sup>10</sup> = "+gbp(y10/Math.pow(1+d,10))+"<br>"+
+    "all ten discounted &minus; capex "+gbp(capex)+" = <u>"+gbp(npv)+"</u>");
+  ex("ex-irr",
+    "put in "+gbp(capex)+" at the start<br>"+
+    "take out roughly "+gbp(cumCo/10)+" a year for 10 years<br>"+
+    "the rate that makes those cancel out = <u>"+((irrVal===null)?"—":Math.round(irrVal*100)+"%")+"</u> a year");
+
+  document.querySelectorAll(".preset").forEach(function(b){
+    b.classList.toggle("on", Math.abs(parseFloat(b.dataset.v)-p)<250);
+  });
+}
+els.vol.addEventListener("input",calc);
+F.forEach(function(i){document.getElementById(i).addEventListener("input",calc)});
+document.querySelectorAll(".preset").forEach(function(b){
+  b.addEventListener("click",function(){els.vol.value=b.dataset.v;calc()});
+});
+calc();
+</script>
+</body>
+</html>

@@ -23,3 +23,8 @@
 /apc-p1-28f2a2ab/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store
+
+# Helios tariff model — private commercial page, keep out of every index.
+/helios-t-452d39e2/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
