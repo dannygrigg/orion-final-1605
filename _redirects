@@ -4,6 +4,14 @@
 /call  https://calendly.com/danny-grigg-orionmis/30min  302
 /visit https://calendly.com/danny-grigg-orionmis/process-review  302
 
+# ── Tracked campaign short links (edge-counted, consent-proof) ────────
+/go/li-why /explainer-why-orion.html 302
+/go/li-roi /warehouse-automation-roi.html 302
+/go/li-cost /warehouse-automation-cost-uk 302
+/go/li-install /warehouse-automation-installation-time 302
+/go/li-call https://calendly.com/danny-grigg-orionmis/30min 302
+
+
 # ── Legacy URLs from the old site ──────────────────────────────────────
 # Search engines and AI crawlers still hold the old site's URLs (blog
 # posts, sector pages, /public/ and /front/ asset paths) and were burning
