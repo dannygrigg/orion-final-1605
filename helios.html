@@ -285,6 +285,7 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
 .footer-bottom{max-width:var(--max);margin:34px auto 0;padding-top:20px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--soft);text-transform:uppercase;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 </style>
 <link rel="stylesheet" href="mobile.css?v=1">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -670,13 +671,14 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
     <div class="eyebrow" style="justify-content:center">See it live</div>
     <h2>Helios, running on <em>your operation.</em></h2>
     <p>It's live on real sites today. Leave your details and an Orion engineer will show you Helios on a system like yours and talk through the right tier.</p>
-    <form class="register" id="heliosForm" action="https://usebasin.com/f/d04288a27fc6" method="POST" novalidate>
+    <form class="register" id="heliosForm" action="/api/submit" method="POST" novalidate>
       <input type="hidden" name="_subject" value="Helios enquiry — Orion website">
       <input type="hidden" name="source" value="Helios page">
       <input type="hidden" name="_honeypot" value="_hp">
       <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
       <input type="text" name="name" placeholder="Your name" required autocomplete="name">
       <input type="email" name="email" placeholder="you@company.co.uk" required autocomplete="email">
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAEzmsg-udQEVBEiq" data-theme="dark" style="margin:14px 0"></div>
       <button type="submit">Book a Helios demo →</button>
     </form>
     <div class="register-note">No spam · We'll only contact you about Helios · +44 333 335 5269</div>

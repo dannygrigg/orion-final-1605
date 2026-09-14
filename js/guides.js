@@ -8,7 +8,8 @@
   'use strict';
   if (window.OrionGuides) return;
 
-  var BASIN = 'https://usebasin.com/f/d04288a27fc6';
+  var BASIN = '/api/submit';  // same-origin proxy (Turnstile + rate-limited)
+  var TURNSTILE_SITEKEY = '0x4AAAAAAEzmsg-udQEVBEiq';
   // Calendly — Danny's scheduling page. Per-event deep links preselect the event type;
   // BOOKINGS.page (the profile page) is the always-works fallback.
   // Query params: hide_gdpr_banner (no cookie notice in the embed), hide_event_type_details
@@ -386,8 +387,10 @@
       + '<input type="hidden" name="visitor_profile" value="">'
       + '<input type="hidden" name="page" value="">'
       + '<input type="hidden" name="_honeypot" value="_hp"><input type="text" name="_hp" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">'
+      + '<div class="og-ts" style="margin:8px 0"></div>'
       + '<button type="submit" class="og-cta" style="width:100%;justify-content:center">Send →</button>'
       + '</form></div>';
+    (function(){ var el=c.querySelector('.og-ts'); if(!el) return; function r(){ try{ window.turnstile.render(el,{sitekey:TURNSTILE_SITEKEY,theme:'dark'}); }catch(e){} } if(window.turnstile) return r(); var sc=document.createElement('script'); sc.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; sc.async=true; sc.onload=r; document.head.appendChild(sc); })();
     var f = document.getElementById('ogForm');
     f.querySelector('[name="visitor_profile"]').value = prof().join(' | ') || 'none captured';
     f.querySelector('[name="page"]').value = location.pathname + location.hash;

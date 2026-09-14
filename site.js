@@ -7,14 +7,26 @@
 //     (replaces Tawk — works offline, no third-party widget,
 //      submits direct to Basin → info@orionmis.co.uk)
 // ════════════════════════════════════════════════════════════════
-(function () {
+(  // Lazy-load Turnstile and render into a container (dynamic forms can't
+  // use the implicit widget scan).
+  function orionTurnstile(container) {
+    function render(){ try { window.turnstile.render(container, { sitekey: TURNSTILE_SITEKEY, theme: 'dark' }); } catch(e){} }
+    if (window.turnstile) return render();
+    var sc = document.createElement('script');
+    sc.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    sc.async = true; sc.onload = render;
+    document.head.appendChild(sc);
+  }
+
+  function () {
   'use strict';
 
   // ──────────────────────────────────────────────────────────────
   // 1. CONFIG
   // ──────────────────────────────────────────────────────────────
   var GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX';                  // e.g. 'G-1A2B3C4D5E'
-  var BASIN_ENDPOINT     = 'https://usebasin.com/f/d04288a27fc6';  // routes to info@orionmis.co.uk
+  var BASIN_ENDPOINT     = '/api/submit';  // same-origin proxy (Turnstile + rate-limited) in front of Basin
+  var TURNSTILE_SITEKEY  = '0x4AAAAAAEzmsg-udQEVBEiq';
   var STORAGE_KEY        = 'orion_cookie_consent_v1';
   // Working hours (UK time, 24h): Mon–Fri 09:00–17:30
   var WORK_DAYS          = [1, 2, 3, 4, 5]; // 0 = Sunday
@@ -130,7 +142,7 @@
   }
 
   // Lazy-load the guides panel (Barry/Penny/Comet/Liam router); fall back to the classic modal.
-  var GUIDES_V = 11; // ← bump whenever js/guides.js changes (immutable cache)
+  var GUIDES_V = 12; // ← bump whenever js/guides.js changes (immutable cache)
   var guidesLoading = null;
   function loadGuides() {
     if (window.OrionGuides) return Promise.resolve();
@@ -289,6 +301,7 @@
       +       '<span class="ao-label">What would you like to ask? <em>*</em></span>'
       +       '<textarea name="message" required rows="4" placeholder="Helix sortation throughput, finance routes, conveyor specs, AMR fit for our line — bullet points are fine."></textarea>'
       +     '</label>'
+      +     '<div class="ao-ts" style="margin:10px 0"></div>'
       +     '<button type="submit" class="ao-submit">Send to engineering →</button>'
       +     '<div class="ao-foot">'
       +       'Replies typically within <b>1 working day</b>'
@@ -313,6 +326,7 @@
     backdrop.className = 'ao-modal-backdrop';
     backdrop.innerHTML = askOrionModalHTML();
     document.body.appendChild(backdrop);
+    var aoTs = backdrop.querySelector('.ao-ts'); if (aoTs) orionTurnstile(aoTs);
     document.documentElement.style.overflow = 'hidden'; // lock scroll under modal
     requestAnimationFrame(function () { backdrop.classList.add('show'); });
     backdrop.addEventListener('click', function (e) {

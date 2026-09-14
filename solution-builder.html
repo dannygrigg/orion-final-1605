@@ -204,6 +204,7 @@ img{display:block;max-width:100%;height:auto}
 @media(max-width:700px){.footer-inner,.footer-cols{grid-template-columns:1fr}}
 </style>
 <link rel="stylesheet" href="mobile.css?v=1">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -623,7 +624,8 @@ function renderCapture(){
     <input type="hidden" name="_subject" value="Helix Solution Builder — indicative design (Barry)">
     <input type="hidden" name="_honeypot" value="_hp"><input type="text" name="_hp" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
     <input type="hidden" name="design" id="cd">
-    <button type="submit" class="btn btn-primary" id="cSub" style="width:100%;margin-top:10px">Send my design →</button>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAEzmsg-udQEVBEiq" data-theme="dark" style="margin:14px 0"></div>
+      <button type="submit" class="btn btn-primary" id="cSub" style="width:100%;margin-top:10px">Send my design →</button>
   </form>`;
   foot.appendChild(box);
   const {a,cfg,pr}=build(), m=cfg.metrics;
@@ -641,7 +643,7 @@ function renderCapture(){
     const ev=em.value.trim(),evok=ev&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ev);em.classList.toggle('err',!evok);if(!evok)ok=false;
     if(!ok)return;
     const b=$('cSub');b.disabled=true;b.textContent='Sending…';
-    try{const r=await fetch('https://usebasin.com/f/d04288a27fc6',{method:'POST',headers:{'Accept':'application/json'},body:new FormData($('cbForm'))});
+    try{const r=await fetch('/api/submit',{method:'POST',headers:{'Accept':'application/json'},body:new FormData($('cbForm'))});
       if(!r.ok)throw 0;box.remove();say("Champion — your sheet's with us and we'll email it over with a firmer figure inside a working day. Want it now? Hit <em>Print / save this sheet</em> on the right. Owt urgent, give us a bell — <em>+44 333 335 5269</em>. ☕");
     }catch(err){b.disabled=false;b.textContent='Send my design →';alert("Couldn't send — email info@orionmis.co.uk and we'll come straight back.");}
   });

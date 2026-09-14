@@ -322,7 +322,8 @@ input[type=file]{display:none}
 .pg-card button[type="submit"]:hover{transform:translateY(-1px)}
 .pg-card button[type="submit"]:disabled{opacity:.6;cursor:wait;transform:none}
 .pg-note{font-family:var(--mono);font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);text-align:center;line-height:1.6;margin-top:8px}
-</style></head>
+</style><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
 <body>
 
 <!-- ── SITE TOP BANNER · same marquee as every page ── -->
@@ -531,7 +532,8 @@ input[type=file]{display:none}
           <input type="text" name="company" placeholder="Company" autocomplete="organization">
           <input type="email" name="email" placeholder="you@company.co.uk" required autocomplete="email">
           <label class="pg-consent"><input type="checkbox" name="marketing_consent" value="Yes"><span>OK to send me occasional automation insights (optional)</span></label>
-          <button type="submit">Unlock pricing →</button>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAAEzmsg-udQEVBEiq" data-theme="dark" style="margin:14px 0"></div>
+      <button type="submit">Unlock pricing →</button>
           <div class="pg-note">Your layout stays in your browser<br>We only receive your contact details</div>
         </form>
       </div>
@@ -3093,7 +3095,7 @@ window.addEventListener('DOMContentLoaded', () => {
 // ════════════════════════════════════════════════════════════
 (function(){
   const KEY = 'orion_tool_unlock_v1';
-  const BASIN = 'https://usebasin.com/f/d04288a27fc6';
+  const BASIN = '/api/submit';
   const gate = document.getElementById('priceGate');
 
   function unlocked(){ try{ return !!localStorage.getItem(KEY); }catch(e){ return false; } }

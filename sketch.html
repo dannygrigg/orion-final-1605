@@ -257,6 +257,7 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
 }
 </style>
 <link rel="stylesheet" href="mobile.css?v=1">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -415,9 +416,8 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
       </div>
 
       <!-- ── FORM ── -->
-      <!-- Submission via Basin (usebasin.com, free tier, supports file attachments via AJAX). -->
-      <!-- Endpoint d04288a27fc6 routes to info@orionmis.co.uk. -->
-      <form id="sketchForm" method="POST" action="https://usebasin.com/f/d04288a27fc6" enctype="multipart/form-data" novalidate>
+      <!-- Submission via /api/submit — same-origin proxy (Turnstile + rate-limited) in front of the form relay. -->
+      <form id="sketchForm" method="POST" action="/api/submit" enctype="multipart/form-data" novalidate>
         <input type="hidden" id="formSubject" name="_subject" value="New enquiry — Orion website">
         <input type="hidden" name="_honeypot" value="_honey_secondary">
         <!-- Honeypot: real users leave this empty; bots fill it and Basin rejects the submission -->
@@ -675,7 +675,8 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
 
         <div class="submit-row">
           <div class="submit-note">Submissions and attachments are emailed direct to <strong>info@orionmis.co.uk</strong> — never stored on third-party servers. We aim to reply within one working day.</div>
-          <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAAEzmsg-udQEVBEiq" data-theme="dark" style="margin:14px 0"></div>
+        <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
             Send brief →
           </button>
         </div>
