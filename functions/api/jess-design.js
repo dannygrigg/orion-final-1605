@@ -51,7 +51,6 @@ export async function onRequestPost({ request, env, waitUntil }) {
   try { body = await request.json(); } catch (e) { return json({ error: 'Bad request' }, 400); }
   const desc = String(body.desc || '').replace(/\s+/g, ' ').trim().slice(0, 600);
   if (desc.length < 3) return json({ error: 'Describe the design in a few words.' }, 400);
-  const debug = body.debug === 'jf-7c1';
   const w = 1000;
   const h = Math.max(200, Math.min(3000, Math.round(Number(body.h) || 400)));
 
@@ -64,6 +63,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
       model: 'claude-sonnet-5',
       max_tokens: 12000,
       stream: true,
+      output_config: { effort: 'low' },
       messages: [{ role: 'user', content: prompt(desc, w, h) }],
     }),
   });
@@ -78,12 +78,10 @@ export async function onRequestPost({ request, env, waitUntil }) {
     const enc = new TextEncoder();
     const reader = upstream.body.pipeThrough(new TextDecoderStream()).getReader();
     let buf = '';
-    let raw = 0;
     try {
       for (;;) {
         const { value, done } = await reader.read();
         if (done) break;
-        if (debug && raw < 3000) { await out.write(enc.encode(value.slice(0, 3000 - raw))); raw += value.length; }
         buf += value;
         let i;
         while ((i = buf.indexOf('\n')) >= 0) {
@@ -93,6 +91,8 @@ export async function onRequestPost({ request, env, waitUntil }) {
           let ev;
           try { ev = JSON.parse(line.slice(5)); } catch (e) { continue; }
           if (ev.type === 'content_block_delta' && ev.delta && ev.delta.type === 'text_delta') await out.write(enc.encode(ev.delta.text));
+          // Keep the connection busy while the model thinks (spaces are ignored by the page)
+          else if (ev.type === 'ping' || ev.type === 'content_block_start' || (ev.type === 'content_block_delta' && ev.delta && ev.delta.type !== 'text_delta')) await out.write(enc.encode(' '));
           else if (ev.type === 'error') await out.write(enc.encode('\n[[ERROR]]'));
         }
       }
