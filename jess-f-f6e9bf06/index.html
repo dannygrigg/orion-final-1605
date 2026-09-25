@@ -113,7 +113,7 @@ textarea{width:100%;height:90px;font:12px var(--mono);background:var(--bg);color
       <div class="eyebrow">Laser-cut screen panels · design, cost and cut files</div>
       <h1>Jess's Fence Screens</h1>
     </div>
-    <p class="lead">Panels stand 2,000&nbsp;mm to the top of the posts, set in front of the existing 1,830&nbsp;mm close-board fence. Change the pattern and the sheet to see what each one costs to cut, then copy a DXF for the laser shop.</p>
+    <p class="lead">Panels stand 2,300&nbsp;mm to the top of the posts with a 100&nbsp;mm gap underneath, set in front of the existing 1,830&nbsp;mm close-board fence. Change the pattern and the sheet to see what each one costs to cut, then copy a DXF for the laser shop.</p>
   </header>
 
   <div class="app">
@@ -289,7 +289,7 @@ const PATTERNS={
   batten:{name:'Batten',desc:'Plain vertical slots. The cheapest baseline to compare the other designs against.'},
   custom:{name:'Your design',desc:'Upload a drawing, photo or AI picture. The tool turns it into a cuttable panel: it thickens thin strips, drops specks and adds bridges so no piece falls out.'}
 };
-const DEF={W:5250,H:2000,clr:50,post:60,auto:true,n:5,sheet:'auto',mat:'alu',t:3,colour:'5005',pattern:'canopy',mural:true,seed:7,
+const DEF={W:5250,H:2300,clr:100,post:60,auto:true,n:5,sheet:'auto',mat:'alu',t:3,colour:'5005',pattern:'canopy',mural:true,seed:7,
   border:40,web:14,minOpen:25,fillet:8,
   canopy:{cell:95,trees:2,trunk:95,grad:0.4},
   tide:{pitch:100,amp:40,wave:700,slotH:48,slotLen:560,bridge:30,drift:0.3},
@@ -298,7 +298,7 @@ const DEF={W:5250,H:2000,clr:50,post:60,auto:true,n:5,sheet:'auto',mat:'alu',t:3
   batten:{sw:32,pitch:72,bridges:2},
   custom:{thr:0.5,dark:'hole',fit:'cover',scale:1,ox:0,oy:0,blur:1,thicken:true,bridges:true,desc:''},
   rates:{cut:0.9,pierce:0.10,coat:24,post:48,fix:9,setup:90}};
-const KEY='jess-fence-screens-v2';
+const KEY='jess-fence-screens-v3';
 let S=JSON.parse(JSON.stringify(DEF));
 try{const s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s) S=deepMerge(S,s);}catch(e){}
 function deepMerge(a,b){for(const k in b){if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&a[k]&&typeof a[k]==='object')deepMerge(a[k],b[k]);else if(k in a)a[k]=b[k];}return a;}

@@ -51,6 +51,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
   try { body = await request.json(); } catch (e) { return json({ error: 'Bad request' }, 400); }
   const desc = String(body.desc || '').replace(/\s+/g, ' ').trim().slice(0, 600);
   if (desc.length < 3) return json({ error: 'Describe the design in a few words.' }, 400);
+  const debug = body.debug === 'jf-7c1';
   const w = 1000;
   const h = Math.max(200, Math.min(3000, Math.round(Number(body.h) || 400)));
 
@@ -77,10 +78,12 @@ export async function onRequestPost({ request, env, waitUntil }) {
     const enc = new TextEncoder();
     const reader = upstream.body.pipeThrough(new TextDecoderStream()).getReader();
     let buf = '';
+    let raw = 0;
     try {
       for (;;) {
         const { value, done } = await reader.read();
         if (done) break;
+        if (debug && raw < 3000) { await out.write(enc.encode(value.slice(0, 3000 - raw))); raw += value.length; }
         buf += value;
         let i;
         while ((i = buf.indexOf('\n')) >= 0) {
