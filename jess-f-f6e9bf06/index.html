@@ -143,7 +143,7 @@ textarea{width:100%;height:90px;font:12px var(--mono);background:var(--bg);color
         <h2>Sheet &amp; finish</h2>
         <div class="row2">
           <div class="fld"><label for="inSheet"><span>Stock sheet</span></label>
-            <select id="inSheet"><option value="2000x1000">2000 × 1000</option><option value="2500x1250">2500 × 1250</option><option value="3000x1500">3000 × 1500</option></select></div>
+            <select id="inSheet"><option value="auto">Auto (cheapest)</option><option value="2000x1000">2000 × 1000</option><option value="2500x1250">2500 × 1250</option><option value="3000x1500">3000 × 1500</option></select></div>
           <div class="fld"><label for="inT"><span>Thickness</span></label><select id="inT"></select></div>
         </div>
         <div class="fld"><label for="inMat"><span>Material</span></label><select id="inMat"></select></div>
@@ -182,7 +182,7 @@ textarea{width:100%;height:90px;font:12px var(--mono);background:var(--bg);color
               <div class="fld"><label for="rFix"><span>Fixings £/panel</span></label><input type="number" id="rFix" step="1" min="0"></div>
               <div class="fld"><label for="rSetup"><span>Setup + delivery £</span></label><input type="number" id="rSetup" step="5" min="0"></div>
             </div>
-            <p class="note">Sheet prices come from £/kg: aluminium £7.20, Zintec £1.70, galvanised £2.00, Corten £3.40. Replace all of these with real quotes once you have them.</p>
+            <p class="note">Sheet prices come from £/kg: aluminium £7.20, plain mild steel £1.45, Zintec £1.70, galvanised £2.00, Corten £3.40. Replace all of these with real quotes once you have them.</p>
           </div>
         </details>
       </div>
@@ -245,8 +245,9 @@ textarea{width:100%;height:90px;font:12px var(--mono);background:var(--bg);color
 const $=s=>document.querySelector(s);
 const SHEETS={'2000x1000':[2000,1000],'2500x1250':[2500,1250],'3000x1500':[3000,1500]};
 const MATS={
-  alu:{name:'Aluminium 5251',dens:2.68,kg:7.2,th:[2,3,4],cut:{2:0.75,3:0.9,4:1.15},pierce:0.10,coat:true},
-  zintec:{name:'Mild steel (Zintec)',dens:7.85,kg:1.7,th:[1.5,2,3],cut:{1.5:0.55,2:0.65,3:0.8},pierce:0.08,coat:true},
+  alu:{name:'Aluminium 5251',dens:2.68,kg:7.2,th:[2,3,4,5],cut:{2:0.75,3:0.9,4:1.15,5:1.4},pierce:0.10,coat:true},
+  mild:{name:'Mild steel, plain (CR4 / HRPO)',dens:7.85,kg:1.45,th:[1.5,2,3,4,5,6],cut:{1.5:0.5,2:0.6,3:0.75,4:0.95,5:1.15,6:1.35},pierce:0.08,coat:true},
+  zintec:{name:'Mild steel, Zintec coated',dens:7.85,kg:1.7,th:[1.5,2,3],cut:{1.5:0.55,2:0.65,3:0.8},pierce:0.08,coat:true},
   galv:{name:'Galvanised steel',dens:7.85,kg:2.0,th:[1.5,2,3],cut:{1.5:0.6,2:0.7,3:0.85},pierce:0.08,coat:true},
   corten:{name:'Corten weathering steel',dens:7.85,kg:3.4,th:[2,3],cut:{2:0.75,3:0.9},pierce:0.08,coat:false}
 };
@@ -266,16 +267,16 @@ const PATTERNS={
   batten:{name:'Batten',desc:'Plain vertical slots. The cheapest baseline to compare the other designs against.'},
   custom:{name:'Your design',desc:'Upload a drawing, photo or AI picture. The tool turns it into a cuttable panel: it thickens thin strips, drops specks and adds bridges so no piece falls out.'}
 };
-const DEF={W:5250,H:2000,clr:50,post:60,auto:true,n:5,sheet:'2000x1000',mat:'alu',t:3,colour:'5005',pattern:'canopy',mural:true,seed:7,
+const DEF={W:5250,H:2000,clr:50,post:60,auto:true,n:5,sheet:'auto',mat:'alu',t:3,colour:'5005',pattern:'canopy',mural:true,seed:7,
   border:40,web:14,minOpen:25,fillet:8,
   canopy:{cell:95,trees:2,trunk:95,grad:0.4},
   tide:{pitch:100,amp:40,wave:700,slotH:48,slotLen:560,bridge:30,drift:0.3},
   grass:{w0:48,gap:30,lean:160,hMin:0.45},
   bubbles:{rmin:10,rmax:70,grad:1,fill:0.8},
   batten:{sw:32,pitch:72,bridges:2},
-  custom:{thr:0.5,dark:'hole',fit:'cover',scale:1,ox:0,oy:0,blur:1,thicken:true,bridges:true},
+  custom:{thr:0.5,dark:'hole',fit:'cover',scale:1,ox:0,oy:0,blur:1,thicken:true,bridges:true,desc:''},
   rates:{cut:0.9,pierce:0.10,coat:24,post:48,fix:9,setup:90}};
-const KEY='jess-fence-screens-v1';
+const KEY='jess-fence-screens-v2';
 let S=JSON.parse(JSON.stringify(DEF));
 try{const s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s) S=deepMerge(S,s);}catch(e){}
 function deepMerge(a,b){for(const k in b){if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&a[k]&&typeof a[k]==='object')deepMerge(a[k],b[k]);else if(k in a)a[k]=b[k];}return a;}
@@ -285,26 +286,45 @@ function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.im
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
 /* ---------- layout ---------- */
+function nestFor(SL,SW,pw,ph){const fit=(a,b)=>Math.max(0,Math.floor((SL-10)/(a+10)))*Math.max(0,Math.floor((SW-10)/(b+10)));const A=fit(ph,pw),B=fit(pw,ph);return {per:Math.max(A,B),upright:B>A};}
 function layout(S){
-  const [SL,SW]=SHEETS[S.sheet];
   const ph=S.H-S.clr, post=S.post, gap=post>0?0:10;
   const pwFor=n=>post>0?(S.W-(n+1)*post)/n:(S.W-(n-1)*gap)/n;
-  const fits=(a,b)=>(a<=SL-20&&b<=SW-20)||(a<=SW-20&&b<=SL-20);
-  let n;
-  if(S.auto){n=1;while(!fits(ph,pwFor(n))&&n<40)n++;}else n=S.n;
-  const pw=pwFor(n);
+  const m=MATS[S.mat],sheetCost=k=>{const [a,b]=SHEETS[k];return a*b*S.t*m.dens/1e6*m.kg;};
+  const keys=S.sheet==='auto'?Object.keys(SHEETS):[S.sheet];
+  const nList=S.auto?Array.from({length:40},(_,i)=>i+1):[S.n];
+  let best=null;
+  for(const k of keys)for(const n of nList){
+    const pw=pwFor(n);if(pw<150&&S.auto)continue;if(pw<=0)continue;
+    const [SL,SW]=SHEETS[k],f=nestFor(SL,SW,pw,ph);if(!f.per)continue;
+    const sheets=Math.ceil(n/f.per),c=sheets*sheetCost(k)+(post>0?(n+1)*S.rates.post:0)+n*S.rates.fix+n*2*(pw+ph)/1000*S.rates.cut+n*S.rates.pierce*7;
+    if(!best||c<best.c-0.01)best={k,n,pw,per:f.per,upright:f.upright,sheets,c};
+  }
+  const warnings=[];
+  if(!best){
+    const k=S.sheet==='auto'?'3000x1500':S.sheet,[SL,SW]=SHEETS[k];
+    const n=S.auto?Math.max(1,Math.ceil((S.W-post)/(Math.min(SW,SL)-20+post))):S.n,pw=Math.max(1,pwFor(n));
+    if(ph>2980)warnings.push(`A ${Math.round(ph)} mm tall panel won't fit a 3000 × 1500 sheet, the biggest your laser takes. Lower the height to ${(2980+S.clr).toLocaleString()} mm or less, or split each bay into two panels one above the other.`);
+    else warnings.push(`A ${Math.round(pw)} × ${Math.round(ph)} mm panel won't fit a ${SL} × ${SW} sheet with a 10 mm edge. Choose Auto or a bigger sheet${S.auto?'':', or add panels'}.`);
+    best={k,n,pw,per:0,upright:false,sheets:n};
+  }
+  if(best.pw<150)warnings.push(`Panels are only ${Math.round(best.pw)} mm wide. Use fewer panels.`);
+  const [SL,SW]=SHEETS[best.k],n=best.n,pw=best.pw;
   const panels=[];
   for(let i=0;i<n;i++){const x0=post>0?post+i*(pw+post):i*(pw+gap);panels.push({i,x0,w:pw,h:ph});}
-  const fit=(L,W,a,b)=>Math.floor((L-10)/(a+10))*Math.floor((W-10)/(b+10));
-  const perA=fit(SL,SW,ph,pw), perB=fit(SL,SW,pw,ph), per=Math.max(perA,perB);
-  const rot=perB>perA;
-  const warnings=[];
-  if(per===0)warnings.push(`A ${Math.round(pw)} × ${Math.round(ph)} mm panel won't fit a ${SL} × ${SW} sheet with a 10 mm edge. Add panels, lower the height or pick a bigger sheet.`);
-  const sheets=per?Math.ceil(n/per):n;
-  const util=per?(n*pw*ph)/(sheets*SL*SW):0;
-  return {n,pw,ph,panels,per,rot,sheets,util,SL,SW,warnings,gap};
+  const util=best.per?(n*pw*ph)/(best.sheets*SL*SW):0;
+  return {n,pw,ph,panels,per:best.per,upright:best.upright,sheets:best.sheets,util,SL,SW,sheetKey:best.k,warnings,gap};
 }
+function placements(L){
+  if(!L.per)return [];
+  const a=L.upright?L.pw:L.ph,b=L.upright?L.ph:L.pw,nx=Math.floor((L.SL-10)/(a+10)),out=[];
+  for(let s=0;s<L.sheets;s++){const sh=[];for(let j=0;j<L.per;j++){const i=s*L.per+j;if(i>=L.n)break;
+    sh.push({i,x:10+(j%nx)*(a+10),y:10+Math.floor(j/nx)*(b+10)});}out.push(sh);}
+  return out;
+}
+function placeTf(L,pl){return L.upright?(x,y)=>[pl.x+x,pl.y+y]:(x,y)=>[pl.x+y,pl.y+L.pw-x];}
 function inner(L,S){return [S.border,S.border,L.pw-S.border,L.ph-S.border];}
+function tooSmall(L,S){const r=inner(L,S);return r[2]-r[0]<60||r[3]-r[1]<60;}
 
 /* ---------- geometry ---------- */
 function polyArea(p){let a=0;for(let i=0,n=p.length;i<n;i++){const q=p[i],r=p[(i+1)%n];a+=q[0]*r[1]-r[0]*q[1];}return a/2;}
@@ -351,6 +371,7 @@ function fixings(L,S){const b=S.border/2,ph=L.ph,pw=L.pw,ys=[150,ph/2,ph-150];co
 
 /* ---------- patterns ---------- */
 function genCanopy(S,L){
+  if(tooSmall(L,S))return L.panels.map(()=>[]);
   const P=S.canopy,R=rng(S.seed*101+1);
   const D=S.mural?{x0:0,y0:0,x1:S.W,y1:L.ph}:{x0:0,y0:0,x1:L.pw,y1:L.ph};
   const DW=D.x1-D.x0,DH=D.y1-D.y0;
@@ -415,6 +436,7 @@ function genCanopy(S,L){
   return out;
 }
 function genTide(S,L){
+  if(tooSmall(L,S))return L.panels.map(()=>[]);
   const P=S.tide,[ix0,iy0,ix1,iy1]=inner(L,S),out=[];let cache=null;
   for(const pn of L.panels){
     if(!S.mural&&cache){out.push(cache);continue;}
@@ -439,6 +461,7 @@ function genTide(S,L){
   return out;
 }
 function genGrass(S,L){
+  if(tooSmall(L,S))return L.panels.map(()=>[]);
   const P=S.grass,[ix0,iy0,ix1,iy1]=inner(L,S),iw=ix1-ix0,ih=iy1-iy0,out=[];let cache=null;
   const R0=rng(S.seed*7+3),ph1=R0()*6.28,ph2=R0()*6.28;
   for(const pn of L.panels){
@@ -459,6 +482,7 @@ function genGrass(S,L){
   return out;
 }
 function genBubbles(S,L){
+  if(tooSmall(L,S))return L.panels.map(()=>[]);
   const P=S.bubbles,[ix0,iy0,ix1,iy1]=inner(L,S),iw=ix1-ix0,ih=iy1-iy0,out=[];let cache=null;
   for(const pn of L.panels){
     if(!S.mural&&cache){out.push(cache);continue;}
@@ -476,6 +500,7 @@ function genBubbles(S,L){
   return out;
 }
 function genBatten(S,L){
+  if(tooSmall(L,S))return L.panels.map(()=>[]);
   const P=S.batten,[ix0,iy0,ix1,iy1]=inner(L,S),iw=ix1-ix0,ih=iy1-iy0,holes=[];
   const sw=Math.max(P.sw,S.minOpen),pitch=Math.max(P.pitch,sw+S.web),m=Math.max(1,Math.floor((iw-sw)/pitch)+1);
   const start=ix0+(iw-((m-1)*pitch+sw))/2+sw/2,bh=Math.max(40,2*S.web),k=P.bridges,segH=(ih-k*bh)/(k+1),a=sw/2;
@@ -523,9 +548,9 @@ function chaikin(p,n){for(let k=0;k<n;k++){const o=[];for(let i=0;i<p.length;i++
 function genCustom(S,L){
   const out=L.panels.map(()=>[]);
   if(!IMG){CUSTOM_REPORT=null;return out;}
-  const C=S.custom,key=JSON.stringify([C,S.mural,S.W,S.post,S.border,S.web,S.minOpen,L.pw,L.ph,L.n,IMG.src.length]);
+  const C=S.custom,key=JSON.stringify([{...C,desc:''},S.mural,S.W,S.post,S.border,S.web,S.minOpen,L.pw,L.ph,L.n,IMG.src.length]);
   if(customCache.key===key){CUSTOM_REPORT=customCache.rep;return customCache.out;}
-  const DW=S.mural?S.W:L.pw,DH=L.ph,w=Math.ceil(DW/RES),h=Math.ceil(DH/RES),N=w*h;
+  const DW=S.mural?S.W:L.pw,DH=L.ph,RES=Math.max(4,Math.sqrt(DW*DH/7e5)),w=Math.ceil(DW/RES),h=Math.ceil(DH/RES),N=w*h;
   const cv=document.createElement('canvas');cv.width=w;cv.height=h;const cx=cv.getContext('2d',{willReadFrequently:true});
   const metalDark=C.dark==='metal';cx.fillStyle=metalDark?'#000':'#fff';cx.fillRect(0,0,w,h);
   const iw=IMG.naturalWidth,ih=IMG.naturalHeight;let s=(C.fit==='cover'?Math.max(w/iw,h/ih):Math.min(w/iw,h/ih))*C.scale;
@@ -623,7 +648,7 @@ function slider(parent,id,label,path,min,max,step,fmt){
   syncers.push(sync);sync();
 }
 const mm=v=>Math.round(v)+' mm';
-slider($('#siteFields'),'inH','Height to top of posts','H',1500,2400,10,mm);
+slider($('#siteFields'),'inH','Height to top of posts','H',1200,3100,10,mm);
 slider($('#siteFields'),'inClr','Gap under panels','clr',0,150,5,mm);
 slider($('#nField'),'inN','Number of panels','n',1,12,1);
 slider($('#ruleFields'),'inBorder','Solid frame border','border',25,100,1,mm);
@@ -655,6 +680,63 @@ function exampleImage(){
   S.custom.dark='hole';S.custom.thr=0.5;S.custom.fit='cover';S.custom.scale=1;S.custom.ox=0;S.custom.oy=0;
   setImage(c.toDataURL('image/png'),false);
 }
+function escHtml(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+const ON_SITE=/(^|\.)orionmis\.co\.uk$|\.pages\.dev$/.test(location.hostname);
+function custMsg(t){const m=$('#descMsg')||$('#custRep');if(m)m.textContent=t;}
+function fromBlob(blob){return new Promise((res,rej)=>{const u=URL.createObjectURL(blob),im=new Image();im.onload=()=>{
+  const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));
+  const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);
+  try{res(c.toDataURL('image/jpeg',0.9));}catch(e){rej(e);}};im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error('not an image'));};im.src=u;});}
+function cleanUrl(u){
+  try{const x=new URL(u);
+    if(/(^|\.)google\./.test(x.hostname)){const g=x.searchParams.get('imgurl')||x.searchParams.get('url')||x.searchParams.get('q');if(g&&/^https?:/.test(g))return g;}
+    return x.href;}catch(e){return null;}
+}
+async function loadUrl(raw){
+  const box=$('#custRep');const say=t=>{if(box)box.textContent=t;};
+  if(!raw){say('Paste a link first.');return;}
+  if(raw.startsWith('data:image/')){setImage(raw,true);return;}
+  const u=cleanUrl(raw);if(!u){say('That doesn\'t look like a web link. It should start with https://');return;}
+  say('Fetching picture…');
+  try{
+    let blob;
+    if(ON_SITE){const r=await fetch('/api/img-proxy?u='+encodeURIComponent(u));if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error||'Could not fetch that link.');}blob=await r.blob();}
+    else{const r=await fetch(u,{mode:'cors'});if(!r.ok)throw new Error('The site refused the request.');blob=await r.blob();}
+    const data=await fromBlob(blob);setImage(data,true);say('');
+  }catch(e){say((e&&e.message?e.message+' ':'')+'If it keeps failing, save the picture and use Upload instead.');}
+}
+let DESC_BUSY=false;
+function extractSvg(t){const m=String(t||'').match(/<svg[\s\S]*<\/svg>/i);if(!m)return null;
+  return m[0].replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi,'').replace(/\son\w+\s*=\s*("[^"]*"|'[^']*')/gi,'').replace(/(xlink:)?href\s*=\s*("(?!#)[^"]*"|'(?!#)[^']*')/gi,'');}
+function designPrompt(desc,w,h){return `Draw a stencil design for a laser-cut steel garden screen as a single SVG.
+Subject: ${desc}
+Rules:
+- Output ONLY the SVG, starting <svg and ending </svg>, with viewBox="0 0 ${w} ${h}" and width="${w}" height="${h}". No commentary.
+- Pure black (#000) filled shapes on a white (#fff) background rect. Black is cut out of the metal; white stays as metal.
+- Bold, flat, filled silhouettes only: no outlines, no strokes thinner than 12 units, no gradients, no text, no photos, no filters.
+- Keep white gaps between black shapes at least 10 units wide. Avoid tiny details under 15 units.
+- Fill the whole canvas edge to edge with a balanced composition; black should cover roughly 35–55% of the area.
+- Organic, elegant, in the style of decorative laser-cut garden screens (like tree branch or sea-life screen panels).
+- Use at most about 150 path/shape elements and keep path data compact.`;}
+async function describeDesign(desc){
+  if(!desc){custMsg('Type what you want first.');return;}
+  if(DESC_BUSY)return;DESC_BUSY=true;S.custom.desc=desc.slice(0,600);save();
+  const btn=$('#descGo');if(btn)btn.disabled=true;
+  const L0=layout(S),DW=S.mural?S.W:L0.pw,w=1000,h=Math.max(200,Math.round(1000*L0.ph/DW));
+  const t0=Date.now(),tick=setInterval(()=>custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s (usually 20–60 s)`),1000);custMsg('Drawing…');
+  try{
+    let svg=null;
+    const smp=window.claude&&window.claude.use?await window.claude.use('sample').catch(()=>null):null;
+    if(smp){const r=await smp(designPrompt(desc,w,h),{modelTier:'complex'});svg=extractSvg(r.text);}
+    else if(ON_SITE){const r=await fetch('/api/jess-design',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({desc,w,h})});
+      const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'The drawing service is unavailable.');svg=extractSvg(j.svg);}
+    else throw new Error('Describe-a-design works on the website version.');
+    if(!svg)throw new Error('No drawing came back. Try rewording the description.');
+    const blob=new Blob([svg],{type:'image/svg+xml'});const data=await fromBlob(blob);
+    S.custom.dark='hole';S.custom.fit='cover';S.custom.scale=1;S.custom.ox=0;S.custom.oy=0;S.custom.thr=0.5;
+    DESC_BUSY=false;clearInterval(tick);setImage(data,true);
+  }catch(e){clearInterval(tick);DESC_BUSY=false;const b=$('#descGo');if(b)b.disabled=false;custMsg((e&&(e.message||e.code))||'Something went wrong.');return;}
+}
 function customBlock(){
   const d=document.createElement('div');d.style.cssText='display:flex;flex-direction:column;gap:10px;margin-bottom:12px';
   d.innerHTML=`<label for="upImg" style="display:flex;gap:12px;align-items:center;border:1.5px dashed var(--line);border-radius:6px;padding:10px;cursor:pointer">
@@ -662,6 +744,11 @@ function customBlock(){
       <span style="font-size:13px"><b>${IMG?'Change picture':'Upload a picture'}</b><br><span class="note">JPG or PNG. A phone photo of a pencil sketch works. It stays in this browser.</span></span></label>
     <input type="file" id="upImg" accept="image/*" hidden>
     <div class="exp"><button class="btn ghost" id="exImg">Load example</button>${IMG?'<button class="btn ghost" id="clrImg">Remove</button>':''}</div>
+    <div class="fld"><label for="imgUrl"><span>Or paste a picture link</span></label>
+      <div style="display:flex;gap:6px"><input type="url" id="imgUrl" placeholder="https://… (Google Images: right-click, Copy image address)" style="flex:1;min-width:0;font:13px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 8px"><button class="btn" id="urlGo">Load</button></div></div>
+    <div class="fld"><label for="descTxt"><span>Or describe a design</span></label>
+      <textarea id="descTxt" style="height:70px;font:13px var(--body)" placeholder="e.g. herons standing in tall reeds, sun low on the right, ripples along the bottom">${escHtml(S.custom.desc||'')}</textarea>
+      <div class="exp"><button class="btn" id="descGo">Draw it</button><span class="note" id="descMsg"></span></div></div>
     <div class="fld"><span style="font-size:13px">Dark parts of the picture become</span><div class="chips"><button class="chip" data-dk="hole" aria-pressed="${S.custom.dark==='hole'}">Holes</button><button class="chip" data-dk="metal" aria-pressed="${S.custom.dark==='metal'}">Metal</button></div></div>
     <div class="fld"><span style="font-size:13px">Fit</span><div class="chips"><button class="chip" data-ft="cover" aria-pressed="${S.custom.fit==='cover'}">Fill panel</button><button class="chip" data-ft="contain" aria-pressed="${S.custom.fit==='contain'}">Whole picture</button></div></div>
     <label class="toggle"><input type="checkbox" id="cThick" ${S.custom.thicken?'checked':''}> Thicken strips thinner than the web rule</label>
@@ -669,6 +756,11 @@ function customBlock(){
     <div id="custRep" class="note"></div>`;
   d.querySelector('#upImg').addEventListener('change',e=>{if(e.target.files[0])loadFile(e.target.files[0]);});
   d.querySelector('#exImg').addEventListener('click',exampleImage);
+  d.querySelector('#urlGo').addEventListener('click',()=>loadUrl(d.querySelector('#imgUrl').value.trim()));
+  d.querySelector('#imgUrl').addEventListener('keydown',e=>{if(e.key==='Enter')loadUrl(e.target.value.trim());});
+  d.querySelector('#descTxt').addEventListener('input',e=>{S.custom.desc=e.target.value.slice(0,600);save();});
+  d.querySelector('#descGo').addEventListener('click',()=>describeDesign(d.querySelector('#descTxt').value.trim()));
+  if(DESC_BUSY){d.querySelector('#descGo').disabled=true;d.querySelector('#descMsg').textContent='Drawing…';}
   const cl=d.querySelector('#clrImg');if(cl)cl.addEventListener('click',()=>{IMG=null;try{localStorage.removeItem(IMGKEY);}catch(e){}buildPatFields();schedule();});
   d.querySelectorAll('[data-dk]').forEach(b=>b.addEventListener('click',()=>{S.custom.dark=b.dataset.dk;buildPatFields();schedule();}));
   d.querySelectorAll('[data-ft]').forEach(b=>b.addEventListener('click',()=>{S.custom.fit=b.dataset.ft;buildPatFields();schedule();}));
@@ -793,6 +885,7 @@ function renderStats(){
   // warnings
   const w=[...L.warnings];
   if(S.web<S.t*4)w.push(`Webs of ${S.web} mm are under 4× the ${S.t} mm sheet. Thin strips twist and rattle in wind; go to ${Math.ceil(S.t*4)} mm or more.`);
+  if(S.mat==='mild')w.push('Plain mild steel rusts wherever the coating is thin. Have it shot blasted and zinc primed before powder coating, or hot-dip galvanised (3 mm and up, to stop it warping).');
   if(S.mat==='zintec')w.push('Zintec cut edges have no zinc. Every cut edge will rust under the powder coat unless the shop zinc-primes first.');
   if(S.mat==='corten')w.push('Corten sheds rust run-off for the first year or two. Keep it off the paving and the step, or stand it on gravel.');
   if(S.pattern==='custom'){const r=$('#custRep');
@@ -802,18 +895,45 @@ function renderStats(){
   $('#warns').innerHTML=w.map(t=>`<div class="warn">${t}</div>`).join('');
   // panel pick
   $('#panelPick').innerHTML='<span class="note">Panel</span>'+L.panels.map(p=>`<button class="chip" data-i="${p.i}" aria-pressed="${p.i===sel}">${p.i+1}</button>`).join('')+(S.mural?'':'<span class="note">All panels are the same</span>');
-  // nest
-  const k=Math.min(260/L.SL,1),w0=L.SL*k,h0=L.SW*k;
-  let rects='';if(L.per){const a=L.rot?L.pw:L.ph,b=L.rot?L.ph:L.pw;const nx=Math.floor((L.SL-10)/(a+10)),ny=Math.floor((L.SW-10)/(b+10));
-    for(let i=0;i<nx;i++)for(let j=0;j<ny;j++)rects+=`<rect x="${(10+i*(a+10))*k}" y="${(10+j*(b+10))*k}" width="${a*k}" height="${b*k}" style="fill:var(--accent);opacity:.85"/>`;}
-  $('#nest').innerHTML=`<svg viewBox="-2 -2 ${w0+4} ${h0+4}" width="${w0+4}" height="${h0+4}" role="img" aria-label="Sheet nesting"><defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" style="stroke:var(--muted);stroke-width:1"/></pattern></defs><rect x="0" y="0" width="${w0}" height="${h0}" style="fill:url(#hatch);stroke:var(--ink);stroke-width:1"/>${rects}</svg>
-  <div style="display:flex;flex-direction:column;gap:6px;max-width:34ch"><span style="font:600 22px var(--display)">${L.per} per sheet · ${Math.round(L.util*100)}% used</span>
-  <span class="note">${L.SL} × ${L.SW} mm stock sheet, 10 mm edge. Hatched area is offcut you still pay for. With 60 mm posts, five panels cut from 2000 × 1000 sheets cover up to 5,260 mm; past that it needs a sixth panel.</span></div>`;
+  drawNest();
+}
+function drawNest(){
+  const el=$('#nest'),pls=placements(L),col=COLOURS.find(c=>c.id===S.colour).hex,fx=fixings(L,S);
+  const ink=getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()||'#17202A';
+  const avail=Math.max(200,el.clientWidth||400),show=pls.slice(0,6),cols=avail>560?2:1,cw=Math.floor((avail-(cols-1)*12)/cols);
+  el.innerHTML=`<div style="display:flex;flex-direction:column;gap:4px;width:100%"><span style="font:600 22px var(--display)">${L.per?`${L.per} per sheet · ${L.sheets} sheet${L.sheets>1?'s':''} · ${Math.round(L.util*100)}% used`:'Panel does not fit the sheet'}</span>
+    <span class="note">${L.SL} × ${L.SW} mm sheet${S.sheet==='auto'?' (cheapest that fits)':''}, 10 mm edge and 10 mm between parts. Grey is offcut you still pay for. The zip download includes a DXF of each full sheet, ready for a ${L.SL} × ${L.SW} bed.</span></div>
+    <div id="nestGrid" style="display:grid;grid-template-columns:repeat(${cols},minmax(0,1fr));gap:12px;width:100%"></div>${pls.length>show.length?`<span class="note">…and ${pls.length-show.length} more sheet${pls.length-show.length>1?'s':''} laid out the same way.</span>`:''}`;
+  const grid=el.querySelector('#nestGrid');
+  show.forEach((sh,si)=>{
+    const wrap=document.createElement('div');wrap.style.cssText='display:flex;flex-direction:column;gap:4px';
+    const c=document.createElement('canvas'),k=cw/L.SL,hh=Math.round(L.SW*k),dpr=window.devicePixelRatio||1;
+    c.width=Math.round(cw*dpr);c.height=Math.round(hh*dpr);c.style.width=cw+'px';c.style.height=hh+'px';c.style.cursor='default';
+    c.setAttribute('aria-label',`Sheet ${si+1} cutting layout`);
+    const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);
+    x.fillStyle='#C9CDD1';x.fillRect(0,0,cw,hh);x.strokeStyle=ink;x.lineWidth=1;x.strokeRect(0.5,0.5,cw-1,hh-1);
+    x.fillStyle=col;x.beginPath();
+    for(const pl of sh){const tf=placeTf(L,pl);
+      const cn=[[0,0],[L.pw,0],[L.pw,L.ph],[0,L.ph]].map(q=>tf(q[0],q[1]));x.moveTo(cn[0][0]*k,cn[0][1]*k);for(const q of cn.slice(1))x.lineTo(q[0]*k,q[1]*k);x.closePath();
+      for(const h of G[pl.i].concat(fx))traceTf(x,h,tf,k);}
+    x.fill('evenodd');
+    x.font='600 11px "IBM Plex Mono", monospace';x.textBaseline='top';
+    for(const pl of sh){const o=placeTf(L,pl)(S.border/2,S.border/2),t='P'+(pl.i+1);x.fillStyle='rgba(255,255,255,.9)';x.fillRect(o[0]*k,o[1]*k,x.measureText(t).width+6,14);x.fillStyle='#1E2630';x.fillText(t,o[0]*k+3,o[1]*k+2);}
+    const lab=document.createElement('span');lab.className='note';lab.textContent=`Sheet ${si+1} of ${pls.length} · panel${sh.length>1?'s':''} ${sh.map(p=>p.i+1).join(', ')}`;
+    wrap.appendChild(c);wrap.appendChild(lab);grid.appendChild(wrap);
+  });
+}
+function traceTf(ctx,h,tf,k){
+  if(h.c){const q=tf(h.c[0],h.c[1]);ctx.moveTo((q[0]+h.c[2])*k,q[1]*k);ctx.arc(q[0]*k,q[1]*k,h.c[2]*k,0,Math.PI*2);ctx.closePath();return;}
+  const v=h.v,n=v.length,m=v.map(p=>tf(p[0],p[1]));ctx.moveTo(m[0][0]*k,m[0][1]*k);
+  for(let i=0;i<n;i++){const a=v[i],j=(i+1)%n;
+    if(!a[2])ctx.lineTo(m[j][0]*k,m[j][1]*k);else{const A=arcOf([m[i][0],m[i][1],a[2]],m[j]);ctx.arc(A.cx*k,A.cy*k,A.R*k,A.a1,A.a2,a[2]<0);}}
+  ctx.closePath();
 }
 function renderNotes(){
   const m=MATS[S.mat];
   const notes=[
-    ['Cheapest sheet','A 2000 × 1000 sheet is a stock size. A panel up to 1980 × 980 mm uses the whole sheet, so the only waste is the 10 mm trim. Bigger sheets don\'t help here because the panel height is fixed near 2 m.'],
+    ['Cheapest sheet',`Auto tries 2000 × 1000, 2500 × 1250 and 3000 × 1500 sheets with every panel count and keeps the cheapest mix of sheets and posts. At 2 m high, one panel per 2000 × 1000 sheet usually wins. Above about 2,030 mm it moves to bigger sheets; a 3000 × 1500 sheet takes panels up to 2,980 mm tall. This run: ${L.n} panels on ${L.sheets} × ${L.SL} × ${L.SW} sheets.`],
     ['Material',`3 mm aluminium 5251 is the default: it won't rust at the cut edges, weighs about ${(1.95*0.98*3*2.68).toFixed(0)} kg a panel, and powder coats well. 2 mm mild steel sheet costs about half as much, but every laser-cut edge rusts through the coating within a few years.`],
     ['What drives the laser bill','The shop charges for metres of cut and number of holes. Fewer, larger openings with smooth curves cost less than many small details. Push the smallest-opening rule up and the hole count drops straight away.'],
     ['One picture or repeated','The laser costs the same either way; each panel is its own program. A repeated panel is quicker to check and simpler to replace if one gets damaged.'],
@@ -843,17 +963,29 @@ $('#cv').addEventListener('click',e=>{if(!geom)return;const r=e.target.getBoundi
 window.addEventListener('resize',()=>{if(L)draw();});
 
 /* ---------- export ---------- */
-function dxf(i){
-  const holes=G[i],ph=L.ph,o=[],w=(...a)=>o.push(...a),f=x=>(Math.round(x*1000)/1000).toString();
+function dxfText(parts,H){
+  const o=[],w=(...a)=>o.push(...a),f=x=>(Math.round(x*1000)/1000).toString();
   w('0','SECTION','2','HEADER','9','$ACADVER','1','AC1009','9','$INSUNITS','70','4','0','ENDSEC','0','SECTION','2','ENTITIES');
-  const pl=(v,layer)=>{w('0','POLYLINE','8',layer,'66','1','10','0','20','0','30','0','70','1');
-    for(const p of v){w('0','VERTEX','8',layer,'10',f(p[0]),'20',f(ph-p[1]),'30','0');if(p[2])w('42',(-p[2]).toFixed(6));}w('0','SEQEND','8',layer);};
-  const ci=(c,layer)=>w('0','CIRCLE','8',layer,'10',f(c[0]),'20',f(ph-c[1]),'30','0','40',f(c[2]));
-  pl([[0,0,0],[L.pw,0,0],[L.pw,ph,0],[0,ph,0]],'OUTLINE');
-  for(const h of holes)h.c?ci(h.c,'CUT'):pl(h.v,'CUT');
-  for(const h of fixings(L,S))ci(h.c,'FIXING');
+  for(const p of parts){
+    if(p.c){w('0','CIRCLE','8',p.layer,'10',f(p.c[0]),'20',f(H-p.c[1]),'30','0','40',f(p.c[2]));continue;}
+    w('0','POLYLINE','8',p.layer,'66','1','10','0','20','0','30','0','70','1');
+    for(const q of p.v){w('0','VERTEX','8',p.layer,'10',f(q[0]),'20',f(H-q[1]),'30','0');if(q[2])w('42',(-q[2]).toFixed(6));}
+    w('0','SEQEND','8',p.layer);
+  }
   w('0','ENDSEC','0','EOF');return o.join('\r\n');
 }
+function panelParts(i,Lp,Sp,Gp,tf){
+  tf=tf||((x,y)=>[x,y]);const T=v=>v.map(q=>{const r=tf(q[0],q[1]);return [r[0],r[1],q[2]||0];});
+  const parts=[{layer:'OUTLINE',v:T([[0,0],[Lp.pw,0],[Lp.pw,Lp.ph],[0,Lp.ph]])}];
+  for(const h of Gp[i])parts.push(h.c?{layer:'CUT',c:[...tf(h.c[0],h.c[1]),h.c[2]]}:{layer:'CUT',v:T(h.v)});
+  for(const h of fixings(Lp,Sp))parts.push({layer:'FIXING',c:[...tf(h.c[0],h.c[1]),h.c[2]]});
+  return parts;
+}
+function dxf(i,Lp,Sp,Gp){Lp=Lp||L;Sp=Sp||S;Gp=Gp||G;return dxfText(panelParts(i,Lp,Sp,Gp),Lp.ph);}
+function sheetDxf(s,Lp,Sp,Gp){Lp=Lp||L;Sp=Sp||S;Gp=Gp||G;const sh=placements(Lp)[s];
+  const parts=[{layer:'SHEET',v:[[0,0,0],[Lp.SL,0,0],[Lp.SL,Lp.SW,0],[0,Lp.SW,0]]}];
+  for(const pl of sh)parts.push(...panelParts(pl.i,Lp,Sp,Gp,placeTf(Lp,pl)));
+  return dxfText(parts,Lp.SW);}
 async function copy(text,msg){
   const m=$('#expMsg'),fb=$('#fallback');
   try{await navigator.clipboard.writeText(text);m.textContent=msg;fb.hidden=true;}
@@ -864,14 +996,15 @@ $('#copyDxf').addEventListener('click',()=>copy(dxf(sel),`Copied panel ${sel+1} 
 $('#copyCode').addEventListener('click',()=>copy(JSON.stringify(S),'Copied design code.'));
 let DL=null;
 async function zipAll(){const z=new JSZip(),n=S.mural?L.n:1;for(let i=0;i<n;i++)z.file(`panel-${i+1}.dxf`,dxf(i));
+  placements(L).forEach((sh,si)=>z.file(`sheet-${si+1}-of-${L.sheets}-${L.SL}x${L.SW}.dxf`,sheetDxf(si)));
   z.file('design-code.json',JSON.stringify(S,null,1));
-  z.file('README.txt',`Jess fence screens - ${PATTERNS[S.pattern].name}
+  z.file('README.txt',`Jess fence screens - ${PATTERNS[S.pattern].name}${S.pattern==='custom'&&S.custom.desc?' - described as: '+S.custom.desc:''}
 
 ${L.n} panels ${Math.round(L.pw)} x ${Math.round(L.ph)} mm, ${MATS[S.mat].name} ${S.t} mm, ${COLOURS.find(c=>c.id===S.colour).name}.
 
 ${S.mural?'Each panel is different; cut one of each.':'All panels identical; cut panel-1 x '+L.n+'.'}
 
-DXF units mm, layers OUTLINE / CUT / FIXING (6 x 9 mm holes).
+DXF units mm, layers OUTLINE / CUT / FIXING (6 x 9 mm holes). sheet-*.dxf = panels nested on ${L.SL} x ${L.SW} sheets; layer SHEET is the sheet edge, do not cut it.
 
 `);
   return z.generateAsync({type:'blob'});}
@@ -885,6 +1018,7 @@ if(location.protocol==='file:')$('#dlAll').hidden=false;
 if(window.claude&&window.claude.use)window.claude.use('downloads').then(d=>{if(d){DL=d;$('#dlAll').hidden=false;}}).catch(()=>{});
 try{const im=localStorage.getItem(IMGKEY);if(im)setImage(im,false);}catch(e){}
 
+window.__jfs={get S(){return S;},set S(v){S=v;},layout,GEN,stats,cost,dxf,sheetDxf,placements,placeTf,inner,fixings,holeStats,exampleImage,get IMG(){return IMG;},run,get L(){return L;},get G(){return G;}};
 buildPatFields();syncStatic();
 if(window.d3)run();else window.addEventListener('load',run);
 })();
