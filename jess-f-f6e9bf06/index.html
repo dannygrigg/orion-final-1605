@@ -147,7 +147,14 @@ textarea{width:100%;height:90px;font:12px var(--mono);background:var(--bg);color
           <div class="fld"><label for="inT"><span>Thickness</span></label><select id="inT"></select></div>
         </div>
         <div class="fld"><label for="inMat"><span>Material</span></label><select id="inMat"></select></div>
-        <div class="fld"><span style="font-size:13px">Colour: <b id="colName"></b></span><div class="swatches" id="swatches"></div></div>
+        <div class="fld"><span style="font-size:13px">Colour: <b id="colName"></b></span><div class="swatches" id="swatches"></div>
+          <details id="ralBox"><summary style="font-size:13px;text-transform:none;letter-spacing:0;font-family:var(--body);font-weight:500;color:var(--accent)">Full RAL colour chart and custom colours</summary>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <input type="search" id="ralFind" placeholder="Search RAL code or name, e.g. 7016 or green" style="font:13px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 8px">
+              <div id="ralGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px;max-height:260px;overflow-y:auto"></div>
+              <label class="toggle" for="ralCustom" style="gap:10px"><input type="color" id="ralCustom" value="#1F4B8E" style="width:44px;height:30px;padding:0;border:1px solid var(--line);border-radius:4px;background:none"> Pick any colour</label>
+              <p class="note">Screen colours are approximate. Check a physical RAL fan deck or ask the powder coater for a sample before ordering.</p>
+            </div></details></div>
       </div>
 
       <div class="grp">
@@ -251,6 +258,21 @@ const MATS={
   galv:{name:'Galvanised steel',dens:7.85,kg:2.0,th:[1.5,2,3],cut:{1.5:0.6,2:0.7,3:0.85},pierce:0.08,coat:true},
   corten:{name:'Corten weathering steel',dens:7.85,kg:3.4,th:[2,3],cut:{2:0.75,3:0.9},pierce:0.08,coat:false}
 };
+const RAL=[['1013','Oyster white','#E3D9C6'],['1015','Light ivory','#E6D2B5'],['1023','Traffic yellow','#F0CA00'],['2004','Pure orange','#E75B12'],
+  ['3000','Flame red','#A72920'],['3004','Purple red','#6B1C23'],['3005','Wine red','#59191F'],['3009','Oxide red','#6D342D'],['3020','Traffic red','#C1121C'],
+  ['4005','Blue lilac','#76689A'],['5002','Ultramarine blue','#00387B'],['5003','Sapphire blue','#1F3855'],['5005','Signal blue','#1F4B8E'],['5010','Gentian blue','#004F7C'],
+  ['5011','Steel blue','#1A2B3C'],['5013','Cobalt blue','#232C3F'],['5014','Pigeon blue','#637D96'],['5024','Pastel blue','#6093AC'],
+  ['6000','Patina green','#3C7460'],['6005','Moss green','#2E4A3A'],['6009','Fir green','#27352A'],['6011','Reseda green','#587246'],['6021','Pale green','#89AC76'],['6029','Mint green','#006F3D'],
+  ['7001','Silver grey','#8C969D'],['7012','Basalt grey','#575D5E'],['7015','Slate grey','#51565C'],['7016','Anthracite grey','#373F43'],['7021','Black grey','#2E3234'],
+  ['7022','Umbra grey','#4B4D46'],['7024','Graphite grey','#474A50'],['7030','Stone grey','#939388'],['7035','Light grey','#CBD0CC'],['7039','Quartz grey','#6B695F'],
+  ['7040','Window grey','#9DA3A6'],['8011','Nut brown','#5A3826'],['8014','Sepia brown','#442F29'],['8017','Chocolate brown','#45302B'],['8019','Grey brown','#3D3635'],
+  ['9001','Cream','#E9E0D2'],['9005','Jet black','#141517'],['9006','White aluminium','#A5A8A6'],['9007','Grey aluminium','#8F8F8C'],['9010','Pure white','#EEEBE1'],['9016','Traffic white','#F6F8F4']];
+function colourOf(id){
+  const q=COLOURS.find(c=>c.id===id);if(q)return q;
+  if(/^custom-#[0-9a-f]{6}$/i.test(id))return {id,name:'Custom colour '+id.slice(7).toUpperCase()+' (match by RAL code or sample)',hex:id.slice(7)};
+  const r=RAL.find(x=>'ral-'+x[0]===id||x[0]===id);if(r)return {id,name:`RAL ${r[0]} ${r[1]}`,hex:r[2]};
+  return COLOURS[0];
+}
 const COLOURS=[
   {id:'5005',name:'RAL 5005 Signal blue',hex:'#1F4B8E'},
   {id:'7016',name:'RAL 7016 Anthracite',hex:'#373F43'},
@@ -717,19 +739,24 @@ Rules:
 - Keep white gaps between black shapes at least 10 units wide. Avoid tiny details under 15 units.
 - Fill the whole canvas edge to edge with a balanced composition; black should cover roughly 35–55% of the area.
 - Organic, elegant, in the style of decorative laser-cut garden screens (like tree branch or sea-life screen panels).
-- Use at most about 150 path/shape elements and keep path data compact.`;}
+- Use at most about 80 path/shape elements and keep path data compact (integers only).`;}
 async function describeDesign(desc){
   if(!desc){custMsg('Type what you want first.');return;}
   if(DESC_BUSY)return;DESC_BUSY=true;S.custom.desc=desc.slice(0,600);save();
   const btn=$('#descGo');if(btn)btn.disabled=true;
   const L0=layout(S),DW=S.mural?S.W:L0.pw,w=1000,h=Math.max(200,Math.round(1000*L0.ph/DW));
-  const t0=Date.now(),tick=setInterval(()=>custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s (usually 20–60 s)`),1000);custMsg('Drawing…');
+  const t0=Date.now(),tick=setInterval(()=>custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s (usually 1–2 minutes)`),1000);custMsg('Drawing…');
   try{
     let svg=null;
     const smp=window.claude&&window.claude.use?await window.claude.use('sample').catch(()=>null):null;
     if(smp){const r=await smp(designPrompt(desc,w,h),{modelTier:'complex'});svg=extractSvg(r.text);}
     else if(ON_SITE){const r=await fetch('/api/jess-design',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({desc,w,h})});
-      const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'The drawing service is unavailable.');svg=extractSvg(j.svg);}
+      if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error||'The drawing service is unavailable.');}
+      const rd=r.body.getReader(),dec=new TextDecoder();let txt='';
+      clearInterval(tick);
+      for(;;){const {value,done}=await rd.read();if(done)break;txt+=dec.decode(value,{stream:true});custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s · ${Math.round(txt.length/1024)} KB received`);}
+      if(txt.includes('[[ERROR]]'))throw new Error('The drawing was interrupted. Press Draw it again.');
+      svg=extractSvg(txt);}
     else throw new Error('Describe-a-design works on the website version.');
     if(!svg)throw new Error('No drawing came back. Try rewording the description.');
     const blob=new Blob([svg],{type:'image/svg+xml'});const data=await fromBlob(blob);
@@ -794,6 +821,14 @@ $('#inT').addEventListener('change',e=>{S.t=+e.target.value;resetRates();syncSta
 const swEl=$('#swatches');
 for(const c of COLOURS){const b=document.createElement('button');b.className='sw';b.style.background=c.hex;b.title=c.name;b.setAttribute('aria-label',c.name);b.dataset.c=c.id;
   b.addEventListener('click',()=>{if(c.id==='corten'){S.mat='corten';fillThick();resetRates();}else if(S.mat==='corten'){S.mat='alu';fillThick();resetRates();}S.colour=c.id;syncStatic();schedule();});swEl.appendChild(b);}
+function buildRal(){
+  const g=$('#ralGrid'),q=($('#ralFind').value||'').trim().toLowerCase();
+  g.innerHTML=RAL.filter(r=>!q||r[0].includes(q)||r[1].toLowerCase().includes(q)).map(r=>`<button class="ralc" data-r="ral-${r[0]}" aria-pressed="${S.colour==='ral-'+r[0]||S.colour===r[0]}" style="display:flex;flex-direction:column;gap:3px;align-items:stretch;padding:4px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);cursor:pointer;text-align:left;font:11px/1.2 var(--body)"><span style="display:block;height:28px;border-radius:2px;background:${r[2]};border:1px solid rgba(0,0,0,.15)"></span><b style="font:500 11px var(--mono)">RAL ${r[0]}</b><span style="color:var(--muted)">${r[1]}</span></button>`).join('')||'<span class="note">No match. Use Pick any colour.</span>';
+}
+$('#ralFind').addEventListener('input',buildRal);
+$('#ralGrid').addEventListener('click',e=>{const b=e.target.closest('[data-r]');if(!b)return;if(S.mat==='corten'){S.mat='alu';fillThick();resetRates();}S.colour=b.dataset.r;syncStatic();schedule();});
+$('#ralCustom').addEventListener('input',e=>{if(S.mat==='corten'){S.mat='alu';fillThick();resetRates();}S.colour='custom-'+e.target.value;syncStatic();schedule();});
+buildRal();
 const RATE_IDS={rCut:'cut',rPierce:'pierce',rCoat:'coat',rPost:'post',rFix:'fix',rSetup:'setup'};
 for(const id in RATE_IDS)$('#'+id).addEventListener('input',e=>{const v=parseFloat(e.target.value);if(!isNaN(v)&&v>=0){S.rates[RATE_IDS[id]]=v;schedule();}});
 
@@ -803,7 +838,8 @@ function syncStatic(){
   pc.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===S.pattern));
   $('#muralChips').querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed',(b.dataset.m==='1')===S.mural));
   swEl.querySelectorAll('.sw').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===S.colour));
-  $('#colName').textContent=COLOURS.find(c=>c.id===S.colour).name;
+  $('#colName').textContent=colourOf(S.colour).name;
+  document.querySelectorAll('#ralGrid [data-r]').forEach(b=>{const on=b.dataset.r===S.colour;b.setAttribute('aria-pressed',on);b.style.outline=on?'2px solid var(--ink)':'none';});
   $('#seedOut').textContent='#'+S.seed;
   for(const id in RATE_IDS)if(document.activeElement!==$('#'+id))$('#'+id).value=S.rates[RATE_IDS[id]];
   syncers.forEach(f=>f());
@@ -837,7 +873,7 @@ function draw(){
   ctx.fillStyle='#6F9A4C';ctx.fillRect(0,Y(S.H),cw,ch-Y(S.H));
   ctx.fillStyle='#5C8740';ctx.fillRect(0,Y(S.H),cw,Math.max(1,18*sc));
   // panels
-  const col=COLOURS.find(c=>c.id===S.colour).hex,fx=fixings(L,S);
+  const col=colourOf(S.colour).hex,fx=fixings(L,S);
   const body=(ctx,dx,dy)=>{
     ctx.beginPath();
     if(S.post>0)for(let i=0;i<=L.n;i++){const x=i*(L.pw+S.post);ctx.rect(X(x)+dx,Y(0)+dy,S.post*sc,(S.H)*sc);}
@@ -898,7 +934,7 @@ function renderStats(){
   drawNest();
 }
 function drawNest(){
-  const el=$('#nest'),pls=placements(L),col=COLOURS.find(c=>c.id===S.colour).hex,fx=fixings(L,S);
+  const el=$('#nest'),pls=placements(L),col=colourOf(S.colour).hex,fx=fixings(L,S);
   const ink=getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()||'#17202A';
   const avail=Math.max(200,el.clientWidth||400),show=pls.slice(0,6),cols=avail>560?2:1,cw=Math.floor((avail-(cols-1)*12)/cols);
   el.innerHTML=`<div style="display:flex;flex-direction:column;gap:4px;width:100%"><span style="font:600 22px var(--display)">${L.per?`${L.per} per sheet · ${L.sheets} sheet${L.sheets>1?'s':''} · ${Math.round(L.util*100)}% used`:'Panel does not fit the sheet'}</span>
@@ -1000,7 +1036,7 @@ async function zipAll(){const z=new JSZip(),n=S.mural?L.n:1;for(let i=0;i<n;i++)
   z.file('design-code.json',JSON.stringify(S,null,1));
   z.file('README.txt',`Jess fence screens - ${PATTERNS[S.pattern].name}${S.pattern==='custom'&&S.custom.desc?' - described as: '+S.custom.desc:''}
 
-${L.n} panels ${Math.round(L.pw)} x ${Math.round(L.ph)} mm, ${MATS[S.mat].name} ${S.t} mm, ${COLOURS.find(c=>c.id===S.colour).name}.
+${L.n} panels ${Math.round(L.pw)} x ${Math.round(L.ph)} mm, ${MATS[S.mat].name} ${S.t} mm, ${colourOf(S.colour).name}.
 
 ${S.mural?'Each panel is different; cut one of each.':'All panels identical; cut panel-1 x '+L.n+'.'}
 

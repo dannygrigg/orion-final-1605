@@ -7,8 +7,8 @@
 // The client sends only {desc, w, h}; model, prompt and limits are fixed here.
 //   1. Origin allow-list  — off-site and non-browser posts are refused
 //   2. Payload caps       — description 600 chars, canvas size clamped
-//   3. Output sanitising  — only the <svg> element is returned, scripts,
-//                           event handlers and external links stripped
+//   3. Streamed reply     — text only; the page extracts and sanitises the
+//                           <svg> and only ever draws it as an image
 // Add a Cloudflare rate-limiting rule on /api/jess-design like /api/submit*.
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -27,9 +27,10 @@ Rules:
 - Keep white gaps between black shapes at least 10 units wide. Avoid tiny details under 15 units.
 - Fill the whole canvas edge to edge with a balanced composition; black should cover roughly 35-55% of the area.
 - Organic, elegant, in the style of decorative laser-cut garden screens (like tree branch or sea-life screen panels).
-- Use at most about 150 path/shape elements and keep path data compact.`;
+- Use at most about 80 path/shape elements and keep path data compact (integers only).`;
 }
 
+// Kept for reference; sanitising now happens in the page after streaming.
 function cleanSvg(text) {
   const m = String(text || '').match(/<svg[\s\S]*<\/svg>/i);
   if (!m) return null;
@@ -40,7 +41,7 @@ function cleanSvg(text) {
     .replace(/(xlink:)?href\s*=\s*("(?!#)[^"]*"|'(?!#)[^']*')/gi, '');
 }
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request, env, waitUntil }) {
   const origin = request.headers.get('Origin') || '';
   if (!(ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.orion-final-1605\.pages\.dev$/.test(origin)))
     return json({ error: 'Forbidden' }, 403);
@@ -53,12 +54,15 @@ export async function onRequestPost({ request, env }) {
   const w = 1000;
   const h = Math.max(200, Math.min(3000, Math.round(Number(body.h) || 400)));
 
+  // Stream: a full SVG can take over 100 s, past Cloudflare's proxy timeout,
+  // so text deltas are forwarded as they arrive. The page sanitises the SVG.
   const upstream = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
     body: JSON.stringify({
       model: 'claude-sonnet-5',
-      max_tokens: 16000,
+      max_tokens: 12000,
+      stream: true,
       messages: [{ role: 'user', content: prompt(desc, w, h) }],
     }),
   });
@@ -66,9 +70,34 @@ export async function onRequestPost({ request, env }) {
     const status = upstream.status === 429 ? 429 : 502;
     return json({ error: status === 429 ? 'Busy, try again in a minute.' : 'The drawing service is unavailable right now.' }, status);
   }
-  const data = await upstream.json();
-  const text = (data.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
-  const svg = cleanSvg(text);
-  if (!svg) return json({ error: 'No drawing came back. Try rewording the description.' }, 502);
-  return json({ svg });
+
+  const { readable, writable } = new TransformStream();
+  const pump = (async () => {
+    const out = writable.getWriter();
+    const enc = new TextEncoder();
+    const reader = upstream.body.pipeThrough(new TextDecoderStream()).getReader();
+    let buf = '';
+    try {
+      for (;;) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buf += value;
+        let i;
+        while ((i = buf.indexOf('\n')) >= 0) {
+          const line = buf.slice(0, i).trim();
+          buf = buf.slice(i + 1);
+          if (!line.startsWith('data:')) continue;
+          let ev;
+          try { ev = JSON.parse(line.slice(5)); } catch (e) { continue; }
+          if (ev.type === 'content_block_delta' && ev.delta && ev.delta.type === 'text_delta') await out.write(enc.encode(ev.delta.text));
+          else if (ev.type === 'error') await out.write(enc.encode('\n[[ERROR]]'));
+        }
+      }
+    } catch (e) {
+      await out.write(enc.encode('\n[[ERROR]]')).catch(() => {});
+    }
+    await out.close().catch(() => {});
+  })();
+  if (waitUntil) waitUntil(pump);
+  return new Response(readable, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
 }
