@@ -63,7 +63,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
       model: 'claude-sonnet-5',
       max_tokens: 12000,
       stream: true,
-      output_config: { effort: 'low' },
+      output_config: { effort: 'medium' },
       messages: [{ role: 'user', content: prompt(desc, w, h) }],
     }),
   });
