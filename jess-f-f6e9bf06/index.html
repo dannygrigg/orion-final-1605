@@ -101,6 +101,8 @@ tr.cur td{background:var(--soft)}
 .notes p{margin:0;color:var(--muted);max-width:60ch}
 .exp{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .exp .msg{font-size:13px;color:var(--good)}
+.btn.wa{background:var(--good);border-color:var(--good);color:var(--bg)}
+.shared{background:var(--good-bg);color:var(--good);border-radius:6px;padding:10px 14px;font-size:14px}
 textarea{width:100%;height:90px;font:12px var(--mono);background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:8px}
 .pdesc{font-size:13px;color:var(--muted);margin:0}
 .legend{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--muted)}
@@ -196,10 +198,12 @@ textarea{width:100%;height:90px;font:12px var(--mono);background:var(--bg);color
     </aside>
 
     <section class="stage">
+      <div class="shared" id="sharedBanner" hidden></div>
       <div class="card">
         <div class="legend"><span><b style="color:var(--ink)">Elevation from the lawn</b> · click a panel to pick it for export</span><span id="scaleNote"></span></div>
         <div class="cvwrap"><canvas id="cv" aria-label="Elevation drawing of the fence screen panels"></canvas></div>
         <div class="warns" id="warns"></div>
+        <div class="exp"><button class="btn wa" id="waBtn">Send to Danny on WhatsApp</button><span class="note" id="waMsg" role="status">Sends a picture of this screen and a link that opens this exact design.</span></div>
       </div>
 
       <div class="stats" id="stats"></div>
@@ -745,7 +749,7 @@ async function describeDesign(desc){
   if(DESC_BUSY)return;DESC_BUSY=true;S.custom.desc=desc.slice(0,600);save();
   const btn=$('#descGo');if(btn)btn.disabled=true;
   const L0=layout(S),DW=S.mural?S.W:L0.pw,w=1000,h=Math.max(200,Math.round(1000*L0.ph/DW));
-  const t0=Date.now(),tick=setInterval(()=>custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s (usually 1–2 minutes)`),1000);custMsg('Drawing…');
+  const t0=Date.now(),tick=setInterval(()=>custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s (can take 2–5 minutes)`),1000);custMsg('Drawing…');
   try{
     let svg=null;
     const smp=window.claude&&window.claude.use?await window.claude.use('sample').catch(()=>null):null;
@@ -1052,11 +1056,63 @@ $('#dlAll').addEventListener('click',async()=>{const m=$('#expMsg'),name=`jess-s
   setTimeout(()=>{m.textContent='';},4000);});
 if(location.protocol==='file:')$('#dlAll').hidden=false;
 if(window.claude&&window.claude.use)window.claude.use('downloads').then(d=>{if(d){DL=d;$('#dlAll').hidden=false;}}).catch(()=>{});
-try{const im=localStorage.getItem(IMGKEY);if(im)setImage(im,false);}catch(e){}
+try{const im=localStorage.getItem(IMGKEY);if(im&&!new URLSearchParams(location.search).get('d'))setImage(im,false);}catch(e){}
 
-window.__jfs={get S(){return S;},set S(v){S=v;},layout,GEN,stats,cost,dxf,sheetDxf,placements,placeTf,inner,fixings,holeStats,exampleImage,get IMG(){return IMG;},run,get L(){return L;},get G(){return G;}};
+/* ---------- share to WhatsApp ---------- */
+function summaryText(){
+  const pat=PATTERNS[S.pattern].name+(S.pattern==='custom'&&S.custom.desc?` ("${S.custom.desc.slice(0,80)}")`:'');
+  return `Jess's fence screen design: ${pat}. ${L.n} panels ${Math.round(L.pw)} x ${Math.round(L.ph)} mm, ${S.H} mm to the top, ${S.clr} mm off the ground, ${S.W} mm run. ${MATS[S.mat].name} ${S.t} mm, ${colourOf(S.colour).name}. ${L.sheets} sheets of ${L.SL} x ${L.SW}. Estimate ${money(C.total)}.`;
+}
+function shrinkImg(max){if(!IMG)return null;const k=Math.min(1,max/Math.max(IMG.naturalWidth,IMG.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(IMG.naturalWidth*k);c.height=Math.round(IMG.naturalHeight*k);
+  const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(IMG,0,0,c.width,c.height);return c.toDataURL('image/jpeg',0.82);}
+function snapshot(link){
+  const cv=$('#cv'),W=1600,pad=40,elH=Math.round(cv.height*(W-2*pad)/cv.width),nests=[...document.querySelectorAll('#nestGrid canvas')].slice(0,2);
+  const nH=nests.length?Math.round((W-2*pad-20)/2*nests[0].height/nests[0].width):0;
+  const c=document.createElement('canvas');c.width=W;c.height=pad+60+elH+30+150+(nH?nH+50:0)+pad;const x=c.getContext('2d');
+  x.fillStyle='#F8F9F6';x.fillRect(0,0,W,c.height);x.fillStyle='#17202A';
+  x.font='700 40px "Barlow Condensed", Arial Narrow, sans-serif';x.fillText("Jess's Fence Screens",pad,pad+36);
+  x.font='400 18px "IBM Plex Mono", monospace';x.fillStyle='#5B6570';x.fillText(new Date().toLocaleString('en-GB'),W-pad-x.measureText(new Date().toLocaleString('en-GB')).width,pad+30);
+  let y=pad+60;x.drawImage(cv,pad,y,W-2*pad,elH);y+=elH+30;
+  const st=[...document.querySelectorAll('#stats .stat')].map(t=>[t.querySelector('.k').textContent,t.querySelector('.v').textContent]);
+  const cw=(W-2*pad)/Math.max(1,st.length);st.forEach((t,i)=>{x.fillStyle='#5B6570';x.font='600 16px "Barlow Condensed", sans-serif';x.fillText(t[0].toUpperCase(),pad+i*cw,y+18);
+    x.fillStyle=i===st.length-1?'#1F4B8E':'#17202A';x.font='600 34px "Barlow Condensed", sans-serif';x.fillText(t[1],pad+i*cw,y+56);});
+  x.fillStyle='#17202A';x.font='400 17px "IBM Plex Sans", sans-serif';
+  const words=summaryText().split(' ');let line='',ly=y+95;for(const w of words){if(x.measureText(line+w).width>W-2*pad){x.fillText(line,pad,ly);ly+=24;line='';}line+=w+' ';}x.fillText(line,pad,ly);
+  y+=150;
+  if(nH){x.fillStyle='#5B6570';x.font='600 16px "Barlow Condensed", sans-serif';x.fillText('CUTTING LAYOUT',pad,y+16);y+=30;nests.forEach((n,i)=>x.drawImage(n,pad+i*((W-2*pad-20)/2+20),y,(W-2*pad-20)/2,nH));}
+  return new Promise(r=>c.toBlob(r,'image/png'));
+}
+async function shareWhatsApp(){
+  const m=$('#waMsg'),b=$('#waBtn');b.disabled=true;m.textContent='Saving the design…';
+  let link=location.origin+location.pathname;
+  try{
+    if(ON_SITE){const r=await fetch('/api/jess-share',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({state:S,img:S.pattern==='custom'?shrinkImg(1100):null})});
+      const j=await r.json().catch(()=>({}));if(r.ok&&j.id)link+='?d='+j.id;}
+  }catch(e){}
+  const text=summaryText()+'\nOpen this exact design: '+link;
+  m.textContent='Making the picture…';
+  const blob=await snapshot(link),file=new File([blob],'jess-screen-design.png',{type:'image/png'});
+  b.disabled=false;
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    try{await navigator.share({files:[file],text,title:"Jess's fence screen design"});m.textContent='Shared.';return;}
+    catch(e){if(e&&e.name==='AbortError'){m.textContent='Cancelled.';return;}}
+  }
+  try{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='jess-screen-design.png';document.body.appendChild(a);a.click();a.remove();}catch(e){}
+  const w=window.open('https://wa.me/?text='+encodeURIComponent(text),'_blank');
+  m.innerHTML=w?'WhatsApp opened with the link. Attach the picture that just downloaded (<b>jess-screen-design.png</b>).':`Copy this into WhatsApp: <span style="font-family:var(--mono);user-select:all">${escHtml(link)}</span>`;
+}
+$('#waBtn').addEventListener('click',shareWhatsApp);
+async function loadShared(){
+  const id=new URLSearchParams(location.search).get('d');if(!id||!ON_SITE)return false;
+  try{const r=await fetch('/api/jess-share?id='+encodeURIComponent(id));if(!r.ok)throw 0;const j=await r.json();
+    S=deepMerge(JSON.parse(JSON.stringify(DEF)),j.state||{});
+    const ban=$('#sharedBanner');ban.hidden=false;ban.textContent=`You're looking at a design shared on ${new Date(j.created).toLocaleString('en-GB')}. Changes you make here aren't sent back.`;
+    if(j.img){await new Promise(res=>{const im=new Image();im.onload=()=>{IMG=im;customCache.key='';res();};im.onerror=res;im.src=j.img;});}
+    return true;}catch(e){const ban=$('#sharedBanner');ban.hidden=false;ban.textContent='That shared design link has expired or is wrong. Showing the last design on this device.';return false;}
+}
+window.__jfs={snapshot,summaryText,loadShared,get S(){return S;},set S(v){S=v;},layout,GEN,stats,cost,dxf,sheetDxf,placements,placeTf,inner,fixings,holeStats,exampleImage,get IMG(){return IMG;},run,get L(){return L;},get G(){return G;}};
 buildPatFields();syncStatic();
-if(window.d3)run();else window.addEventListener('load',run);
+loadShared().then(ok=>{if(ok){fillThick();buildPatFields();syncStatic();}if(window.d3)run();else window.addEventListener('load',run);});
 })();
 </script>
 
