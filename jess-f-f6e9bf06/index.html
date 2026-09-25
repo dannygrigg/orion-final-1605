@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Jess's Fence Screens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#ECEEE9;--surface:#F8F9F6;--ink:#17202A;--muted:#5B6570;--line:#D0D5CE;--soft:#E2E6E0;
+  --accent:#1F4B8E;--accent-ink:#FFFFFF;--good:#2F7A4E;--good-bg:#E1F0E6;--warn:#9A5B00;--warn-bg:#FBF1DF;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#101419;--surface:#171C23;--ink:#E2E6EB;--muted:#97A1AC;--line:#2A323C;--soft:#1F262E;
+    --accent:#86A8E6;--accent-ink:#0E1420;--good:#6CC08F;--good-bg:#16291E;--warn:#E3A546;--warn-bg:#2A2214;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#101419;--surface:#171C23;--ink:#E2E6EB;--muted:#97A1AC;--line:#2A323C;--soft:#1F262E;
+  --accent:#86A8E6;--accent-ink:#0E1420;--good:#6CC08F;--good-bg:#16291E;--warn:#E3A546;--warn-bg:#2A2214;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--body);padding-inline:20px;padding-block:20px 48px}
+.wrap{max-width:1440px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 32px;border-bottom:2px solid var(--ink);padding-bottom:12px}
+.eyebrow{font:600 12px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 44px/0.95 var(--display);letter-spacing:-.01em;margin:6px 0 0;text-wrap:balance}
+.lead{max-width:62ch;color:var(--muted);margin:0}
+h2{font:600 20px/1.1 var(--display);letter-spacing:.02em;margin:0;text-transform:uppercase}
+h3{font:600 15px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;margin:0;color:var(--muted)}
+.app{display:grid;grid-template-columns:330px minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:960px){.app{grid-template-columns:1fr}}
+.rail{background:var(--surface);border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column}
+.grp{padding:16px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--line)}
+.grp:last-child{border-bottom:0}
+.fld{display:flex;flex-direction:column;gap:4px}
+.fld label{display:flex;justify-content:space-between;gap:8px;font-size:13px}
+.fld output{font:500 12px var(--mono);color:var(--accent);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent);margin:0}
+select,input[type=number]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 8px;width:100%}
+input[type=number]{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 14px/1 var(--display);letter-spacing:.04em;text-transform:uppercase;padding:8px 11px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.swatches{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);cursor:pointer;padding:0}
+.sw[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 2px var(--surface) inset}
+.note{font-size:12.5px;color:var(--muted);margin:0}
+.btn{font:600 14px/1 var(--display);letter-spacing:.05em;text-transform:uppercase;padding:9px 12px;border-radius:4px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.toggle{display:flex;gap:8px;align-items:center;font-size:13px}
+details summary{cursor:pointer;font:600 15px/1.2 var(--display);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+details[open] summary{margin-bottom:12px}
+.stage{display:flex;flex-direction:column;gap:20px;min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.cvwrap{position:relative;border-radius:4px;overflow:hidden;background:#dfe7ee}
+canvas{display:block;width:100%;cursor:pointer}
+.panelpick{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.stat{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.stat .k{font:600 12px/1.2 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stat .v{font:600 28px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.stat .s{font:12px var(--mono);color:var(--muted)}
+.stat.total .v{color:var(--accent)}
+.two{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:20px}
+@media (max-width:1100px){.two{grid-template-columns:1fr}}
+.tblwrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font:600 12px/1.2 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td{font-family:var(--mono);font-size:13px}
+td:first-child{font-family:var(--body);font-weight:500}
+tr.cur td{background:var(--soft)}
+.pill{display:inline-block;font:600 11px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;padding:3px 6px;border-radius:3px;margin-left:6px;vertical-align:1px}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.cur{background:var(--accent);color:var(--accent-ink)}
+.costlist{display:flex;flex-direction:column;gap:8px}
+.cl{display:grid;grid-template-columns:130px 1fr 72px;gap:10px;align-items:center;font-size:13px}
+.cl .bar{height:10px;background:var(--soft);border-radius:2px;overflow:hidden}
+.cl .bar i{display:block;height:100%;background:var(--accent)}
+.cl b{font:500 13px var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.warns{display:flex;flex-direction:column;gap:6px}
+.warn{background:var(--warn-bg);color:var(--warn);border-radius:4px;padding:8px 10px;font-size:13px}
+.nest{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.nest svg{max-width:100%;height:auto}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px 24px}
+.notes div{display:flex;flex-direction:column;gap:4px}
+.notes h3{color:var(--ink)}
+.notes p{margin:0;color:var(--muted);max-width:60ch}
+.exp{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.exp .msg{font-size:13px;color:var(--good)}
+textarea{width:100%;height:90px;font:12px var(--mono);background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:4px;padding:8px}
+.pdesc{font-size:13px;color:var(--muted);margin:0}
+.legend{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Laser-cut screen panels · design, cost and cut files</div>
+      <h1>Jess's Fence Screens</h1>
+    </div>
+    <p class="lead">Panels stand 2,000&nbsp;mm to the top of the posts, set in front of the existing 1,830&nbsp;mm close-board fence. Change the pattern and the sheet to see what each one costs to cut, then copy a DXF for the laser shop.</p>
+  </header>
+
+  <div class="app">
+    <aside class="rail" aria-label="Design controls">
+      <div class="grp">
+        <h2>Site</h2>
+        <div class="fld">
+          <label for="inW"><span>Run width, post face to post face (mm)</span></label>
+          <input type="number" id="inW" min="1000" max="12000" step="10">
+          <p class="note">5,250 is an estimate from the photo (just under three 1,830&nbsp;mm fence bays). Measure it before ordering.</p>
+        </div>
+        <div id="siteFields"></div>
+        <div class="fld">
+          <label for="inPost"><span>Posts</span></label>
+          <select id="inPost">
+            <option value="60">60 × 60 mm steel posts between panels</option>
+            <option value="50">50 × 50 mm steel posts between panels</option>
+            <option value="80">80 × 80 mm steel posts between panels</option>
+            <option value="0">No new posts. Fix to existing fence</option>
+          </select>
+        </div>
+        <label class="toggle"><input type="checkbox" id="inAuto"> Choose panel count to suit the sheet</label>
+        <div id="nField"></div>
+      </div>
+
+      <div class="grp">
+        <h2>Sheet &amp; finish</h2>
+        <div class="row2">
+          <div class="fld"><label for="inSheet"><span>Stock sheet</span></label>
+            <select id="inSheet"><option value="2000x1000">2000 × 1000</option><option value="2500x1250">2500 × 1250</option><option value="3000x1500">3000 × 1500</option></select></div>
+          <div class="fld"><label for="inT"><span>Thickness</span></label><select id="inT"></select></div>
+        </div>
+        <div class="fld"><label for="inMat"><span>Material</span></label><select id="inMat"></select></div>
+        <div class="fld"><span style="font-size:13px">Colour: <b id="colName"></b></span><div class="swatches" id="swatches"></div></div>
+      </div>
+
+      <div class="grp">
+        <h2>Pattern</h2>
+        <div class="chips" id="patChips"></div>
+        <p class="pdesc" id="patDesc"></p>
+        <div class="chips" id="muralChips">
+          <button class="chip" data-m="1">One picture across all</button>
+          <button class="chip" data-m="0">Same panel repeated</button>
+        </div>
+        <div class="exp"><button class="btn ghost" id="shuffle">Shuffle</button><span class="note">Variation <span id="seedOut" style="font-family:var(--mono)"></span></span></div>
+        <div id="patFields"></div>
+      </div>
+
+      <div class="grp">
+        <details>
+          <summary>Cut rules</summary>
+          <div id="ruleFields" style="display:flex;flex-direction:column;gap:12px"></div>
+          <p class="note" style="margin-top:10px">Keep webs at least 4× the sheet thickness so the panel stays stiff and the strips don't burn away. Openings smaller than the minimum are left solid, which saves a pierce each.</p>
+        </details>
+      </div>
+
+      <div class="grp">
+        <details>
+          <summary>Rates (budget figures)</summary>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="row2">
+              <div class="fld"><label for="rCut"><span>Cutting £/m</span></label><input type="number" id="rCut" step="0.05" min="0"></div>
+              <div class="fld"><label for="rPierce"><span>£ per pierce</span></label><input type="number" id="rPierce" step="0.01" min="0"></div>
+              <div class="fld"><label for="rCoat"><span>Powder coat £/m²</span></label><input type="number" id="rCoat" step="1" min="0"></div>
+              <div class="fld"><label for="rPost"><span>£ per post fitted</span></label><input type="number" id="rPost" step="1" min="0"></div>
+              <div class="fld"><label for="rFix"><span>Fixings £/panel</span></label><input type="number" id="rFix" step="1" min="0"></div>
+              <div class="fld"><label for="rSetup"><span>Setup + delivery £</span></label><input type="number" id="rSetup" step="5" min="0"></div>
+            </div>
+            <p class="note">Sheet prices come from £/kg: aluminium £7.20, Zintec £1.70, galvanised £2.00, Corten £3.40. Replace all of these with real quotes once you have them.</p>
+          </div>
+        </details>
+      </div>
+    </aside>
+
+    <section class="stage">
+      <div class="card">
+        <div class="legend"><span><b style="color:var(--ink)">Elevation from the lawn</b> · click a panel to pick it for export</span><span id="scaleNote"></span></div>
+        <div class="cvwrap"><canvas id="cv" aria-label="Elevation drawing of the fence screen panels"></canvas></div>
+        <div class="warns" id="warns"></div>
+      </div>
+
+      <div class="stats" id="stats"></div>
+
+      <div class="two">
+        <div class="card">
+          <h2>Pattern cost comparison</h2>
+          <p class="note">Every pattern on the same layout, sheet and cut rules. Cut length and hole count drive the laser bill; the sheet and coating cost barely change between patterns.</p>
+          <div class="tblwrap"><table id="cmp"><thead><tr><th>Pattern</th><th>Holes / panel</th><th>Cut / panel</th><th>Open area</th><th>Est. total</th></tr></thead><tbody></tbody></table></div>
+        </div>
+        <div class="card">
+          <h2>Where the money goes</h2>
+          <div class="costlist" id="costlist"></div>
+          <p class="note" id="costNote"></p>
+        </div>
+      </div>
+
+      <div class="two">
+        <div class="card">
+          <h2>Sheet nesting</h2>
+          <div class="nest" id="nest"></div>
+        </div>
+        <div class="card">
+          <h2>Cut files</h2>
+          <p class="note">DXF (R12, millimetres, true arcs). Layers: OUTLINE, CUT, FIXING. Panel origin bottom-left, viewed from the lawn side.</p>
+          <div class="panelpick" id="panelPick"></div>
+          <div class="exp">
+            <button class="btn" id="copyDxf">Copy DXF for panel</button>
+            <button class="btn ghost" id="copyCode">Copy design code</button>
+            <button class="btn ghost" id="dlAll" hidden>Download all as .zip</button>
+            <span class="msg" id="expMsg" role="status"></span>
+          </div>
+          <textarea id="fallback" hidden aria-label="Copy this text"></textarea>
+          <p class="note">Paste the DXF into a text file saved as <span style="font-family:var(--mono)">panel-1.dxf</span>. The design code records every setting, so a design can be rebuilt exactly.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Build notes</h2>
+        <div class="notes" id="notes"></div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const SHEETS={'2000x1000':[2000,1000],'2500x1250':[2500,1250],'3000x1500':[3000,1500]};
+const MATS={
+  alu:{name:'Aluminium 5251',dens:2.68,kg:7.2,th:[2,3,4],cut:{2:0.75,3:0.9,4:1.15},pierce:0.10,coat:true},
+  zintec:{name:'Mild steel (Zintec)',dens:7.85,kg:1.7,th:[1.5,2,3],cut:{1.5:0.55,2:0.65,3:0.8},pierce:0.08,coat:true},
+  galv:{name:'Galvanised steel',dens:7.85,kg:2.0,th:[1.5,2,3],cut:{1.5:0.6,2:0.7,3:0.85},pierce:0.08,coat:true},
+  corten:{name:'Corten weathering steel',dens:7.85,kg:3.4,th:[2,3],cut:{2:0.75,3:0.9},pierce:0.08,coat:false}
+};
+const COLOURS=[
+  {id:'5005',name:'RAL 5005 Signal blue',hex:'#1F4B8E'},
+  {id:'7016',name:'RAL 7016 Anthracite',hex:'#373F43'},
+  {id:'6005',name:'RAL 6005 Moss green',hex:'#2E4A3A'},
+  {id:'9005',name:'RAL 9005 Black',hex:'#141517'},
+  {id:'9010',name:'RAL 9010 White',hex:'#EEEBE1'},
+  {id:'corten',name:'Corten, left to rust',hex:'#8A4B2A'}
+];
+const PATTERNS={
+  canopy:{name:'Canopy',desc:'Tree branches over leaf-shaped openings, after the blue tree panel. With one picture across all panels the trees run through the posts.'},
+  tide:{name:'Tide',desc:'Rows of wave slots, after the sea panel. Long smooth cuts and few holes, so it cuts quickly.'},
+  grass:{name:'Seagrass',desc:'Tall blades leaning in the same breeze, rising from the base of each panel.'},
+  bubbles:{name:'Bubbles',desc:'Round holes graded in size. Circles are the quickest shape to cut.'},
+  batten:{name:'Batten',desc:'Plain vertical slots. The cheapest baseline to compare the other designs against.'},
+  custom:{name:'Your design',desc:'Upload a drawing, photo or AI picture. The tool turns it into a cuttable panel: it thickens thin strips, drops specks and adds bridges so no piece falls out.'}
+};
+const DEF={W:5250,H:2000,clr:50,post:60,auto:true,n:5,sheet:'2000x1000',mat:'alu',t:3,colour:'5005',pattern:'canopy',mural:true,seed:7,
+  border:40,web:14,minOpen:25,fillet:8,
+  canopy:{cell:95,trees:2,trunk:95,grad:0.4},
+  tide:{pitch:100,amp:40,wave:700,slotH:48,slotLen:560,bridge:30,drift:0.3},
+  grass:{w0:48,gap:30,lean:160,hMin:0.45},
+  bubbles:{rmin:10,rmax:70,grad:1,fill:0.8},
+  batten:{sw:32,pitch:72,bridges:2},
+  custom:{thr:0.5,dark:'hole',fit:'cover',scale:1,ox:0,oy:0,blur:1,thicken:true,bridges:true},
+  rates:{cut:0.9,pierce:0.10,coat:24,post:48,fix:9,setup:90}};
+const KEY='jess-fence-screens-v1';
+let S=JSON.parse(JSON.stringify(DEF));
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null'); if(s) S=deepMerge(S,s);}catch(e){}
+function deepMerge(a,b){for(const k in b){if(b[k]&&typeof b[k]==='object'&&!Array.isArray(b[k])&&a[k]&&typeof a[k]==='object')deepMerge(a[k],b[k]);else if(k in a)a[k]=b[k];}return a;}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* ---------- layout ---------- */
+function layout(S){
+  const [SL,SW]=SHEETS[S.sheet];
+  const ph=S.H-S.clr, post=S.post, gap=post>0?0:10;
+  const pwFor=n=>post>0?(S.W-(n+1)*post)/n:(S.W-(n-1)*gap)/n;
+  const fits=(a,b)=>(a<=SL-20&&b<=SW-20)||(a<=SW-20&&b<=SL-20);
+  let n;
+  if(S.auto){n=1;while(!fits(ph,pwFor(n))&&n<40)n++;}else n=S.n;
+  const pw=pwFor(n);
+  const panels=[];
+  for(let i=0;i<n;i++){const x0=post>0?post+i*(pw+post):i*(pw+gap);panels.push({i,x0,w:pw,h:ph});}
+  const fit=(L,W,a,b)=>Math.floor((L-10)/(a+10))*Math.floor((W-10)/(b+10));
+  const perA=fit(SL,SW,ph,pw), perB=fit(SL,SW,pw,ph), per=Math.max(perA,perB);
+  const rot=perB>perA;
+  const warnings=[];
+  if(per===0)warnings.push(`A ${Math.round(pw)} × ${Math.round(ph)} mm panel won't fit a ${SL} × ${SW} sheet with a 10 mm edge. Add panels, lower the height or pick a bigger sheet.`);
+  const sheets=per?Math.ceil(n/per):n;
+  const util=per?(n*pw*ph)/(sheets*SL*SW):0;
+  return {n,pw,ph,panels,per,rot,sheets,util,SL,SW,warnings,gap};
+}
+function inner(L,S){return [S.border,S.border,L.pw-S.border,L.ph-S.border];}
+
+/* ---------- geometry ---------- */
+function polyArea(p){let a=0;for(let i=0,n=p.length;i<n;i++){const q=p[i],r=p[(i+1)%n];a+=q[0]*r[1]-r[0]*q[1];}return a/2;}
+function polyPer(p){let s=0;for(let i=0,n=p.length;i<n;i++){const q=p[i],r=p[(i+1)%n];s+=Math.hypot(r[0]-q[0],r[1]-q[1]);}return s;}
+function clipHP(poly,px,py,nx,ny,d){const out=[],n=poly.length;for(let i=0;i<n;i++){const a=poly[i],b=poly[(i+1)%n];const da=(a[0]-px)*nx+(a[1]-py)*ny-d,db=(b[0]-px)*nx+(b[1]-py)*ny-d;if(da>=0)out.push(a);if((da>=0)!==(db>=0)){const t=da/(da-db);out.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]);}}return out;}
+function dedupe(p){const o=[];for(const q of p){const l=o[o.length-1];if(!l||Math.hypot(q[0]-l[0],q[1]-l[1])>0.5)o.push(q);}if(o.length>1){const a=o[0],b=o[o.length-1];if(Math.hypot(a[0]-b[0],a[1]-b[1])<=0.5)o.pop();}return o;}
+function fillet(poly,r){
+  const n=poly.length,out=[];
+  for(let i=0;i<n;i++){
+    const P=poly[i],A=poly[(i-1+n)%n],B=poly[(i+1)%n];
+    const ax=A[0]-P[0],ay=A[1]-P[1],bx=B[0]-P[0],by=B[1]-P[1],la=Math.hypot(ax,ay),lb=Math.hypot(bx,by);
+    const th=Math.acos(clamp((ax*bx+ay*by)/(la*lb),-1,1));
+    if(r<=0||th>Math.PI-0.03){out.push([P[0],P[1],0]);continue;}
+    let t=r/Math.tan(th/2);const tm=0.48*Math.min(la,lb);if(t>tm)t=tm;
+    const cr=(P[0]-A[0])*(B[1]-P[1])-(P[1]-A[1])*(B[0]-P[0]);
+    const bl=Math.tan((Math.PI-th)/4)*(cr<0?-1:1);
+    out.push([P[0]+ax/la*t,P[1]+ay/la*t,bl]);out.push([P[0]+bx/lb*t,P[1]+by/lb*t,0]);
+  }
+  return out;
+}
+function convexHole(poly,rect,S){
+  const [x0,y0,x1,y1]=rect;let p=poly;
+  p=clipHP(p,x0,0,1,0,0);if(p.length<3)return null;
+  p=clipHP(p,x1,0,-1,0,0);if(p.length<3)return null;
+  p=clipHP(p,0,y0,0,1,0);if(p.length<3)return null;
+  p=clipHP(p,0,y1,0,-1,0);if(p.length<3)return null;
+  p=dedupe(p);if(p.length<3)return null;
+  if(polyArea(p)<0)p=p.slice().reverse();
+  const e=S.web/2,edges=p.map((a,i)=>[a,p[(i+1)%p.length]]);
+  for(const [a,b] of edges){const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy);if(l<1e-9)continue;p=clipHP(p,a[0],a[1],-dy/l,dx/l,e);if(p.length<3)return null;}
+  p=dedupe(p);if(p.length<3)return null;
+  const A=polyArea(p),P=polyPer(p);if(A<=0||2*A/P<S.minOpen/2)return null;
+  return {v:fillet(p,S.fillet)};
+}
+function arcOf(a,b){const bl=a[2],dx=b[0]-a[0],dy=b[1]-a[1],c=Math.hypot(dx,dy),ux=dx/c,uy=dy/c,h=c*(1-bl*bl)/(4*bl);const cx=(a[0]+b[0])/2-uy*h,cy=(a[1]+b[1])/2+ux*h;return {cx,cy,R:Math.hypot(a[0]-cx,a[1]-cy),a1:Math.atan2(a[1]-cy,a[0]-cx),a2:Math.atan2(b[1]-cy,b[0]-cx)};}
+function holeStats(h){
+  if(h.c)return {p:2*Math.PI*h.c[2],a:Math.PI*h.c[2]*h.c[2]};
+  const v=h.v,n=v.length;let per=0,a=0,sa=0;
+  for(let i=0;i<n;i++){const q=v[i],r=v[(i+1)%n];a+=q[0]*r[1]-r[0]*q[1];const c=Math.hypot(r[0]-q[0],r[1]-q[1]);
+    if(!q[2])per+=c;else{const th=4*Math.atan(Math.abs(q[2])),R=c/(2*Math.sin(th/2));per+=R*th;sa+=Math.sign(q[2])*R*R/2*(th-Math.sin(th));}}
+  return {p:per,a:Math.abs(a/2+sa)};
+}
+function fixings(L,S){const b=S.border/2,ph=L.ph,pw=L.pw,ys=[150,ph/2,ph-150];const o=[];for(const y of ys){o.push({c:[b,y,4.5]});o.push({c:[pw-b,y,4.5]});}return o;}
+
+/* ---------- patterns ---------- */
+function genCanopy(S,L){
+  const P=S.canopy,R=rng(S.seed*101+1);
+  const D=S.mural?{x0:0,y0:0,x1:S.W,y1:L.ph}:{x0:0,y0:0,x1:L.pw,y1:L.ph};
+  const DW=D.x1-D.x0,DH=D.y1-D.y0;
+  const segs=[];
+  const nT=S.mural?P.trees:Math.min(P.trees,1);
+  function grow(x,y,a,len,w,depth){
+    if(segs.length>400)return;
+    const x2=x+Math.cos(a)*len,y2=y+Math.sin(a)*len,w2=w*0.82;
+    segs.push({x1:x,y1:y,x2,y2,w1:w,w2});
+    if(depth<=0||w2*0.7<S.web*1.3)return;
+    const k=R()<0.22?3:2;
+    for(let j=0;j<k;j++){
+      const f=k===2?(j?1:-1):(j-1);
+      let na=a+f*(0.32+R()*0.3)+(R()-0.5)*0.15;
+      na=clamp(na,-Math.PI+0.25,-0.25);
+      grow(x2,y2,na,len*(0.66+R()*0.16),w2*(0.62+R()*0.14),depth-1);
+    }
+  }
+  for(let k=0;k<nT;k++){
+    const bx=D.x0+DW*((k+0.5)/nT+(R()-0.5)*0.5/nT);
+    grow(bx,D.y1+20,-Math.PI/2+(R()-0.5)*0.35,DH*(0.28+R()*0.1),P.trunk,6);
+  }
+  function nearBranch(x,y,pad){
+    for(const s of segs){const dx=s.x2-s.x1,dy=s.y2-s.y1,l2=dx*dx+dy*dy;const t=clamp(((x-s.x1)*dx+(y-s.y1)*dy)/l2,0,1);
+      const d=Math.hypot(x-s.x1-dx*t,y-s.y1-dy*t);if(d<(s.w1+(s.w2-s.w1)*t)/2+pad)return true;}
+    return false;
+  }
+  const rAt=y=>P.cell*(1+P.grad*((y-D.y0)/DH-0.5));
+  const rmax=P.cell*(1+Math.abs(P.grad)/2)*1.2,g=P.cell*0.4,grid=new Map(),pts=[];
+  const tries=Math.round(DW*DH/(P.cell*P.cell)*14),span=Math.ceil(rmax/g);
+  for(let t=0;t<tries;t++){
+    const x=D.x0+R()*DW,y=D.y0+R()*DH,r=rAt(y)*(0.85+R()*0.3);
+    if(nearBranch(x,y,0.3*P.cell))continue;
+    const gi=Math.floor(x/g),gj=Math.floor(y/g);let ok=true;
+    for(let a=-span;a<=span&&ok;a++)for(let b=-span;b<=span&&ok;b++){const c=grid.get((gi+a)+','+(gj+b));if(c)for(const q of c)if(Math.hypot(q[0]-x,q[1]-y)<r*0.8){ok=false;break;}}
+    if(!ok)continue;
+    const kk=gi+','+gj;if(!grid.has(kk))grid.set(kk,[]);grid.get(kk).push([x,y]);pts.push([x,y]);
+  }
+  const blk=[],step=Math.min(P.cell*0.35,30);
+  for(const s of segs){
+    const dx=s.x2-s.x1,dy=s.y2-s.y1,len=Math.hypot(dx,dy),nx=-dy/len,ny=dx/len,nA=Math.max(1,Math.ceil(len/step));
+    for(let i=0;i<=nA;i++){const t=i/nA,cx=s.x1+dx*t,cy=s.y1+dy*t,w=s.w1+(s.w2-s.w1)*t,nX=Math.max(1,Math.ceil(w/step));
+      for(let j=0;j<nX;j++){const off=nX===1?0:-w/2+w*j/(nX-1),x=cx+nx*off,y=cy+ny*off;
+        if(x>D.x0+0.5&&x<D.x1-0.5&&y>D.y0+0.5&&y<D.y1-0.5)blk.push([x+(R()-0.5)*0.01,y+(R()-0.5)*0.01]);}}
+  }
+  const all=pts.concat(blk);
+  const out=L.panels.map(()=>[]);
+  if(all.length<3)return S.mural?out:L.panels.map(()=>[]);
+  const vor=d3.Delaunay.from(all).voronoi([D.x0,D.y0,D.x1,D.y1]);
+  const rectL=inner(L,S);
+  for(let i=0;i<pts.length;i++){
+    const poly=vor.cellPolygon(i);if(!poly)continue;poly.pop();
+    if(S.mural){
+      let bx0=Infinity,bx1=-Infinity;for(const q of poly){bx0=Math.min(bx0,q[0]);bx1=Math.max(bx1,q[0]);}
+      for(const pn of L.panels){
+        if(bx1<pn.x0||bx0>pn.x0+pn.w)continue;
+        const h=convexHole(poly.map(q=>[q[0]-pn.x0,q[1]]),rectL,S);if(h)out[pn.i].push(h);
+      }
+    }else{const h=convexHole(poly,rectL,S);if(h)out[0].push(h);}
+  }
+  if(!S.mural)return L.panels.map(()=>out[0]);
+  return out;
+}
+function genTide(S,L){
+  const P=S.tide,[ix0,iy0,ix1,iy1]=inner(L,S),out=[];let cache=null;
+  for(const pn of L.panels){
+    if(!S.mural&&cache){out.push(cache);continue;}
+    const gx=S.mural?pn.x0:0,holes=[],A=P.amp,d=P.drift;
+    const hMax=P.pitch-S.web-2*A*Math.abs(Math.sin(d/2)),h0=Math.max(0,Math.min(P.slotH,hMax));
+    if(h0>=S.minOpen*0.5){
+      const ih=iy1-iy0,rows=Math.max(1,Math.floor((ih-2*A-h0)/P.pitch)+1),yStart=iy0+(ih-(rows-1)*P.pitch)/2,per=P.slotLen+P.bridge;
+      for(let j=0;j<rows;j++){
+        const yc=yStart+j*P.pitch,X0=gx+ix0,X1=gx+ix1,shift=(j%2)*per/2;
+        for(let k=Math.floor((X0+shift)/per)-1;;k++){
+          let a=k*per-shift,b=a+P.slotLen;if(a>X1)break;a=Math.max(a,X0);b=Math.min(b,X1);
+          if(b-a<Math.max(80,P.slotLen*0.25))continue;
+          const N=Math.max(10,Math.ceil((b-a)/12)),up=[],lo=[];
+          for(let i=0;i<=N;i++){const X=a+(b-a)*i/N,t=i/N;const Am=A*(0.7+0.3*Math.sin(2*Math.PI*X/(P.wave*2.7)));
+            const y=yc+Am*Math.sin(2*Math.PI*X/P.wave+j*d),h=h0*Math.pow(Math.sin(Math.PI*t),0.55);up.push([X-gx,y-h/2,0]);lo.push([X-gx,y+h/2,0]);}
+          holes.push({v:up.concat(lo.slice(1,-1).reverse())});
+        }
+      }
+    }
+    out.push(holes);cache=holes;
+  }
+  return out;
+}
+function genGrass(S,L){
+  const P=S.grass,[ix0,iy0,ix1,iy1]=inner(L,S),iw=ix1-ix0,ih=iy1-iy0,out=[];let cache=null;
+  const R0=rng(S.seed*7+3),ph1=R0()*6.28,ph2=R0()*6.28;
+  for(const pn of L.panels){
+    if(!S.mural&&cache){out.push(cache);continue;}
+    const R=rng(S.seed*31+(S.mural?pn.i*977:0)+5),gx=S.mural?pn.x0:0,holes=[];
+    const s=P.w0+Math.max(P.gap,S.web),m=Math.max(1,Math.floor((iw-P.w0)/s)+1),start=ix0+(iw-(m-1)*s)/2;
+    for(let k=0;k<m;k++){
+      const xb=clamp(start+k*s+(R()-0.5)*Math.max(0,s-P.w0-S.web)*0.8,ix0+P.w0/2,ix1-P.w0/2),X=gx+xb;
+      const hb=Math.min(ih-4,ih*clamp(P.hMin+(1-P.hMin)*(0.55+0.3*Math.sin(X/310+ph1)+0.35*(R()-0.5)),P.hMin,1));
+      const lean=clamp(P.lean*(0.75+0.25*Math.sin(2*Math.PI*X/2400+ph2)),ix0+6-xb,ix1-6-xb);
+      const N=28,left=[],right=[];
+      for(let i=0;i<=N;i++){const t=i/N,cx=xb+lean*Math.pow(t,1.8),y=iy1-t*hb,w=P.w0*Math.pow(1-t,0.85);
+        left.push([clamp(cx-w/2,ix0,ix1),y,0]);right.push([clamp(cx+w/2,ix0,ix1),y,0]);}
+      holes.push({v:left.concat(right.slice(0,-1).reverse())});
+    }
+    out.push(holes);cache=holes;
+  }
+  return out;
+}
+function genBubbles(S,L){
+  const P=S.bubbles,[ix0,iy0,ix1,iy1]=inner(L,S),iw=ix1-ix0,ih=iy1-iy0,out=[];let cache=null;
+  for(const pn of L.panels){
+    if(!S.mural&&cache){out.push(cache);continue;}
+    const R=rng(S.seed*53+(S.mural?pn.i*613:0)+9),c=[],tries=Math.round(4000*P.fill);
+    const rlo=Math.max(P.rmin,S.minOpen/2),rhi=Math.max(rlo,P.rmax);
+    for(let t=0;t<tries;t++){
+      const y=iy0+R()*ih,yn=(y-iy0)/ih,f=P.grad>=0?yn:1-yn,mix=Math.abs(P.grad),base=(1-mix)*0.5+mix*f;
+      const r=rlo+(rhi-rlo)*base*(0.45+0.55*R()),x=ix0+r+R()*(iw-2*r);
+      if(y-r<iy0||y+r>iy1||iw<2*r)continue;
+      let ok=true;for(const q of c){const dd=q[2]+r+S.web;if(Math.abs(q[0]-x)<dd&&Math.abs(q[1]-y)<dd&&Math.hypot(q[0]-x,q[1]-y)<dd){ok=false;break;}}
+      if(ok)c.push([x,y,r]);
+    }
+    const holes=c.map(q=>({c:q}));out.push(holes);cache=holes;
+  }
+  return out;
+}
+function genBatten(S,L){
+  const P=S.batten,[ix0,iy0,ix1,iy1]=inner(L,S),iw=ix1-ix0,ih=iy1-iy0,holes=[];
+  const sw=Math.max(P.sw,S.minOpen),pitch=Math.max(P.pitch,sw+S.web),m=Math.max(1,Math.floor((iw-sw)/pitch)+1);
+  const start=ix0+(iw-((m-1)*pitch+sw))/2+sw/2,bh=Math.max(40,2*S.web),k=P.bridges,segH=(ih-k*bh)/(k+1),a=sw/2;
+  if(segH>=sw*2)for(let i=0;i<m;i++){const x=start+i*pitch;
+    for(let j=0;j<=k;j++){const top=iy0+j*(segH+bh),bot=top+segH,yt=top+a,yb=bot-a;
+      holes.push({v:[[x-a,yt,0],[x-a,yb,-1],[x+a,yb,0],[x+a,yt,-1]]});}}
+  return L.panels.map(()=>holes);
+}
+/* ---------- your design: image -> cuttable panel ---------- */
+let IMG=null,CUSTOM_REPORT=null,customCache={key:'',out:null,rep:null};
+const RES=4; // mm per pixel of the working bitmap
+function dtf(M,w,h){const d=new Int32Array(w*h),INF=1e9;for(let i=0;i<w*h;i++)d[i]=M[i]?INF:0;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x;if(!d[i])continue;
+    const l=x>0?d[i-1]:0,u=y>0?d[i-w]:0,ul=x>0&&y>0?d[i-w-1]:0,ur=x<w-1&&y>0?d[i-w+1]:0;d[i]=Math.min(d[i],l+3,u+3,ul+4,ur+4);}
+  for(let y=h-1;y>=0;y--)for(let x=w-1;x>=0;x--){const i=y*w+x;if(!d[i])continue;
+    const r=x<w-1?d[i+1]:0,dn=y<h-1?d[i+w]:0,dr=x<w-1&&y<h-1?d[i+w+1]:0,dl=x>0&&y<h-1?d[i+w-1]:0;d[i]=Math.min(d[i],r+3,dn+3,dr+4,dl+4);}
+  return d;}
+function erode(M,w,h,r){const d=dtf(M,w,h),o=new Uint8Array(w*h),t=r*3;for(let i=0;i<w*h;i++)o[i]=M[i]&&d[i]>t?1:0;return o;}
+function inv(M){const o=new Uint8Array(M.length);for(let i=0;i<M.length;i++)o[i]=M[i]?0:1;return o;}
+function dilate(M,w,h,r){return inv(erode(inv(M),w,h,r));}
+function openM(M,w,h,r){return r<=0?M:dilate(erode(M,w,h,r),w,h,r);}
+function marching(H,w,h){
+  const v=(x,y)=>(x>=0&&y>=0&&x<w&&y<h)?H[y*w+x]:0,adj=new Map();
+  const K=(X,Y)=>(X+4)*65536+(Y+4);
+  const add=(a,b)=>{const ka=K(a[0],a[1]),kb=K(b[0],b[1]);if(!adj.has(ka))adj.set(ka,[]);if(!adj.has(kb))adj.set(kb,[]);adj.get(ka).push(kb);adj.get(kb).push(ka);};
+  for(let j=-1;j<h;j++)for(let i=-1;i<w;i++){
+    const c=(v(i,j)<<3)|(v(i+1,j)<<2)|(v(i+1,j+1)<<1)|v(i,j+1);if(c===0||c===15)continue;
+    const T=[2*i+1,2*j],R=[2*i+2,2*j+1],B=[2*i+1,2*j+2],Lf=[2*i,2*j+1];
+    switch(c){case 1:case 14:add(Lf,B);break;case 2:case 13:add(B,R);break;case 3:case 12:add(Lf,R);break;case 4:case 11:add(T,R);break;
+      case 6:case 9:add(T,B);break;case 7:case 8:add(Lf,T);break;case 5:add(Lf,B);add(T,R);break;case 10:add(Lf,T);add(B,R);break;}
+  }
+  const seen=new Set(),loops=[];
+  for(const [k0] of adj){if(seen.has(k0))continue;const loop=[];let prev=-1,cur=k0;
+    for(let g=0;g<1e6;g++){seen.add(cur);loop.push([Math.floor(cur/65536)-4,(cur%65536)-4]);const nb=adj.get(cur);let nx=nb[0]===prev?nb[1]:nb[0];
+      if(nb[0]===prev&&nb[1]===prev)nx=nb[0];prev=cur;cur=nx;if(cur===k0||cur===undefined||seen.has(cur))break;}
+    if(loop.length>=6)loops.push(loop.map(p=>[p[0]/2,p[1]/2]));}
+  return loops;
+}
+function rdp(pts,tol){if(pts.length<3)return pts;const a=pts[0],b=pts[pts.length-1];let md=0,mi=0;const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1e-9;
+  for(let i=1;i<pts.length-1;i++){const d=Math.abs((pts[i][0]-a[0])*dy-(pts[i][1]-a[1])*dx)/l;if(d>md){md=d;mi=i;}}
+  if(md<=tol)return [a,b];return rdp(pts.slice(0,mi+1),tol).slice(0,-1).concat(rdp(pts.slice(mi),tol));}
+function simplifyLoop(p,tol){let far=0,fd=0;for(let i=1;i<p.length;i++){const d=Math.hypot(p[i][0]-p[0][0],p[i][1]-p[0][1]);if(d>fd){fd=d;far=i;}}
+  const A=rdp(p.slice(0,far+1),tol),B=rdp(p.slice(far).concat([p[0]]),tol);return A.slice(0,-1).concat(B.slice(0,-1));}
+function chaikin(p,n){for(let k=0;k<n;k++){const o=[];for(let i=0;i<p.length;i++){const a=p[i],b=p[(i+1)%p.length];o.push([a[0]*.75+b[0]*.25,a[1]*.75+b[1]*.25],[a[0]*.25+b[0]*.75,a[1]*.25+b[1]*.75]);}p=o;}return p;}
+function genCustom(S,L){
+  const out=L.panels.map(()=>[]);
+  if(!IMG){CUSTOM_REPORT=null;return out;}
+  const C=S.custom,key=JSON.stringify([C,S.mural,S.W,S.post,S.border,S.web,S.minOpen,L.pw,L.ph,L.n,IMG.src.length]);
+  if(customCache.key===key){CUSTOM_REPORT=customCache.rep;return customCache.out;}
+  const DW=S.mural?S.W:L.pw,DH=L.ph,w=Math.ceil(DW/RES),h=Math.ceil(DH/RES),N=w*h;
+  const cv=document.createElement('canvas');cv.width=w;cv.height=h;const cx=cv.getContext('2d',{willReadFrequently:true});
+  const metalDark=C.dark==='metal';cx.fillStyle=metalDark?'#000':'#fff';cx.fillRect(0,0,w,h);
+  const iw=IMG.naturalWidth,ih=IMG.naturalHeight;let s=(C.fit==='cover'?Math.max(w/iw,h/ih):Math.min(w/iw,h/ih))*C.scale;
+  const dw=iw*s,dh=ih*s,dx=(w-dw)/2+C.ox*w/2,dy=(h-dh)/2+C.oy*h/2;
+  if(C.blur>0)cx.filter=`blur(${C.blur}px)`;cx.drawImage(IMG,dx,dy,dw,dh);cx.filter='none';
+  const px=cx.getImageData(0,0,w,h).data;
+  let H=new Uint8Array(N);const A=new Uint8Array(N);
+  const rects=(S.mural?L.panels.map(p=>p.x0):[0]).map(x0=>[Math.ceil((x0+S.border)/RES),Math.ceil(S.border/RES),Math.floor((x0+L.pw-S.border)/RES),Math.floor((DH-S.border)/RES)]);
+  for(const [a,b,c,d] of rects)for(let y=Math.max(0,b);y<Math.min(h,d);y++)for(let x=Math.max(0,a);x<Math.min(w,c);x++)A[y*w+x]=1;
+  for(let i=0;i<N;i++){const lum=(0.299*px[i*4]+0.587*px[i*4+1]+0.114*px[i*4+2])/255,dark=lum<C.thr;H[i]=A[i]&&(metalDark?!dark:dark)?1:0;}
+  const rO=S.minOpen/2/RES,rW=Math.max(1,S.web/2/RES);
+  H=openM(H,w,h,rO);
+  let thin=0;
+  if(C.thicken){const Sd=inv(H),op=openM(Sd,w,h,rW),th=new Uint8Array(N);for(let i=0;i<N;i++)if(Sd[i]&&!op[i]){th[i]=1;thin++;}
+    if(thin){const g=dilate(th,w,h,rW);for(let i=0;i<N;i++)if(g[i])H[i]=0;}}
+  // solid components (8-connected)
+  const lab=new Int32Array(N),order=new Int32Array(N),start=[0],anch=[0];let nc=0,op2=0;
+  for(let i=0;i<N;i++){if(H[i]||lab[i])continue;nc++;let a=0;lab[i]=nc;order[op2++]=i;const s0=op2-1;let q=s0;
+    while(q<op2){const p=order[q++],x=p%w,y=(p-x)/w;if(!A[p]||x===0||y===0||x===w-1||y===h-1)a=1;
+      for(let yy=-1;yy<=1;yy++)for(let xx=-1;xx<=1;xx++){const X=x+xx,Y=y+yy;if(X<0||Y<0||X>=w||Y>=h)continue;const n=Y*w+X;if(!H[n]&&!lab[n]){lab[n]=nc;order[op2++]=n;}}}
+    start.push(op2);anch.push(a);}
+  const isl=[];for(let k=1;k<=nc;k++)if(!anch[k])isl.push(k);
+  isl.sort((a,b)=>(start[b]-start[b-1])-(start[a]-start[a-1]));
+  const speck=Math.pow(S.web*1.2/RES,2);let specks=0,bridged=0,lost=0;
+  const stamp=new Int32Array(N),par=new Int32Array(N),dist=new Int32Array(N),Q=new Int32Array(N),maxR=Math.round(350/RES),rB=Math.max(1.2,S.web/2/RES);let st=0;
+  for(const k of isl){
+    if(anch[k])continue;
+    const s0=start[k-1],s1=start[k];
+    if(s1-s0<speck||!C.bridges){for(let q=s0;q<s1;q++)H[order[q]]=1;if(s1-s0<speck)specks++;else lost++;continue;}
+    st++;let qh=0,qt=0,found=-1;
+    for(let q=s0;q<s1;q++){const p=order[q];stamp[p]=st;par[p]=-1;dist[p]=0;Q[qt++]=p;}
+    while(qh<qt&&found<0){const p=Q[qh++],x=p%w,y=(p-x)/w;if(dist[p]>=maxR)continue;
+      for(const [xx,yy] of [[1,0],[-1,0],[0,1],[0,-1]]){const X=x+xx,Y=y+yy;if(X<0||Y<0||X>=w||Y>=h)continue;const n=Y*w+X;if(stamp[n]===st)continue;
+        stamp[n]=st;par[n]=p;dist[n]=dist[p]+1;if(!H[n]&&anch[lab[n]]){found=n;break;}Q[qt++]=n;}}
+    if(found<0){for(let q=s0;q<s1;q++)H[order[q]]=1;lost++;continue;}
+    const R=Math.ceil(rB);
+    for(let p=found;p>=0;p=par[p]){const x=p%w,y=(p-x)/w;
+      for(let yy=-R;yy<=R;yy++)for(let xx=-R;xx<=R;xx++){if(xx*xx+yy*yy>rB*rB)continue;const X=x+xx,Y=y+yy;if(X<0||Y<0||X>=w||Y>=h)continue;const n=Y*w+X;
+        if(!H[n]&&lab[n])anch[lab[n]]=1;H[n]=0;if(!lab[n])lab[n]=k;}}
+    anch[k]=1;bridged++;
+  }
+  H=openM(H,w,h,rO);for(let i=0;i<N;i++)if(!A[i])H[i]=0;
+  const loops=marching(H,w,h);let holes=0;
+  for(const lp of loops){let p=simplifyLoop(lp,0.6);if(p.length<3)continue;p=chaikin(p,2).map(q=>[(q[0]+0.5)*RES,(q[1]+0.5)*RES]);
+    const ar=Math.abs(polyArea(p));if(ar<Math.PI*Math.pow(S.minOpen/2,2)*0.5)continue;
+    let cxm=0;for(const q of p)cxm+=q[0];cxm/=p.length;
+    const pn=S.mural?L.panels.find(pp=>cxm>=pp.x0&&cxm<=pp.x0+L.pw):L.panels[0];if(!pn)continue;
+    const off=S.mural?pn.x0:0;out[pn.i].push({v:p.map(q=>[q[0]-off,q[1],0])});holes++;}
+  const res=S.mural?out:L.panels.map(()=>out[0]);
+  CUSTOM_REPORT={bridged,specks,lost,thin:thin>0,islands:isl.length};
+  customCache={key,out:res,rep:CUSTOM_REPORT};
+  return res;
+}
+const GEN={canopy:genCanopy,tide:genTide,grass:genGrass,bubbles:genBubbles,batten:genBatten,custom:genCustom};
+
+/* ---------- stats + cost ---------- */
+function stats(G,L,S){
+  const fx=fixings(L,S),fxp=fx.reduce((s,h)=>s+holeStats(h).p,0),fxa=fx.reduce((s,h)=>s+holeStats(h).a,0);
+  const m=MATS[S.mat];const per=[];const memo=new Map();
+  for(const holes of G){
+    if(memo.has(holes)){per.push(memo.get(holes));continue;}
+    let p=0,a=0;for(const h of holes){const s=holeStats(h);p+=s.p;a+=s.a;}
+    const cut=2*(L.pw+L.ph)+p+fxp,pierce=holes.length+fx.length+1,open=a/(L.pw*L.ph),kg=(L.pw*L.ph-a-fxa)*S.t*m.dens/1e6;
+    const r={holes:holes.length,cut,pierce,open,kg};memo.set(holes,r);per.push(r);
+  }
+  const sum=k=>per.reduce((s,r)=>s+r[k],0);
+  return {per,cut:sum('cut'),pierce:sum('pierce'),holes:sum('holes'),kg:sum('kg'),open:sum('open')/Math.max(1,per.length)};
+}
+function cost(S,L,ST){
+  const m=MATS[S.mat],sheetKg=L.SL*L.SW*S.t*m.dens/1e6;
+  const coated=m.coat&&S.colour!=='corten';
+  const items=[
+    {k:'Sheet material',v:L.sheets*sheetKg*m.kg,note:`${L.sheets} sheet${L.sheets>1?'s':''} × ${sheetKg.toFixed(1)} kg`},
+    {k:'Laser cutting',v:ST.cut/1000*S.rates.cut,note:`${(ST.cut/1000).toFixed(0)} m of cut`},
+    {k:'Pierces',v:ST.pierce*S.rates.pierce,note:`${ST.pierce.toLocaleString()} holes started`},
+    {k:'Powder coat',v:coated?L.n*L.pw*L.ph/1e6*S.rates.coat:0,note:coated?`${(L.n*L.pw*L.ph/1e6).toFixed(1)} m² of panel`:'Not coated'},
+    {k:'Posts',v:S.post>0?(L.n+1)*S.rates.post:0,note:S.post>0?`${L.n+1} posts in postcrete`:'Fixed to existing fence'},
+    {k:'Fixings',v:L.n*S.rates.fix,note:'Stainless bolts and spacers'},
+    {k:'Setup + delivery',v:S.rates.setup,note:'Programming, handling, van'}
+  ];
+  return {items,total:items.reduce((s,i)=>s+i.v,0)};
+}
+
+/* ---------- UI ---------- */
+const syncers=[];
+function getP(p){return p.split('.').reduce((o,k)=>o[k],S);}
+function setP(p,v){const ks=p.split('.'),l=ks.pop();ks.reduce((o,k)=>o[k],S)[l]=v;}
+function slider(parent,id,label,path,min,max,step,fmt){
+  const d=document.createElement('div');d.className='fld';
+  d.innerHTML=`<label for="${id}"><span>${label}</span><output id="${id}-o"></output></label><input type="range" id="${id}" min="${min}" max="${max}" step="${step}">`;
+  parent.appendChild(d);const inp=d.querySelector('input'),o=d.querySelector('output');
+  const f=v=>fmt?fmt(v):v;
+  const sync=()=>{inp.value=getP(path);o.textContent=f(+getP(path));};
+  inp.addEventListener('input',()=>{setP(path,+inp.value);o.textContent=f(+inp.value);schedule();});
+  syncers.push(sync);sync();
+}
+const mm=v=>Math.round(v)+' mm';
+slider($('#siteFields'),'inH','Height to top of posts','H',1500,2400,10,mm);
+slider($('#siteFields'),'inClr','Gap under panels','clr',0,150,5,mm);
+slider($('#nField'),'inN','Number of panels','n',1,12,1);
+slider($('#ruleFields'),'inBorder','Solid frame border','border',25,100,1,mm);
+slider($('#ruleFields'),'inWeb','Minimum web between openings','web',8,40,1,mm);
+slider($('#ruleFields'),'inMin','Smallest opening kept','minOpen',10,80,1,mm);
+slider($('#ruleFields'),'inFil','Corner radius','fillet',0,30,1,mm);
+
+const PFIELDS={
+  canopy:[['cell','Opening size',60,160,1,mm],['trees','Trunks',0,5,1],['trunk','Trunk width',40,160,1,mm],['grad','Opening size, top to bottom',-0.8,0.8,0.05,v=>(v>0?'bigger at bottom':v<0?'bigger at top':'even')]],
+  tide:[['pitch','Row spacing',60,180,1,mm],['amp','Wave height',0,90,1,mm],['wave','Wavelength',250,1600,10,mm],['slotH','Slot depth',15,100,1,mm],['slotLen','Slot length',150,1000,10,mm],['bridge','Bridge between slots',20,80,1,mm],['drift','Row offset',0,1.5,0.05,v=>v.toFixed(2)]],
+  grass:[['w0','Blade width',20,90,1,mm],['gap','Gap between blades',14,80,1,mm],['lean','Lean',-300,300,5,mm],['hMin','Shortest blade',0.2,0.95,0.05,v=>Math.round(v*100)+'%']],
+  bubbles:[['rmin','Smallest radius',5,40,1,mm],['rmax','Largest radius',20,140,1,mm],['grad','Big bubbles at',-1,1,0.1,v=>v>0?'bottom':v<0?'top':'random'],['fill','Density',0.2,1,0.05,v=>Math.round(v*100)+'%']],
+  batten:[['sw','Slot width',10,80,1,mm],['pitch','Slot pitch',30,160,1,mm],['bridges','Bridges per slot',0,5,1]],
+  custom:[['thr','Light / dark cut-off',0.05,0.95,0.01,v=>Math.round(v*100)+'%'],['scale','Zoom',0.5,3,0.05,v=>Math.round(v*100)+'%'],['ox','Move left / right',-1,1,0.01,v=>Math.round(v*100)],['oy','Move up / down',-1,1,0.01,v=>Math.round(v*100)],['blur','Smooth rough edges',0,4,0.5,v=>v+' px']]
+};
+const IMGKEY='jess-fence-screens-img';
+function setImage(src,remember){const im=new Image();im.onload=()=>{IMG=im;customCache.key='';if(remember){try{localStorage.setItem(IMGKEY,src);}catch(e){}}buildPatFields();schedule();};im.src=src;}
+function loadFile(file){const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');
+  c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
+  setImage(c.toDataURL('image/jpeg',0.9),true);};im.src=fr.result;};fr.readAsDataURL(file);}
+function exampleImage(){
+  const c=document.createElement('canvas');c.width=1600;c.height=600;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,1600,600);x.fillStyle='#000';x.strokeStyle='#000';
+  x.beginPath();x.arc(1180,150,95,0,Math.PI*2);x.arc(1180,150,68,0,Math.PI*2,true);x.fill();
+  x.lineCap='round';x.lineWidth=9;for(const [bx,by,s] of [[300,110,1],[380,80,.8],[450,130,.7],[820,90,.9],[900,60,.6]]){x.beginPath();x.moveTo(bx-40*s,by-12*s);x.quadraticCurveTo(bx-15*s,by-22*s,bx,by);x.quadraticCurveTo(bx+15*s,by-22*s,bx+40*s,by-12*s);x.stroke();}
+  for(let r=0;r<4;r++){x.beginPath();const y0=330+r*62;x.moveTo(0,y0);for(let X=0;X<=1600;X+=10)x.lineTo(X,y0+22*Math.sin(X/95+r*0.9));for(let X=1600;X>=0;X-=10)x.lineTo(X,y0+26+18*Math.sin(X/95+r*0.9+0.4));x.fill();}
+  for(const [fx,fy,s] of [[560,250,1],[700,215,.8],[1350,270,1.1]]){x.beginPath();x.ellipse(fx,fy,55*s,24*s,0,0,Math.PI*2);x.moveTo(fx-45*s,fy);x.lineTo(fx-85*s,fy-26*s);x.lineTo(fx-85*s,fy+26*s);x.closePath();x.fill();
+    x.fillStyle='#fff';x.beginPath();x.arc(fx+30*s,fy-5*s,7*s,0,Math.PI*2);x.fill();x.fillStyle='#000';}
+  for(let k=0;k<22;k++){const bx=40+k*72,hgt=110+60*Math.sin(k*1.7);x.beginPath();x.moveTo(bx-14,600);x.quadraticCurveTo(bx+8,600-hgt*0.6,bx+30,600-hgt);x.quadraticCurveTo(bx+2,600-hgt*0.5,bx+14,600);x.fill();}
+  S.custom.dark='hole';S.custom.thr=0.5;S.custom.fit='cover';S.custom.scale=1;S.custom.ox=0;S.custom.oy=0;
+  setImage(c.toDataURL('image/png'),false);
+}
+function customBlock(){
+  const d=document.createElement('div');d.style.cssText='display:flex;flex-direction:column;gap:10px;margin-bottom:12px';
+  d.innerHTML=`<label for="upImg" style="display:flex;gap:12px;align-items:center;border:1.5px dashed var(--line);border-radius:6px;padding:10px;cursor:pointer">
+      ${IMG?`<img src="${IMG.src}" alt="Uploaded design" style="width:64px;height:64px;object-fit:cover;border-radius:3px;border:1px solid var(--line)">`:''}
+      <span style="font-size:13px"><b>${IMG?'Change picture':'Upload a picture'}</b><br><span class="note">JPG or PNG. A phone photo of a pencil sketch works. It stays in this browser.</span></span></label>
+    <input type="file" id="upImg" accept="image/*" hidden>
+    <div class="exp"><button class="btn ghost" id="exImg">Load example</button>${IMG?'<button class="btn ghost" id="clrImg">Remove</button>':''}</div>
+    <div class="fld"><span style="font-size:13px">Dark parts of the picture become</span><div class="chips"><button class="chip" data-dk="hole" aria-pressed="${S.custom.dark==='hole'}">Holes</button><button class="chip" data-dk="metal" aria-pressed="${S.custom.dark==='metal'}">Metal</button></div></div>
+    <div class="fld"><span style="font-size:13px">Fit</span><div class="chips"><button class="chip" data-ft="cover" aria-pressed="${S.custom.fit==='cover'}">Fill panel</button><button class="chip" data-ft="contain" aria-pressed="${S.custom.fit==='contain'}">Whole picture</button></div></div>
+    <label class="toggle"><input type="checkbox" id="cThick" ${S.custom.thicken?'checked':''}> Thicken strips thinner than the web rule</label>
+    <label class="toggle"><input type="checkbox" id="cBridge" ${S.custom.bridges?'checked':''}> Add bridges so no piece falls out</label>
+    <div id="custRep" class="note"></div>`;
+  d.querySelector('#upImg').addEventListener('change',e=>{if(e.target.files[0])loadFile(e.target.files[0]);});
+  d.querySelector('#exImg').addEventListener('click',exampleImage);
+  const cl=d.querySelector('#clrImg');if(cl)cl.addEventListener('click',()=>{IMG=null;try{localStorage.removeItem(IMGKEY);}catch(e){}buildPatFields();schedule();});
+  d.querySelectorAll('[data-dk]').forEach(b=>b.addEventListener('click',()=>{S.custom.dark=b.dataset.dk;buildPatFields();schedule();}));
+  d.querySelectorAll('[data-ft]').forEach(b=>b.addEventListener('click',()=>{S.custom.fit=b.dataset.ft;buildPatFields();schedule();}));
+  d.querySelector('#cThick').addEventListener('change',e=>{S.custom.thicken=e.target.checked;schedule();});
+  d.querySelector('#cBridge').addEventListener('change',e=>{S.custom.bridges=e.target.checked;schedule();});
+  return d;
+}
+function buildPatFields(){
+  const el=$('#patFields');el.innerHTML='';
+  const keep=syncers.length;
+  if(S.pattern==='custom')el.appendChild(customBlock());
+  for(const f of PFIELDS[S.pattern])slider(el,'pf-'+S.pattern+'-'+f[0],f[1],S.pattern+'.'+f[0],f[2],f[3],f[4],f[5]);
+  $('#patDesc').textContent=PATTERNS[S.pattern].desc;
+}
+// pattern chips
+const pc=$('#patChips');
+for(const k in PATTERNS){const b=document.createElement('button');b.className='chip';b.textContent=PATTERNS[k].name;b.dataset.p=k;b.addEventListener('click',()=>{S.pattern=k;buildPatFields();syncStatic();schedule();});pc.appendChild(b);}
+$('#muralChips').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;S.mural=b.dataset.m==='1';syncStatic();schedule();});
+$('#shuffle').addEventListener('click',()=>{S.seed=Math.floor(Math.random()*9000)+1;syncStatic();schedule();});
+// site / material
+$('#inW').addEventListener('input',e=>{const v=+e.target.value;if(v>=1000&&v<=12000){S.W=v;schedule();}});
+$('#inPost').addEventListener('change',e=>{S.post=+e.target.value;schedule();});
+$('#inAuto').addEventListener('change',e=>{S.auto=e.target.checked;syncStatic();schedule();});
+$('#inSheet').addEventListener('change',e=>{S.sheet=e.target.value;schedule();});
+const matSel=$('#inMat');for(const k in MATS){const o=document.createElement('option');o.value=k;o.textContent=MATS[k].name;matSel.appendChild(o);}
+function fillThick(){const t=$('#inT');t.innerHTML='';for(const v of MATS[S.mat].th){const o=document.createElement('option');o.value=v;o.textContent=v+' mm';t.appendChild(o);}if(!MATS[S.mat].th.includes(S.t))S.t=MATS[S.mat].th[Math.min(1,MATS[S.mat].th.length-1)];t.value=S.t;}
+function resetRates(){const m=MATS[S.mat];S.rates.cut=m.cut[S.t];S.rates.pierce=m.pierce;}
+matSel.addEventListener('change',e=>{S.mat=e.target.value;fillThick();resetRates();
+  if(S.mat==='corten')S.colour='corten';else if(S.colour==='corten')S.colour='5005';syncStatic();schedule();});
+$('#inT').addEventListener('change',e=>{S.t=+e.target.value;resetRates();syncStatic();schedule();});
+const swEl=$('#swatches');
+for(const c of COLOURS){const b=document.createElement('button');b.className='sw';b.style.background=c.hex;b.title=c.name;b.setAttribute('aria-label',c.name);b.dataset.c=c.id;
+  b.addEventListener('click',()=>{if(c.id==='corten'){S.mat='corten';fillThick();resetRates();}else if(S.mat==='corten'){S.mat='alu';fillThick();resetRates();}S.colour=c.id;syncStatic();schedule();});swEl.appendChild(b);}
+const RATE_IDS={rCut:'cut',rPierce:'pierce',rCoat:'coat',rPost:'post',rFix:'fix',rSetup:'setup'};
+for(const id in RATE_IDS)$('#'+id).addEventListener('input',e=>{const v=parseFloat(e.target.value);if(!isNaN(v)&&v>=0){S.rates[RATE_IDS[id]]=v;schedule();}});
+
+function syncStatic(){
+  $('#inW').value=S.W;$('#inPost').value=S.post;$('#inAuto').checked=S.auto;$('#inSheet').value=S.sheet;matSel.value=S.mat;fillThick();
+  $('#inN').disabled=S.auto;
+  pc.querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===S.pattern));
+  $('#muralChips').querySelectorAll('.chip').forEach(b=>b.setAttribute('aria-pressed',(b.dataset.m==='1')===S.mural));
+  swEl.querySelectorAll('.sw').forEach(b=>b.setAttribute('aria-pressed',b.dataset.c===S.colour));
+  $('#colName').textContent=COLOURS.find(c=>c.id===S.colour).name;
+  $('#seedOut').textContent='#'+S.seed;
+  for(const id in RATE_IDS)if(document.activeElement!==$('#'+id))$('#'+id).value=S.rates[RATE_IDS[id]];
+  syncers.forEach(f=>f());
+}
+
+/* ---------- drawing ---------- */
+let L,G,ST,C,sel=0,geom=null;
+function tracePath(ctx,h,X,Y,s){
+  if(h.c){ctx.moveTo(X(h.c[0]+h.c[2]),Y(h.c[1]));ctx.arc(X(h.c[0]),Y(h.c[1]),h.c[2]*s,0,Math.PI*2);ctx.closePath();return;}
+  const v=h.v,n=v.length;ctx.moveTo(X(v[0][0]),Y(v[0][1]));
+  for(let i=0;i<n;i++){const a=v[i],b=v[(i+1)%n];
+    if(!a[2])ctx.lineTo(X(b[0]),Y(b[1]));else{const A=arcOf(a,b);ctx.arc(X(A.cx),Y(A.cy),A.R*s,A.a1,A.a2,a[2]<0);}}
+  ctx.closePath();
+}
+function draw(){
+  const cv=$('#cv'),cw=cv.parentElement.clientWidth;if(!cw)return;
+  const mL=320,mR=160,mT=280,mB=420,Wmm=S.W+mL+mR,Hmm=S.H+mT+mB,sc=cw/Wmm,ch=Math.round(Hmm*sc),dpr=window.devicePixelRatio||1;
+  cv.width=Math.round(cw*dpr);cv.height=Math.round(ch*dpr);cv.style.height=ch+'px';
+  const ctx=cv.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+  const X=x=>(x+mL)*sc,Y=y=>(y+mT)*sc;
+  geom={X,Y,sc};
+  const sky=ctx.createLinearGradient(0,0,0,Y(S.H));sky.addColorStop(0,'#C9D8E6');sky.addColorStop(1,'#EEF2F2');
+  ctx.fillStyle=sky;ctx.fillRect(0,0,cw,ch);
+  // hedge behind left
+  ctx.fillStyle='#4E6B3A';ctx.beginPath();ctx.ellipse(X(-mL+200),Y(S.H-1830),900*sc,420*sc,0,Math.PI,0);ctx.fill();
+  // existing fence
+  const fT=S.H-1830;
+  for(let x=-mL,k=0;x<S.W+mR;x+=100,k++){ctx.fillStyle=k%2?'#A59E92':'#9B9488';ctx.fillRect(X(x),Y(fT),100*sc,Y(S.H)-Y(fT));ctx.fillStyle='rgba(60,55,48,.35)';ctx.fillRect(X(x),Y(fT),Math.max(0.6,3*sc),Y(S.H)-Y(fT));}
+  ctx.fillStyle='#8C857A';for(let x=-mL+40;x<S.W+mR;x+=1830)ctx.fillRect(X(x),Y(fT-40),100*sc,Y(S.H)-Y(fT-40));
+  ctx.fillStyle='#BDB9AF';ctx.fillRect(0,Y(S.H-150),cw,Y(S.H)-Y(S.H-150));
+  ctx.fillStyle='#6F9A4C';ctx.fillRect(0,Y(S.H),cw,ch-Y(S.H));
+  ctx.fillStyle='#5C8740';ctx.fillRect(0,Y(S.H),cw,Math.max(1,18*sc));
+  // panels
+  const col=COLOURS.find(c=>c.id===S.colour).hex,fx=fixings(L,S);
+  const body=(ctx,dx,dy)=>{
+    ctx.beginPath();
+    if(S.post>0)for(let i=0;i<=L.n;i++){const x=i*(L.pw+S.post);ctx.rect(X(x)+dx,Y(0)+dy,S.post*sc,(S.H)*sc);}
+    for(const pn of L.panels){
+      const PX=x=>X(pn.x0+x)+dx,PY=y=>Y(y)+dy;
+      ctx.moveTo(PX(0),PY(0));ctx.rect(PX(0),PY(0),L.pw*sc,L.ph*sc);
+      for(const h of G[pn.i])tracePath(ctx,h,PX,PY,sc);
+      for(const h of fx)tracePath(ctx,h,PX,PY,sc);
+    }
+  };
+  ctx.save();ctx.fillStyle='rgba(20,24,20,.28)';body(ctx,Math.max(1,10*sc),Math.max(1,10*sc));ctx.fill('evenodd');ctx.restore();
+  ctx.fillStyle=col;body(ctx,0,0);ctx.fill('evenodd');
+  // selected
+  const sp=L.panels[sel];if(sp){ctx.save();ctx.setLineDash([6,4]);ctx.strokeStyle='#FFFFFF';ctx.lineWidth=2;ctx.strokeRect(X(sp.x0)-3,Y(0)-3,L.pw*sc+6,L.ph*sc+6);ctx.restore();}
+  // dims
+  const ink='#1E2630';ctx.strokeStyle=ink;ctx.fillStyle=ink;ctx.lineWidth=1;
+  const label=(t,x,y,rot)=>{ctx.save();ctx.translate(x,y);if(rot)ctx.rotate(-Math.PI/2);ctx.font='500 12px "IBM Plex Mono", monospace';const w=ctx.measureText(t).width+10;
+    ctx.fillStyle='rgba(255,255,255,.92)';ctx.fillRect(-w/2,-9,w,18);ctx.fillStyle=ink;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(t,0,1);ctx.restore();};
+  const dimH=(x1,x2,y,t)=>{ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.moveTo(x1,y-5);ctx.lineTo(x1,y+5);ctx.moveTo(x2,y-5);ctx.lineTo(x2,y+5);ctx.stroke();label(t,(x1+x2)/2,y);};
+  const dimV=(y1,y2,x,t)=>{ctx.beginPath();ctx.moveTo(x,y1);ctx.lineTo(x,y2);ctx.moveTo(x-5,y1);ctx.lineTo(x+5,y1);ctx.moveTo(x-5,y2);ctx.lineTo(x+5,y2);ctx.stroke();label(t,x,(y1+y2)/2,true);};
+  dimH(X(0),X(S.W),Y(S.H+230),`${Math.round(S.W).toLocaleString()} run`);
+  dimV(Y(0),Y(S.H),X(-170),`${S.H.toLocaleString()} to top`);
+  const p0=L.panels[0];if(p0)dimH(X(p0.x0),X(p0.x0+L.pw),Y(-140),`${Math.round(L.pw)} × ${Math.round(L.ph)}`);
+  $('#scaleNote').textContent=`${L.n} panels · approx 1:${Math.round(1/(sc*3.78))} on screen`;
+}
+
+/* ---------- panels UI, stats, compare ---------- */
+const money=v=>'£'+Math.round(v).toLocaleString();
+function renderStats(){
+  const pp=ST.per[sel]||ST.per[0];
+  const tiles=[
+    ['Panels',`${L.n}`,`${Math.round(L.pw)} × ${Math.round(L.ph)} mm`],
+    ['Sheets',`${L.sheets}`,`${L.SL}×${L.SW} · ${Math.round(L.util*100)}% used`],
+    ['Cut per panel',`${(ST.cut/L.n/1000).toFixed(1)} m`,`${Math.round(ST.cut/1000)} m in total`],
+    ['Holes per panel',`${Math.round(ST.holes/L.n)}`,`${ST.pierce.toLocaleString()} pierces in total`],
+    ['Open area',`${Math.round(ST.open*100)}%`,`see-through share`],
+    ['Weight per panel',`${(ST.kg/L.n).toFixed(1)} kg`,`${MATS[S.mat].name.split(' (')[0]} ${S.t} mm`],
+    ['Estimated total',money(C.total),`${money(C.total/L.n)} per panel`]
+  ];
+  $('#stats').innerHTML=tiles.map((t,i)=>`<div class="stat${i===tiles.length-1?' total':''}"><span class="k">${t[0]}</span><span class="v">${t[1]}</span><span class="s">${t[2]}</span></div>`).join('');
+  const mx=Math.max(...C.items.map(i=>i.v),1);
+  $('#costlist').innerHTML=C.items.map(i=>`<div class="cl"><span>${i.k}<br><span class="note">${i.note}</span></span><span class="bar"><i style="width:${(i.v/mx*100).toFixed(1)}%"></i></span><b>${money(i.v)}</b></div>`).join('');
+  const cutShare=(C.items[1].v+C.items[2].v)/C.total;
+  $('#costNote').textContent=`Cutting is ${Math.round(cutShare*100)}% of this estimate. Budget figures before VAT; get two laser shops to quote from the DXFs.`;
+  // warnings
+  const w=[...L.warnings];
+  if(S.web<S.t*4)w.push(`Webs of ${S.web} mm are under 4× the ${S.t} mm sheet. Thin strips twist and rattle in wind; go to ${Math.ceil(S.t*4)} mm or more.`);
+  if(S.mat==='zintec')w.push('Zintec cut edges have no zinc. Every cut edge will rust under the powder coat unless the shop zinc-primes first.');
+  if(S.mat==='corten')w.push('Corten sheds rust run-off for the first year or two. Keep it off the paving and the step, or stand it on gravel.');
+  if(S.pattern==='custom'){const r=$('#custRep');
+    if(!IMG)w.push('Upload a picture, or press Load example, to see your own design on the fence.');
+    else if(r&&CUSTOM_REPORT){const c=CUSTOM_REPORT;r.innerHTML=`<b style="color:var(--ink)">Made cuttable:</b> ${c.bridged} loose piece${c.bridged===1?'':'s'} bridged, ${c.specks} speck${c.specks===1?'':'s'} dropped${c.lost?`, ${c.lost} piece${c.lost===1?'':'s'} too far from metal removed`:''}${c.thin?', thin strips thickened':''}.`;}}
+  if(S.pattern==='batten'&&S.batten.bridges===0)w.push('Full-height slots with no bridges leave long loose strips. Add at least one bridge.');
+  $('#warns').innerHTML=w.map(t=>`<div class="warn">${t}</div>`).join('');
+  // panel pick
+  $('#panelPick').innerHTML='<span class="note">Panel</span>'+L.panels.map(p=>`<button class="chip" data-i="${p.i}" aria-pressed="${p.i===sel}">${p.i+1}</button>`).join('')+(S.mural?'':'<span class="note">All panels are the same</span>');
+  // nest
+  const k=Math.min(260/L.SL,1),w0=L.SL*k,h0=L.SW*k;
+  let rects='';if(L.per){const a=L.rot?L.pw:L.ph,b=L.rot?L.ph:L.pw;const nx=Math.floor((L.SL-10)/(a+10)),ny=Math.floor((L.SW-10)/(b+10));
+    for(let i=0;i<nx;i++)for(let j=0;j<ny;j++)rects+=`<rect x="${(10+i*(a+10))*k}" y="${(10+j*(b+10))*k}" width="${a*k}" height="${b*k}" style="fill:var(--accent);opacity:.85"/>`;}
+  $('#nest').innerHTML=`<svg viewBox="-2 -2 ${w0+4} ${h0+4}" width="${w0+4}" height="${h0+4}" role="img" aria-label="Sheet nesting"><defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" style="stroke:var(--muted);stroke-width:1"/></pattern></defs><rect x="0" y="0" width="${w0}" height="${h0}" style="fill:url(#hatch);stroke:var(--ink);stroke-width:1"/>${rects}</svg>
+  <div style="display:flex;flex-direction:column;gap:6px;max-width:34ch"><span style="font:600 22px var(--display)">${L.per} per sheet · ${Math.round(L.util*100)}% used</span>
+  <span class="note">${L.SL} × ${L.SW} mm stock sheet, 10 mm edge. Hatched area is offcut you still pay for. With 60 mm posts, five panels cut from 2000 × 1000 sheets cover up to 5,260 mm; past that it needs a sixth panel.</span></div>`;
+}
+function renderNotes(){
+  const m=MATS[S.mat];
+  const notes=[
+    ['Cheapest sheet','A 2000 × 1000 sheet is a stock size. A panel up to 1980 × 980 mm uses the whole sheet, so the only waste is the 10 mm trim. Bigger sheets don\'t help here because the panel height is fixed near 2 m.'],
+    ['Material',`3 mm aluminium 5251 is the default: it won't rust at the cut edges, weighs about ${(1.95*0.98*3*2.68).toFixed(0)} kg a panel, and powder coats well. 2 mm mild steel sheet costs about half as much, but every laser-cut edge rusts through the coating within a few years.`],
+    ['What drives the laser bill','The shop charges for metres of cut and number of holes. Fewer, larger openings with smooth curves cost less than many small details. Push the smallest-opening rule up and the hole count drops straight away.'],
+    ['One picture or repeated','The laser costs the same either way; each panel is its own program. A repeated panel is quicker to check and simpler to replace if one gets damaged.'],
+    ['Posts and fixing',S.post>0?`${S.post} × ${S.post} × 3 mm galvanised steel box posts, 2.6 m long, 600 mm into the ground in postcrete, powder coated to match. Each panel bolts to angle cleats on the posts through the six 9 mm holes in its border.`:'No new posts: each panel bolts through 25 mm spacers into the existing fence posts. Check those posts are sound first, because the panels add wind load and the top 170 mm stands above the fence.'],
+    ['Before ordering','Measure the run at ground level and at 2 m, and check where the step on the right finishes. Ask the laser shop to quote cut and powder coat together; one shop saves a delivery and the handling damage.']
+  ];
+  $('#notes').innerHTML=notes.map(n=>`<div><h3>${n[0]}</h3><p>${n[1]}</p></div>`).join('');
+}
+let cmpTimer=null;
+function renderCompare(){
+  const rows=[];
+  for(const k in PATTERNS){if(k==='custom'&&!IMG)continue;const S2=JSON.parse(JSON.stringify(S));S2.pattern=k;const L2=layout(S2),G2=GEN[k](S2,L2),ST2=stats(G2,L2,S2),C2=cost(S2,L2,ST2);rows.push({k,ST:ST2,C:C2,L:L2});}
+  const min=Math.min(...rows.map(r=>r.C.total));
+  $('#cmp tbody').innerHTML=rows.map(r=>`<tr class="${r.k===S.pattern?'cur':''}"><td>${PATTERNS[r.k].name}${r.k===S.pattern?'<span class="pill cur">Now</span>':''}${r.C.total===min?'<span class="pill good">Cheapest</span>':''}</td><td>${Math.round(r.ST.holes/r.L.n)}</td><td>${(r.ST.cut/r.L.n/1000).toFixed(1)} m</td><td>${Math.round(r.ST.open*100)}%</td><td>${money(r.C.total)}</td></tr>`).join('');
+}
+let raf=0;
+let slow=0;
+function schedule(){if(S.pattern==='custom'&&IMG){clearTimeout(slow);slow=setTimeout(run,220);return;}if(raf)return;raf=requestAnimationFrame(()=>{raf=0;run();});}
+function run(){
+  L=layout(S);if(sel>=L.n)sel=0;G=GEN[S.pattern](S,L);ST=stats(G,L,S);C=cost(S,L,ST);
+  syncStatic();draw();renderStats();renderNotes();save();
+  clearTimeout(cmpTimer);cmpTimer=setTimeout(renderCompare,250);
+}
+$('#panelPick').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;sel=+b.dataset.i;draw();renderStats();});
+$('#cv').addEventListener('click',e=>{if(!geom)return;const r=e.target.getBoundingClientRect(),x=(e.clientX-r.left)/geom.sc-320;
+  const p=L.panels.find(p=>x>=p.x0&&x<=p.x0+L.pw);if(p){sel=p.i;draw();renderStats();}});
+window.addEventListener('resize',()=>{if(L)draw();});
+
+/* ---------- export ---------- */
+function dxf(i){
+  const holes=G[i],ph=L.ph,o=[],w=(...a)=>o.push(...a),f=x=>(Math.round(x*1000)/1000).toString();
+  w('0','SECTION','2','HEADER','9','$ACADVER','1','AC1009','9','$INSUNITS','70','4','0','ENDSEC','0','SECTION','2','ENTITIES');
+  const pl=(v,layer)=>{w('0','POLYLINE','8',layer,'66','1','10','0','20','0','30','0','70','1');
+    for(const p of v){w('0','VERTEX','8',layer,'10',f(p[0]),'20',f(ph-p[1]),'30','0');if(p[2])w('42',(-p[2]).toFixed(6));}w('0','SEQEND','8',layer);};
+  const ci=(c,layer)=>w('0','CIRCLE','8',layer,'10',f(c[0]),'20',f(ph-c[1]),'30','0','40',f(c[2]));
+  pl([[0,0,0],[L.pw,0,0],[L.pw,ph,0],[0,ph,0]],'OUTLINE');
+  for(const h of holes)h.c?ci(h.c,'CUT'):pl(h.v,'CUT');
+  for(const h of fixings(L,S))ci(h.c,'FIXING');
+  w('0','ENDSEC','0','EOF');return o.join('\r\n');
+}
+async function copy(text,msg){
+  const m=$('#expMsg'),fb=$('#fallback');
+  try{await navigator.clipboard.writeText(text);m.textContent=msg;fb.hidden=true;}
+  catch(e){fb.hidden=false;fb.value=text.length>200000?text.slice(0,200000):text;fb.focus();fb.select();m.textContent='Clipboard blocked. The text is selected below; press Ctrl+C.';}
+  setTimeout(()=>{m.textContent='';},4000);
+}
+$('#copyDxf').addEventListener('click',()=>copy(dxf(sel),`Copied panel ${sel+1} DXF (${ST.per[sel].holes} openings).`));
+$('#copyCode').addEventListener('click',()=>copy(JSON.stringify(S),'Copied design code.'));
+let DL=null;
+async function zipAll(){const z=new JSZip(),n=S.mural?L.n:1;for(let i=0;i<n;i++)z.file(`panel-${i+1}.dxf`,dxf(i));
+  z.file('design-code.json',JSON.stringify(S,null,1));
+  z.file('README.txt',`Jess fence screens - ${PATTERNS[S.pattern].name}
+
+${L.n} panels ${Math.round(L.pw)} x ${Math.round(L.ph)} mm, ${MATS[S.mat].name} ${S.t} mm, ${COLOURS.find(c=>c.id===S.colour).name}.
+
+${S.mural?'Each panel is different; cut one of each.':'All panels identical; cut panel-1 x '+L.n+'.'}
+
+DXF units mm, layers OUTLINE / CUT / FIXING (6 x 9 mm holes).
+
+`);
+  return z.generateAsync({type:'blob'});}
+$('#dlAll').addEventListener('click',async()=>{const m=$('#expMsg'),name=`jess-screens-${S.pattern}.zip`;
+  try{const blob=await zipAll();
+    if(DL){await DL.save({filename:name,data:blob});m.textContent='Saved.';}
+    else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();m.textContent='Downloaded.';}}
+  catch(e){m.textContent=e&&e.code==='declined'?'Download cancelled.':'Download not available here. Use Copy DXF instead.';}
+  setTimeout(()=>{m.textContent='';},4000);});
+if(location.protocol==='file:')$('#dlAll').hidden=false;
+if(window.claude&&window.claude.use)window.claude.use('downloads').then(d=>{if(d){DL=d;$('#dlAll').hidden=false;}}).catch(()=>{});
+try{const im=localStorage.getItem(IMGKEY);if(im)setImage(im,false);}catch(e){}
+
+buildPatFields();syncStatic();
+if(window.d3)run();else window.addEventListener('load',run);
+})();
+</script>
+
+</html>

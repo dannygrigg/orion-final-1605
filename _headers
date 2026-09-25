@@ -28,3 +28,8 @@
 /helios-t-452d39e2/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store
+
+# Jess fence screen designer — private personal tool, keep out of every index.
+/jess-f-f6e9bf06/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
