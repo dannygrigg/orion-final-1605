@@ -732,7 +732,10 @@ async function loadUrl(raw){
   }catch(e){say((e&&e.message?e.message+' ':'')+'If it keeps failing, save the picture and use Upload instead.');}
 }
 let DESC_BUSY=false;
-function extractSvg(t){const m=String(t||'').match(/<svg[\s\S]*<\/svg>/i);if(!m)return null;
+function repairSvg(t){t=String(t||'');const a=t.search(/<svg[\s>]/i);if(a<0)return t;let s=t.slice(a);if(/<\/svg>/i.test(s))return s;
+  const cut=Math.max(s.lastIndexOf('/>'),s.lastIndexOf('</g>')+3);if(cut<5)return t;s=s.slice(0,cut+2);
+  const open=(s.match(/<g[\s>]/g)||[]).length-(s.match(/<\/g>/g)||[]).length;return s+'</g>'.repeat(Math.max(0,open))+'</svg>';}
+function extractSvg(t){t=repairSvg(t);const m=String(t||'').match(/<svg[\s\S]*<\/svg>/i);if(!m)return null;
   return m[0].replace(/<script[\s\S]*?<\/script>/gi,'').replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi,'').replace(/\son\w+\s*=\s*("[^"]*"|'[^']*')/gi,'').replace(/(xlink:)?href\s*=\s*("(?!#)[^"]*"|'(?!#)[^']*')/gi,'');}
 function designPrompt(desc,w,h){return `Draw a stencil design for a laser-cut steel garden screen as a single SVG.
 Subject: ${desc}
@@ -756,11 +759,15 @@ async function describeDesign(desc){
     if(smp){const r=await smp(designPrompt(desc,w,h),{modelTier:'default'});svg=extractSvg(r.text);}
     else if(ON_SITE){const r=await fetch('/api/jess-design',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({desc,w,h})});
       if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error||'The drawing service is unavailable.');}
-      const rd=r.body.getReader(),dec=new TextDecoder();let txt='';
+      const rd=r.body.getReader(),dec=new TextDecoder();let txt='',buf='',failed=false;
       clearInterval(tick);
-      for(;;){const {value,done}=await rd.read();if(done)break;txt+=dec.decode(value,{stream:true});custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s · ${Math.round(txt.length/1024)} KB received`);}
-      if(txt.includes('[[ERROR]]'))throw new Error('The drawing was interrupted. Press Draw it again.');
-      svg=extractSvg(txt);}
+      for(;;){const {value,done}=await rd.read();if(done)break;buf+=dec.decode(value,{stream:true});let i;
+        while((i=buf.indexOf('\n'))>=0){const line=buf.slice(0,i).trim();buf=buf.slice(i+1);if(!line.startsWith('data:'))continue;
+          let ev;try{ev=JSON.parse(line.slice(5));}catch(e){continue;}
+          if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta')txt+=ev.delta.text;else if(ev.type==='error')failed=true;}
+        custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s · ${Math.round(txt.length/1024*10)/10} KB drawn`);}
+      svg=extractSvg(txt);
+      if(!svg&&failed)throw new Error('The drawing service was busy. Press Draw it again.');}
     else throw new Error('Describe-a-design works on the website version.');
     if(!svg)throw new Error('No drawing came back. Try rewording the description.');
     const blob=new Blob([svg],{type:'image/svg+xml'});const data=await fromBlob(blob);

@@ -7,8 +7,8 @@
 // The client sends only {desc, w, h}; model, prompt and limits are fixed here.
 //   1. Origin allow-list  — off-site and non-browser posts are refused
 //   2. Payload caps       — description 600 chars, canvas size clamped
-//   3. Streamed reply     — text only; the page extracts and sanitises the
-//                           <svg> and only ever draws it as an image
+//   3. Streamed reply     — Anthropic's event stream passed through; the page
+//                           extracts and sanitises the <svg> and only draws it as an image
 // Speed: thinking off + low effort + 7k token cap keeps a drawing under ~60 s.
 // Add a Cloudflare rate-limiting rule on /api/jess-design like /api/submit*.
 // ─────────────────────────────────────────────────────────────────────────
@@ -42,7 +42,7 @@ function cleanSvg(text) {
     .replace(/(xlink:)?href\s*=\s*("(?!#)[^"]*"|'(?!#)[^']*')/gi, '');
 }
 
-export async function onRequestPost({ request, env, waitUntil }) {
+export async function onRequestPost({ request, env }) {
   const origin = request.headers.get('Origin') || '';
   if (!(ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.orion-final-1605\.pages\.dev$/.test(origin)))
     return json({ error: 'Forbidden' }, 403);
@@ -74,35 +74,7 @@ export async function onRequestPost({ request, env, waitUntil }) {
     return json({ error: status === 429 ? 'Busy, try again in a minute.' : 'The drawing service is unavailable right now.' }, status);
   }
 
-  const { readable, writable } = new TransformStream();
-  const pump = (async () => {
-    const out = writable.getWriter();
-    const enc = new TextEncoder();
-    const reader = upstream.body.pipeThrough(new TextDecoderStream()).getReader();
-    let buf = '';
-    try {
-      for (;;) {
-        const { value, done } = await reader.read();
-        if (done) break;
-        buf += value;
-        let i;
-        while ((i = buf.indexOf('\n')) >= 0) {
-          const line = buf.slice(0, i).trim();
-          buf = buf.slice(i + 1);
-          if (!line.startsWith('data:')) continue;
-          let ev;
-          try { ev = JSON.parse(line.slice(5)); } catch (e) { continue; }
-          if (ev.type === 'content_block_delta' && ev.delta && ev.delta.type === 'text_delta') await out.write(enc.encode(ev.delta.text));
-          // Keep the connection busy while the model thinks (spaces are ignored by the page)
-          else if (ev.type === 'ping' || ev.type === 'content_block_start' || (ev.type === 'content_block_delta' && ev.delta && ev.delta.type !== 'text_delta')) await out.write(enc.encode(' '));
-          else if (ev.type === 'error') await out.write(enc.encode('\n[[ERROR]]'));
-        }
-      }
-    } catch (e) {
-      await out.write(enc.encode('\n[[ERROR]]')).catch(() => {});
-    }
-    await out.close().catch(() => {});
-  })();
-  if (waitUntil) waitUntil(pump);
-  return new Response(readable, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
+  // Pass the event stream straight through: parsing it here costs Worker CPU
+  // time and cut long drawings short. The page reads the text deltas itself.
+  return new Response(upstream.body, { headers: { 'Content-Type': 'text/event-stream; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
 }
