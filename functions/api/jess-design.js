@@ -9,6 +9,7 @@
 //   2. Payload caps       — description 600 chars, canvas size clamped
 //   3. Streamed reply     — text only; the page extracts and sanitises the
 //                           <svg> and only ever draws it as an image
+// Speed: thinking off + low effort + 7k token cap keeps a drawing under ~60 s.
 // Add a Cloudflare rate-limiting rule on /api/jess-design like /api/submit*.
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -27,7 +28,7 @@ Rules:
 - Keep white gaps between black shapes at least 10 units wide. Avoid tiny details under 15 units.
 - Fill the whole canvas edge to edge with a balanced composition; black should cover roughly 35-55% of the area.
 - Organic, elegant, in the style of decorative laser-cut garden screens (like tree branch or sea-life screen panels).
-- Use at most about 80 path/shape elements and keep path data compact (integers only).`;
+- Use 40 to 70 path/shape elements: a few large bold forms plus enough mid-sized detail to look rich. Keep path data compact (integers only, Q/C curves). Start writing the SVG immediately.`;
 }
 
 // Kept for reference; sanitising now happens in the page after streaming.
@@ -61,9 +62,10 @@ export async function onRequestPost({ request, env, waitUntil }) {
     headers: { 'Content-Type': 'application/json', 'x-api-key': env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
     body: JSON.stringify({
       model: 'claude-sonnet-5',
-      max_tokens: 16000,
+      max_tokens: 7000,
       stream: true,
-      output_config: { effort: 'medium' },
+      thinking: { type: 'disabled' },
+      output_config: { effort: 'low' },
       messages: [{ role: 'user', content: prompt(desc, w, h) }],
     }),
   });

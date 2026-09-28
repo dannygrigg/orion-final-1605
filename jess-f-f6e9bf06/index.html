@@ -743,17 +743,17 @@ Rules:
 - Keep white gaps between black shapes at least 10 units wide. Avoid tiny details under 15 units.
 - Fill the whole canvas edge to edge with a balanced composition; black should cover roughly 35–55% of the area.
 - Organic, elegant, in the style of decorative laser-cut garden screens (like tree branch or sea-life screen panels).
-- Use at most about 80 path/shape elements and keep path data compact (integers only).`;}
+- Use 40 to 70 path/shape elements: a few large bold forms plus enough mid-sized detail to look rich. Keep path data compact (integers only, Q/C curves). Start writing the SVG immediately.`;}
 async function describeDesign(desc){
   if(!desc){custMsg('Type what you want first.');return;}
   if(DESC_BUSY)return;DESC_BUSY=true;S.custom.desc=desc.slice(0,600);save();
   const btn=$('#descGo');if(btn)btn.disabled=true;
   const L0=layout(S),DW=S.mural?S.W:L0.pw,w=1000,h=Math.max(200,Math.round(1000*L0.ph/DW));
-  const t0=Date.now(),tick=setInterval(()=>custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s (can take 2–5 minutes)`),1000);custMsg('Drawing…');
+  const t0=Date.now(),tick=setInterval(()=>custMsg(`Drawing… ${Math.round((Date.now()-t0)/1000)} s (usually 20–60 s)`),1000);custMsg('Drawing…');
   try{
     let svg=null;
     const smp=window.claude&&window.claude.use?await window.claude.use('sample').catch(()=>null):null;
-    if(smp){const r=await smp(designPrompt(desc,w,h),{modelTier:'complex'});svg=extractSvg(r.text);}
+    if(smp){const r=await smp(designPrompt(desc,w,h),{modelTier:'default'});svg=extractSvg(r.text);}
     else if(ON_SITE){const r=await fetch('/api/jess-design',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({desc,w,h})});
       if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error||'The drawing service is unavailable.');}
       const rd=r.body.getReader(),dec=new TextDecoder();let txt='';
