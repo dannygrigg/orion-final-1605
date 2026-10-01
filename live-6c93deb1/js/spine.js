@@ -114,6 +114,8 @@ export const EVENT_TYPES = {
     fields: [['by_name', 'Signed by', 'text', true], ['warranty_months', 'Warranty (months)', 'number', true]] },
   fault_reported: { label: 'Fault reported', group: 'Aftercare', customer: true,
     fields: [['text', 'Fault', 'text', true], ['action', 'What we are doing', 'text']] },
+  email_logged: { label: 'Email captured', group: 'Internal', manual: false,
+    fields: [['mail_id', 'Mail', 'number'], ['from', 'From', 'text'], ['subject', 'Subject', 'text'], ['attachments', 'Attachments', 'number']] },
   note: { label: 'Internal note', group: 'Internal',
     fields: [['text', 'Note (customer never sees this)', 'longtext', true]] },
   void: { label: 'Cancel an event logged in error', group: 'Internal',

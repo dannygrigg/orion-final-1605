@@ -61,6 +61,9 @@ export async function ensureSchema(db) {
       to_addr TEXT, subject TEXT NOT NULL, body TEXT NOT NULL, why TEXT, status TEXT NOT NULL,
       created_at TEXT NOT NULL, sent_at TEXT, sent_by TEXT, error TEXT)`),
     db.prepare(`CREATE TABLE IF NOT EXISTS ol_fails (ip TEXT NOT NULL, scope TEXT NOT NULL, at TEXT NOT NULL)`),
+    db.prepare(`CREATE TABLE IF NOT EXISTS ol_mail (
+      id INTEGER PRIMARY KEY AUTOINCREMENT, project_id INTEGER, message_id TEXT UNIQUE, from_addr TEXT, from_name TEXT,
+      to_addrs TEXT, cc_addrs TEXT, subject TEXT, sent_at TEXT, body TEXT, attachments TEXT, matched_by TEXT, received_at TEXT NOT NULL)`),
   ]);
   try { await db.prepare('ALTER TABLE ol_projects ADD COLUMN owners TEXT').run(); } catch (_) { /* already there */ }
   globalThis.__olSchema = true;
@@ -154,6 +157,8 @@ export async function sendOutbox(env, origin, row, project, by) {
   if (!row.to_addr) return { error: 'No customer email address on this project' };
   const link = project.pin_hash ? `\n\nYour project page: ${origin}${TRACK_BASE}/${project.token}` : '';
   const cc = (project.cc_emails || '').split(',').map(s => s.trim()).filter(Boolean);
+  // copy the job's capture mailbox so the customer's replies land in the job automatically
+  if (env.LIVE_MAIL_DOMAIN) cc.push(captureAddress(env, project));
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
@@ -182,6 +187,55 @@ export function customerView(p, r) {
     docs: r.docs, signoffs: r.signoffs, snags: r.snags, faults: r.faults,
     percent: r.percent, warranty: r.warranty, timeline: r.timeline.slice().reverse(),
   };
+}
+
+// ── capture mailbox ──
+// Every job has an address <ref>@<LIVE_MAIL_DOMAIN> (e.g. pro-gaz-001@projects.orionmis.co.uk).
+// Mail arrives through Cloudflare Email Routing → the orion-live-mail Worker → captureMail().
+export const MAIL_DOMAIN_DEFAULT = 'projects.orionmis.co.uk';
+export const captureAddress = (env, p) => `${p.ref.toLowerCase()}@${env.LIVE_MAIL_DOMAIN || MAIL_DOMAIN_DEFAULT}`;
+
+// File one parsed email (postal-mime shape) against a project. Returns { id, project, matchedBy } or { duplicate }.
+export async function captureMail(env, { envelopeTo, envelopeFrom, mail }) {
+  const db = env.SNAG_DB, domain = (env.LIVE_MAIL_DOMAIN || MAIL_DOMAIN_DEFAULT).toLowerCase();
+  const msgId = (mail.messageId || '').trim() || `no-id:${envelopeFrom}:${mail.date}:${mail.subject}`;
+  if (await db.prepare('SELECT id FROM ol_mail WHERE message_id = ?').bind(msgId).first()) return { duplicate: true };
+  const addr = a => (a?.address || '').toLowerCase();
+  const to = (mail.to || []).map(addr).filter(Boolean), cc = (mail.cc || []).map(addr).filter(Boolean);
+  const from = addr(mail.from) || String(envelopeFrom || '').toLowerCase();
+  const all = [...new Set([from, ...to, ...cc, String(envelopeTo || '').toLowerCase()])].filter(Boolean);
+  const { results: projects } = await db.prepare('SELECT * FROM ol_projects').all();
+  let project = null, matchedBy = null;
+  // 1. sent to the job's own address
+  for (const a of all) {
+    const [local, dom] = a.split('@');
+    const hit = dom === domain && projects.find(p => p.ref.toLowerCase() === local);
+    if (hit) { project = hit; matchedBy = 'job address'; break; }
+  }
+  // 2. job ref in the subject
+  if (!project) {
+    const subj = (mail.subject || '').toLowerCase();
+    const hits = projects.filter(p => subj.includes(p.ref.toLowerCase()));
+    if (hits.length === 1) { project = hits[0]; matchedBy = 'ref in subject'; }
+  }
+  // 3. the customer's contact or cc address is on it (only if exactly one job matches)
+  if (!project) {
+    const hits = projects.filter(p => [p.contact_email, ...(p.cc_emails || '').split(',')].map(x => (x || '').trim().toLowerCase()).filter(Boolean).some(x => all.includes(x)));
+    if (hits.length === 1) { project = hits[0]; matchedBy = 'customer address'; }
+  }
+  let body = mail.text || (mail.html || '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<[^>]+>/g, ' ').replace(/[ \t]+\n/g, '\n');
+  body = String(body || '').slice(0, 20000);
+  const atts = (mail.attachments || []).map(a => ({ name: a.filename || 'attachment', type: a.mimeType, size: a.content?.byteLength || 0 }));
+  const sentAt = mail.date ? new Date(mail.date).toISOString() : nowIso();
+  const row = await db.prepare(`INSERT INTO ol_mail (project_id, message_id, from_addr, from_name, to_addrs, cc_addrs, subject, sent_at, body, attachments, matched_by, received_at)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?) RETURNING id`).bind(project?.id || null, msgId, from, mail.from?.name || null, to.join(', '), cc.join(', '),
+    (mail.subject || '(no subject)').slice(0, 300), sentAt, body, JSON.stringify(atts), matchedBy, nowIso()).first();
+  if (project) await fileMailEvent(db, project.id, row.id, { from, subject: mail.subject, sentAt, atts: atts.length });
+  return { id: row.id, project: project?.ref || null, matchedBy };
+}
+async function fileMailEvent(db, projectId, mailId, { from, subject, sentAt, atts }) {
+  await db.prepare('INSERT INTO ol_events (project_id, type, date, data, by, source, created_at) VALUES (?,?,?,?,?,?,?)')
+    .bind(projectId, 'email_logged', londonDay(new Date(sentAt)), JSON.stringify({ mail_id: mailId, from, subject: (subject || '').slice(0, 200), attachments: atts }), from, 'email', nowIso()).run();
 }
 
 // ── staff API ──
@@ -257,7 +311,8 @@ Orion MIS · ${p.ref}`,
       const events = await loadEvents(db, p.id);
       const { results: outbox } = await db.prepare('SELECT * FROM ol_outbox WHERE project_id = ? ORDER BY id DESC').bind(p.id).all();
       const { pin_hash, ...project } = p;
-      return json({ project: { ...project, page: !!pin_hash, track: `${TRACK_BASE}/${p.token}` }, events, record: derive(events), outbox, mail: !!env.RESEND_API_KEY });
+      const { results: mails } = await db.prepare('SELECT id, from_addr, from_name, to_addrs, cc_addrs, subject, sent_at, body, attachments FROM ol_mail WHERE project_id = ? ORDER BY sent_at DESC, id DESC LIMIT 200').bind(p.id).all();
+      return json({ project: { ...project, page: !!pin_hash, track: `${TRACK_BASE}/${p.token}`, capture: captureAddress(env, p) }, events, record: derive(events), outbox, mails, mail: !!env.RESEND_API_KEY, captureLive: !!env.LIVE_MAIL_DOMAIN });
     }
     if (!sub && method === 'PATCH') {
       const sets = [], vals = [];
@@ -303,6 +358,21 @@ Orion MIS · ${p.ref}`,
       events.push(ev); added++;
     }
     return json({ id: p.id, ref: p.ref, added });
+  }
+  // captured mail that could not be matched to a job, and filing it by hand
+  if (a === 'mail' && !id && method === 'GET') {
+    const { results } = await db.prepare('SELECT id, from_addr, from_name, to_addrs, cc_addrs, subject, sent_at, body, attachments FROM ol_mail WHERE project_id IS NULL ORDER BY id DESC LIMIT 200').all();
+    return json({ items: results, domain: env.LIVE_MAIL_DOMAIN || MAIL_DOMAIN_DEFAULT, live: !!env.LIVE_MAIL_DOMAIN });
+  }
+  if (a === 'mail' && id && method === 'POST') {
+    const m = await db.prepare('SELECT * FROM ol_mail WHERE id = ?').bind(id).first();
+    if (!m) return bad('No such email', 404);
+    const p = await loadProject(db, body.project_id);
+    if (!p) return bad('Choose a project');
+    if (m.project_id) return bad('Already filed');
+    await db.prepare("UPDATE ol_mail SET project_id = ?, matched_by = 'filed by ' || ? WHERE id = ?").bind(p.id, user, m.id).run();
+    await fileMailEvent(db, p.id, m.id, { from: m.from_addr, subject: m.subject, sentAt: m.sent_at, atts: JSON.parse(m.attachments || '[]').length });
+    return json({ ok: true });
   }
   if (a === 'outbox' && !id && method === 'GET') {
     const { results } = await db.prepare(`SELECT o.*, p.ref FROM ol_outbox o JOIN ol_projects p ON p.id = o.project_id

@@ -1,0 +1,8 @@
+{
+  "name": "orion-live-mail",
+  "private": true,
+  "description": "Orion Live capture mailbox (Cloudflare Email Worker)",
+  "dependencies": {
+    "postal-mime": "^2"
+  }
+}

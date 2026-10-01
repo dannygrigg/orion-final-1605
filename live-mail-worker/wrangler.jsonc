@@ -1,0 +1,13 @@
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "orion-live-mail",
+  "main": "index.js",
+  "compatibility_date": "2026-05-17",
+  "observability": { "enabled": true },
+  "vars": { "LIVE_MAIL_DOMAIN": "projects.orionmis.co.uk" },
+  // Same database as the website's Orion Live (the snag app's D1, tables ol_*).
+  // database_id: Cloudflare dash → Storage & databases → D1 → apc-snags.
+  "d1_databases": [
+    { "binding": "SNAG_DB", "database_name": "apc-snags", "database_id": "REPLACE_WITH_APC_SNAGS_ID" }
+  ]
+}

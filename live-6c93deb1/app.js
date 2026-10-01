@@ -27,7 +27,7 @@ async function api(path, opts = {}) {
 // ── shell ──
 let outboxCount = 0;
 function nav(active) {
-  $('#nav').innerHTML = [['#/', 'Register', 'reg'], ['#/outbox', `Outbox${outboxCount ? `<span class="badge">${outboxCount}</span>` : ''}`, 'out'], ['#/new', 'New project', 'new'], ['#/import', 'Import', 'imp']]
+  $('#nav').innerHTML = [['#/', 'Register', 'reg'], ['#/outbox', `Outbox${outboxCount ? `<span class="badge">${outboxCount}</span>` : ''}`, 'out'], ['#/new', 'New project', 'new'], ['#/mail', 'Mail to file', 'mail'], ['#/import', 'Import', 'imp']]
     .map(([h, l, k]) => `<a href="${h}" ${k === active ? 'aria-current="page"' : ''}>${l}</a>`).join('');
   $('#who').textContent = userName() ? `Signed in as ${userName()}` : '';
 }
@@ -61,13 +61,13 @@ async function project(id, flash) {
   nav('');
   const [cur, tm] = await Promise.all([api('/projects/' + id), api('/team').catch(() => ({ people: [] }))]);
   current = cur; const team = tm.people || [];
-  const { project: p, record: r, events, outbox, mail } = current;
+  const { project: p, record: r, events, outbox, mail, mails = [], captureLive } = current;
   const t = today();
   const voided = new Set(events.filter(e => e.type === 'void').map(e => +e.data.event));
   const held = outbox.filter(o => ['held', 'failed', 'open'].includes(o.status));
   const done = outbox.filter(o => !['held', 'failed', 'open'].includes(o.status));
   const groups = {};
-  Object.entries(EVENT_TYPES).forEach(([k, T]) => (groups[T.group] ||= []).push([k, T]));
+  Object.entries(EVENT_TYPES).filter(([, T]) => T.manual !== false).forEach(([k, T]) => (groups[T.group] ||= []).push([k, T]));
 
   $('#main').innerHTML = `
   ${flash ? `<div class="msg ${flash.err ? 'err' : 'ok'}">${esc(flash.text)}</div>` : ''}
@@ -106,6 +106,11 @@ async function project(id, flash) {
       </div>
       <div class="card"><h3>Documents <small>${r.docs.filter(d => !d.superseded).length} current</small></h3>
         ${r.docs.length ? `<ul class="list">${r.docs.slice().reverse().map(d => `<li class="${d.superseded ? 'sup' : ''}"><span><span class="mono">${esc(d.ref)}</span> ${esc(d.title)}${d.link ? ` · <a href="${esc(d.link)}" target="_blank" rel="noopener">open</a>` : ''}</span><span class="mono">Rev ${esc(d.rev)} · ${fmtDate(d.date)}</span></li>`).join('')}</ul>` : '<p class="empty">None yet.</p>'}
+      </div>
+      <div class="card"><h3>Emails <small>${mails.length} captured</small></h3>
+        <p style="margin:0 0 8px">Copy <span class="mono">${esc(p.capture)}</span> into any email about this job and it is filed here. <button class="btn small" id="cap-copy" type="button">Copy address</button></p>
+        ${!captureLive ? '<p class="empty" style="margin-bottom:8px;font-size:13px">The capture mailbox is not switched on yet; emails sent to this address will bounce until it is.</p>' : ''}
+        ${mails.length ? `<div class="stack" style="gap:6px">${mails.map(mailItem).join('')}</div>` : '<p class="empty">None yet.</p>'}
       </div>
       ${r.signoffs.length || r.snags.length || r.faults.length || r.warranty ? `<div class="card"><h3>Sign-offs, snags, aftercare</h3><ul class="list">
         ${r.signoffs.map(s => `<li><span>${esc(s.what)} · ${esc(s.by)}</span><span class="mono">${fmtDate(s.date)}</span></li>`).join('')}
@@ -187,6 +192,7 @@ async function project(id, flash) {
   lastPin = null;
   $('#pinf').addEventListener('submit', async e => { e.preventDefault(); const pin = $('#pin').value; lastPin = pin; await patch(p.id, { pin }, 'Customer page PIN set. Send the address and the PIN as separate messages.'); });
   const copy = async (text, btn) => { try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; } catch { prompt('Copy this:', text); } };
+  $('#cap-copy')?.addEventListener('click', e => copy(p.capture, e.target));
   $('#sh-copy')?.addEventListener('click', e => copy(shareMsg(p), e.target));
   $('#pin-copy')?.addEventListener('click', e => copy(pinMsg(p, $('#pin-copy').closest('.msg').querySelector('b').textContent), e.target));
   $('#sh-mail')?.addEventListener('click', async () => {
@@ -205,6 +211,27 @@ async function project(id, flash) {
     ['name', 'customer', 'site', 'lead', 'lead_email', 'contact_name', 'contact_email', 'cc_emails'].forEach(k => { b[k] = document.getElementById('d_' + k).value; });
     await patch(p.id, b, 'Details saved.');
   });
+}
+function mailItem(m) {
+  const atts = JSON.parse(m.attachments || '[]');
+  return `<details class="list" style="background:var(--soft);border-radius:3px;padding:8px 10px">
+    <summary style="color:var(--ink)"><span class="mono muted">${fmtDate((m.sent_at || '').slice(0, 10))}</span> · <b>${esc(m.from_name || m.from_addr)}</b> · ${esc(m.subject)}${atts.length ? ` · <span class="muted">${atts.length} attachment${atts.length > 1 ? 's' : ''}</span>` : ''}</summary>
+    <div class="muted" style="font-size:12.5px;margin:6px 0">From ${esc(m.from_addr)} · To ${esc(m.to_addrs)}${m.cc_addrs ? ' · Cc ' + esc(m.cc_addrs) : ''}</div>
+    <pre style="white-space:pre-wrap;font-family:var(--f-body);font-size:14px;margin:0;max-height:360px;overflow:auto">${esc(m.body)}</pre>
+    ${atts.length ? `<div class="muted" style="font-size:12.5px;margin-top:6px">Attachments (names only, files stay in Outlook): ${atts.map(a => esc(a.name)).join(', ')}</div>` : ''}
+  </details>`;
+}
+async function mailPage() {
+  nav('mail');
+  const [{ items, domain, live }, { projects }] = await Promise.all([api('/mail'), api('/projects')]);
+  $('#main').innerHTML = `<div class="card"><h3>Mail to file <small>captured emails that could not be matched to a job</small></h3>
+    <p class="empty" style="margin-bottom:10px">Emails are filed automatically when sent to a job's own address (e.g. <span class="mono">pro-gaz-001@${esc(domain)}</span>), when the job ref is in the subject, or when the customer's address is on them. General address: <span class="mono">admin@${esc(domain)}</span>.${live ? '' : ' The capture mailbox is not switched on yet.'}</p>
+    ${items.length ? `<div class="stack">${items.map(m => `<div>${mailItem(m)}<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap"><select id="fm_${m.id}" aria-label="Project"><option value="">File against…</option>${projects.map(p => `<option value="${p.id}">${esc(p.ref)} · ${esc(p.customer)}</option>`).join('')}</select><button class="btn small" data-file="${m.id}">File</button></div></div>`).join('')}</div>` : '<p class="empty">Nothing to file.</p>'}</div>`;
+  document.querySelectorAll('[data-file]').forEach(b => b.addEventListener('click', async () => {
+    const pid = document.getElementById('fm_' + b.dataset.file).value; if (!pid) return;
+    b.disabled = true;
+    try { await api('/mail/' + b.dataset.file, { method: 'POST', body: { project_id: +pid } }); mailPage(); } catch (err) { b.disabled = false; }
+  }));
 }
 function shareMsg(p) {
   const first = (p.contact_name || '').split(' ')[0];
@@ -325,6 +352,7 @@ async function route() {
     else if (h === '#/outbox') await outbox();
     else if (h === '#/new') newProject();
     else if (h === '#/import') importPage();
+    else if (h === '#/mail') await mailPage();
     else await register();
   } catch (err) {
     if (err.message !== 'signin') $('#main').innerHTML = `<div class="msg err">${esc(err.message)}</div>`;
