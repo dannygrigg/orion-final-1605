@@ -14,7 +14,7 @@
 // ─────────────────────────────────────────────────────────────────────────
 
 export const STAGES = [
-  'Enquiry', 'Proposal', 'Order confirmed', 'Design', 'Procurement', 'Manufacture',
+  'Enquiry', 'Concept + data', 'Proposal', 'Order confirmed', 'Design', 'Procurement', 'Manufacture',
   'Factory test', 'Delivery', 'Install + commission', 'Handover', 'Aftercare',
 ];
 
@@ -37,10 +37,14 @@ const MILESTONE_NAME = Object.fromEntries(MILESTONES);
 export const EVENT_TYPES = {
   enquiry_received: { label: 'Enquiry received', group: 'Sales', stage: 0, customer: true,
     fields: [['summary', 'What they want', 'longtext', true]] },
-  quote_issued: { label: 'Quote / proposal issued', group: 'Sales', stage: 1, customer: true,
+  quote_issued: { label: 'Quote / proposal issued', group: 'Sales', stage: 2, customer: true,
     fields: [['ref', 'Document ref', 'text', true], ['rev', 'Rev', 'text', true], ['title', 'Title', 'text'],
       ['value', 'Value (£ ex VAT)', 'money'], ['valid_until', 'Valid until', 'date']] },
-  order_received: { label: 'Order received (PO)', group: 'Sales', stage: 2, customer: true,
+  concept_issued: { label: 'Concept / data request issued', group: 'Sales', stage: 1, customer: true,
+    fields: [['ref', 'Document ref', 'text', true], ['rev', 'Rev', 'text', true], ['title', 'Title', 'text', true], ['link', 'Link', 'text']] },
+  site_visit: { label: 'Site visit booked or held', group: 'Sales', customer: true,
+    fields: [['date', 'Visit date', 'date', true], ['purpose', 'Purpose', 'text', true], ['held', 'Visit has taken place', 'check']] },
+  order_received: { label: 'Order received (PO)', group: 'Sales', stage: 3, customer: true,
     fields: [['po_ref', 'Customer PO ref', 'text', true], ['value', 'Order value (£ ex VAT)', 'money'], ['note', 'Note', 'text']] },
   milestone_planned: { label: 'Set or move a milestone date', group: 'Programme', customer: true,
     fields: [['milestone', 'Milestone', 'milestone', true], ['date', 'Planned date', 'date', true],
@@ -48,28 +52,28 @@ export const EVENT_TYPES = {
   document_issued: { label: 'Document issued', group: 'Documents', customer: true,
     fields: [['ref', 'Document ref', 'text', true], ['rev', 'Rev', 'text', true], ['title', 'Title', 'text', true],
       ['link', 'Link (SharePoint etc.)', 'text']] },
-  drawing_issued: { label: 'Drawing issued for approval', group: 'Design', stage: 3, customer: true,
+  drawing_issued: { label: 'Drawing issued for approval', group: 'Design', stage: 4, customer: true,
     fields: [['ref', 'Drawing ref', 'text', true], ['rev', 'Rev', 'text', true], ['title', 'Title', 'text'],
       ['approve_by', 'Approval needed by', 'date', true], ['link', 'Link', 'text']] },
-  drawing_approved: { label: 'Drawing approved by customer', group: 'Design', stage: 4, customer: true,
+  drawing_approved: { label: 'Drawing approved by customer', group: 'Design', stage: 5, customer: true,
     fields: [['ref', 'Drawing ref', 'text', true], ['rev', 'Rev', 'text', true], ['by_name', 'Approved by', 'text', true]] },
   waiting_added: { label: 'Waiting on customer: add item', group: 'Customer', customer: true,
-    fields: [['text', 'What we need from them', 'text', true], ['due', 'Needed by', 'date', true]] },
+    fields: [['text', 'What we need from them', 'text', true], ['due', 'Needed by', 'date']] },
   waiting_cleared: { label: 'Waiting on customer: item done', group: 'Customer', customer: true,
     fields: [['waiting', 'Item', 'waiting', true]] },
-  materials_ordered: { label: 'Materials ordered', group: 'Procurement', stage: 4, customer: true,
+  materials_ordered: { label: 'Materials ordered', group: 'Procurement', stage: 5, customer: true,
     fields: [['expected', 'All expected by', 'date'], ['note', 'Internal note (suppliers, POs)', 'text']] },
   materials_received: { label: 'Materials received', group: 'Procurement',
     fields: [['note', 'What arrived', 'text', true], ['all_in', 'This completes materials', 'check']] },
-  build_started: { label: 'Build started', group: 'Workshop', stage: 5, customer: true, fields: [] },
+  build_started: { label: 'Build started', group: 'Workshop', stage: 6, customer: true, fields: [] },
   build_progress: { label: 'Build progress', group: 'Workshop', customer: true,
     fields: [['percent', 'Percent complete', 'number', true], ['note', 'Note for customer', 'text']] },
-  build_complete: { label: 'Build complete', group: 'Workshop', stage: 6, customer: true, fields: [] },
-  test_passed: { label: 'Factory test passed', group: 'Workshop', stage: 7, customer: true,
+  build_complete: { label: 'Build complete', group: 'Workshop', stage: 7, customer: true, fields: [] },
+  test_passed: { label: 'Factory test passed', group: 'Workshop', stage: 8, customer: true,
     fields: [['note', 'What was tested', 'text'], ['by_name', 'Witnessed / accepted by', 'text']] },
   delivery_booked: { label: 'Delivery booked', group: 'Site', customer: true,
     fields: [['date', 'Delivery date', 'date', true], ['note', 'Details for customer', 'text']] },
-  delivered: { label: 'Delivered to site', group: 'Site', stage: 8, customer: true, fields: [] },
+  delivered: { label: 'Delivered to site', group: 'Site', stage: 9, customer: true, fields: [] },
   update_posted: { label: 'Progress update (customer sees it)', group: 'Site', customer: true,
     fields: [['text', 'Update', 'longtext', true]] },
   snag_raised: { label: 'Snag raised', group: 'Site', customer: true,
@@ -77,9 +81,9 @@ export const EVENT_TYPES = {
   snag_closed: { label: 'Snag closed', group: 'Site', customer: true,
     fields: [['snag', 'Snag', 'snag', true], ['note', 'Fix', 'text']] },
   install_complete: { label: 'Install complete', group: 'Site', customer: true, fields: [] },
-  sat_signed: { label: 'SAT signed', group: 'Site', stage: 9, customer: true,
+  sat_signed: { label: 'SAT signed', group: 'Site', stage: 10, customer: true,
     fields: [['by_name', 'Signed by', 'text', true]] },
-  handover_signed: { label: 'Handover signed', group: 'Site', stage: 10, customer: true,
+  handover_signed: { label: 'Handover signed', group: 'Site', stage: 11, customer: true,
     fields: [['by_name', 'Signed by', 'text', true], ['warranty_months', 'Warranty (months)', 'number', true]] },
   fault_reported: { label: 'Fault reported', group: 'Aftercare', customer: true,
     fields: [['text', 'Fault', 'text', true], ['action', 'What we are doing', 'text']] },
@@ -128,6 +132,7 @@ export function derive(events) {
           r.moves.push({ milestone: d.milestone, from: r.planned[d.milestone], to: d.date, reason: d.reason || '', date: e.date });
         r.planned[d.milestone] = d.date;
         break;
+      case 'concept_issued':
       case 'document_issued':
         r.docs.forEach(x => { if (x.ref === d.ref) x.superseded = true; });
         r.docs.push({ ref: d.ref, rev: d.rev, title: d.title, date: e.date, link: d.link });
@@ -187,13 +192,15 @@ export function customerLine(e) {
   const d = data(e);
   switch (e.type) {
     case 'enquiry_received': return 'Enquiry received.';
+    case 'concept_issued': return `${d.title} ${d.ref} Rev ${d.rev} issued.`;
+    case 'site_visit': return d.held ? `Site visit held: ${d.purpose}.` : `Site visit booked for ${fmtDate(d.date)}: ${d.purpose}.`;
     case 'quote_issued': return `${d.title || 'Proposal'} ${d.ref} Rev ${d.rev} issued.`;
     case 'order_received': return 'Order confirmed.';
     case 'milestone_planned': return `${MILESTONE_NAME[d.milestone] || d.milestone}: planned for ${fmtDate(d.date)}${d.reason ? ` (${d.reason})` : ''}.`;
     case 'document_issued': return `${d.title} ${d.ref} Rev ${d.rev} added to documents.`;
     case 'drawing_issued': return `${d.title || 'Drawing'} ${d.ref} Rev ${d.rev} ready for your approval.`;
     case 'drawing_approved': return `${d.ref} Rev ${d.rev} approved by ${d.by_name}.`;
-    case 'waiting_added': return `We need from you: ${d.text} by ${fmtDate(d.due)}.`;
+    case 'waiting_added': return `We need from you: ${d.text}${d.due ? ` by ${fmtDate(d.due)}` : ''}.`;
     case 'waiting_cleared': return 'Thanks, item received.';
     case 'materials_ordered': return `Materials ordered${d.expected ? `, all expected by ${fmtDate(d.expected)}` : ''}.`;
     case 'build_started': return 'Build started in our workshop.';
@@ -229,6 +236,12 @@ export function rules(project, e, before, after) {
     case 'enquiry_received':
       mail('We have your enquiry', `Thank you for your enquiry. We have logged it as ${project.ref} and will come back to you with a layout and budget price.`, 'Enquiry received');
       break;
+    case 'concept_issued':
+      mail(`${d.title} Rev ${d.rev}`, `${d.title} ${d.ref} Rev ${d.rev} is on your project page.`, 'Concept issued');
+      break;
+    case 'site_visit':
+      if (!d.held) mail(`Site visit: ${fmtDate(d.date)}`, `We have booked a site visit for ${fmtDate(d.date)}: ${d.purpose}.`, 'Site visit booked');
+      break;
     case 'quote_issued':
       mail(`${d.title || 'Proposal'} Rev ${d.rev}`, `${d.title || 'Our proposal'} ${d.ref} Rev ${d.rev} is on your project page${d.value ? `. Total ${gbp(d.value)} ex VAT` : ''}${d.valid_until ? `, valid until ${fmtDate(d.valid_until)}` : ''}.`, 'Quote issued');
       break;
@@ -251,7 +264,7 @@ export function rules(project, e, before, after) {
       mail('Approval recorded', `Thank you. Your approval of ${d.ref} Rev ${d.rev} is recorded. Materials are now being ordered.`, 'Customer approval');
       break;
     case 'waiting_added':
-      mail(`Needed from you: ${d.text}`, `To keep your programme on track we need: ${d.text}, by ${fmtDate(d.due)}.`, 'Waiting-on item added');
+      mail(`Needed from you: ${d.text}`, `To keep your programme on track we need: ${d.text}${d.due ? `, by ${fmtDate(d.due)}` : ''}.`, 'Waiting-on item added');
       break;
     case 'build_complete':
       mail('Build complete', `Your system is built.${after.planned.test ? ` Factory test is planned for ${fmtDate(after.planned.test)}.` : ''}`, 'Build complete');

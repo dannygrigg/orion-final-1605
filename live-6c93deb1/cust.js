@@ -6,7 +6,7 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '
 const token = location.pathname.split('/').filter(Boolean)[1] || '';
 const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date());
 // the milestone that completes each stage, shown as its date on the tracker
-const STAGE_MILESTONE = { 3: 'design', 4: 'materials', 5: 'build', 6: 'test', 7: 'delivery', 8: 'sat', 9: 'handover' };
+const STAGE_MILESTONE = { 4: 'design', 5: 'materials', 6: 'build', 7: 'test', 8: 'delivery', 9: 'sat', 10: 'handover' };
 
 async function load() {
   const r = await fetch('/track-180021fb/api/' + token);
@@ -33,8 +33,8 @@ function show(v) {
   $('#main').innerHTML = `
   <div class="hero"><div class="label">Orion MIS · your project</div><h1>${esc(v.name)}</h1><p>${esc(v.ref)} · ${esc(v.customer)}${v.site ? ', ' + esc(v.site) : ''}</p></div>
   <div class="card"><div class="label">Now</div><h2 style="font-size:26px;margin:2px 0 4px">${v.stage >= 0 ? STAGES[v.stage] : 'Getting started'}</h2>
-    <p style="margin:0" class="muted">${v.next ? `Next: <b style="color:var(--ink)">${esc(v.next.n)}</b>, ${fmtDate(v.next.date)}` : v.stage < 2 ? 'Dates are set when the order is placed.' : 'All planned milestones are complete.'}
-    ${v.percent != null && v.stage === 5 ? ` · Build ${v.percent}% complete` : ''}</p></div>
+    <p style="margin:0" class="muted">${v.next ? `Next: <b style="color:var(--ink)">${esc(v.next.n)}</b>, ${fmtDate(v.next.date)}` : v.stage < 3 ? 'Dates are set when the order is placed.' : 'All planned milestones are complete.'}
+    ${v.percent != null && v.stage === 6 ? ` · Build ${v.percent}% complete` : ''}</p></div>
   ${v.waiting.length ? `<div class="youbox"><h2>We're waiting on you</h2><ul class="list">${v.waiting.map(w => `<li><span>${esc(w.text)}</span><span>${w.due && w.due < today ? '<span class="pill warn">overdue</span> ' : ''}<span class="mono">${w.due ? 'by ' + fmtDate(w.due) : ''}</span></span></li>`).join('')}</ul>
     <p class="empty" style="margin-top:8px">Reply to any of our emails, or contact ${esc(v.lead || 'your Orion contact')}, and we will mark it done.</p></div>` : ''}
   <div class="card"><h3>Your job, stage by stage</h3>

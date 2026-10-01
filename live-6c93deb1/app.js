@@ -25,14 +25,14 @@ async function api(path, opts = {}) {
 // ── shell ──
 let outboxCount = 0;
 function nav(active) {
-  $('#nav').innerHTML = [['#/', 'Register', 'reg'], ['#/outbox', `Outbox${outboxCount ? `<span class="badge">${outboxCount}</span>` : ''}`, 'out'], ['#/new', 'New project', 'new']]
+  $('#nav').innerHTML = [['#/', 'Register', 'reg'], ['#/outbox', `Outbox${outboxCount ? `<span class="badge">${outboxCount}</span>` : ''}`, 'out'], ['#/new', 'New project', 'new'], ['#/import', 'Import', 'imp']]
     .map(([h, l, k]) => `<a href="${h}" ${k === active ? 'aria-current="page"' : ''}>${l}</a>`).join('');
   $('#who').textContent = userName() ? `Signed in as ${userName()}` : '';
 }
 function stageStrip(stage) {
   return `<div class="stages">${STAGES.map((s, i) => `<div class="stg ${i < stage ? 'done' : i === stage ? 'cur' : ''}"><span class="n">${i + 1}</span>${s}</div>`).join('')}</div>`;
 }
-const stagePill = s => s < 0 ? '<span class="pill">no events</span>' : `<span class="pill ${s >= 10 ? 'good' : 'steel'}">${s + 1} · ${STAGES[s]}</span>`;
+const stagePill = s => s < 0 ? '<span class="pill">no events</span>' : `<span class="pill ${s >= 11 ? 'good' : 'steel'}">${s + 1} · ${STAGES[s]}</span>`;
 
 // ── register ──
 async function register() {
@@ -242,6 +242,34 @@ function newProject() {
   });
 }
 
+// ── import (job history files kept on our own PCs, never in the website code) ──
+function importPage() {
+  nav('imp');
+  $('#main').innerHTML = `<div class="card"><h3>Import job history <small>one .json file per job · events are added as "import" and send no emails</small></h3>
+    <form id="if" class="grid">
+      <div class="field wide"><label for="ifile">Choose one or more job files</label><input id="ifile" type="file" accept=".json,application/json" multiple required></div>
+      <div class="field wide"><button class="btn primary">Import</button></div>
+    </form>
+    <ul class="list" id="ires" style="margin-top:12px"></ul>
+    <p class="empty" style="margin-top:12px">File format: <span class="mono">{ "project": { "ref", "name", "customer", "site", "lead", "lead_email", "contact_name", "contact_email" }, "events": [ { "type", "date", "data" } ] }</span>. A job can be imported once; after that, log events on its project page.</p></div>`;
+  $('#if').addEventListener('submit', async e => {
+    e.preventDefault();
+    const out = $('#ires'); out.innerHTML = '';
+    for (const f of $('#ifile').files) {
+      let line;
+      try {
+        const body = JSON.parse(await f.text());
+        const r = await api('/import', { method: 'POST', body });
+        line = `<li><span>${esc(f.name)}: <a href="#/p/${r.id}">${esc(r.ref)}</a></span><span class="pill good">${r.added} events</span></li>`;
+      } catch (err) {
+        if (err.message === 'signin') return;
+        line = `<li><span>${esc(f.name)}</span><span class="pill warn">${esc(err.message)}</span></li>`;
+      }
+      out.insertAdjacentHTML('beforeend', line);
+    }
+  });
+}
+
 async function refreshCount() {
   try { const { items } = await api('/outbox'); outboxCount = items.length; } catch {}
 }
@@ -252,6 +280,7 @@ async function route() {
     if (h.startsWith('#/p/')) await project(h.slice(4));
     else if (h === '#/outbox') await outbox();
     else if (h === '#/new') newProject();
+    else if (h === '#/import') importPage();
     else await register();
   } catch (err) {
     if (err.message !== 'signin') $('#main').innerHTML = `<div class="msg err">${esc(err.message)}</div>`;

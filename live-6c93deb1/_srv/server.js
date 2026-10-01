@@ -240,6 +240,33 @@ export async function staffApi(request, env, user, parts, origin) {
       return json({ ok: true });
     }
   }
+  // Import a job's history from a file kept off the public repo.
+  // { project: {ref, name, customer, ...}, events: [{type, date, data}] } — rules do not run, no emails.
+  if (a === 'import' && method === 'POST') {
+    const pj = body.project || {}, list = Array.isArray(body.events) ? body.events : [];
+    for (const k of ['ref', 'name', 'customer']) if (!String(pj[k] || '').trim()) return bad(`project.${k} is required`);
+    let p = await db.prepare('SELECT * FROM ol_projects WHERE ref = ?').bind(pj.ref.trim()).first();
+    if (p) {
+      const prior = await db.prepare("SELECT COUNT(*) n FROM ol_events WHERE project_id = ? AND source = 'import'").bind(p.id).first();
+      if (prior.n) return bad(`${p.ref} has already been imported (${prior.n} events). Log new events on the project page instead.`);
+    } else {
+      const row = await db.prepare(`INSERT INTO ol_projects (ref, name, customer, site, lead, lead_email, contact_name, contact_email, cc_emails, token, created_at, created_by)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?) RETURNING id`).bind(pj.ref.trim(), pj.name.trim(), pj.customer.trim(), pj.site || null, pj.lead || null,
+        pj.lead_email || null, pj.contact_name || null, pj.contact_email || null, pj.cc_emails || null, randomHex(), nowIso(), user).first();
+      p = await loadProject(db, row.id);
+    }
+    const events = await loadEvents(db, p.id);
+    const sorted = list.slice().sort((x, y) => (x.date < y.date ? -1 : x.date > y.date ? 1 : 0));
+    let added = 0;
+    for (const e of sorted) {
+      const err = validateEvent(e.type, e.date, e.data || {}, derive(events), events);
+      if (err) return json({ error: `Event ${added + 1} (${e.type} ${e.date}): ${err}`, id: p.id, added }, 400);
+      const ev = parseEvent(await db.prepare('INSERT INTO ol_events (project_id, type, date, data, by, source, created_at) VALUES (?,?,?,?,?,?,?) RETURNING *')
+        .bind(p.id, e.type, e.date, JSON.stringify(e.data || {}), e.by || user, 'import', nowIso()).first());
+      events.push(ev); added++;
+    }
+    return json({ id: p.id, ref: p.ref, added });
+  }
   if (a === 'outbox' && !id && method === 'GET') {
     const { results } = await db.prepare(`SELECT o.*, p.ref FROM ol_outbox o JOIN ol_projects p ON p.id = o.project_id
       WHERE o.status IN ('held','open','failed') ORDER BY o.id DESC`).all();
