@@ -36,6 +36,8 @@ Disallow: /sketch-tool.html
 Disallow: /apc-p1-
 Disallow: /helios-t-
 Disallow: /jess-f-
+Disallow: /live-
+Disallow: /track-
 Disallow: /daily-report-worker/
 
 User-agent: *
@@ -59,6 +61,8 @@ Disallow: /sketch-tool.html
 Disallow: /apc-p1-
 Disallow: /helios-t-
 Disallow: /jess-f-
+Disallow: /live-
+Disallow: /track-
 Disallow: /daily-report-worker/
 
 Sitemap: https://orionmis.co.uk/sitemap.xml
