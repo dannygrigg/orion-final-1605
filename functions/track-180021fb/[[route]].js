@@ -14,7 +14,7 @@ import {
 } from '../../live-6c93deb1/_srv/server.js';
 import { derive } from '../../live-6c93deb1/js/spine.js';
 
-const FILES = { 'cust.js': 'cust.js', 'app.css': 'app.css', 'spine.js': 'js/spine.js' };
+const FILES = { 'cust.js': 'cust.js', 'app.css': 'app.css', 'spine.js': 'js/spine.js', 'system.js': 'js/system.js' };
 const isToken = t => /^[0-9a-f]{24}$/.test(t || '');
 
 export async function onRequest(context) {

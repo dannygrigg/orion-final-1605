@@ -11,7 +11,8 @@
 //   LIVE_MAIL_FROM  optional, e.g. "Orion MIS Projects <projects@orionmis.co.uk>"
 // Database: reuses the snag app's D1 binding SNAG_DB, tables prefixed ol_.
 // ─────────────────────────────────────────────────────────────────────────
-import { derive, rules, EVENT_TYPES, MILESTONES, ROLES, ownerNow, parseOwners, parsePerson } from '../js/spine.js';
+import { derive, rules, EVENT_TYPES, MILESTONES, ROLES, ownerNow, parseOwners, parsePerson, stageRole } from '../js/spine.js';
+import { normaliseSystem } from '../js/system.js';
 
 export const STAFF_BASE = '/live-6c93deb1';
 export const TRACK_BASE = '/track-180021fb';
@@ -65,7 +66,7 @@ export async function ensureSchema(db) {
       id INTEGER PRIMARY KEY AUTOINCREMENT, project_id INTEGER, message_id TEXT UNIQUE, from_addr TEXT, from_name TEXT,
       to_addrs TEXT, cc_addrs TEXT, subject TEXT, sent_at TEXT, body TEXT, attachments TEXT, matched_by TEXT, received_at TEXT NOT NULL)`),
   ]);
-  try { await db.prepare('ALTER TABLE ol_projects ADD COLUMN owners TEXT').run(); } catch (_) { /* already there */ }
+  for (const col of ['owners', 'system']) { try { await db.prepare(`ALTER TABLE ol_projects ADD COLUMN ${col} TEXT`).run(); } catch (_) { /* already there */ } }
   globalThis.__olSchema = true;
 }
 
@@ -177,10 +178,26 @@ export async function sendOutbox(env, origin, row, project, by) {
   return { ok: true };
 }
 
+const parseJSON = v => { try { return JSON.parse(v || 'null'); } catch { return null; } };
+// The customer's team at Orion: names and roles only, never email addresses.
+function teamOf(p, stage) {
+  const owners = parseOwners(p), now = stageRole(stage), seen = new Map();
+  for (const [k, label] of ROLES) {
+    const name = owners[k] ? parsePerson(owners[k]).name : p.lead;
+    if (!name) continue;
+    const t = seen.get(name) || { name, roles: [], now: false };
+    t.roles.push(label); if (k === now) t.now = true; seen.set(name, t);
+  }
+  return [...seen.values()];
+}
 export function customerView(p, r) {
   return {
     ref: p.ref, name: p.name, customer: p.customer, site: p.site, lead: p.lead,
     contact: ownerNow(p, r.stage).name || p.lead,
+    first: (p.contact_name || '').split(' ')[0],
+    system: normaliseSystem(parseJSON(p.system)),
+    planned: r.planned, actual: r.actual,
+    team: teamOf(p, r.stage),
     stage: r.stage, next: r.next,
     milestones: MILESTONES.map(([k, n]) => ({ k, n, planned: r.planned[k] || null, actual: r.actual[k] || null })),
     moves: r.moves, waiting: r.waiting.map(({ id, text, due }) => ({ id, text, due })),
@@ -272,6 +289,19 @@ export async function staffApi(request, env, user, parts, origin) {
     results.forEach(r => { add(r.lead && r.lead_email ? `${r.lead} <${r.lead_email}>` : r.lead); Object.values(parseOwners(r)).forEach(add); });
     return json({ people: [...seen.values()].sort() });
   }
+  // Everything the Overview needs in one call: projects, their events, and what is waiting for a person.
+  if (a === 'overview' && method === 'GET') {
+    const [{ results: projects }, { results: events }, { results: held }, unfiled] = await Promise.all([
+      db.prepare('SELECT id, ref, name, customer, site, lead, lead_email, contact_name, contact_email, owners, system, pin_hash IS NOT NULL AS page FROM ol_projects ORDER BY ref').all(),
+      db.prepare('SELECT * FROM ol_events ORDER BY date, id').all(),
+      db.prepare("SELECT project_id, channel, COUNT(*) n FROM ol_outbox WHERE status IN ('held','open','failed') GROUP BY project_id, channel").all(),
+      db.prepare('SELECT COUNT(*) n FROM ol_mail WHERE project_id IS NULL').first(),
+    ]);
+    const by = {}; events.forEach(e => (by[e.project_id] ||= []).push(parseEvent(e)));
+    return json({ today: londonDay(), unfiled: unfiled?.n || 0, projects: projects.map(p => ({ ...p, events: by[p.id] || [],
+      held: held.filter(h => h.project_id === p.id && h.channel === 'email').reduce((x, h) => x + h.n, 0),
+      alerts: held.filter(h => h.project_id === p.id && h.channel === 'alert').reduce((x, h) => x + h.n, 0) })) });
+  }
   if (a === 'projects' && !id && method === 'POST') {
     for (const k of ['ref', 'name', 'customer']) if (!String(body[k] || '').trim()) return bad(`${k} is required`);
     if (await db.prepare('SELECT id FROM ol_projects WHERE ref = ?').bind(body.ref.trim()).first()) return bad(`Project ${body.ref} already exists`);
@@ -322,6 +352,7 @@ Orion MIS · ${p.ref}`,
         for (const [k] of ROLES) { const v = String(body.owners?.[k] ?? '').trim(); if (v) o[k] = v.slice(0, 120); }
         sets.push('owners = ?'); vals.push(JSON.stringify(o));
       }
+      if ('system' in body) { sets.push('system = ?'); vals.push(JSON.stringify(normaliseSystem(body.system))); }
       if ('auto_send' in body) { sets.push('auto_send = ?'); vals.push(body.auto_send ? 1 : 0); }
       if ('pin' in body) {
         if (body.pin === null || body.pin === '') sets.push('pin_hash = NULL');

@@ -4,6 +4,8 @@
 //   #/outbox      everything waiting for a person, all projects
 //   #/new         create a project
 import { STAGES, MILESTONES, EVENT_TYPES, ROLES, stageRole, ownerNow, parseOwners, parsePerson, fmtDate, gbp } from './js/spine.js';
+import { overview } from './overview.js';
+import { SYSTEM_TYPES, normaliseSystem } from './js/system.js';
 const ROLE_NAME = Object.fromEntries(ROLES);
 let lastPin = null;
 
@@ -27,7 +29,7 @@ async function api(path, opts = {}) {
 // ── shell ──
 let outboxCount = 0;
 function nav(active) {
-  $('#nav').innerHTML = [['#/', 'Register', 'reg'], ['#/outbox', `Outbox${outboxCount ? `<span class="badge">${outboxCount}</span>` : ''}`, 'out'], ['#/new', 'New project', 'new'], ['#/mail', 'Mail to file', 'mail'], ['#/import', 'Import', 'imp']]
+  $('#nav').innerHTML = [['#/', 'Overview', 'ov'], ['#/register', 'Register', 'reg'], ['#/outbox', `Outbox${outboxCount ? `<span class="badge">${outboxCount}</span>` : ''}`, 'out'], ['#/new', 'New project', 'new'], ['#/mail', 'Mail to file', 'mail'], ['#/import', 'Import', 'imp']]
     .map(([h, l, k]) => `<a href="${h}" ${k === active ? 'aria-current="page"' : ''}>${l}</a>`).join('');
   $('#who').textContent = userName() ? `Signed in as ${userName()}` : '';
 }
@@ -62,6 +64,7 @@ async function project(id, flash) {
   const [cur, tm] = await Promise.all([api('/projects/' + id), api('/team').catch(() => ({ people: [] }))]);
   current = cur; const team = tm.people || [];
   const { project: p, record: r, events, outbox, mail, mails = [], captureLive } = current;
+  let sys; try { sys = normaliseSystem(JSON.parse(p.system || 'null')); } catch { sys = normaliseSystem(null); }
   const t = today();
   const voided = new Set(events.filter(e => e.type === 'void').map(e => +e.data.event));
   const held = outbox.filter(o => ['held', 'failed', 'open'].includes(o.status));
@@ -144,6 +147,16 @@ async function project(id, flash) {
         ${p.page ? '<p style="margin:8px 0 0"><button class="btn small" id="pinoff">Switch page off</button></p>' : ''}
         <label class="check" style="margin-top:12px"><input type="checkbox" id="auto" ${p.auto_send ? 'checked' : ''}> Send customer emails straight away (off = each email waits here for approval)</label>
       </div>
+      <div class="card"><h3>Customer page drawing <small>${esc(SYSTEM_TYPES[sys.type].label)}</small></h3>
+        <form id="sf" class="grid">
+          <div class="field"><label for="s_type">Drawing</label><select id="s_type">${Object.entries(SYSTEM_TYPES).map(([k, T]) => `<option value="${k}" ${sys.type === k ? 'selected' : ''}>${esc(T.label)}</option>`).join('')}</select></div>
+          ${SYSTEM_TYPES[sys.type].fields.map(([k, l, lo, hi]) => `<div class="field"><label for="s_${k}">${l}</label><input id="s_${k}" type="number" min="${lo}" max="${hi}" value="${sys[k]}"></div>`).join('')}
+          ${sys.type === 'sorter' ? `<div class="field"><label for="s_spine">Spine length (label)</label><input id="s_spine" type="text" value="${esc(sys.spine || '')}" placeholder="e.g. 28.9 m"></div>
+            <div class="field wide"><label class="check"><input type="checkbox" id="s_scan" ${sys.scan ? 'checked' : ''}> Scanning</label> <label class="check"><input type="checkbox" id="s_fence" ${sys.fence ? 'checked' : ''}> Safety fencing</label></div>` : ''}
+          ${['conveyor', 'guarding', 'stillage'].includes(sys.type) ? `<div class="field"><label for="s_label">Label</label><input id="s_label" type="text" value="${esc(sys.label || '')}"></div>` : ''}
+          <div class="field wide"><button class="btn">Save drawing</button> <a class="btn" href="/live-6c93deb1/cust#${p.id}" target="_blank" rel="noopener">Preview</a></div>
+        </form>
+      </div>
       <div class="card"><h3>Owners <small>now: <b>${esc(ownerNow(p, r.stage).name || '–')}</b>${ownerNow(p, r.stage).email ? ` <span class="mono">${esc(ownerNow(p, r.stage).email)}</span>` : ''} · ${ROLE_NAME[stageRole(r.stage)]}</small></h3>
         <form id="of" class="grid">
           ${ROLES.map(([k, l]) => `<div class="field"><label for="o_${k}">${l}${stageRole(r.stage) === k ? ' · current stage' : ''}</label><input id="o_${k}" type="text" list="team" value="${esc(parseOwners(p)[k] || '')}" placeholder="Name or email (blank = ${esc(p.lead || 'lead')})"></div>`).join('')}
@@ -198,6 +211,14 @@ async function project(id, flash) {
   $('#sh-mail')?.addEventListener('click', async () => {
     try { await api(`/projects/${p.id}/share`, { method: 'POST' }); await refreshCount(); project(p.id, { text: 'Email queued under "Needs you". Check it and press Send.' }); }
     catch (err) { if (err.message !== 'signin') project(p.id, { text: err.message, err: true }); }
+  });
+  $('#s_type').addEventListener('change', e => patch(p.id, { system: { ...sys, type: e.target.value } }, 'Drawing type changed. Set its sizes below.'));
+  $('#sf').addEventListener('submit', async e => {
+    e.preventDefault(); const next = { type: sys.type };
+    SYSTEM_TYPES[sys.type].fields.forEach(([k]) => { next[k] = +document.getElementById('s_' + k).value; });
+    if (sys.type === 'sorter') { next.spine = $('#s_spine').value; next.scan = $('#s_scan').checked; next.fence = $('#s_fence').checked; }
+    if ($('#s_label')) next.label = $('#s_label').value;
+    await patch(p.id, { system: next }, 'Drawing saved. Use Preview to see it as the customer will.');
   });
   $('#of').addEventListener('submit', async e => {
     e.preventDefault(); const owners = {};
@@ -353,7 +374,8 @@ async function route() {
     else if (h === '#/new') newProject();
     else if (h === '#/import') importPage();
     else if (h === '#/mail') await mailPage();
-    else await register();
+    else if (h === '#/register') await register();
+    else { nav('ov'); overview($('#main'), await api('/overview')); }
   } catch (err) {
     if (err.message !== 'signin') $('#main').innerHTML = `<div class="msg err">${esc(err.message)}</div>`;
   }
