@@ -18,6 +18,22 @@ export const STAGES = [
   'Factory test', 'Delivery', 'Install + commission', 'Handover', 'Aftercare',
 ];
 
+// Owner roles on a project, and which role owns each stage (index matches STAGES).
+export const ROLES = [
+  ['sales', 'Sales'], ['design', 'Design'], ['procurement', 'Procurement'],
+  ['workshop', 'Workshop'], ['site', 'Site'], ['aftercare', 'Aftercare'],
+];
+const STAGE_ROLE = ['sales', 'sales', 'sales', 'design', 'design', 'procurement', 'workshop', 'workshop', 'site', 'site', 'site', 'aftercare'];
+export const stageRole = stage => STAGE_ROLE[stage] || 'sales';
+export function parseOwners(project) {
+  try { return typeof project.owners === 'string' ? JSON.parse(project.owners || '{}') : (project.owners || {}); } catch { return {}; }
+}
+// Who owns the project right now: the owner of its current stage, else the Orion lead.
+export function ownerNow(project, stage) {
+  const role = stageRole(stage), owners = parseOwners(project);
+  return { role, name: owners[role] || project.lead || '', fromLead: !owners[role] };
+}
+
 export const MILESTONES = [
   ['survey', 'Site survey'],
   ['design', 'Design approved'],

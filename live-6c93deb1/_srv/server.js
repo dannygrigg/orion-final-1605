@@ -11,7 +11,7 @@
 //   LIVE_MAIL_FROM  optional, e.g. "Orion MIS Projects <projects@orionmis.co.uk>"
 // Database: reuses the snag app's D1 binding SNAG_DB, tables prefixed ol_.
 // ─────────────────────────────────────────────────────────────────────────
-import { derive, rules, EVENT_TYPES, MILESTONES } from '../js/spine.js';
+import { derive, rules, EVENT_TYPES, MILESTONES, ROLES, ownerNow, parseOwners } from '../js/spine.js';
 
 export const STAFF_BASE = '/live-6c93deb1';
 export const TRACK_BASE = '/track-180021fb';
@@ -62,6 +62,7 @@ export async function ensureSchema(db) {
       created_at TEXT NOT NULL, sent_at TEXT, sent_by TEXT, error TEXT)`),
     db.prepare(`CREATE TABLE IF NOT EXISTS ol_fails (ip TEXT NOT NULL, scope TEXT NOT NULL, at TEXT NOT NULL)`),
   ]);
+  try { await db.prepare('ALTER TABLE ol_projects ADD COLUMN owners TEXT').run(); } catch (_) { /* already there */ }
   globalThis.__olSchema = true;
 }
 
@@ -173,6 +174,7 @@ export async function sendOutbox(env, origin, row, project, by) {
 export function customerView(p, r) {
   return {
     ref: p.ref, name: p.name, customer: p.customer, site: p.site, lead: p.lead,
+    contact: ownerNow(p, r.stage).name || p.lead,
     stage: r.stage, next: r.next,
     milestones: MILESTONES.map(([k, n]) => ({ k, n, planned: r.planned[k] || null, actual: r.actual[k] || null })),
     moves: r.moves, waiting: r.waiting.map(({ id, text, due }) => ({ id, text, due })),
@@ -201,6 +203,7 @@ export async function staffApi(request, env, user, parts, origin) {
         const r = derive(by[p.id] || []);
         const n = ch => held.filter(h => h.project_id === p.id && h.channel === ch).reduce((x, h) => x + h.n, 0);
         return { id: p.id, ref: p.ref, name: p.name, customer: p.customer, lead: p.lead, stage: r.stage, next: r.next, value: r.value,
+          owner: ownerNow(p, r.stage), owners: parseOwners(p),
           waiting: r.waiting.length, overdue: r.waiting.filter(w => w.due && w.due < today).length,
           last: r.log.length ? r.log[r.log.length - 1].date : null, page: !!p.pin_hash, held: n('email'), alerts: n('alert') };
       }),
@@ -217,6 +220,26 @@ export async function staffApi(request, env, user, parts, origin) {
   if (a === 'projects' && id) {
     const p = await loadProject(db, id);
     if (!p) return bad('No such project', 404);
+    if (sub === 'customer' && method === 'GET') return json(customerView(p, derive(await loadEvents(db, p.id))));
+    // Queue an email to the customer with the address of their page (held for approval like any other).
+    if (sub === 'share' && method === 'POST') {
+      if (!p.pin_hash) return bad('Switch the customer page on (set a PIN) first');
+      if (!p.contact_email) return bad('Add the customer contact email in Details first');
+      const first = (p.contact_name || '').split(' ')[0] || 'Hello';
+      const row = await db.prepare('INSERT INTO ol_outbox (project_id, event_id, channel, to_addr, subject, body, why, status, created_at) VALUES (?,?,?,?,?,?,?,?,?) RETURNING id')
+        .bind(p.id, null, 'email', p.contact_email, `[${p.ref}] Your project page`,
+          `${first},
+
+You can follow ${p.name} on your own project page:
+${origin}${TRACK_BASE}/${p.token}
+
+It shows the stage your job is at, the dates we are working to, anything we need from you, and every document we issue. We will send the PIN separately.
+
+${p.lead || 'Orion MIS'}
+Orion MIS · ${p.ref}`,
+          'Customer page shared', 'held', nowIso()).first();
+      return json({ id: row.id });
+    }
     if (sub === 'events' && method === 'POST') {
       const r = await logEvent(env, origin, p, { type: body.type, date: body.date, data: body.data || {}, by: user, source: body.source === 'import' ? 'import' : 'staff' });
       return r.error ? bad(r.error) : json({ event: r.event, outputs: r.outputs.length });
@@ -230,6 +253,11 @@ export async function staffApi(request, env, user, parts, origin) {
     if (!sub && method === 'PATCH') {
       const sets = [], vals = [];
       for (const k of EDITABLE) if (k in body) { sets.push(`${k} = ?`); vals.push(String(body[k] ?? '').trim() || null); }
+      if ('owners' in body) {
+        const o = {};
+        for (const [k] of ROLES) { const v = String(body.owners?.[k] ?? '').trim(); if (v) o[k] = v.slice(0, 60); }
+        sets.push('owners = ?'); vals.push(JSON.stringify(o));
+      }
       if ('auto_send' in body) { sets.push('auto_send = ?'); vals.push(body.auto_send ? 1 : 0); }
       if ('pin' in body) {
         if (body.pin === null || body.pin === '') sets.push('pin_hash = NULL');

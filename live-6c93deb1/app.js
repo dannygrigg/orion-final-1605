@@ -3,7 +3,9 @@
 //   #/p/<id>      one project: record, log an event, outbox, settings
 //   #/outbox      everything waiting for a person, all projects
 //   #/new         create a project
-import { STAGES, MILESTONES, EVENT_TYPES, fmtDate, gbp } from './js/spine.js';
+import { STAGES, MILESTONES, EVENT_TYPES, ROLES, stageRole, ownerNow, parseOwners, fmtDate, gbp } from './js/spine.js';
+const ROLE_NAME = Object.fromEntries(ROLES);
+let lastPin = null;
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -41,9 +43,10 @@ async function register() {
   const t = today();
   $('#main').innerHTML = `
   <div class="card"><h3>Live projects <small>${projects.length} · stage, dates and waiting items are worked out from each project's events</small></h3>
-  ${projects.length ? `<div class="tbl"><table><thead><tr><th>Ref</th><th>Project</th><th>Customer</th><th>Stage</th><th>Next milestone</th><th>Waiting on customer</th><th>Needs you</th><th>Last event</th><th>Customer page</th></tr></thead><tbody>
+  ${projects.length ? `<div class="tbl"><table><thead><tr><th>Ref</th><th>Project</th><th>Customer</th><th>Stage</th><th>Owner now</th><th>Next milestone</th><th>Waiting on customer</th><th>Needs you</th><th>Last event</th><th>Customer page</th></tr></thead><tbody>
   ${projects.map(p => `<tr class="link" data-id="${p.id}">
     <td class="mono">${esc(p.ref)}</td><td>${esc(p.name)}</td><td>${esc(p.customer)}</td><td>${stagePill(p.stage)}</td>
+    <td>${p.owner?.name ? esc(p.owner.name) : '<span class="muted">–</span>'}<br><span class="muted" style="font-size:12.5px">${ROLE_NAME[p.owner?.role] || ''}${p.owner?.fromLead ? ' (lead)' : ''}</span></td>
     <td>${p.next ? `${esc(p.next.n)}<br><span class="mono ${p.next.date < t ? '' : 'muted'}">${fmtDate(p.next.date)}</span> ${p.next.date < t ? '<span class="pill warn">late</span>' : ''}` : '<span class="muted">–</span>'}</td>
     <td>${p.waiting ? `${p.waiting}${p.overdue ? ` <span class="pill warn">${p.overdue} overdue</span>` : ''}` : '<span class="muted">0</span>'}</td>
     <td>${p.held ? `<span class="pill amber">${p.held} email${p.held > 1 ? 's' : ''}</span> ` : ''}${p.alerts ? `<span class="pill warn">${p.alerts} alert${p.alerts > 1 ? 's' : ''}</span>` : ''}${!p.held && !p.alerts ? '<span class="muted">–</span>' : ''}</td>
@@ -116,12 +119,32 @@ async function project(id, flash) {
         ${held.length ? held.map(mailCard).join('') : '<p class="empty">Nothing waiting.</p>'}
         ${done.length ? `<details style="margin-top:10px"><summary>${done.length} sent, cancelled or done</summary><div class="stack" style="margin-top:8px">${done.map(mailCard).join('')}</div></details>` : ''}
       </div>
-      <div class="card"><h3>Customer page</h3>
-        ${p.page ? `<p style="margin:0 0 8px">On. Address: <a href="${p.track}" target="_blank" rel="noopener" class="mono">orionmis.co.uk${p.track}</a></p>` : '<p class="empty" style="margin-bottom:8px">Off. Set a PIN to switch it on, then send the customer the address and PIN.</p>'}
-        <form id="pinf" class="grid"><div class="field"><label for="pin">${p.page ? 'New PIN' : 'PIN'} (4–8 digits)</label><input id="pin" type="text" inputmode="numeric" pattern="\\d{4,8}" required></div>
+      <div class="card"><h3>Customer page <small>${p.page ? 'on' : 'off'}</small></h3>
+        <p style="margin:0 0 10px"><a class="btn small" href="/live-6c93deb1/cust#${p.id}" target="_blank" rel="noopener">Preview what the customer sees</a></p>
+        ${p.page ? `<p style="margin:0 0 8px">Address: <span class="mono">${esc(location.host + p.track)}</span></p>
+          <div class="label" style="margin:10px 0 6px">Send the address</div>
+          <div class="acts" style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn small" id="sh-copy" type="button">Copy message</button>
+            <a class="btn small" href="https://wa.me/?text=${encodeURIComponent(shareMsg(p))}" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn small" href="mailto:${encodeURIComponent(p.contact_email || '')}?subject=${encodeURIComponent(`[${p.ref}] Your project page`)}&body=${encodeURIComponent(shareMsg(p))}">Your email</a>
+            <button class="btn small" id="sh-mail" type="button">Email from Orion Live</button>
+          </div>
+          <p class="empty" style="margin-top:6px;font-size:13px">Send the PIN in a separate message.</p>` : '<p class="empty" style="margin-bottom:8px">Off. Set a PIN to switch it on.</p>'}
+        ${lastPin ? `<div class="msg ok" style="margin-top:10px">PIN <b class="mono">${esc(lastPin)}</b> set. Send it separately, now; it is not shown again.
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"><button class="btn small" id="pin-copy" type="button">Copy PIN message</button>
+          <a class="btn small" href="https://wa.me/?text=${encodeURIComponent(pinMsg(p, lastPin))}" target="_blank" rel="noopener">WhatsApp the PIN</a></div></div>` : ''}
+        <form id="pinf" class="grid" style="margin-top:12px"><div class="field"><label for="pin">${p.page ? 'New PIN' : 'PIN'} (4–8 digits)</label><input id="pin" type="text" inputmode="numeric" pattern="\d{4,8}" required></div>
           <div class="field"><button class="btn">${p.page ? 'Change PIN' : 'Switch page on'}</button></div></form>
         ${p.page ? '<p style="margin:8px 0 0"><button class="btn small" id="pinoff">Switch page off</button></p>' : ''}
         <label class="check" style="margin-top:12px"><input type="checkbox" id="auto" ${p.auto_send ? 'checked' : ''}> Send customer emails straight away (off = each email waits here for approval)</label>
+      </div>
+      <div class="card"><h3>Owners <small>now: <b>${esc(ownerNow(p, r.stage).name || '–')}</b> · ${ROLE_NAME[stageRole(r.stage)]}</small></h3>
+        <form id="of" class="grid">
+          ${ROLES.map(([k, l]) => `<div class="field"><label for="o_${k}">${l}${stageRole(r.stage) === k ? ' · current stage' : ''}</label><input id="o_${k}" type="text" list="team" value="${esc(parseOwners(p)[k] || '')}" placeholder="${esc(p.lead || 'Name')}"></div>`).join('')}
+          <div class="field wide"><button class="btn">Save owners</button></div>
+        </form>
+        <datalist id="team">${[...new Set([p.lead, userName(), ...Object.values(parseOwners(p))].filter(Boolean))].map(n => `<option value="${esc(n)}">`).join('')}</datalist>
+        <p class="empty" style="margin-top:6px;font-size:13px">Blank = the Orion lead covers it. The owner of the current stage shows on the register and on the customer page as their contact.</p>
       </div>
       <div class="card"><h3>Details</h3>
         <form id="df" class="grid">
@@ -160,7 +183,20 @@ async function project(id, flash) {
     try { await api('/outbox/' + id, { method: 'POST', body }); await refreshCount(); project(p.id, { text: action === 'send' ? 'Email sent.' : 'Done.' }); }
     catch (err) { if (err.message !== 'signin') project(p.id, { text: err.message, err: true }); }
   }));
-  $('#pinf').addEventListener('submit', async e => { e.preventDefault(); await patch(p.id, { pin: $('#pin').value }, 'Customer page PIN set. Send the customer the address and the PIN separately.'); });
+  lastPin = null;
+  $('#pinf').addEventListener('submit', async e => { e.preventDefault(); const pin = $('#pin').value; lastPin = pin; await patch(p.id, { pin }, 'Customer page PIN set. Send the address and the PIN as separate messages.'); });
+  const copy = async (text, btn) => { try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; } catch { prompt('Copy this:', text); } };
+  $('#sh-copy')?.addEventListener('click', e => copy(shareMsg(p), e.target));
+  $('#pin-copy')?.addEventListener('click', e => copy(pinMsg(p, $('#pin-copy').closest('.msg').querySelector('b').textContent), e.target));
+  $('#sh-mail')?.addEventListener('click', async () => {
+    try { await api(`/projects/${p.id}/share`, { method: 'POST' }); await refreshCount(); project(p.id, { text: 'Email queued under "Needs you". Check it and press Send.' }); }
+    catch (err) { if (err.message !== 'signin') project(p.id, { text: err.message, err: true }); }
+  });
+  $('#of').addEventListener('submit', async e => {
+    e.preventDefault(); const owners = {};
+    ROLES.forEach(([k]) => { owners[k] = document.getElementById('o_' + k).value; });
+    await patch(p.id, { owners }, 'Owners saved.');
+  });
   $('#pinoff')?.addEventListener('click', () => patch(p.id, { pin: null }, 'Customer page switched off.'));
   $('#auto').addEventListener('change', e => patch(p.id, { auto_send: e.target.checked }, e.target.checked ? 'Customer emails will now send straight away.' : 'Customer emails will wait for approval.'));
   $('#df').addEventListener('submit', async e => {
@@ -169,6 +205,13 @@ async function project(id, flash) {
     await patch(p.id, b, 'Details saved.');
   });
 }
+function shareMsg(p) {
+  const first = (p.contact_name || '').split(' ')[0];
+  return `${first ? 'Hi ' + first + ', y' : 'Y'}ou can follow ${p.name} (${p.ref}) on your project page: ${location.origin}${p.track}
+It shows the stage, the dates we are working to, anything we need from you, and our documents. I'll send the PIN separately.
+${userName() || p.lead || ''}, Orion MIS`;
+}
+const pinMsg = (p, pin) => `PIN for your ${p.ref} project page: ${pin}`;
 async function patch(id, body, okText) {
   try { await api('/projects/' + id, { method: 'PATCH', body }); project(id, { text: okText }); }
   catch (err) { if (err.message !== 'signin') project(id, { text: err.message, err: true }); }

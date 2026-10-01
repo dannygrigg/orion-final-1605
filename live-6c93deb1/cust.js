@@ -4,13 +4,15 @@ import { STAGES, fmtDate } from '/track-180021fb/a/spine.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const token = location.pathname.split('/').filter(Boolean)[1] || '';
+// Staff preview: /live-6c93deb1/cust#<project id>, uses the staff sign-in instead of the customer PIN
+const PREVIEW = location.pathname.startsWith('/live-6c93deb1/');
 const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(new Date());
 // the milestone that completes each stage, shown as its date on the tracker
 const STAGE_MILESTONE = { 4: 'design', 5: 'materials', 6: 'build', 7: 'test', 8: 'delivery', 9: 'sat', 10: 'handover' };
 
 async function load() {
-  const r = await fetch('/track-180021fb/api/' + token);
-  if (r.status === 401) return pin();
+  const r = await fetch(PREVIEW ? `/live-6c93deb1/api/projects/${location.hash.slice(1)}/customer` : '/track-180021fb/api/' + token);
+  if (r.status === 401) return PREVIEW ? location.reload() : pin();
   const j = await r.json().catch(() => ({}));
   if (!r.ok) { $('#main').innerHTML = `<div class="card"><p class="empty">${esc(j.error || 'This page is not available.')}</p></div>`; return; }
   show(j);
@@ -30,7 +32,7 @@ function pin(err) {
 function show(v) {
   document.title = `${v.name} · Orion MIS`;
   const ms = Object.fromEntries(v.milestones.map(m => [m.k, m]));
-  $('#main').innerHTML = `
+  $('#main').innerHTML = `${PREVIEW ? `<div class="msg ok" style="font-size:14px">Preview: this is exactly what ${esc(v.customer)} sees on their project page. Nothing here is visible to them until the page is switched on.</div>` : ''}
   <div class="hero"><div class="label">Orion MIS · your project</div><h1>${esc(v.name)}</h1><p>${esc(v.ref)} · ${esc(v.customer)}${v.site ? ', ' + esc(v.site) : ''}</p></div>
   <div class="card"><div class="label">Now</div><h2 style="font-size:26px;margin:2px 0 4px">${v.stage >= 0 ? STAGES[v.stage] : 'Getting started'}</h2>
     <p style="margin:0" class="muted">${v.next ? `Next: <b style="color:var(--ink)">${esc(v.next.n)}</b>, ${fmtDate(v.next.date)}` : v.stage < 3 ? 'Dates are set when the order is placed.' : 'All planned milestones are complete.'}
@@ -45,6 +47,6 @@ function show(v) {
   ${v.docs.length ? `<div class="card"><h3>Documents</h3><ul class="list">${v.docs.slice().reverse().map(d => `<li class="${d.superseded ? 'sup' : ''}"><span>${esc(d.title)}${d.link && !d.superseded ? ` · <a href="${esc(d.link)}" target="_blank" rel="noopener">open</a>` : ''}</span><span class="mono">${esc(d.ref)} Rev ${esc(d.rev)}</span></li>`).join('')}</ul></div>` : ''}
   ${v.snags.length ? `<div class="card"><h3>Snags</h3><ul class="list">${v.snags.map(s => `<li><span>${esc(s.text)}</span><span class="pill ${s.closed ? 'good' : 'warn'}">${s.closed ? 'closed' : 'open'}</span></li>`).join('')}</ul></div>` : ''}
   ${v.warranty ? `<div class="card"><h3>Warranty</h3><p style="margin:0">${v.warranty.months} months, to <b>${fmtDate(v.warranty.to)}</b>.</p></div>` : ''}
-  <p class="foot">Orion MIS · ${esc(v.lead || '')} · This page updates as your job progresses.</p>`;
+  <p class="foot">Your contact: ${esc(v.contact || v.lead || 'Orion MIS')} · Orion MIS · This page updates as your job progresses.</p>`;
 }
 load();
