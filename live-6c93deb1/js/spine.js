@@ -28,10 +28,21 @@ export const stageRole = stage => STAGE_ROLE[stage] || 'sales';
 export function parseOwners(project) {
   try { return typeof project.owners === 'string' ? JSON.parse(project.owners || '{}') : (project.owners || {}); } catch { return {}; }
 }
+// An owner is typed as a name, an email, or "Name <email>".
+// Returns { name, email } — a bare email gets a readable name from its first part.
+export function parsePerson(s) {
+  s = String(s || '').trim();
+  const m = s.match(/^(.*?)\s*<\s*([^<>\s]+@[^<>\s]+)\s*>$/);
+  if (m) return { name: m[1].trim() || nameFromEmail(m[2]), email: m[2].toLowerCase() };
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)) return { name: nameFromEmail(s), email: s.toLowerCase() };
+  return { name: s, email: '' };
+}
+const nameFromEmail = e => e.split('@')[0].split(/[._-]+/).filter(Boolean).map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
 // Who owns the project right now: the owner of its current stage, else the Orion lead.
 export function ownerNow(project, stage) {
   const role = stageRole(stage), owners = parseOwners(project);
-  return { role, name: owners[role] || project.lead || '', fromLead: !owners[role] };
+  if (owners[role]) return { role, ...parsePerson(owners[role]), fromLead: false };
+  return { role, name: project.lead || '', email: project.lead_email || '', fromLead: true };
 }
 
 export const MILESTONES = [

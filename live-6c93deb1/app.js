@@ -3,7 +3,7 @@
 //   #/p/<id>      one project: record, log an event, outbox, settings
 //   #/outbox      everything waiting for a person, all projects
 //   #/new         create a project
-import { STAGES, MILESTONES, EVENT_TYPES, ROLES, stageRole, ownerNow, parseOwners, fmtDate, gbp } from './js/spine.js';
+import { STAGES, MILESTONES, EVENT_TYPES, ROLES, stageRole, ownerNow, parseOwners, parsePerson, fmtDate, gbp } from './js/spine.js';
 const ROLE_NAME = Object.fromEntries(ROLES);
 let lastPin = null;
 
@@ -59,7 +59,8 @@ async function register() {
 let current = null;
 async function project(id, flash) {
   nav('');
-  current = await api('/projects/' + id);
+  const [cur, tm] = await Promise.all([api('/projects/' + id), api('/team').catch(() => ({ people: [] }))]);
+  current = cur; const team = tm.people || [];
   const { project: p, record: r, events, outbox, mail } = current;
   const t = today();
   const voided = new Set(events.filter(e => e.type === 'void').map(e => +e.data.event));
@@ -138,13 +139,13 @@ async function project(id, flash) {
         ${p.page ? '<p style="margin:8px 0 0"><button class="btn small" id="pinoff">Switch page off</button></p>' : ''}
         <label class="check" style="margin-top:12px"><input type="checkbox" id="auto" ${p.auto_send ? 'checked' : ''}> Send customer emails straight away (off = each email waits here for approval)</label>
       </div>
-      <div class="card"><h3>Owners <small>now: <b>${esc(ownerNow(p, r.stage).name || '–')}</b> · ${ROLE_NAME[stageRole(r.stage)]}</small></h3>
+      <div class="card"><h3>Owners <small>now: <b>${esc(ownerNow(p, r.stage).name || '–')}</b>${ownerNow(p, r.stage).email ? ` <span class="mono">${esc(ownerNow(p, r.stage).email)}</span>` : ''} · ${ROLE_NAME[stageRole(r.stage)]}</small></h3>
         <form id="of" class="grid">
-          ${ROLES.map(([k, l]) => `<div class="field"><label for="o_${k}">${l}${stageRole(r.stage) === k ? ' · current stage' : ''}</label><input id="o_${k}" type="text" list="team" value="${esc(parseOwners(p)[k] || '')}" placeholder="${esc(p.lead || 'Name')}"></div>`).join('')}
+          ${ROLES.map(([k, l]) => `<div class="field"><label for="o_${k}">${l}${stageRole(r.stage) === k ? ' · current stage' : ''}</label><input id="o_${k}" type="text" list="team" value="${esc(parseOwners(p)[k] || '')}" placeholder="Name or email (blank = ${esc(p.lead || 'lead')})"></div>`).join('')}
           <div class="field wide"><button class="btn">Save owners</button></div>
         </form>
-        <datalist id="team">${[...new Set([p.lead, userName(), ...Object.values(parseOwners(p))].filter(Boolean))].map(n => `<option value="${esc(n)}">`).join('')}</datalist>
-        <p class="empty" style="margin-top:6px;font-size:13px">Blank = the Orion lead covers it. The owner of the current stage shows on the register and on the customer page as their contact.</p>
+        <datalist id="team">${team.map(n => `<option value="${esc(n)}">`).join('')}</datalist>
+        <p class="empty" style="margin-top:6px;font-size:13px">Type a name, an email, or <span class="mono">Name &lt;email&gt;</span>. Anyone entered once is suggested on every job. With an email, alerts for the current stage go to that person. Blank = the Orion lead covers it.</p>
       </div>
       <div class="card"><h3>Details</h3>
         <form id="df" class="grid">

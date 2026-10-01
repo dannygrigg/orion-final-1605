@@ -11,7 +11,7 @@
 //   LIVE_MAIL_FROM  optional, e.g. "Orion MIS Projects <projects@orionmis.co.uk>"
 // Database: reuses the snag app's D1 binding SNAG_DB, tables prefixed ol_.
 // ─────────────────────────────────────────────────────────────────────────
-import { derive, rules, EVENT_TYPES, MILESTONES, ROLES, ownerNow, parseOwners } from '../js/spine.js';
+import { derive, rules, EVENT_TYPES, MILESTONES, ROLES, ownerNow, parseOwners, parsePerson } from '../js/spine.js';
 
 export const STAFF_BASE = '/live-6c93deb1';
 export const TRACK_BASE = '/track-180021fb';
@@ -139,7 +139,8 @@ export async function logEvent(env, origin, project, { type, date, data, by, sou
   const after = derive([...events, event]);
   const outputs = rules(project, event, before, after);
   for (const o of outputs) {
-    const to = o.channel === 'email' ? project.contact_email : project.lead_email;
+    // alerts go to whoever owns the stage the job is now in (email if they have one), else the lead
+    const to = o.channel === 'email' ? project.contact_email : (ownerNow(project, after.stage).email || project.lead_email);
     const row = await db.prepare('INSERT INTO ol_outbox (project_id, event_id, channel, to_addr, subject, body, why, status, created_at) VALUES (?,?,?,?,?,?,?,?,?) RETURNING *')
       .bind(project.id, event.id, o.channel, to || null, o.subject, o.body, o.why, o.channel === 'email' ? 'held' : 'open', nowIso()).first();
     if (o.channel === 'email' && project.auto_send && env.RESEND_API_KEY && to) await sendOutbox(env, origin, row, project, 'auto');
@@ -209,6 +210,14 @@ export async function staffApi(request, env, user, parts, origin) {
       }),
     });
   }
+  // Everyone named as a lead or owner on any job, for the owner suggestions.
+  if (a === 'team' && method === 'GET') {
+    const { results } = await db.prepare('SELECT lead, lead_email, owners FROM ol_projects').all();
+    const seen = new Map();
+    const add = s => { if (!s) return; const k = (parsePerson(s).email || s).toLowerCase(); if (!seen.has(k) || s.includes('@')) seen.set(k, s); };
+    results.forEach(r => { add(r.lead && r.lead_email ? `${r.lead} <${r.lead_email}>` : r.lead); Object.values(parseOwners(r)).forEach(add); });
+    return json({ people: [...seen.values()].sort() });
+  }
   if (a === 'projects' && !id && method === 'POST') {
     for (const k of ['ref', 'name', 'customer']) if (!String(body[k] || '').trim()) return bad(`${k} is required`);
     if (await db.prepare('SELECT id FROM ol_projects WHERE ref = ?').bind(body.ref.trim()).first()) return bad(`Project ${body.ref} already exists`);
@@ -255,7 +264,7 @@ Orion MIS · ${p.ref}`,
       for (const k of EDITABLE) if (k in body) { sets.push(`${k} = ?`); vals.push(String(body[k] ?? '').trim() || null); }
       if ('owners' in body) {
         const o = {};
-        for (const [k] of ROLES) { const v = String(body.owners?.[k] ?? '').trim(); if (v) o[k] = v.slice(0, 60); }
+        for (const [k] of ROLES) { const v = String(body.owners?.[k] ?? '').trim(); if (v) o[k] = v.slice(0, 120); }
         sets.push('owners = ?'); vals.push(JSON.stringify(o));
       }
       if ('auto_send' in body) { sets.push('auto_send = ?'); vals.push(body.auto_send ? 1 : 0); }
