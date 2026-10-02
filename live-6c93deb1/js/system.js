@@ -77,6 +77,13 @@ function look(st) {
   if (st === 'parts') return `fill="${c}" fill-opacity=".55" stroke="#6b8194" stroke-width="1" stroke-dasharray="3 3"`;
   return `fill="${c}" fill-opacity=".88" stroke="${c}" stroke-width="1.5" ${st === 'test' || st === 'live' ? 'filter="url(#olglow)"' : ''}`;
 }
+// A conveyor drawn as a belt with two edges: blueprint = dashed outline, later stages = filled belt.
+function tube(d, st, w = 20) {
+  const c = COLOR[st], inner = '#0c1218';
+  if (st === 'plan' || st === 'design') return `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linejoin="round" opacity=".85"/><path d="${d}" fill="none" stroke="${inner}" stroke-width="${w - 3}" stroke-linejoin="round"/>${st === 'plan' ? `<path d="${d}" fill="none" stroke="${c}" stroke-width="1" stroke-dasharray="2 9" opacity=".6"/>` : ''}`;
+  if (st === 'parts') return `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linejoin="round" opacity=".6"/><path d="${d}" fill="none" stroke="#6b8194" stroke-width="1" stroke-dasharray="3 4"/>`;
+  return `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}" stroke-linejoin="round" opacity=".9" ${st === 'test' || st === 'live' ? 'filter="url(#olglow)"' : ''}/><path d="${d}" fill="none" stroke="#0c1218" stroke-width="1" stroke-opacity=".35" stroke-dasharray="1 6"/>`;
+}
 const strokeLook = st => `stroke="${COLOR[st]}" opacity="${st === 'plan' ? .4 : st === 'design' ? .5 : .85}" ${st === 'plan' ? 'stroke-dasharray="6 5"' : ''}`;
 const DEFS = `<defs><filter id="olglow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
 
@@ -103,12 +110,12 @@ export function drawSystem(sys, stage) {
       ${txt(gapX + 37, y + h + 20, 'GAPPERS', { s: 11.5, c: '#8b9aa8', w: 500 })}${txt((x0 + x1) / 2 + 100, y + h + 44, 'SORTATION SPINE' + (s.spine ? ' ' + s.spine : ''))}</g>`;
     if (s.scan) body += `<g><rect x="${scanX}" y="${y - 20}" width="46" height="${h + 40}" rx="3" ${look(st('scan'))} fill-opacity=".25"/><line class="ol-beam" x1="${scanX + 23}" y1="${y - 16}" x2="${scanX + 23}" y2="${y + h + 16}" stroke="#38d47a" stroke-width="2" opacity="0"/>${txt(scanX + 23, y - 28, 'SCAN')}</g>`;
     body += outX.map((x, i) => { const S = st('out' + i); return `<g>
-      <path d="M${x + ow * .3} ${y - 2} L${x + ow * .78} ${y - 70} L${x + ow * .78} ${y - 128}" fill="none" stroke-width="18" stroke-linejoin="round" ${strokeLook(S)}/>
+      ${tube(`M${x + ow * .3} ${y - 2} L${x + ow * .78} ${y - 70} L${x + ow * .78} ${y - 128}`, S, 18)}
       <rect x="${x}" y="${y - 3}" width="${ow}" height="${h + 6}" rx="2" ${look(S)}/>
       ${Array.from({ length: s.slices - 1 }, (_, k) => `<line x1="${x + (k + 1) * ow / s.slices}" y1="${y}" x2="${x + (k + 1) * ow / s.slices}" y2="${y + h}" stroke="#0c1218" stroke-opacity=".5"/>`).join('')}
       <rect x="${x + ow * .78 - 24}" y="${y - 160}" width="48" height="26" rx="3" fill="none" stroke="#5c6d7d" stroke-dasharray="3 3"/>
       ${txt(x + ow * .78, y - 143, 'BAY ' + (i + 1), { s: 11.5, c: '#8b9aa8', w: 500 })}${txt(x + ow / 2, y + h + 20, 'OUTPUT ' + (i + 1))}</g>`; }).join('');
-    body += `<g><path d="M${x1} ${y + h / 2} q44 0 44 44 v40" fill="none" stroke-width="20" ${strokeLook(st('end'))}/>${txt(x1 + 44, y + h + 86, 'OVERFLOW')}</g>`;
+    body += `<g>${tube(`M${x1} ${y + h / 2} q44 0 44 44 v40`, st('end'), 20)}${txt(x1 + 44, y + h + 86, 'OVERFLOW')}</g>`;
     const px = (x0 + x1) / 2 - 52;
     body += `<g><rect x="${px}" y="${y + h + 60}" width="104" height="34" rx="3" ${look(st('panel'))}/>${[0, 1, 2].map(i => `<circle cx="${px + 18 + i * 14}" cy="${y + h + 77}" r="3.5" fill="${on('panel') ? ['#38d47a', '#ffb323', '#38d47a'][i] : '#2a3a48'}"/>`).join('')}${txt(px + 72, y + h + 82, 'PANEL', { s: 11.5 })}</g>`;
     if (stage >= 9) flow = { kind: 'sorter', y: y + h / 2, inX: inX.map(x => x + 11), inTop: y + h + 74, outX: outX.map(x => x + ow * .3), outRise: ow * .48, endX: x1 + 20, scanX: s.scan ? scanX + 23 : null };
@@ -119,7 +126,7 @@ export function drawSystem(sys, stage) {
     for (let b = 0; b < bends; b++) { x += seg; pts.push([x, yy]); yy += dir * 70; dir *= -1; pts.push([x, yy]); }
     pts.push([830, yy]);
     const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0] + ' ' + p[1]).join(' ');
-    body += `<path d="${d}" fill="none" stroke-width="22" stroke-linejoin="round" ${strokeLook(st('run'))}/>`;
+    body += tube(d, st('run'), 22);
     body += pts.slice(1, -1).filter((_, i) => i % 2 === 0).map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="16" ${look(st('bends'))}/>`).join('');
     body += `<rect x="806" y="${yy - 30}" width="50" height="60" rx="4" ${look(st('panel'))}/>${txt(831, yy + 50, 'DRIVE + CONTROLS', { s: 11.5 })}`;
     body += txt(450, 300, (s.label || 'CONVEYOR RUN').toUpperCase());

@@ -376,6 +376,11 @@ Orion MIS · ${p.ref}`,
       const row = await db.prepare(`INSERT INTO ol_projects (ref, name, customer, site, lead, lead_email, contact_name, contact_email, cc_emails, token, created_at, created_by)
         VALUES (?,?,?,?,?,?,?,?,?,?,?,?) RETURNING id`).bind(pj.ref.trim(), pj.name.trim(), pj.customer.trim(), pj.site || null, pj.lead || null,
         pj.lead_email || null, pj.contact_name || null, pj.contact_email || null, pj.cc_emails || null, randomHex(), nowIso(), user).first();
+      // optional: owners and customer-page drawing in the same file
+      const o = {};
+      for (const [k] of ROLES) { const v = String(pj.owners?.[k] ?? '').trim(); if (v) o[k] = v.slice(0, 120); }
+      await db.prepare('UPDATE ol_projects SET owners = ?, system = ? WHERE id = ?')
+        .bind(Object.keys(o).length ? JSON.stringify(o) : null, pj.system ? JSON.stringify(normaliseSystem(pj.system)) : null, row.id).run();
       p = await loadProject(db, row.id);
     }
     const events = await loadEvents(db, p.id);
