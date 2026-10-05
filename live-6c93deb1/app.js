@@ -61,7 +61,8 @@ async function register() {
 let current = null;
 async function project(id, flash) {
   nav('');
-  const [cur, tm] = await Promise.all([api('/projects/' + id), api('/team').catch(() => ({ people: [] }))]);
+  const [cur, tm, pl] = await Promise.all([api('/projects/' + id), api('/team').catch(() => ({ people: [] })), api('/projects').catch(() => ({ projects: [] }))]);
+  allProjects = pl.projects || [];
   current = cur; const team = tm.people || [];
   const { project: p, record: r, events, outbox, mail, mails = [], captureLive } = current;
   let sys; try { sys = normaliseSystem(JSON.parse(p.system || 'null')); } catch { sys = normaliseSystem(null); }
@@ -111,9 +112,13 @@ async function project(id, flash) {
         ${r.docs.length ? `<ul class="list">${r.docs.slice().reverse().map(d => `<li class="${d.superseded ? 'sup' : ''}"><span><span class="mono">${esc(d.ref)}</span> ${esc(d.title)}${d.link ? ` · <a href="${esc(d.link)}" target="_blank" rel="noopener">open</a>` : ''}</span><span class="mono">Rev ${esc(d.rev)} · ${fmtDate(d.date)}</span></li>`).join('')}</ul>` : '<p class="empty">None yet.</p>'}
       </div>
       <div class="card"><h3>Emails <small>${mails.length} captured</small></h3>
-        <p style="margin:0 0 8px">Copy <span class="mono">${esc(p.capture)}</span> into any email about this job and it is filed here. <button class="btn small" id="cap-copy" type="button">Copy address</button></p>
+        <div id="maildrop" tabindex="0" role="button" aria-label="Add emails to this job" style="border:2px dashed var(--line);border-radius:6px;padding:14px;text-align:center;margin:0 0 10px;cursor:pointer">
+          <b>Drag emails here</b> <span class="muted">(.eml or .msg, several at once)</span><br><span class="muted" style="font-size:13px">or click to choose files. Duplicates are skipped.</span>
+          <input type="file" id="mailfile" accept=".eml,.msg,message/rfc822,application/vnd.ms-outlook" multiple hidden>
+          <div id="mailmsg" style="margin-top:6px;font-size:14px"></div></div>
+        <p style="margin:0 0 8px;font-size:13px" class="muted">Once the capture mailbox is on: copy <span class="mono">${esc(p.capture)}</span> into emails about this job and they file themselves. <button class="btn small" id="cap-copy" type="button">Copy address</button></p>
         ${!captureLive ? '<p class="empty" style="margin-bottom:8px;font-size:13px">The capture mailbox is not switched on yet; emails sent to this address will bounce until it is.</p>' : ''}
-        ${mails.length ? `<div class="stack" style="gap:6px">${mails.map(mailItem).join('')}</div>` : '<p class="empty">None yet.</p>'}
+        ${mails.length ? `<div class="stack" style="gap:6px">${mails.map(m => mailItem(m, true)).join('')}</div>` : '<p class="empty">None yet.</p>'}
       </div>
       ${r.signoffs.length || r.snags.length || r.faults.length || r.warranty ? `<div class="card"><h3>Sign-offs, snags, aftercare</h3><ul class="list">
         ${r.signoffs.map(s => `<li><span>${esc(s.what)} · ${esc(s.by)}</span><span class="mono">${fmtDate(s.date)}</span></li>`).join('')}
@@ -206,6 +211,32 @@ async function project(id, flash) {
   $('#pinf').addEventListener('submit', async e => { e.preventDefault(); const pin = $('#pin').value; lastPin = pin; await patch(p.id, { pin }, 'Customer page PIN set. Send the address and the PIN as separate messages.'); });
   const copy = async (text, btn) => { try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; } catch { prompt('Copy this:', text); } };
   $('#cap-copy')?.addEventListener('click', e => copy(p.capture, e.target));
+  // drag-and-drop emails onto the job
+  const drop = $('#maildrop'), pick = $('#mailfile');
+  const addFiles = async files => {
+    files = [...files].filter(f => /\.(eml|msg)$/i.test(f.name) || /rfc822|ms-outlook/.test(f.type));
+    if (!files.length) { $('#mailmsg').innerHTML = '<span class="pill warn">Only .eml or .msg files</span> In Outlook: open the email, File → Save as, then drag the saved file here.'; return; }
+    $('#mailmsg').textContent = `Reading ${files.length} email${files.length > 1 ? 's' : ''}…`;
+    try {
+      const messages = []; const failed = [];
+      for (const f of files) { try { messages.push(await parseEmailFile(f)); } catch (err) { failed.push(f.name); } }
+      const r = messages.length ? await api(`/projects/${p.id}/mail`, { method: 'POST', body: { messages } }) : { added: 0, skipped: 0 };
+      project(p.id, { text: `Emails: ${r.added} added${r.skipped ? `, ${r.skipped} already on file` : ''}${failed.length ? `. Could not read: ${failed.join(', ')}` : ''}.`, err: !r.added && failed.length > 0 });
+    } catch (err) { if (err.message !== 'signin') $('#mailmsg').innerHTML = `<span class="pill warn">${esc(err.message)}</span>`; }
+  };
+  drop.addEventListener('click', e => { if (e.target === drop || e.target.closest('b,span,br')) pick.click(); });
+  drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick.click(); } });
+  pick.addEventListener('change', () => addFiles(pick.files));
+  ['dragenter', 'dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.style.borderColor = 'var(--accent)'; drop.style.background = 'var(--accent-soft)'; }));
+  ['dragleave', 'drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.style.borderColor = ''; drop.style.background = ''; }));
+  drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+  // move / unfile a captured email
+  document.querySelectorAll('[data-mailmove]').forEach(b => b.addEventListener('click', async () => {
+    const id = b.dataset.mailmove, to = document.getElementById('mm_' + id).value;
+    if (!to) return;
+    try { await api('/mail/' + id, { method: 'POST', body: to === 'unfile' ? { action: 'unfile' } : { project_id: +to } }); project(p.id, { text: to === 'unfile' ? 'Email unfiled. It is now under Mail to file.' : 'Email moved.' }); }
+    catch (err) { if (err.message !== 'signin') project(p.id, { text: err.message, err: true }); }
+  }));
   $('#sh-copy')?.addEventListener('click', e => copy(shareMsg(p), e.target));
   $('#pin-copy')?.addEventListener('click', e => copy(pinMsg(p, $('#pin-copy').closest('.msg').querySelector('b').textContent), e.target));
   $('#sh-mail')?.addEventListener('click', async () => {
@@ -233,13 +264,37 @@ async function project(id, flash) {
     await patch(p.id, b, 'Details saved.');
   });
 }
-function mailItem(m) {
+let allProjects = [];
+const currentProjectId = () => current?.project?.id;
+// Read a dragged .eml (MIME) or .msg (Outlook) file into the fields the server stores.
+async function parseEmailFile(f) {
+  const buf = await f.arrayBuffer();
+  const strip = h => String(h || '').replace(/<style[\s\S]*?<\/style>/gi, '').replace(/<br\s*\/?>|<\/p>|<\/div>/gi, '\n').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/[ \t]+\n/g, '\n');
+  if (/\.msg$/i.test(f.name) || f.type === 'application/vnd.ms-outlook') {
+    const mod = await import('https://cdn.jsdelivr.net/npm/@kenjiuno/msgreader@1.28.0/+esm');
+    const MsgReader = typeof mod.default === 'function' ? mod.default : mod.default.default;
+    const d = new MsgReader(buf).getFileData();
+    if (d.error) throw new Error(d.error);
+    const rec = t => (d.recipients || []).filter(r => (r.recipType || 'to') === t).map(r => r.smtpAddress || r.email).filter(Boolean);
+    const mid = (String(d.headers || '').match(/^Message-ID:\s*(<[^>]+>)/im) || [])[1] || d.internetMessageId || '';
+    return { messageId: mid, from: d.senderSmtpAddress || d.senderEmail || '', fromName: d.senderName || '', to: rec('to'), cc: rec('cc'),
+      subject: d.subject || '', date: d.messageDeliveryTime || d.clientSubmitTime || d.creationTime || '', text: d.body || strip(d.bodyHtml),
+      attachments: (d.attachments || []).map(a => ({ name: a.fileName || a.name, type: a.mimeType || '', size: a.contentLength || 0 })) };
+  }
+  const PostalMime = (await import('https://cdn.jsdelivr.net/npm/postal-mime@2.7.6/+esm')).default;
+  const e = await PostalMime.parse(buf);
+  return { messageId: e.messageId || '', from: e.from?.address || '', fromName: e.from?.name || '', to: (e.to || []).map(a => a.address).filter(Boolean), cc: (e.cc || []).map(a => a.address).filter(Boolean),
+    subject: e.subject || '', date: e.date || '', text: e.text || strip(e.html),
+    attachments: (e.attachments || []).filter(a => a.disposition !== 'inline').map(a => ({ name: a.filename, type: a.mimeType, size: a.content?.byteLength || 0 })) };
+}
+function mailItem(m, onJob) {
   const atts = JSON.parse(m.attachments || '[]');
   return `<details class="list" style="background:var(--soft);border-radius:3px;padding:8px 10px">
     <summary style="color:var(--ink)"><span class="mono muted">${fmtDate((m.sent_at || '').slice(0, 10))}</span> · <b>${esc(m.from_name || m.from_addr)}</b> · ${esc(m.subject)}${atts.length ? ` · <span class="muted">${atts.length} attachment${atts.length > 1 ? 's' : ''}</span>` : ''}</summary>
     <div class="muted" style="font-size:12.5px;margin:6px 0">From ${esc(m.from_addr)} · To ${esc(m.to_addrs)}${m.cc_addrs ? ' · Cc ' + esc(m.cc_addrs) : ''}</div>
     <pre style="white-space:pre-wrap;font-family:var(--f-body);font-size:14px;margin:0;max-height:360px;overflow:auto">${esc(m.body)}</pre>
     ${atts.length ? `<div class="muted" style="font-size:12.5px;margin-top:6px">Attachments (names only, files stay in Outlook): ${atts.map(a => esc(a.name)).join(', ')}</div>` : ''}
+    ${onJob ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center"><select id="mm_${m.id}" aria-label="Move this email"><option value="">Move to…</option>${allProjects.filter(x => x.id !== currentProjectId()).map(x => `<option value="${x.id}">${esc(x.ref)} · ${esc(x.customer)}</option>`).join('')}<option value="unfile">Unfile (back to Mail to file)</option></select><button class="btn small" type="button" data-mailmove="${m.id}">Apply</button></div>` : ''}
   </details>`;
 }
 async function mailPage() {

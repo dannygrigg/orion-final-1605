@@ -314,6 +314,25 @@ export async function staffApi(request, env, user, parts, origin) {
     const p = await loadProject(db, id);
     if (!p) return bad('No such project', 404);
     if (sub === 'customer' && method === 'GET') return json(customerView(p, derive(await loadEvents(db, p.id))));
+    // Emails dragged onto the job page (parsed in the browser). Duplicates (same Message-ID) are skipped.
+    if (sub === 'mail' && method === 'POST') {
+      const list = Array.isArray(body.messages) ? body.messages.slice(0, 50) : [];
+      let added = 0, skipped = 0;
+      for (const msg of list) {
+        const lc = v => String(v || '').trim().toLowerCase();
+        const from = lc(msg.from), to = (msg.to || []).map(lc).filter(Boolean), cc = (msg.cc || []).map(lc).filter(Boolean);
+        const sentAt = msg.date && !isNaN(Date.parse(msg.date)) ? new Date(msg.date).toISOString() : nowIso();
+        const msgId = String(msg.messageId || '').trim() || `manual:${from}:${sentAt}:${msg.subject || ''}`;
+        if (await db.prepare('SELECT id FROM ol_mail WHERE message_id = ?').bind(msgId).first()) { skipped++; continue; }
+        const atts = (msg.attachments || []).slice(0, 50).map(a => ({ name: String(a.name || 'attachment').slice(0, 200), type: String(a.type || '').slice(0, 100), size: +a.size || 0 }));
+        const row = await db.prepare(`INSERT INTO ol_mail (project_id, message_id, from_addr, from_name, to_addrs, cc_addrs, subject, sent_at, body, attachments, matched_by, received_at)
+          VALUES (?,?,?,?,?,?,?,?,?,?,?,?) RETURNING id`).bind(p.id, msgId.slice(0, 500), from, String(msg.fromName || '').slice(0, 200) || null, to.join(', '), cc.join(', '),
+          String(msg.subject || '(no subject)').slice(0, 300), sentAt, String(msg.text || '').slice(0, 20000), JSON.stringify(atts), 'added by ' + user, nowIso()).first();
+        await fileMailEvent(db, p.id, row.id, { from, subject: msg.subject, sentAt, atts: atts.length });
+        added++;
+      }
+      return json({ added, skipped });
+    }
     // Queue an email to the customer with the address of their page (held for approval like any other).
     if (sub === 'share' && method === 'POST') {
       if (!p.pin_hash) return bad('Switch the customer page on (set a PIN) first');
@@ -403,9 +422,19 @@ Orion MIS · ${p.ref}`,
   if (a === 'mail' && id && method === 'POST') {
     const m = await db.prepare('SELECT * FROM ol_mail WHERE id = ?').bind(id).first();
     if (!m) return bad('No such email', 404);
+    // take it off its current job: cancel that job's 'email captured' event (events are never edited)
+    if (m.project_id) {
+      const ev = await db.prepare("SELECT id FROM ol_events WHERE project_id = ? AND type = 'email_logged' AND json_extract(data, '$.mail_id') = ? ORDER BY id DESC").bind(m.project_id, m.id).first();
+      if (ev) await db.prepare('INSERT INTO ol_events (project_id, type, date, data, by, source, created_at) VALUES (?,?,?,?,?,?,?)')
+        .bind(m.project_id, 'void', londonDay(), JSON.stringify({ event: String(ev.id), reason: body.action === 'unfile' ? 'Email unfiled' : 'Email moved to another job' }), user, 'staff', nowIso()).run();
+    }
+    if (body.action === 'unfile') {
+      await db.prepare("UPDATE ol_mail SET project_id = NULL, matched_by = 'unfiled by ' || ? WHERE id = ?").bind(user, m.id).run();
+      return json({ ok: true });
+    }
     const p = await loadProject(db, body.project_id);
     if (!p) return bad('Choose a project');
-    if (m.project_id) return bad('Already filed');
+    if (m.project_id === p.id) return bad('Already on that job');
     await db.prepare("UPDATE ol_mail SET project_id = ?, matched_by = 'filed by ' || ? WHERE id = ?").bind(p.id, user, m.id).run();
     await fileMailEvent(db, p.id, m.id, { from: m.from_addr, subject: m.subject, sentAt: m.sent_at, atts: JSON.parse(m.attachments || '[]').length });
     return json({ ok: true });
