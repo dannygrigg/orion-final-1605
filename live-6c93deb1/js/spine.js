@@ -179,9 +179,12 @@ export function derive(events) {
       case 'waiting_added':
         r.waiting.push({ key: 'w' + e.id, id: 'e' + e.id, text: d.text, due: d.due, from: e.date });
         break;
-      case 'waiting_cleared':
+      case 'waiting_cleared': {
+        const item = r.waiting.find(w => w.id === d.waiting);
+        if (item) e._line = `Received: ${item.text}.`;
         r.waiting = r.waiting.filter(w => w.id !== d.waiting);
         break;
+      }
       case 'materials_received':
         if (d.all_in) r.actual.materials = e.date;
         break;
@@ -209,7 +212,7 @@ export function derive(events) {
       }
       case 'fault_reported': r.faults.push({ text: d.text, action: d.action, date: e.date }); break;
     }
-    if (T.customer) r.timeline.push({ id: e.id, date: e.date, type: e.type, text: customerLine(e) });
+    if (T.customer) r.timeline.push({ id: e.id, date: e.date, type: e.type, text: e._line || customerLine(e) });
   }
   if (r.stage < 0 && live.length) r.stage = 0;
   r.next = MILESTONES.map(([k, n]) => ({ k, n, date: r.planned[k] })).find(m => m.date && !r.actual[m.k]) || null;
