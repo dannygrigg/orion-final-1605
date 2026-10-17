@@ -5,13 +5,9 @@
 // Goal: ONE canonical domain (orionmis.co.uk). Every other domain 301-redirects to it,
 // preserving the path + query string. Consolidates SEO, avoids duplicate content.
 //
-// SAFE TO DEPLOY BEFORE THE FRIDAY CUTOVER:
-//   • helixsorter.co.uk stays in SERVE_HOSTS, so it keeps serving until orionmis.co.uk is live.
-//   • Spare/brand domains only redirect once you attach them to this Pages project
-//     (Cloudflare → Workers & Pages → this project → Custom domains).
-//
-// AFTER orionmis.co.uk is live on Friday:
-//   • Delete the two helixsorter lines below to fold helixsorter.co.uk into orionmis.co.uk too.
+// Spare/brand domains only redirect once they are attached to this Pages project
+// (Cloudflare → Workers & Pages → this project → Custom domains).
+// helixsorter.co.uk was folded into orionmis.co.uk on 17 Oct 2026.
 // ─────────────────────────────────────────────────────────────────────────
 
 const CANONICAL = 'orionmis.co.uk';
@@ -19,9 +15,6 @@ const CANONICAL = 'orionmis.co.uk';
 // Hosts that SERVE the site directly (no redirect).
 const SERVE_HOSTS = new Set([
   'orionmis.co.uk',
-  // ── remove these two after the orionmis.co.uk cutover to redirect helixsorter as well ──
-  'helixsorter.co.uk',
-  'www.helixsorter.co.uk',
 ]);
 
 // Campaign/brand domains: homepage requests land on the most relevant page.
