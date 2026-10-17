@@ -35,6 +35,19 @@ const HOST_LANDING = {
   'helixsorter.uk':            '/',
 };
 
+// Cloudflare Web Analytics. Auto-install never injected on this Pages project,
+// so the beacon is added here. Internal tools (PIN-gated apps) are not tracked.
+const BEACON = `<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "d6c083d8264e4c558827a20858f718da"}'></script>`;
+const UNTRACKED = /^\/(live-|track-|apc-p1-|helios-t-|jess-f-|api\/|go\/)/;
+
+function withBeacon(res, url) {
+  const type = res.headers.get('content-type') || '';
+  if (!type.includes('text/html') || UNTRACKED.test(url.pathname)) return res;
+  return new HTMLRewriter()
+    .on('body', { element(el) { el.append(BEACON, { html: true }); } })
+    .transform(res);
+}
+
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   const host = url.hostname.toLowerCase();
@@ -43,7 +56,7 @@ export async function onRequest(context) {
   if (host.endsWith('.pages.dev')) return context.next();
 
   // Serve directly for the canonical host and any allow-listed hosts.
-  if (host === CANONICAL || SERVE_HOSTS.has(host)) return context.next();
+  if (host === CANONICAL || SERVE_HOSTS.has(host)) return withBeacon(await context.next(), url);
 
   // Brand domains: send the homepage to a targeted landing page.
   const bare = host.replace(/^www\./, '');
