@@ -138,11 +138,12 @@ export function derive(events) {
   const r = {
     stage: -1, planned: {}, actual: {}, moves: [], waiting: [], docs: [], signoffs: [],
     snags: [], faults: [], percent: null, value: null, warranty: null, timeline: [], log: live,
+    reached: {}, // stage index → date the job first reached it
   };
   for (const e of live) {
     const d = data(e), T = EVENT_TYPES[e.type];
     if (!T) continue;
-    if (T.stage != null && T.stage > r.stage) r.stage = T.stage;
+    if (T.stage != null && T.stage > r.stage) { for (let i = r.stage + 1; i <= T.stage; i++) r.reached[i] = e.date; r.stage = T.stage; }
     switch (e.type) {
       case 'quote_issued':
         if (d.value) r.value = +d.value;
@@ -214,7 +215,7 @@ export function derive(events) {
     }
     if (T.customer) r.timeline.push({ id: e.id, date: e.date, type: e.type, text: e._line || customerLine(e) });
   }
-  if (r.stage < 0 && live.length) r.stage = 0;
+  if (r.stage < 0 && live.length) { r.stage = 0; r.reached[0] = live[0].date; }
   r.next = MILESTONES.map(([k, n]) => ({ k, n, date: r.planned[k] })).find(m => m.date && !r.actual[m.k]) || null;
   return r;
 }

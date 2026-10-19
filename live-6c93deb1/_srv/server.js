@@ -198,7 +198,7 @@ export function customerView(p, r) {
     system: normaliseSystem(parseJSON(p.system)),
     planned: r.planned, actual: r.actual,
     team: teamOf(p, r.stage),
-    stage: r.stage, next: r.next,
+    stage: r.stage, next: r.next, reached: r.reached,
     milestones: MILESTONES.map(([k, n]) => ({ k, n, planned: r.planned[k] || null, actual: r.actual[k] || null })),
     moves: r.moves, waiting: r.waiting.map(({ id, text, due }) => ({ id, text, due })),
     docs: r.docs, signoffs: r.signoffs, snags: r.snags, faults: r.faults,

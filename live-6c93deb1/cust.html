@@ -86,6 +86,21 @@ header.site{display:flex;justify-content:space-between;align-items:center;gap:12
 @media (prefers-reduced-motion:reduce){.seg i.cur{background:var(--test)}}
 .pct{display:flex;justify-content:space-between;font-size:13px;color:var(--cr-muted);margin-top:6px}
 .pct b{color:var(--cr-ink);font-family:var(--f-mono)}
+.jlink{display:inline-block;margin-top:8px;font-size:13px;color:var(--cr-ink);text-decoration:underline;text-underline-offset:3px}
+html{scroll-behavior:smooth}
+/* journey: all 12 stages */
+.journey{list-style:none;margin:0;padding:0;position:relative}
+.journey li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:7px 0;position:relative;font-size:15px}
+.journey li:not(:last-child)::before{content:"";position:absolute;left:13px;top:31px;bottom:-9px;width:2px;background:var(--line)}
+.journey li.done:not(:last-child)::before{background:var(--live)}
+.journey .dot{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-size:12px;font-weight:700;background:var(--soft);color:var(--muted);border:2px solid var(--line);position:relative;z-index:1}
+.journey .done .dot{background:var(--live);border-color:var(--live);color:#fff}
+.journey .cur .dot{background:var(--test);border-color:var(--test);color:#3d2a00}
+.journey .next .nm{color:var(--muted)}
+.journey .cur .nm{font-weight:700}
+.journey em{font-style:normal;font-size:12px;font-weight:600;color:var(--ink);background:var(--accent-soft);border:1px solid var(--accent);border-radius:10px;padding:1px 8px;margin-left:6px}
+.journey .wd{font-family:var(--f-mono);font-size:12.5px;color:var(--muted);text-align:right}
+@media (max-width:520px){.journey li{grid-template-columns:28px minmax(0,1fr)}.journey .wd{grid-column:2;text-align:left}}
 
 /* reading column */
 .cols{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:18px;margin-top:18px;align-items:start}

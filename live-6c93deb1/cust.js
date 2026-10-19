@@ -13,6 +13,8 @@ const short = d => fmtDate(d).split(' ').slice(0, 2).join(' ');
 // events that move a job on: shown in bold in the updates
 const BIG = new Set(['enquiry_received', 'quote_issued', 'order_received', 'drawing_approved', 'build_complete', 'test_passed', 'delivered', 'sat_signed', 'handover_signed']);
 let stopAnim = () => {};
+// planned milestone that marks each stage being reached (index matches STAGES)
+const STAGE_MS = [null, null, null, null, 'design', 'materials', 'build', 'test', 'delivery', 'install', 'handover', null];
 
 async function load() {
   const r = await fetch(PREVIEW ? `/live-6c93deb1/api/projects/${location.hash.slice(1)}/customer` : '/track-180021fb/api/' + token);
@@ -41,9 +43,11 @@ function show(v) {
   const drawing = drawSystem(sys, stage);
   const [head, sub] = moment(stage, { noun, first: v.first, d: v.planned || {} });
   const openSnags = (v.snags || []).filter(s => !s.closed);
-  const state = openSnags.length ? 'r' : v.waiting.length ? 'a' : 'g';
-  const n = v.waiting.length;
-  const words = { g: ['On track', 'Everything is moving to plan.'], a: ['Waiting on you', `${n} item${n > 1 ? 's' : ''} below keep${n > 1 ? '' : 's'} your dates on track.`], r: ['We are fixing something', 'A snag is open. We will update you here when it is closed.'] }[state];
+  // an open quote decision is listed below but does not hold the job up, so it stays green
+  const blocking = v.waiting.filter(w => w.id !== 'decision');
+  const state = openSnags.length ? 'r' : blocking.length ? 'a' : 'g';
+  const n = v.waiting.length, nb = blocking.length;
+  const words = { g: ['On track', 'Everything is moving to plan.'], a: ['Waiting on you', `${nb} item${nb > 1 ? 's' : ''} below keep${nb > 1 ? '' : 's'} your dates on track.`], r: ['We are fixing something', 'A snag is open. We will update you here when it is closed.'] }[state];
   const live = v.actual?.handover, goLive = v.planned?.handover;
   const count = live ? `<div class="label" style="color:var(--cr-muted)">Live since</div><div class="n" style="font-size:30px">${fmtDate(live)}</div><div class="u">${v.warranty ? 'warranty to ' + fmtDate(v.warranty.to) : ''}</div>`
     : goLive ? `<div class="label" style="color:var(--cr-muted)">Go-live</div><div class="n">${Math.max(0, days(TODAY, goLive))}</div><div class="u">days to go · ${fmtDate(goLive)}</div>`
@@ -68,13 +72,19 @@ function show(v) {
       <div class="count">${count}</div>
       <div><div class="label" style="color:var(--cr-muted)">Progress</div>
         <div class="seg">${STAGES.map((s, i) => `<i class="${i < stage ? 'done' : i === stage ? 'cur' : ''}" title="${s}"></i>`).join('')}</div>
-        <div class="pct"><span>${STAGES[stage]}</span><span><b>${pct}%</b> complete</span></div></div>
+        <div class="pct"><span>${STAGES[stage]}</span><span><b>${pct}%</b> complete</span></div>
+        <a class="jlink" href="#journey">See the full journey ↓</a></div>
     </aside>
   </section>
   <div class="cols">
     <div class="stackc">
       ${n ? `<div class="card you"><h3>We're waiting on you</h3><ul class="plain">${v.waiting.map(w => `<li><span>${esc(w.text)}</span><span class="mono" style="font-size:13px">${w.due ? (w.due < TODAY ? 'overdue · ' : 'by ') + short(w.due) : ''}</span></li>`).join('')}</ul>
         <p style="margin:8px 0 0;font-size:14px;color:var(--muted)">Reply to any of our emails, or contact ${esc(v.contact || 'us')}, and we will mark it done.</p></div>` : ''}
+      <div class="card" id="journey"><h3>Your journey</h3><ol class="journey">${STAGES.map((s, i) => {
+        const st = i < stage ? 'done' : i === stage ? 'cur' : 'next';
+        const reached = v.reached?.[i], ms = STAGE_MS[i], plan = ms && (v.actual?.[ms] || v.planned?.[ms]);
+        const when = st === 'next' ? (plan ? 'planned ' + fmtDate(plan) : '') : reached ? (st === 'cur' ? 'since ' : '') + fmtDate(reached) : '';
+        return `<li class="${st}"><span class="dot">${st === 'done' ? '✓' : i + 1}</span><span class="nm">${s}${st === 'cur' ? ' <em>we are here</em>' : ''}</span><span class="wd">${when}</span></li>`; }).join('')}</ol></div>
       ${openSnags.length ? `<div class="card"><h3>Open snags</h3><ul class="plain docs">${openSnags.map(s => `<li><span>${esc(s.text)}</span><span class="mono" style="font-size:13px;color:var(--muted)">${short(s.raised)}</span></li>`).join('')}</ul></div>` : ''}
       <div class="card"><h3>Your ${noun}, section by section</h3><ul class="plain sect">${secs.map((s, i) => { const st = stateAt(stage, s, i, secs.length);
         return `<li><span>${esc(s.name)}</span><span class="bar"><i style="width:${PCT[st]}%;background:${SECT_COLOR[st]}"></i></span><span class="st">${LABEL[st]}</span></li>`; }).join('')}</ul></div>
