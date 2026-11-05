@@ -401,6 +401,43 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   </div>
 </section>
 
+<!-- ── LIVE AT JUPITER · real photos from APC Overnight, Cannock ── -->
+<section class="jup-band" id="live">
+<style>
+.jup-band{position:relative;overflow:hidden;background:var(--o-ink,#060A16);padding:96px 36px;border-bottom:1px solid var(--o-line,rgba(150,180,230,.18))}
+.jup-band .grid{position:absolute;inset:0;pointer-events:none;opacity:.3;background-image:linear-gradient(rgba(150,180,230,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(150,180,230,.18) 1px,transparent 1px);background-size:46px 46px}
+.jup-inner{position:relative;max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:.8fr 2fr;gap:48px;align-items:start}
+.jup-label{font-family:var(--o-mono,var(--mono));font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--o-acc,#3AA0FF);margin-bottom:16px}
+.jup-band h2{font-family:var(--o-display,var(--sans));font-weight:700;letter-spacing:-.02em;font-size:clamp(30px,3.4vw,46px);line-height:1.06;color:#F4F7FC;margin-bottom:20px}
+.jup-band h2 span{color:var(--o-acc,#3AA0FF)}
+.jup-copy p{font-size:16px;line-height:1.65;color:#C9D3E6;margin-bottom:26px}
+.jup-stat{border-left:4px solid var(--o-acc,#3AA0FF);padding-left:14px;margin-bottom:20px}
+.jup-stat b{display:block;font-family:var(--o-display,var(--sans));font-weight:700;letter-spacing:-.02em;font-size:40px;line-height:.95;color:#F4F7FC}
+.jup-stat small{display:block;margin-top:8px;font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--o-acc,#3AA0FF)}
+.jup-grid{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:repeat(3,1fr);gap:14px;min-height:560px}
+.jup-shot{position:relative;margin:0;border-radius:10px;overflow:hidden;border:1px solid var(--o-line,rgba(150,180,230,.18));background:#0B1428}
+.jup-shot.big{grid-row:1 / span 3}
+.jup-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.jup-shot figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 12px;background:linear-gradient(0deg,rgba(6,10,22,.9),rgba(6,10,22,0));font-family:var(--o-mono,var(--mono));font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#C9D3E6}
+@media(max-width:960px){.jup-band{padding:64px 20px}.jup-inner{grid-template-columns:1fr;gap:28px}.jup-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;min-height:0}.jup-shot{aspect-ratio:16/10}.jup-shot.big{grid-column:1 / span 2;grid-row:auto}}
+</style>
+  <div class="grid"></div>
+  <div class="jup-inner">
+    <div class="jup-copy">
+      <div class="jup-label">— Live result · APC Overnight, Cannock</div>
+      <h2>HeliOS, running<br><span>Project Jupiter.</span></h2>
+      <p>Jupiter is a Helix sortation line at APC Overnight&rsquo;s Cannock hub, controlled by HeliOS. These are photographs from the site, not mock-ups.</p>
+      <div class="jup-stat"><b>13,000</b><small>Peak items / hour · mixed freight</small></div>
+      <div class="jup-stat"><b>4,500 &rarr; 13,000</b><small>Oct to Nov 2026 · same line</small></div>
+    </div>
+    <div class="jup-grid">
+      <figure class="jup-shot big"><img src="/images/brand/jupiter-t28.webp" alt="HeliOS control tower workstation at the Jupiter site" loading="lazy"><figcaption>Control tower · HeliOS on site</figcaption></figure>
+      <figure class="jup-shot"><img src="/images/brand/jupiter-t45.webp" alt="Operator using the live 3D twin on a touchscreen" loading="lazy"><figcaption>Live 3D twin of the line</figcaption></figure>
+      <figure class="jup-shot"><img src="/images/brand/jupiter-t38.webp" alt="Insights panel explaining a fault cause" loading="lazy"><figcaption>Insights · what failed, where, why</figcaption></figure>
+      <figure class="jup-shot"><img src="/images/brand/jupiter-t21.webp" alt="Chute board showing rate per chute above the line" loading="lazy"><figcaption>Chute board · rate per chute</figcaption></figure>
+    </div>
+  </div>
+</section>
 
 <!-- ── MEET THE GUIDE ── -->
 <section class="guide-band"><style>
@@ -543,33 +580,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
     <div class="trust-item"><b>Edge-agent architecture</b><span>An agent per sorter connects the platform to the physical line</span></div>
     <div class="trust-item"><b>Backups &amp; recovery</b><span>Point-in-time backups, managed by Orion</span></div>
     <div class="trust-item"><b>Live in production</b><span>Real sorters, real parcels, real customers — today</span></div>
-  </div>
-</section>
-
-<!-- ── PRODUCT SCREENSHOTS ── -->
-<section class="shots">
-  <div class="section-head">
-    <div class="eyebrow" style="justify-content:center">See it live</div>
-    <h2>The real thing, <em>running today.</em></h2>
-    <p>Live screens from Orion Helios — dropping in this week as the next site goes live.</p>
-  </div>
-  <div class="shots-grid">
-    <!-- Drop real screenshots into images/ to replace the placeholders -->
-    <div class="shot wide">
-      <img src="images/helios-scada.png" alt="Orion Helios SCADA — live 3D digital twin" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="shot-missing" style="display:none"><span class="sm-badge">Live display · this week</span><b>SCADA · digital twin</b><span>Real-time 3D model of the sorter, parcels moving as they move on the floor</span></div>
-      <span class="shot-cap">SCADA · live digital twin</span>
-    </div>
-    <div class="shot">
-      <img src="images/helios-home.png" alt="Orion Helios home dashboard" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="shot-missing" style="display:none"><span class="sm-badge">Live display · this week</span><b>Home · dashboard</b><span>Customisable live widgets</span></div>
-      <span class="shot-cap">Home · command surface</span>
-    </div>
-    <div class="shot">
-      <img src="images/helios-reports.png" alt="Orion Helios reports & analytics" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="shot-missing" style="display:none"><span class="sm-badge">Live display · this week</span><b>Reports · analytics</b><span>Insights &amp; leaderboards</span></div>
-      <span class="shot-cap">Reports · analytics</span>
-    </div>
   </div>
 </section>
 

@@ -11,12 +11,16 @@
    ========================================================================== */
 
 .hero:not(#top) {
+  /* own stacking context so the photo + grid layers (z-index:-1) sit behind
+     every child, whatever markup the page uses inside its hero */
+  isolation: isolate;
+  position: relative; overflow: hidden;   /* contain the layers to the hero itself */
   background: var(--o-ink, #060A16);
   border-bottom: 1px solid var(--o-line, rgba(150,180,230,.18));
 }
 /* Photo bleeding in from the right, shaded into the ink */
 .hero:not(#top)::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1;
   background:
     linear-gradient(0deg, rgba(6,10,22,.9) 0%, rgba(6,10,22,0) 28%),
     linear-gradient(90deg, #060A16 0%, rgba(6,10,22,.94) 34%, rgba(6,10,22,.55) 68%, rgba(6,10,22,.3) 100%),
@@ -24,7 +28,7 @@
 }
 /* Blueprint grid */
 .hero:not(#top)::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .3;
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .3; z-index: -1;
   background-image:
     linear-gradient(rgba(150,180,230,.18) 1px, transparent 1px),
     linear-gradient(90deg, rgba(150,180,230,.18) 1px, transparent 1px);
