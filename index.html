@@ -82,13 +82,6 @@ section[id],div[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
 .news-dot{display:inline-block;width:8px;height:8px;background:var(--cyan);border-radius:50%;margin-left:7px;box-shadow:0 0 10px var(--cyan),0 0 3px rgba(0,213,255,.7);animation:newsPulse 2.4s ease-in-out infinite;vertical-align:super;position:relative;top:-3px}
 @keyframes newsPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.45}}
 
-/* ── FINANCE CARDS (clickable in #finance grid) ── */
-.fin-card{display:block;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);border-radius:12px;padding:12px 14px;text-decoration:none;color:inherit;transition:background .2s,border-color .2s,transform .15s,box-shadow .2s;position:relative}
-.fin-card:hover{background:rgba(0,213,255,.06);border-color:rgba(0,213,255,.5);transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,213,255,.08)}
-.fin-card-tag{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);display:block}
-.fin-card-title{font-family:var(--sans);font-size:16px;color:#fff;font-weight:400;margin-top:6px;line-height:1.15;display:block;letter-spacing:-.01em}
-.fin-card-arrow{position:absolute;top:12px;right:12px;font-family:var(--mono);font-size:14px;color:rgba(0,213,255,.5);opacity:0;transition:opacity .2s,transform .2s;line-height:1}
-.fin-card:hover .fin-card-arrow{opacity:1;transform:translateX(2px)}
 .nav ul{display:flex;gap:26px;list-style:none;font-size:13px;color:var(--muted)}
 .nav li a{padding:6px 0;position:relative;transition:color .2s}
 .nav li a:hover{color:#fff}
@@ -464,6 +457,39 @@ table.vs{min-width:0;width:100%;border-collapse:separate;border-spacing:0}
   .vs td.us[data-l]::before{color:var(--o-acc,#3AA0FF)}
 }
 
+/* ── PAY AS YOU GO · brochure page 07 ── */
+.pay-band{position:relative;overflow:hidden;background:var(--o-ink,#060A16);padding:96px 36px 0;border-bottom:1px solid rgba(150,180,230,.18)}
+.pay-band .grid{position:absolute;inset:0;pointer-events:none;opacity:.35;background-image:linear-gradient(rgba(150,180,230,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(150,180,230,.18) 1px,transparent 1px);background-size:46px 46px}
+.pay-inner{position:relative;z-index:1;max-width:var(--max);margin:0 auto}
+.pay-label{font-family:var(--o-mono,var(--mono));font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--o-acc,#3AA0FF);margin-bottom:16px}
+.pay-band h2{font-family:var(--o-display,var(--sans));font-weight:700;letter-spacing:-.02em;font-size:clamp(32px,3.6vw,48px);line-height:1.06;color:#F4F7FC;margin-bottom:18px}
+.pay-band h2 span{color:var(--o-acc,#3AA0FF)}
+.pay-lead{font-size:18px;line-height:1.6;color:#DCE4F2;max-width:640px;margin-bottom:36px}
+.pay-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.pay-card{display:flex;flex-direction:column;min-height:220px;background:linear-gradient(160deg,rgba(20,36,70,.92),rgba(11,20,40,.92));border:1px solid rgba(150,180,230,.18);border-radius:12px;padding:22px 24px}
+.pay-card.hot{border-color:var(--o-acc,#3AA0FF);background:linear-gradient(160deg,rgba(30,70,140,.8),rgba(11,20,40,.95))}
+.pay-card small{font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--o-acc,#3AA0FF)}
+.pay-card b{display:block;font-family:var(--o-display,var(--sans));font-weight:700;font-size:26px;line-height:1.05;letter-spacing:-.02em;color:#F4F7FC;margin:8px 0 12px}
+.pay-card p{font-size:14.5px;line-height:1.55;color:#C9D3E6}
+.pay-actions{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0 22px}
+.pay-scope{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+.pay-scope em{font-style:normal;font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8592AD;margin-right:6px}
+.pay-scope a{border:1px solid rgba(150,180,230,.18);background:rgba(16,28,54,.8);border-radius:999px;padding:6px 12px;font-family:var(--o-mono,var(--mono));font-size:12px;letter-spacing:.04em;color:#F4F7FC;text-decoration:none;transition:border-color .2s,color .2s}
+.pay-scope a:hover{border-color:var(--o-acc,#3AA0FF);color:var(--o-acc,#3AA0FF)}
+.pay-note{font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8592AD;line-height:1.6;max-width:760px}
+.pay-photo{position:relative;height:260px;margin:56px -36px 0;background:#060A16 url('images/brand/jupiter-hall.webp') center 55%/cover no-repeat}
+.pay-photo:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,10,22,1) 0%,rgba(6,10,22,.35) 45%,rgba(6,10,22,.75) 100%)}
+.pay-photo span{position:absolute;left:36px;bottom:18px;font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#C9D3E6}
+@media (max-width:1000px){.pay-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){
+  .pay-band{padding:64px 20px 0}
+  .pay-grid{grid-template-columns:1fr}
+  .pay-card{min-height:0}
+  .pay-photo{height:180px;margin:40px -20px 0}
+  .pay-photo span{left:20px}
+  .pay-scope em{flex-basis:100%;margin-bottom:2px}
+}
+
 /* ── TABLES (shared) ── */
 .tablewrap{max-width:var(--max);margin:0 auto;border:1px solid var(--line2);border-radius:24px;background:rgba(255,255,255,.03);overflow:hidden;overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:720px}
@@ -628,9 +654,6 @@ tr:last-child td{border-bottom:none}
   .trusted-row{gap:12px}
   .trusted-row img{height:54px;padding:12px 18px;max-width:200px}
 
-  /* finance route: stack the how-it-works card above the finance-catalogue card
-     (outer grid is inline-styled, hence the !important) */
-  #finance > div[style*="display:grid"]{grid-template-columns:1fr!important;gap:16px!important}
 }
 </style>
 <link rel="stylesheet" href="mobile.css?v=1">
@@ -1088,69 +1111,26 @@ tr:last-child td{border-bottom:none}
 </section>
 
 <!-- ── 04 · FINANCE / PAY MONTHLY ── -->
-<section class="section light" id="finance" style="background:#F2F1ED">
-  <div class="head">
-    <div class="eyebrow">04 · Finance route</div>
-    <h2>Pay monthly. Reduce labour. <em>Increase capacity.</em></h2>
-    <p>Many operations are already spending the monthly cost of automation on labour, overtime, agency cover and manual rework. Orion helps you compare that spend against UK-built automation — <a href="products.html#unit-handling" style="color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(30,144,255,.4)">conveyor systems</a>, <a href="#helix" style="color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(30,144,255,.4)">Helix sortation</a>, robotics, AMRs, print &amp; apply and WCS — with <a href="warehouse-automation-finance.html" style="color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(30,144,255,.4)">finance routes</a> built around payback.</p>
-  </div>
-
-  <div style="max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:stretch">
-
-    <div style="background:#fff;border:1px solid var(--paperline);border-radius:22px;padding:32px;display:flex;flex-direction:column">
-      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;font-weight:700">How a monthly automation case works</div>
-      <ul style="list-style:none;padding:0;margin:0 0 18px;display:flex;flex-direction:column;gap:14px">
-        <li style="display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start">
-          <span style="font-family:var(--sans);font-size:22px;color:var(--blue);line-height:1;font-weight:400">01</span>
-          <div style="font-size:14.5px;line-height:1.6;color:var(--mid)"><strong style="color:var(--ink);font-weight:700">Map current operating cost.</strong> Manual labour, overtime, agency cover, mis-sort rework, peak chaos. The real number is usually bigger than finance assume.</div>
-        </li>
-        <li style="display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start">
-          <span style="font-family:var(--sans);font-size:22px;color:var(--blue);line-height:1;font-weight:400">02</span>
-          <div style="font-size:14.5px;line-height:1.6;color:var(--mid)"><strong style="color:var(--ink);font-weight:700">Size the automation route.</strong> Throughput, destinations, parcel mix and shift pattern map to a sized Orion system — conveyors, Helix sortation, robotics or a turnkey combination.</div>
-        </li>
-        <li style="display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start">
-          <span style="font-family:var(--sans);font-size:22px;color:var(--blue);line-height:1;font-weight:400">03</span>
-          <div style="font-size:14.5px;line-height:1.6;color:var(--mid)"><strong style="color:var(--ink);font-weight:700">Compare monthly against monthly.</strong> The automation case sits next to the current labour line. Saving, payback months and five-year ROI fall out of the same model.</div>
-        </li>
-        <li style="display:grid;grid-template-columns:36px 1fr;gap:14px;align-items:start">
-          <span style="font-family:var(--sans);font-size:22px;color:var(--blue);line-height:1;font-weight:400">04</span>
-          <div style="font-size:14.5px;line-height:1.6;color:var(--mid)"><strong style="color:var(--ink);font-weight:700">Fund against current cost — not on top of it.</strong> Monthly finance routes are available subject to specification and approval. The route is built around payback, not around a heavy upfront CAPEX cycle.</div>
-        </li>
-      </ul>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:auto">
-        <a class="btn btn-line" href="#roi" style="background:var(--ink);color:#fff;border-color:var(--ink)">Calculate your monthly automation case →</a>
-        <a class="btn btn-line" href="sketch.html">Send us a sketch</a>
-      </div>
-      <p style="margin-top:18px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);line-height:1.55">Finance options available subject to specification &amp; approval. We do not promise guaranteed approval — we help build the technical and commercial case.</p>
+<section class="pay-band" id="finance">
+  <div class="grid"></div>
+  <div class="pay-inner">
+    <div class="pay-label">— 04 · Pay as you go</div>
+    <h2>Automation without<br>a <span>capital budget.</span></h2>
+    <p class="pay-lead">Because Orion owns the technology, Orion can carry it. Choose how to pay, and move between models as volume grows.</p>
+    <div class="pay-grid">
+      <div class="pay-card hot"><small>01 · Volume-linked</small><b>Pay per parcel</b><p>Pay for what the system sorts. Cost rises and falls with volume, so a quiet month costs less.</p></div>
+      <div class="pay-card"><small>02 · Fixed</small><b>Pay per month</b><p>A fixed monthly payment, set against the labour the system saves from the first month of running.</p></div>
+      <div class="pay-card"><small>03 · Software</small><b>HeliOS subscription</b><p>Routing, twin, dashboards, updates and support, per site, per month.</p></div>
+      <div class="pay-card"><small>04 · Capital</small><b>Buy outright</b><p>For customers who prefer to own the asset, with the same warranty and support.</p></div>
     </div>
-
-    <div style="background:#111926;color:#fff;border-radius:22px;padding:32px;position:relative;overflow:hidden">
-      <div style="position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(0,213,255,.16),transparent 70%);pointer-events:none"></div>
-      <div style="position:relative">
-        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;font-weight:700">Everything on this site is available on monthly finance</div>
-        <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <li><a class="fin-card" href="products.html#unit-handling"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Conveyor systems</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="#helix"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Helix sortation</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="products.html#sortation"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Cross belt / tilt tray</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="products.html#robotics"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Robot cells &amp; palletising</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="products.html#robotics"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">AMR fleets</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="products.html#sortation"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Print &amp; apply</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="products.html#vision"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Scan tunnels &amp; vision</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="products.html#asrs"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">ASRS shuttles</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="products.html#food-beverage"><span class="fin-card-tag">Hardware</span><span class="fin-card-title">Food-grade conveyor</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="#helix"><span class="fin-card-tag">Software</span><span class="fin-card-title">WCS &amp; WMS integration</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="products.html"><span class="fin-card-tag">System</span><span class="fin-card-title">Turnkey automation</span><span class="fin-card-arrow">→</span></a></li>
-          <li><a class="fin-card" href="sketch.html"><span class="fin-card-tag">System</span><span class="fin-card-title">Retrofit &amp; integration</span><span class="fin-card-arrow">→</span></a></li>
-        </ul>
-        <div style="margin-top:18px;border:1px solid rgba(50,213,131,.32);background:rgba(50,213,131,.08);border-radius:16px;padding:18px">
-          <div style="font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px;font-weight:700">How it is funded</div>
-          <div style="font-family:var(--sans);font-size:24px;color:var(--green);line-height:1.15;font-weight:400">Automation funded against current operating cost — not on top of it.</div>
-          <p style="margin-top:8px;color:rgba(255,255,255,.7);font-size:13.5px;line-height:1.55">Monthly finance routes available, subject to approval.</p>
-        </div>
-      </div>
+    <div class="pay-actions">
+      <a class="btn btn-primary" href="#roi">Calculate your monthly automation case →</a>
+      <a class="btn btn-secondary" href="sketch.html">Send us a sketch</a>
     </div>
-
+    <div class="pay-scope"><em>Available across the range</em><a href="products.html#unit-handling">Conveyor</a><a href="#helix">Helix sortation</a><a href="products.html#sortation">Cross belt / tilt tray</a><a href="products.html#robotics">Robotics &amp; AMRs</a><a href="products.html#sortation">Print &amp; apply</a><a href="products.html#vision">Scan tunnels</a><a href="products.html#asrs">ASRS</a><a href="helios.html">HeliOS</a><a href="sketch.html">Retrofit</a></div>
+    <p class="pay-note">Rates are set per site against volume and parcel mix. Finance options are subject to specification &amp; approval; we help build the technical and commercial case but do not promise guaranteed approval.</p>
   </div>
+  <div class="pay-photo"><span>Jupiter sort hall · Cannock</span></div>
 </section>
 
 <!-- ── 05 · SECTORS ── -->
