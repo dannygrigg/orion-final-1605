@@ -432,8 +432,39 @@ input[type=range].calc-slider::-moz-range-track{background:rgba(255,255,255,.08)
 .sector li{padding-left:14px;position:relative}
 .sector li:before{content:"—";color:var(--blue);position:absolute;left:0}
 
-/* ── COMPARE ── */
-.compare{background:linear-gradient(180deg,#050B14,#07111F)}
+/* ── US VS THEM · brochure page 02 ── */
+.vs-band{position:relative;overflow:hidden;background:var(--o-ink,#060A16);padding:96px 36px;border-bottom:1px solid rgba(150,180,230,.18)}
+.vs-band .grid{position:absolute;inset:0;pointer-events:none;opacity:.35;background-image:linear-gradient(rgba(150,180,230,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(150,180,230,.18) 1px,transparent 1px);background-size:46px 46px}
+.vs-inner{position:relative;max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:.9fr 2fr;gap:56px;align-items:start}
+.vs-label{font-family:var(--o-mono,var(--mono));font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--o-acc,#3AA0FF);margin-bottom:16px}
+.vs-band h2{font-family:var(--o-display,var(--sans));font-weight:700;letter-spacing:-.02em;font-size:clamp(32px,3.6vw,48px);line-height:1.06;color:#F4F7FC;margin-bottom:22px}
+.vs-band h2 span{color:var(--o-acc,#3AA0FF)}
+.vs-band .vs-copy p{font-size:16px;line-height:1.65;color:#C9D3E6;margin-bottom:14px}
+table.vs{min-width:0;width:100%;border-collapse:separate;border-spacing:0}
+.vs th,.vs td{border-bottom:1px solid rgba(150,180,230,.18);padding:15px 18px;font-size:14.5px;line-height:1.5;vertical-align:top;text-align:left}
+.vs th{font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.13em;text-transform:uppercase;font-weight:600;border-bottom:none;padding-top:12px;padding-bottom:12px}
+.vs th.them{color:#8592AD}
+.vs th.us{color:#060A16;background:var(--o-acc,#3AA0FF);border-radius:10px 10px 0 0}
+.vs td.k{font-family:var(--o-display,var(--sans));font-weight:600;color:#F4F7FC;width:20%;font-size:15px}
+.vs td.them{color:#8592AD;width:36%}
+.vs td.us{color:#F4F7FC;background:rgba(58,160,255,.10);border-left:1px solid rgba(58,160,255,.5);border-right:1px solid rgba(58,160,255,.5)}
+.vs tr:last-child td.us{border-bottom:1px solid rgba(58,160,255,.5);border-radius:0 0 10px 10px}
+@media (max-width:900px){
+  .vs-band{padding:64px 20px}
+  .vs-inner{grid-template-columns:1fr;gap:28px}
+  .vs thead{display:none}
+  .vs,.vs tbody,.vs tr,.vs td{display:block;width:auto}
+  .vs tr{border:1px solid rgba(150,180,230,.18);border-radius:12px;background:rgba(16,28,54,.6);padding:14px 16px;margin-bottom:10px}
+  .vs td,.vs tr:last-child td.us{border:none;border-radius:0;padding:0;background:none}
+  .vs td.k{font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--o-acc,#3AA0FF);margin-bottom:8px;width:auto}
+  .vs td.them,.vs td.us{font-size:14px;width:auto}
+  .vs td.them{margin-bottom:8px}
+  .vs td.us,.vs tr:last-child td.us{border:none;border-left:3px solid var(--o-acc,#3AA0FF);border-radius:6px;background:rgba(58,160,255,.10);padding:8px 12px}
+  .vs td[data-l]::before{content:attr(data-l);display:block;font-family:var(--o-mono,var(--mono));font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8592AD;margin-bottom:2px}
+  .vs td.us[data-l]::before{color:var(--o-acc,#3AA0FF)}
+}
+
+/* ── TABLES (shared) ── */
 .tablewrap{max-width:var(--max);margin:0 auto;border:1px solid var(--line2);border-radius:24px;background:rgba(255,255,255,.03);overflow:hidden;overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:720px}
 th,td{padding:17px;text-align:left;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);vertical-align:top}
@@ -584,17 +615,6 @@ tr:last-child td{border-bottom:none}
   .eb-player-wrap{display:none}
   .eb-watch-mobile{display:inline-flex;margin-top:26px}
   .eb-note{margin-top:14px}
-
-  /* compare table -> stacked cards, Orion column only */
-  .compare .tablewrap{border:none;background:transparent;border-radius:0;overflow:visible}
-  .compare table{min-width:0;display:block}
-  .compare tbody{display:block}
-  .compare tr{display:block;border:1px solid var(--line2);border-radius:14px;background:rgba(255,255,255,.03);padding:14px 16px;margin-bottom:10px}
-  .compare tr:first-child{display:none}
-  .compare td{display:block;border:none;padding:0}
-  .compare td:nth-child(2),.compare td:nth-child(3){display:none}
-  .compare td:first-child{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:6px}
-  .compare td:last-child{color:var(--muted);font-size:14px;line-height:1.55}
 
   /* case carousel: arrows out of the copy, long stories clamped */
   .case-nav{top:auto;bottom:14px;transform:none}
@@ -758,6 +778,31 @@ tr:last-child td{border-bottom:none}
       <img src="images/logos/rolls-royce.png" alt="" loading="lazy">
       <img src="images/logos/royal-mail.png" alt="" loading="lazy">
     </div>
+  </div>
+</section>
+
+<!-- ── US VS THEM · technology house vs integrator ── -->
+<section class="vs-band" id="why-orion">
+  <div class="grid"></div>
+  <div class="vs-inner">
+    <div class="vs-copy">
+      <div class="vs-label">— Us vs them</div>
+      <h2>Integrators resell.<br><span>We build.</span></h2>
+      <p>An integrator buys sorters, software and controls from other manufacturers and fits them together. Orion owns the technology: the sorter, the software and the controls are ours, designed and written in Britain.</p>
+      <p>That changes who answers when something goes wrong, how fast the system improves, and how you can pay for it.</p>
+    </div>
+    <table class="vs">
+      <thead><tr><th></th><th class="them">Integrator</th><th class="us">Orion · technology house</th></tr></thead>
+      <tbody>
+          <tr><td class="k">Core technology</td><td class="them" data-l="Integrator">Bought from other manufacturers, then fitted together</td><td class="us" data-l="Orion">Own sorter (Helix), own software (HeliOS), own controls</td></tr>
+          <tr><td class="k">Accountability</td><td class="them" data-l="Integrator">Several suppliers and contracts; faults sit between companies</td><td class="us" data-l="Orion">One company designed every part, wrote the code and wired the panels</td></tr>
+          <tr><td class="k">Fixing problems</td><td class="them" data-l="Integrator">Wait on the manufacturer&rsquo;s support queue and release cycle</td><td class="us" data-l="Orion">Fixed by the engineers who built it</td></tr>
+          <tr><td class="k">Development</td><td class="them" data-l="Integrator">Limited to what suppliers sell</td><td class="us" data-l="Orion">Improved on live sites: Jupiter from 4,500 to a 13,000/hr peak</td></tr>
+          <tr><td class="k">Scaling</td><td class="them" data-l="Integrator">Re-quote and re-engineer</td><td class="us" data-l="Orion">Add Helix modules and destinations as volume grows</td></tr>
+          <tr><td class="k">Paying</td><td class="them" data-l="Integrator">Large capital purchase upfront</td><td class="us" data-l="Orion">Pay per parcel, pay per month, or buy outright</td></tr>
+          <tr><td class="k">Origin</td><td class="them" data-l="Integrator">Often designed and built overseas</td><td class="us" data-l="Orion">Designed, built, coded and supported in Britain</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -1170,28 +1215,10 @@ tr:last-child td{border-bottom:none}
   </div>
 </section>
 
-<!-- ── COMPARE / WHY ORION ── -->
-<section class="section compare">
-  <div class="head">
-    <div class="eyebrow" style="justify-content:center">06 · Why Orion</div>
-    <h2 style="color:#fff">Integrators are slow. Component suppliers <em style="color:var(--cyan)">stop too early</em>.</h2>
-    <p style="color:var(--muted)">Orion sits in the gap: faster than the global integrators, more complete than component suppliers, and accountable across mechanical, electrical, controls, WCS and support from one UK facility.</p>
-  </div>
-  <div class="tablewrap">
-    <table>
-      <tr><th>Buyer concern</th><th>Traditional integrator</th><th>Component supplier</th><th>Orion position</th></tr>
-      <tr><td>Speed</td><td>Long discovery, long programme, heavy process.</td><td>Fast product supply, limited delivery ownership.</td><td>Modular Helix system, UK-built, faster route to site.</td></tr>
-      <tr><td>Accountability</td><td>Multiple teams and long escalation routes.</td><td>Customer / integrator owns the gaps.</td><td>Mechanical, electrical, controls, WCS and support under one roof.</td></tr>
-      <tr><td>Commercial model</td><td>Often CAPEX-heavy and board-process heavy.</td><td>Lower component price, incomplete system cost.</td><td>Clear ROI case against labour, overtime and manual process cost.</td></tr>
-      <tr><td>Software</td><td>Powerful, but often expensive and complex.</td><td>Usually not a full WCS layer.</td><td>WCS, dashboards and system visibility included as standard.</td></tr>
-    </table>
-  </div>
-</section>
-
 <!-- ── PROOF / CASE STUDIES ── -->
 <section class="section light" id="proof">
   <div class="head">
-    <div class="eyebrow">07 · Proof</div>
+    <div class="eyebrow">06 · Proof</div>
     <h2>Real sites. Real problems. <em>Real results.</em></h2>
     <p>Case studies from live UK automation projects across parcel handling, fulfilment, freight forwarding, healthcare logistics and food manufacturing. Where a customer name is public, we show it. Where it is not, we show the sector, problem and result without dressing it up.</p>
   </div>
@@ -1519,7 +1546,7 @@ tr:last-child td{border-bottom:none}
 <!-- ── FAQ (consolidated · Helix + Orion + commercial) ── -->
 <section class="section light" id="faq">
   <div class="head">
-    <div class="eyebrow">08 · FAQs</div>
+    <div class="eyebrow">07 · FAQs</div>
     <h2>The questions buyers, engineers and operations leads <em>actually ask</em>.</h2>
     <p>Everything we get asked before signing scope — Helix specifics, Orion the company, integration, finance, install and support — in one place.</p>
   </div>
