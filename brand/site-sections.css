@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Stage 2 — brochure page furniture for every page's hero.
+   Loads after site-bridge.css. Scoped with :not(#top) so the homepage hero
+   (already rebuilt by hand) is untouched; the #id inside :not() also gives
+   these rules enough weight to beat each page's own .hero styles.
+
+   Per-page photo: set it on the section —
+     <section class="hero" style="--hero-img:url('images/brand/scan-tunnel.webp')">
+   No --hero-img = grid only (guides, legal, tools), like the brochure's
+   text pages.
+   ========================================================================== */
+
+.hero:not(#top) {
+  background: var(--o-ink, #060A16);
+  border-bottom: 1px solid var(--o-line, rgba(150,180,230,.18));
+}
+/* Photo bleeding in from the right, shaded into the ink */
+.hero:not(#top)::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(0deg, rgba(6,10,22,.9) 0%, rgba(6,10,22,0) 28%),
+    linear-gradient(90deg, #060A16 0%, rgba(6,10,22,.94) 34%, rgba(6,10,22,.55) 68%, rgba(6,10,22,.3) 100%),
+    var(--hero-img, none) 70% center / cover no-repeat;
+}
+/* Blueprint grid */
+.hero:not(#top)::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .3;
+  background-image:
+    linear-gradient(rgba(150,180,230,.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150,180,230,.18) 1px, transparent 1px);
+  background-size: var(--o-grid-size, 46px) var(--o-grid-size, 46px);
+}
+.hero:not(#top) .hero-inner { z-index: 1; }
+
+.hero:not(#top) h1 { color: var(--o-white, #F4F7FC); line-height: 1.04; }
+.hero:not(#top) .eyebrow { color: var(--o-acc, #3AA0FF); }
+.hero:not(#top) .hero-lead { color: var(--o-lead, #DCE4F2); }
+
+/* Headline-numbers card → brochure card */
+.hero:not(#top) .hero-card {
+  background: linear-gradient(160deg, rgba(20,36,70,.88), rgba(11,20,40,.94));
+  border: 1px solid var(--o-line, rgba(150,180,230,.18));
+  border-radius: var(--o-radius-card, 12px);
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.hero:not(#top) .hero-card::before { display: none; }
+.hero:not(#top) .hero-card .he {
+  font-family: var(--o-mono); color: var(--o-acc, #3AA0FF); letter-spacing: var(--o-track-mono, .14em);
+}
+.hero:not(#top) .hero-card h2 { font-family: var(--o-display); font-weight: 700; letter-spacing: -.02em; }
+.hero:not(#top) .hero-card li {
+  background: none; border: 0; border-radius: 0;
+  border-bottom: 1px solid var(--o-line, rgba(150,180,230,.18));
+  padding: 11px 0; color: var(--o-text, #C9D3E6);
+}
+.hero:not(#top) .hero-card li:last-child { border-bottom: 0; }
+.hero:not(#top) .hero-card li b {
+  font-family: var(--o-display); font-weight: 700; letter-spacing: -.01em; color: var(--o-white, #F4F7FC);
+}
+
+/* Video / media frames */
+.hero:not(#top) .hero-media { border-radius: var(--o-radius-img, 10px); border-color: var(--o-line, rgba(150,180,230,.18)); }
+
+/* Narrow screens: photo sits behind the text, so shade it evenly */
+@media (max-width: 900px) {
+  .hero:not(#top)::before {
+    background:
+      linear-gradient(0deg, rgba(6,10,22,.92) 0%, rgba(6,10,22,.82) 100%),
+      var(--hero-img, none) 70% center / cover no-repeat;
+  }
+}
