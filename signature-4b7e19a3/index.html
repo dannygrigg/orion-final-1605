@@ -138,19 +138,21 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
       <div class="pane on" id="p-new">
         <ol class="steps">
           <li>Press <b>Copy signature</b> above.</li>
-          <li>In Outlook, click the <b>gear icon</b> (top right) to open <b>Settings</b>.</li>
-          <li>Go to <b>Account &#8594; Signatures</b>.</li>
+          <li><b>Turn dark mode OFF first.</b> In Outlook, click the <b>gear icon</b> (top right) &#8594; <b>General &#8594; Appearance</b> and switch <b>Dark mode</b> off. (If you skip this, Outlook flips the colours and the signature saves white.)</li>
+          <li>Still in <b>Settings</b>, go to <b>Account &#8594; Signatures</b>.</li>
           <li>Click <b>+ New signature</b> and name it <b>Orion</b>.</li>
           <li>Click inside the big empty box and press <kbd>Ctrl</kbd> + <kbd>V</kbd> (<kbd>&#8984;</kbd> + <kbd>V</kbd> on a Mac).</li>
           <li>Under <b>Select default signatures</b>, choose <b>Orion</b> for <b>For new messages</b> and for <b>For replies/forwards</b>.</li>
-          <li>Click <b>Save</b>. Send a test email to yourself to check it.</li>
+          <li>Click <b>Save</b>. Now you can switch dark mode back on. The signature stays dark.</li>
+          <li>Send a test email to yourself and click the links <b>in the email you receive</b>.</li>
         </ol>
       </div>
 
       <div class="pane" id="p-classic">
         <ol class="steps">
           <li>Press <b>Copy signature</b> above.</li>
-          <li>In Outlook, click <b>File &#8594; Options &#8594; Mail</b>, then the <b>Signatures&#8230;</b> button.</li>
+          <li><b>Turn dark mode OFF first:</b> <b>File &#8594; Office Account &#8594; Office Theme</b>, choose <b>White</b> or <b>Colorful</b>. You can switch back after saving.</li>
+          <li>Click <b>File &#8594; Options &#8594; Mail</b>, then the <b>Signatures&#8230;</b> button.</li>
           <li>Click <b>New</b>, type <b>Orion</b>, click <b>OK</b>.</li>
           <li>Click in the <b>Edit signature</b> box and press <kbd>Ctrl</kbd> + <kbd>V</kbd>.</li>
           <li>On the right, set <b>New messages</b> and <b>Replies/forwards</b> to <b>Orion</b>.</li>
@@ -180,6 +182,8 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
         </ol>
       </div>
 
+      <div class="note"><b>Signature came out white?</b> Outlook was in dark mode when you pasted. Delete it, turn dark mode off, paste again, save.<br><br>
+        <b>Links won't open when you click them?</b> While you're writing an email (or in the signature editor), Outlook needs <kbd>Ctrl</kbd> + click. The person you send it to just clicks once.</div>
       <div class="note"><b>Don't edit or resize it after pasting.</b> If something looks wrong, change your details on this page and copy again. Some people will see "Click to download pictures" the first time you email them. That's normal and the text still shows.</div>
     </div>
   </div>
@@ -196,6 +200,13 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
   function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   function tel(n){ var d = n.replace(/[^\d+]/g,''); if (d.charAt(0)==='0') d = '+44' + d.slice(1); return d; }
   function val(k){ return F[k].value.trim(); }
+  // Show UK numbers typed without spaces (e.g. +447923913445) as 07923 913445
+  function pretty(n){
+    if (/\s/.test(n)) return n;
+    var d = n.replace(/[^\d+]/g,'');
+    if (d.indexOf('+44') === 0) d = '0' + d.slice(3);
+    return /^0\d{10}$/.test(d) ? d.slice(0,5) + ' ' + d.slice(5) : n;
+  }
 
   var LBL = 'font-family:Consolas,\'Courier New\',monospace;font-size:10px;color:#1E90FF;';
   var TXT = 'color:#E8EEF6;text-decoration:none;';
@@ -208,8 +219,8 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
     var name = val('name') || 'Your Name', title = val('title') || 'Job title';
     var email = val('email'), mob = val('mobile'), off = val('office'), li = val('linkedin');
     var rows = [];
-    if (mob) rows.push(line('M', '<a href="tel:'+esc(tel(mob))+'" style="'+TXT+'">'+esc(mob)+'</a>'));
-    if (off) rows.push(line('T', '<a href="tel:'+esc(tel(off))+'" style="'+TXT+'">'+esc(off)+'</a>'));
+    if (mob) rows.push(line('M', '<a href="tel:'+esc(tel(mob))+'" style="'+TXT+'">'+esc(pretty(mob))+'</a>'));
+    if (off) rows.push(line('T', '<a href="tel:'+esc(tel(off))+'" style="'+TXT+'">'+esc(pretty(off))+'</a>'));
     if (email) rows.push(line('E', '<a href="mailto:'+esc(email)+'" style="'+TXT+'">'+esc(email)+'</a>'));
     var web = line('W', '<a href="https://orionmis.co.uk" style="'+TXT+'">orionmis.co.uk</a>');
     if (/^https?:\/\/([a-z]+\.)?linkedin\.com\//i.test(li)) web += '&nbsp;&nbsp;' + line('IN', '<a href="'+esc(li)+'" style="'+TXT+'">LinkedIn</a>');
@@ -241,8 +252,8 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
 
   function buildText(){
     var out = [val('name') || 'Your Name', (val('title') || 'Job title') + ' | Orion MIS'];
-    if (val('mobile')) out.push('M: ' + val('mobile'));
-    if (val('office')) out.push('T: ' + val('office'));
+    if (val('mobile')) out.push('M: ' + pretty(val('mobile')));
+    if (val('office')) out.push('T: ' + pretty(val('office')));
     if (val('email')) out.push('E: ' + val('email'));
     out.push('orionmis.co.uk');
     return out.join('\n');
@@ -276,10 +287,10 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
       navigator.clipboard.write([new ClipboardItem({
         'text/html': new Blob([html], {type:'text/html'}),
         'text/plain': new Blob([buildText()], {type:'text/plain'})
-      })]).then(function(){ flash('Copied. Now paste it into Outlook (step 03).'); },
-               function(){ flash(selectionCopy($('sig').firstChild) ? 'Copied. Now paste it into Outlook (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.'); });
+      })]).then(function(){ flash('Copied. Turn Outlook dark mode OFF, then paste (step 03).'); },
+               function(){ flash(selectionCopy($('sig').firstChild) ? 'Copied. Turn Outlook dark mode OFF, then paste (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.'); });
     } else {
-      flash(selectionCopy($('sig').firstChild) ? 'Copied. Now paste it into Outlook (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.');
+      flash(selectionCopy($('sig').firstChild) ? 'Copied. Turn Outlook dark mode OFF, then paste (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.');
     }
   });
 
