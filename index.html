@@ -134,6 +134,7 @@ body{padding-top:calc(var(--nav-h) + 34px)}
 .hero-stat{border-left:4px solid var(--o-acc,#3AA0FF);padding-left:14px}
 .hero-stat b{display:block;font-family:var(--o-display,var(--sans));font-weight:700;letter-spacing:-.02em;font-size:clamp(28px,3.2vw,42px);line-height:.95;color:#F4F7FC;white-space:nowrap}
 .hero-stat small{display:block;margin-top:8px;font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--o-acc,#3AA0FF)}
+.hero-stat small.hero-stat-note{margin-top:4px;color:#DCE4F2;text-shadow:0 1px 8px rgba(6,10,22,.9)}
 .hero-proof{display:flex;gap:8px;flex-wrap:wrap}
 .hero-proof span{border:1px solid rgba(150,180,230,.18);background:rgba(16,28,54,.8);border-radius:999px;padding:6px 12px;font-family:var(--o-mono,var(--mono));font-size:12px;letter-spacing:.06em;color:#F4F7FC}
 .hero-cap{position:absolute;right:36px;bottom:24px;z-index:2;font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#C9D3E6;text-decoration:none;border:1px solid rgba(150,180,230,.25);background:rgba(6,10,22,.6);backdrop-filter:blur(6px);padding:8px 14px;border-radius:999px}
@@ -756,7 +757,7 @@ tr:last-child td{border-bottom:none}
       <div class="hero-stats">
         <div class="hero-stat"><b>20,000</b><small>Parcels / hour · single line</small></div>
         <div class="hero-stat"><b>200 mm</b><small>Gap between parcels</small></div>
-        <div class="hero-stat"><b>Per parcel</b><small>Or per month · or buy</small></div>
+        <div class="hero-stat"><b>3 ways to buy</b><small>Per parcel · monthly · outright</small><small class="hero-stat-note">No capex on per parcel or monthly</small></div>
       </div>
       <div class="hero-proof">
         <span>WCS included</span><span>SCADA included</span><span>24-month warranty</span><span>15-minute repair target</span>
