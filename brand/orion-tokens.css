@@ -1,0 +1,105 @@
+/* ==========================================================================
+   ORION — British Technology House · brand tokens
+   Source of truth: brochure/Orion - British Technology House - Brochure.html
+   (Nov 2026). Every Orion surface — website, brochures, signatures, decks,
+   proposals — should pull colour, type and texture from here.
+
+   Fonts (load once per page):
+   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+   ========================================================================== */
+
+:root {
+  /* ---- Surfaces: near-black navy, stepped up for depth ---- */
+  --o-ink:    #060A16;   /* page background */
+  --o-navy:   #0B1428;   /* raised band */
+  --o-panel:  #101C36;   /* cards, tables */
+  --o-line:   rgba(150, 180, 230, .18);  /* hairlines, grid, borders */
+
+  /* ---- Text ---- */
+  --o-white:  #F4F7FC;   /* headings, key numbers */
+  --o-text:   #C9D3E6;   /* body */
+  --o-lead:   #DCE4F2;   /* lead paragraphs */
+  --o-soft:   #8592AD;   /* captions, "them" column, footers */
+
+  /* ---- Accent: one blue, used sparingly ---- */
+  --o-acc:      #3AA0FF; /* the highlight word, stat rules, labels, CTA */
+  --o-acc-wash: rgba(58, 160, 255, .10);
+  --o-acc-edge: rgba(58, 160, 255, .50);
+  --o-acc2:     #7CF3D0; /* reserve: live/OK states only, never decoration */
+
+  /* ---- Type ---- */
+  --o-display: "Space Grotesk", system-ui, sans-serif;  /* h1–h3, big numbers */
+  --o-body:    "Inter", system-ui, -apple-system, sans-serif;
+  --o-mono:    "IBM Plex Mono", ui-monospace, monospace;  /* labels, captions, chips */
+
+  --o-track-display: -.02em;  /* tight headings */
+  --o-track-mono:    .14em;   /* wide uppercase labels */
+
+  /* ---- Geometry ---- */
+  --o-radius-card: 12px;
+  --o-radius-img:  10px;
+  --o-grid-size:   46px;      /* blueprint grid (12 mm on A4) */
+  --o-gutter:      clamp(16px, 4vw, 56px);
+}
+
+/* ==========================================================================
+   Signature moves — these five things ARE the "tech house" feeling.
+   ========================================================================== */
+
+/* 1. Blueprint grid behind content */
+.o-grid-bg {
+  position: absolute; inset: 0; pointer-events: none; opacity: .35;
+  background-image:
+    linear-gradient(var(--o-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--o-line) 1px, transparent 1px);
+  background-size: var(--o-grid-size) var(--o-grid-size);
+}
+
+/* 2. Mono uppercase labels, with the blue tick */
+.o-label {
+  font-family: var(--o-mono); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: var(--o-track-mono); color: var(--o-acc);
+}
+.o-label--tick { display: inline-flex; align-items: center; gap: .6em; color: var(--o-white); }
+.o-label--tick::before { content: ""; width: 4px; height: 1.4em; background: var(--o-acc); }
+
+/* 3. Headline with one blue phrase:  <h2>Integrators resell. <span>We build.</span></h2> */
+.o-h1, .o-h2, .o-h3, .o-num {
+  font-family: var(--o-display); color: var(--o-white);
+  letter-spacing: var(--o-track-display); font-weight: 700;
+}
+.o-h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); line-height: 1.02; }
+.o-h2 { font-size: clamp(2rem, 4vw, 3rem);    line-height: 1.06; }
+.o-h3 { font-size: 1.15rem; font-weight: 600; }
+.o-h1 span, .o-h2 span { color: var(--o-acc); }
+
+/* 4. Big-number stat with a blue left rule */
+.o-stat { border-left: 4px solid var(--o-acc); padding-left: 14px; }
+.o-stat .o-num  { font-size: clamp(2rem, 4vw, 3rem); line-height: .9; }
+.o-stat .o-unit { font-family: var(--o-mono); font-size: .7rem; letter-spacing: var(--o-track-mono);
+                  text-transform: uppercase; color: var(--o-acc); margin-top: 8px; }
+
+/* 5. Photography shaded into the ink, never boxed on white */
+.o-shade-l { background: linear-gradient(90deg, rgba(6,10,22,.96) 0%, rgba(6,10,22,.82) 38%, rgba(6,10,22,.15) 75%, rgba(6,10,22,0) 100%); }
+.o-shade-b { background: linear-gradient(0deg,  rgba(6,10,22,.97) 0%, rgba(6,10,22,.6) 40%, rgba(6,10,22,.05) 75%); }
+
+/* ---- Supporting components ---- */
+.o-card {
+  background: linear-gradient(160deg, rgba(20,36,70,.9), rgba(11,20,40,.9));
+  border: 1px solid var(--o-line); border-radius: var(--o-radius-card); padding: 20px 24px;
+}
+.o-card--hot { border-color: var(--o-acc); background: linear-gradient(160deg, rgba(30,70,140,.75), rgba(11,20,40,.95)); }
+
+.o-chip {
+  display: inline-block; border: 1px solid var(--o-line); background: rgba(16,28,54,.8);
+  color: var(--o-white); padding: 6px 12px; border-radius: 99px;
+  font-family: var(--o-mono); font-size: .75rem; letter-spacing: .06em;
+}
+.o-chip--hot { border-color: var(--o-acc); color: var(--o-acc); }
+
+.o-caption { font-family: var(--o-mono); font-size: .68rem; color: var(--o-soft); letter-spacing: .04em; text-transform: uppercase; }
+
+/* Us-vs-them table: Orion column is the lit one */
+.o-vs td.us { color: var(--o-white); background: var(--o-acc-wash);
+              border-left: 1px solid var(--o-acc-edge); border-right: 1px solid var(--o-acc-edge); }
+.o-vs td.them { color: var(--o-soft); }

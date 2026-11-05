@@ -12,7 +12,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Orion Courier Sortation Builder","url":"https://orionmis.co.uk/courier-builder.html","applicationCategory":"DesignApplication","operatingSystem":"Web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"GBP"},"publisher":{"@id":"https://orionmis.co.uk/#org"},"description":"Interactive parcel sortation layout tool for courier and logistics operations: drag conveyors and Helix sorter modules onto a canvas, see live throughput and an indicative ROM budget."}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/brand/orion-tokens.css">
 <script src="https://unpkg.com/konva@9.3.0/konva.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
@@ -260,7 +261,8 @@ body.guide-collapsed .guide-tip,body.guide-collapsed .guide-nav,body.guide-colla
 .chat-inrow textarea:focus{border-color:var(--line2)}
 .chat-send{background:linear-gradient(90deg,#0066CC,#00A8CC);border:none;border-radius:10px;color:#00111d;font-weight:700;font-size:13px;padding:0 16px;cursor:pointer}
 .chat-send:disabled{opacity:.4;cursor:default}
-</style></head>
+</style><link rel="stylesheet" href="/brand/site-bridge.css">
+</head>
 <body>
 
 <header class="topbar">
@@ -2248,7 +2250,7 @@ function exportQuote(){
   const html = `<!DOCTYPE html><html lang="en-GB"><head><meta charset="UTF-8">
 <title>Orion MIS — ${escapeHtml(project)} · ROM Budget</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
 :root{--ink:#0e1626;--ink2:#2a3447;--mute:#5b6878;--soft:#8a93a3;--line:#e4e8ee;--line2:#cfd6df;--accent:#0066CC;--accent-soft:#e7f0fb;--amber:#d97706;--mono:"JetBrains Mono",monospace;--serif:"DM Serif Display",serif;--sans:"Inter",sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}

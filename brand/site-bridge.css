@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Website bridge — makes orionmis.co.uk pick up the tech-house look
+   without rewriting 42 pages by hand.
+
+   How it works: every page already styles itself with a handful of CSS
+   variables (--blue, --cyan, --sans, --mono, --serif …). Load this file
+   AFTER each page's own <style> and those variables point at the brand
+   tokens instead, so the whole site shifts in one change.
+
+   Load order on each page:
+     1. Google Fonts link (Space Grotesk + IBM Plex Mono + Inter)
+     2. /brand/orion-tokens.css
+     3. page's own <style>
+     4. /brand/site-bridge.css     <-- this file
+   ========================================================================== */
+
+:root {
+  /* Usage counts on index.html today:
+       --cyan  55 uses  (highlight words, links, labels)
+       --blue  31 uses  (buttons, rules, accents)
+       --serif  3 uses  (italic DM Serif highlight word in headings)
+       --sans  24 uses  --mono 45 uses
+       --green  6 uses  (live / OK status)                                  */
+
+  --cyan:  var(--o-acc);      /* cyan becomes the brochure blue        */
+  --blue:  var(--o-acc);      /* blue becomes the same brochure blue   */
+  --green: var(--o-acc2);     /* live/OK status uses the brochure mint */
+  --sans:  var(--o-body);     /* body text stays Inter                 */
+  --mono:  var(--o-mono);     /* labels switch to IBM Plex Mono        */
+  --serif: var(--o-display);  /* highlight word uses the heading font  */
+}
+
+/* Headline highlight: the brochure lights one phrase in blue with the same
+   font and weight as the rest of the heading. The 31 other pages each style
+   heading <em> as italic (often serif) with rules of varying specificity, so
+   this shim uses !important until those pages are rebuilt like index.html.
+   Light/paper sections get a deeper blue so the phrase keeps its contrast. */
+h1 em, h2 em, h3 em, h4 em {
+  font-family: inherit !important; font-style: normal !important;
+  font-weight: inherit !important; letter-spacing: inherit !important;
+  color: var(--o-acc) !important;
+}
+.light h1 em, .light h2 em, .light h3 em, .light h4 em { color: #1A73D9 !important; }
+
+/* Headings move to the display face */
+h1, h2, h3 { font-family: var(--o-display); letter-spacing: var(--o-track-display); }
