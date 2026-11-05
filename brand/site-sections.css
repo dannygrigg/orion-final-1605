@@ -70,3 +70,61 @@
       var(--hero-img, none) 70% center / cover no-repeat;
   }
 }
+
+/* ==========================================================================
+   Stage 3 — everything below the hero.
+   Dark bands = brochure (ink + blueprint grid). Light sections = engineering
+   drawing paper: the same grid in faint blue on the off-white, flat hairline
+   cards, mono labels. Same specificity as each page's rules, loaded later.
+   ========================================================================== */
+
+/* Ticker bar: brochure navy with mono text instead of the cyan gradient */
+.top-banner { background: var(--o-navy, #0B1428); color: var(--o-text, #C9D3E6); border-bottom: 1px solid var(--o-line, rgba(150,180,230,.18)); font-weight: 500; }
+.tb-item a { color: var(--o-acc, #3AA0FF); border-bottom-color: rgba(58,160,255,.45); }
+.tb-sep { color: var(--o-acc, #3AA0FF); }
+
+/* Light sections: drawing-paper grid */
+.light, .faq-section {
+  background-image:
+    linear-gradient(rgba(26,115,217,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,115,217,.055) 1px, transparent 1px);
+  background-size: var(--o-grid-size, 46px) var(--o-grid-size, 46px);
+}
+.light .eyebrow, .faq-section .eyebrow { color: #1A73D9; }
+
+/* Cards on paper: flat, hairline, brochure radius */
+.feat-card, .faq, .product-card {
+  border-radius: var(--o-radius-card, 12px); border-color: #D9DEE8; box-shadow: none;
+}
+.feat-card:hover, .product-card:hover { border-color: #1A73D9; box-shadow: none; }
+.feat-card .tag, .product-card .tag { font-family: var(--o-mono); letter-spacing: var(--o-track-mono, .14em); color: #1A73D9; }
+.faq summary { font-family: var(--o-display); font-weight: 600; letter-spacing: -.01em; }
+.faq summary::after { color: #1A73D9; }
+.case-stat b { font-family: var(--o-display); font-weight: 700; letter-spacing: -.02em; color: #1A73D9; }
+
+/* Cards on dark: brochure card */
+.step, .reason {
+  background: linear-gradient(160deg, rgba(20,36,70,.9), rgba(11,20,40,.9));
+  border: 1px solid var(--o-line, rgba(150,180,230,.18)); border-radius: var(--o-radius-card, 12px);
+}
+.step-num, .reason-num {
+  font-family: var(--o-mono); font-size: 13px; font-weight: 500; letter-spacing: var(--o-track-mono, .14em);
+  color: var(--o-acc, #3AA0FF);
+}
+
+/* Spec pills / chips → brochure chips */
+.spec-pill { font-family: var(--o-mono); letter-spacing: .06em; border-radius: 99px; }
+
+/* Final call-to-action band: ink + grid */
+.final { background: var(--o-ink, #060A16); }
+.final::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35;
+  background-image:
+    linear-gradient(rgba(150,180,230,.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150,180,230,.18) 1px, transparent 1px);
+  background-size: var(--o-grid-size, 46px) var(--o-grid-size, 46px);
+}
+.final::after { display: none; }
+
+/* Footer */
+.footer { background: var(--o-ink, #060A16); border-top: 1px solid var(--o-line, rgba(150,180,230,.18)); }
