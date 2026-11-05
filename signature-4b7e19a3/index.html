@@ -138,12 +138,11 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
       <div class="pane on" id="p-new">
         <ol class="steps">
           <li>Press <b>Copy signature</b> above.</li>
-          <li><b>Turn dark mode OFF first.</b> In Outlook, click the <b>gear icon</b> (top right) &#8594; <b>General &#8594; Appearance</b> and switch <b>Dark mode</b> off. (If you skip this, Outlook flips the colours and the signature saves white.)</li>
-          <li>Still in <b>Settings</b>, go to <b>Account &#8594; Signatures</b>.</li>
+          <li>In Outlook, click the <b>gear icon</b> (top right) to open <b>Settings</b>, then <b>Account &#8594; Signatures</b>.</li>
           <li>Click <b>+ New signature</b> and name it <b>Orion</b>.</li>
           <li>Click inside the big empty box and press <kbd>Ctrl</kbd> + <kbd>V</kbd> (<kbd>&#8984;</kbd> + <kbd>V</kbd> on a Mac).</li>
           <li>Under <b>Select default signatures</b>, choose <b>Orion</b> for <b>For new messages</b> and for <b>For replies/forwards</b>.</li>
-          <li>Click <b>Save</b>. Now you can switch dark mode back on. The signature stays dark.</li>
+          <li>Click <b>Save</b>.</li>
           <li>Send a test email to yourself and click the links <b>in the email you receive</b>.</li>
         </ol>
       </div>
@@ -151,7 +150,6 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
       <div class="pane" id="p-classic">
         <ol class="steps">
           <li>Press <b>Copy signature</b> above.</li>
-          <li><b>Turn dark mode OFF first:</b> <b>File &#8594; Office Account &#8594; Office Theme</b>, choose <b>White</b> or <b>Colorful</b>. You can switch back after saving.</li>
           <li>Click <b>File &#8594; Options &#8594; Mail</b>, then the <b>Signatures&#8230;</b> button.</li>
           <li>Click <b>New</b>, type <b>Orion</b>, click <b>OK</b>.</li>
           <li>Click in the <b>Edit signature</b> box and press <kbd>Ctrl</kbd> + <kbd>V</kbd>.</li>
@@ -180,9 +178,10 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
           <li>Set <b>Signature defaults</b> to <b>Orion</b> for new emails and replies.</li>
           <li>Scroll to the very bottom and click <b>Save Changes</b>.</li>
         </ol>
+        <div class="note"><b>Gmail sometimes refuses pasted pictures in signatures.</b> If your name and contact lines come out blank in Gmail, use Outlook for work email, or ask Danny.</div>
       </div>
 
-      <div class="note"><b>Signature came out white?</b> Outlook was in dark mode when you pasted. Delete it, turn dark mode off, paste again, save.<br><br>
+      <div class="note"><b>Always dark.</b> Every part of this signature is a picture, so no email program can recolour it, whether you or the customer use dark mode or light mode.<br><br>
         <b>Links won't open when you click them?</b> While you're writing an email (or in the signature editor), Outlook needs <kbd>Ctrl</kbd> + click. The person you send it to just clicks once.</div>
       <div class="note"><b>Don't edit or resize it after pasting.</b> If something looks wrong, change your details on this page and copy again. Some people will see "Click to download pictures" the first time you email them. That's normal and the text still shows.</div>
     </div>
@@ -208,44 +207,109 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
     return /^0\d{10}$/.test(d) ? d.slice(0,5) + ' ' + d.slice(5) : n;
   }
 
-  var LBL = 'font-family:Consolas,\'Courier New\',monospace;font-size:10px;color:#1E90FF;';
-  var TXT = 'color:#E8EEF6;text-decoration:none;';
-  function line(label, inner){ return '<span style="'+LBL+'">'+label+'&nbsp;</span>'+inner; }
+  /* ---------- DARK-LOCK ----------
+     Email programs recolour text and backgrounds in dark mode, but never pictures.
+     So every part of the signature is a picture: name, contact lines and footer are
+     drawn here on a canvas (website fonts, 2x for sharp screens); the logo and tiles
+     are hosted. Each contact line is its own picture with its own link. */
+  var DPR = 2, BG = '#050B14', BLUE = '#1E90FF', WHITE = '#F7FAFF', LIGHT = '#E8EEF6', GREY = '#5E6B7E';
+  var DISP = '"Space Grotesk", Arial, sans-serif', MONO = '"IBM Plex Mono", Consolas, monospace', SANS = 'Inter, Arial, sans-serif';
+  var IMGSTYLE = 'display:block;border:0;outline:none;color:#ffffff;font-family:Arial,sans-serif;font-size:12px;font-weight:bold;';
+
+  function paint(w, h, draw){
+    var c = document.createElement('canvas'); c.width = w * DPR; c.height = h * DPR;
+    var x = c.getContext('2d'); x.scale(DPR, DPR);
+    x.fillStyle = BG; x.fillRect(0, 0, w, h); x.textBaseline = 'alphabetic';
+    draw(x); return c.toDataURL('image/png');
+  }
+  function text(x, s, X, Y, font, color, spacing){
+    x.font = font; x.fillStyle = color;
+    if ('letterSpacing' in x) x.letterSpacing = (spacing || 0) + 'px';
+    x.fillText(s, X, Y);
+    var w = x.measureText(s).width;
+    if ('letterSpacing' in x) x.letterSpacing = '0px';
+    return w;
+  }
+  // Largest font size (down to min) at which s fits in maxW
+  function fit(x, s, weight, size, min, family, maxW, spacing){
+    for (var px = size; px > min; px--) {
+      x.font = weight + ' ' + px + 'px ' + family;
+      if ('letterSpacing' in x) x.letterSpacing = (spacing || 0) + 'px';
+      var ok = x.measureText(s).width <= maxW;
+      if ('letterSpacing' in x) x.letterSpacing = '0px';
+      if (ok) return px;
+    }
+    return min;
+  }
+  function pic(src, w, h, alt, href){
+    var img = '<img src="'+src+'" width="'+w+'" height="'+h+'" alt="'+esc(alt)+'" style="'+IMGSTYLE+'width:'+w+'px;height:'+h+'px;">';
+    return href ? '<a href="'+esc(href)+'" style="text-decoration:none;">'+img+'</a>' : img;
+  }
   function tile(img, href, alt){
-    return '<td width="200" style="width:200px;padding:0;"><a href="'+href+'" style="text-decoration:none;"><img src="'+IMG+img+'" width="200" height="110" alt="'+alt+'" style="display:block;width:200px;height:110px;border:0;color:#ffffff;font-family:Arial,sans-serif;font-size:12px;font-weight:bold;"></a></td>';
+    return '<td width="200" style="width:200px;padding:0;font-size:0;line-height:0;">'+pic(IMG+img, 200, 110, alt, href)+'</td>';
   }
 
   function build(){
     var name = val('name') || 'Your Name', title = val('title') || 'Job title';
     var email = val('email'), mob = val('mobile'), off = val('office'), li = val('linkedin');
-    var rows = [];
-    if (mob) rows.push(line('M', '<a href="tel:'+esc(tel(mob))+'" style="'+TXT+'">'+esc(pretty(mob))+'</a>'));
-    if (off) rows.push(line('T', '<a href="tel:'+esc(tel(off))+'" style="'+TXT+'">'+esc(pretty(off))+'</a>'));
-    if (email) rows.push(line('E', '<a href="mailto:'+esc(email)+'" style="'+TXT+'">'+esc(email)+'</a>'));
-    var web = line('W', '<a href="https://orionmis.co.uk" style="'+TXT+'">orionmis.co.uk</a>');
-    if (/^https?:\/\/([a-z]+\.)?linkedin\.com\//i.test(li)) web += '&nbsp;&nbsp;' + line('IN', '<a href="'+esc(li)+'" style="'+TXT+'">LinkedIn</a>');
-    rows.push(web);
 
+    var rows = [];
+    if (mob) rows.push({k:'M', v:pretty(mob), href:'tel:'+tel(mob)});
+    if (off) rows.push({k:'T', v:pretty(off), href:'tel:'+tel(off)});
+    if (email) rows.push({k:'E', v:email, href:'mailto:'+email});
+    rows.push({k:'W', v:'orionmis.co.uk', href:'https://orionmis.co.uk'});
+    if (/^https?:\/\/([a-z]+\.)?linkedin\.com\//i.test(li)) rows.push({k:'IN', v:'LinkedIn', href:li});
+
+    var LW = 340, RW = 260, NAMEH = 60, ROWH = 20;
+    var content = NAMEH + rows.length * ROWH;
+    var H = Math.max(150, content + 10);
+    var top = Math.floor((H - content) / 2), bottom = H - content - top;
+
+    var titleLine = ('— ' + title + ' · Orion MIS').toUpperCase();
+    var nameSrc = paint(LW, NAMEH + top, function(x){
+      var px = fit(x, name, '700', 26, 15, DISP, LW - 40, -0.4);
+      text(x, name, 26, top + 30, '700 ' + px + 'px ' + DISP, WHITE, -0.4);
+      var tp = fit(x, titleLine, '500', 11, 7, MONO, LW - 40, 2);
+      text(x, titleLine, 26, top + 49, '500 ' + tp + 'px ' + MONO, BLUE, 2);
+    });
+
+    var left = pic(nameSrc, LW, NAMEH + top, name + ' - ' + title + ', Orion MIS', 'https://orionmis.co.uk');
+    rows.forEach(function(r){
+      var src = paint(LW, ROWH, function(x){
+        text(x, r.k, 26, 14, '600 10px ' + MONO, BLUE, 0.5);
+        var vp = fit(x, r.v, '500', 13, 9, SANS, LW - 60, 0);
+        text(x, r.v, 48, 14, '500 ' + vp + 'px ' + SANS, LIGHT, 0);
+      });
+      left += pic(src, LW, ROWH, r.k + ' ' + r.v, r.href);
+    });
+    if (bottom > 0) left += pic(paint(LW, bottom, function(){}), LW, bottom, '', null);
+
+    var right = pic(IMG + 'sig-w-logo.jpg', RW, 150, 'ORION - British Engineering', 'https://orionmis.co.uk');
+    if (H > 150) right += pic(paint(RW, H - 150, function(){}), RW, H - 150, '', null);
+
+    var footSrc = paint(600, 58, function(x){
+      x.fillStyle = '#13213A'; x.fillRect(0, 0, 600, 1);
+      var w = text(x, 'FACTORY', 26, 20, '600 9px ' + MONO, BLUE, 0.6);
+      text(x, 'UNIT 2, 1 FORT ROAD, LITTLEHAMPTON BN17 7QU', 26 + w + 10, 20, '500 9px ' + MONO, GREY, 0.6);
+      w = text(x, 'HEAD OFFICE', 26, 34, '600 9px ' + MONO, BLUE, 0.6);
+      text(x, '1 FONTWELL AVE, EASTERGATE, CHICHESTER PO20 3RU', 26 + w + 10, 34, '500 9px ' + MONO, GREY, 0.6);
+      text(x, 'ORION MIS LTD · REGISTERED IN ENGLAND & WALES NO. 11735049 · REGISTERED OFFICE AS HEAD OFFICE', 26, 48, '500 9px ' + MONO, GREY, 0.2);
+    });
+
+    var cell = 'padding:0;font-size:0;line-height:0;';
     return ''
-    + '<table cellpadding="0" cellspacing="0" border="0" width="600" bgcolor="#050B14" style="width:600px;border-collapse:collapse;background:#050B14;font-family:Arial,Helvetica,sans-serif;">'
+    + '<table cellpadding="0" cellspacing="0" border="0" width="600" bgcolor="#050B14" style="width:600px;border-collapse:collapse;background:#050B14;">'
     +  '<tr>'
-    +   '<td width="340" valign="middle" style="width:340px;padding:14px 0 14px 26px;">'
-    +    '<div style="font-size:26px;line-height:28px;font-weight:bold;letter-spacing:-0.5px;color:#F7FAFF;">'+esc(name)+'</div>'
-    +    '<div style="font-family:Consolas,\'Courier New\',monospace;font-size:11px;letter-spacing:2px;color:#1E90FF;padding-top:6px;text-transform:uppercase;">&#8212;&nbsp;'+esc(title)+'&nbsp;&#183;&nbsp;Orion&nbsp;MIS</div>'
-    +    '<div style="height:12px;line-height:12px;font-size:0;">&nbsp;</div>'
-    +    '<div style="font-size:13px;line-height:21px;color:#E8EEF6;">'+rows.join('<br>')+'</div>'
-    +   '</td>'
-    +   '<td width="260" valign="top" style="width:260px;padding:0;"><a href="https://orionmis.co.uk" style="text-decoration:none;"><img src="'+IMG+'sig-w-logo.jpg" width="260" height="150" alt="ORION - British Engineering" style="display:block;width:260px;height:150px;border:0;color:#ffffff;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;"></a></td>'
+    +   '<td width="'+LW+'" valign="top" style="width:'+LW+'px;'+cell+'">'+left+'</td>'
+    +   '<td width="'+RW+'" valign="top" style="width:'+RW+'px;'+cell+'">'+right+'</td>'
     +  '</tr>'
-    +  '<tr><td colspan="2" style="padding:0;"><table cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;border-collapse:collapse;"><tr>'
+    +  '<tr><td colspan="2" style="'+cell+'"><table cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;border-collapse:collapse;"><tr>'
     +    tile('sig-w-helix.jpg',   'https://orionmis.co.uk/call', 'Helix 20,000 parcels/hr per line - watch it run')
     +    tile('sig-w-factory.jpg', 'https://orionmis.co.uk/call', 'See it built - book a factory visit')
     +    tile('sig-w-ppp.jpg',     'https://orionmis.co.uk/sortation-system-finance', 'Pay per parcel - get your price')
     +  '</tr></table></td></tr>'
-    +  '<tr><td colspan="2" style="padding:10px 26px 12px 26px;border-top:1px solid #13213A;font-family:Consolas,\'Courier New\',monospace;font-size:9px;line-height:14px;color:#5E6B7E;">'
-    +    '<span style="color:#1E90FF;">FACTORY</span>&nbsp; UNIT 2, 1 FORT ROAD, LITTLEHAMPTON BN17 7QU<br>'
-    +    '<span style="color:#1E90FF;">HEAD OFFICE</span>&nbsp; 1 FONTWELL AVE, EASTERGATE, CHICHESTER PO20 3RU<br>'
-    +    'ORION MIS LTD &#183; REGISTERED IN ENGLAND &amp; WALES NO. 11735049 &#183; REGISTERED OFFICE AS HEAD OFFICE'
+    +  '<tr><td colspan="2" style="'+cell+'">'
+    +    pic(footSrc, 600, 58, 'Factory: Unit 2, 1 Fort Road, Littlehampton BN17 7QU. Head office: 1 Fontwell Ave, Eastergate, Chichester PO20 3RU. Orion MIS Ltd, registered in England and Wales no. 11735049.', null)
     +  '</td></tr>'
     + '</table>';
   }
@@ -269,6 +333,15 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
   function render(){ validate(); $('sig').innerHTML = build(); }
   Object.keys(F).forEach(function(k){ F[k].addEventListener('input', render); });
   render();
+  // Canvas only uses web fonts once they've loaded, so redraw when they arrive
+  if (document.fonts && document.fonts.load) {
+    Promise.all([
+      document.fonts.load('700 26px "Space Grotesk"'),
+      document.fonts.load('500 11px "IBM Plex Mono"'),
+      document.fonts.load('600 10px "IBM Plex Mono"'),
+      document.fonts.load('500 13px Inter')
+    ]).then(render, render);
+  }
 
   function flash(msg){ var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(flash.t); flash.t = setTimeout(function(){ t.classList.remove('show'); }, 4000); }
 
@@ -287,10 +360,10 @@ footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-fa
       navigator.clipboard.write([new ClipboardItem({
         'text/html': new Blob([html], {type:'text/html'}),
         'text/plain': new Blob([buildText()], {type:'text/plain'})
-      })]).then(function(){ flash('Copied. Turn Outlook dark mode OFF, then paste (step 03).'); },
-               function(){ flash(selectionCopy($('sig').firstChild) ? 'Copied. Turn Outlook dark mode OFF, then paste (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.'); });
+      })]).then(function(){ flash('Copied. Now paste it into Outlook (step 03).'); },
+               function(){ flash(selectionCopy($('sig').firstChild) ? 'Copied. Now paste it into Outlook (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.'); });
     } else {
-      flash(selectionCopy($('sig').firstChild) ? 'Copied. Turn Outlook dark mode OFF, then paste (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.');
+      flash(selectionCopy($('sig').firstChild) ? 'Copied. Now paste it into Outlook (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.');
     }
   });
 
