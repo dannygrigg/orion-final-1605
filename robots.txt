@@ -39,6 +39,7 @@ Disallow: /jess-f-
 Disallow: /live-
 Disallow: /track-
 Disallow: /daily-report-worker/
+Disallow: /signature-
 
 User-agent: *
 Allow: /
@@ -64,6 +65,7 @@ Disallow: /jess-f-
 Disallow: /live-
 Disallow: /track-
 Disallow: /daily-report-worker/
+Disallow: /signature-
 
 Sitemap: https://orionmis.co.uk/sitemap.xml
 # AI summary of this site: https://orionmis.co.uk/llms.txt

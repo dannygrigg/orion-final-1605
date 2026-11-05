@@ -41,3 +41,8 @@
 /track-180021fb/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store
+
+# Email signature builder - internal staff tool, keep out of every index.
+/signature-4b7e19a3/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-cache

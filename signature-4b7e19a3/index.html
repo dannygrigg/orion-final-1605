@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Email signature builder · Orion MIS</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050B14;--bg2:#07111F;--panel:#0B1626;--panel2:#0F1D31;
+  --text:#F7FAFF;--muted:rgba(247,250,255,.68);--soft:rgba(247,250,255,.45);
+  --line:rgba(255,255,255,.10);--line2:rgba(0,213,255,.28);
+  --blue:#1E90FF;--cyan:#00D5FF;--green:#32D583;--red:#F97066;
+  --sans:"Inter",system-ui,sans-serif;--disp:"Space Grotesk","Inter",sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1200px 600px at 80% -10%,rgba(30,144,255,.16),transparent 60%),var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55;min-height:100vh}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 24px 80px}
+header{display:flex;align-items:center;justify-content:space-between;padding-bottom:22px;border-bottom:1px solid var(--line)}
+header img{height:34px}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--soft)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:12px;margin:46px 0 14px}
+.eyebrow:before{content:"";width:34px;height:1px;background:var(--blue)}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.03em}
+h1 em{font-style:normal;color:var(--blue)}
+.lede{color:var(--muted);font-size:17px;max-width:640px;margin-top:16px}
+.grid{display:grid;grid-template-columns:380px 1fr;gap:26px;margin-top:40px;align-items:start}
+@media(max-width:960px){.grid{grid-template-columns:1fr}}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:24px}
+.step{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:6px}
+.card h2{font-family:var(--disp);font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:16px}
+label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}
+label span{color:var(--soft);font-weight:400}
+input{width:100%;background:#040A12;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--text);font:500 15px var(--sans);outline:none;transition:border-color .15s,box-shadow .15s}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,144,255,.22)}
+input.bad{border-color:var(--red)}
+.hint{font-size:12px;color:var(--soft);margin-top:5px}
+.previewbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;flex-wrap:wrap}
+.toggle{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.toggle button{background:none;border:0;color:var(--muted);font:600 12px var(--sans);padding:6px 14px;border-radius:999px;cursor:pointer}
+.toggle button.on{background:var(--blue);color:#fff}
+.stage{border-radius:14px;padding:28px;overflow-x:auto;transition:background .2s}
+.stage.light{background:#ffffff}.stage.dark{background:#1f1f1f}
+.mail-head{font:13px Arial,sans-serif;color:#555;border-bottom:1px solid #e5e5e5;padding-bottom:12px;margin-bottom:18px}
+.stage.dark .mail-head{color:#aaa;border-color:#333}
+.mail-body{font:14px Arial,sans-serif;color:#222;margin-bottom:22px}
+.stage.dark .mail-body{color:#ddd}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:14px 24px;font:700 15px var(--disp);cursor:pointer;transition:transform .12s,box-shadow .2s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--blue);color:#fff;box-shadow:0 10px 30px rgba(30,144,255,.35)}
+.btn.primary:hover{box-shadow:0 12px 40px rgba(30,144,255,.55)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--blue)}
+.toast{font:600 13px var(--sans);color:var(--green);align-self:center;opacity:0;transition:opacity .2s}
+.toast.show{opacity:1}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{background:#040A12;border:1px solid var(--line);color:var(--muted);font:600 13px var(--sans);padding:9px 16px;border-radius:999px;cursor:pointer}
+.tabs button.on{border-color:var(--blue);color:#fff;background:rgba(30,144,255,.14)}
+.pane{display:none}.pane.on{display:block}
+ol.steps{list-style:none;counter-reset:s}
+ol.steps li{counter-increment:s;position:relative;padding:10px 0 10px 46px;border-bottom:1px solid var(--line);color:var(--muted)}
+ol.steps li:last-child{border-bottom:0}
+ol.steps li:before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:10px;font-family:var(--mono);font-size:12px;color:var(--blue);border:1px solid var(--line2);border-radius:8px;padding:2px 7px}
+ol.steps b{color:var(--text)}
+kbd{font-family:var(--mono);font-size:12px;background:#040A12;border:1px solid var(--line);border-radius:6px;padding:1px 7px;color:var(--text)}
+.note{margin-top:16px;padding:14px 16px;border:1px solid var(--line2);border-radius:12px;background:rgba(0,213,255,.05);font-size:14px;color:var(--muted)}
+.note b{color:var(--text)}
+.full{grid-column:1/-1}
+footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="/images/orion-logo-white.png" alt="Orion">
+    <div class="tag">Internal tool · Staff only</div>
+  </header>
+
+  <div class="eyebrow">Email signature builder</div>
+  <h1>Your signature.<br><em>Done in a minute.</em></h1>
+  <p class="lede">Type your details, copy the signature, paste it into Outlook. The design, images and links are already set. You only add who you are.</p>
+
+  <div class="grid">
+    <!-- STEP 1 -->
+    <div class="card">
+      <div class="step">Step 01</div>
+      <h2>Your details</h2>
+      <label for="f-name">Full name</label>
+      <input id="f-name" autocomplete="name" placeholder="Beth Smith">
+      <label for="f-title">Job title</label>
+      <input id="f-title" autocomplete="organization-title" placeholder="Project Coordinator">
+      <label for="f-email">Email address</label>
+      <input id="f-email" type="email" autocomplete="email" placeholder="beth.smith@orionmis.co.uk">
+      <label for="f-mobile">Mobile <span>(optional)</span></label>
+      <input id="f-mobile" type="tel" autocomplete="tel" placeholder="07123 456789">
+      <label for="f-office">Office line <span>(optional)</span></label>
+      <input id="f-office" type="tel" value="+44 3333 355269">
+      <label for="f-linkedin">LinkedIn profile link <span>(optional)</span></label>
+      <input id="f-linkedin" type="url" placeholder="https://www.linkedin.com/in/your-name/">
+      <div class="hint">Leave a box empty and that line is left off.</div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="card">
+      <div class="step">Step 02</div>
+      <div class="previewbar">
+        <h2 style="margin:0">Preview and copy</h2>
+        <div class="toggle" role="group" aria-label="Preview background">
+          <button id="bg-light" class="on" type="button">Light inbox</button>
+          <button id="bg-dark" type="button">Dark inbox</button>
+        </div>
+      </div>
+      <div class="stage light" id="stage">
+        <div class="mail-head">To: customer@example.com<br>Subject: Following up</div>
+        <div class="mail-body">Hi James,<br><br>Thanks for your time today. Notes attached.<br><br>Kind regards,</div>
+        <div id="sig"></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" id="copy" type="button">Copy signature &#8594;</button>
+        <button class="btn ghost" id="copy-text" type="button">Copy text-only version</button>
+        <span class="toast" id="toast">Copied. Now paste it into Outlook (step 03).</span>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="card full">
+      <div class="step">Step 03</div>
+      <h2>Put it in your email</h2>
+      <div class="tabs" role="tablist">
+        <button class="on" data-pane="p-new" type="button">Outlook (new / web)</button>
+        <button data-pane="p-classic" type="button">Outlook classic (Windows)</button>
+        <button data-pane="p-phone" type="button">Phone</button>
+        <button data-pane="p-gmail" type="button">Gmail</button>
+      </div>
+
+      <div class="pane on" id="p-new">
+        <ol class="steps">
+          <li>Press <b>Copy signature</b> above.</li>
+          <li>In Outlook, click the <b>gear icon</b> (top right) to open <b>Settings</b>.</li>
+          <li>Go to <b>Account &#8594; Signatures</b>.</li>
+          <li>Click <b>+ New signature</b> and name it <b>Orion</b>.</li>
+          <li>Click inside the big empty box and press <kbd>Ctrl</kbd> + <kbd>V</kbd> (<kbd>&#8984;</kbd> + <kbd>V</kbd> on a Mac).</li>
+          <li>Under <b>Select default signatures</b>, choose <b>Orion</b> for <b>For new messages</b> and for <b>For replies/forwards</b>.</li>
+          <li>Click <b>Save</b>. Send a test email to yourself to check it.</li>
+        </ol>
+      </div>
+
+      <div class="pane" id="p-classic">
+        <ol class="steps">
+          <li>Press <b>Copy signature</b> above.</li>
+          <li>In Outlook, click <b>File &#8594; Options &#8594; Mail</b>, then the <b>Signatures&#8230;</b> button.</li>
+          <li>Click <b>New</b>, type <b>Orion</b>, click <b>OK</b>.</li>
+          <li>Click in the <b>Edit signature</b> box and press <kbd>Ctrl</kbd> + <kbd>V</kbd>.</li>
+          <li>On the right, set <b>New messages</b> and <b>Replies/forwards</b> to <b>Orion</b>.</li>
+          <li>Click <b>OK</b>, then <b>OK</b> again. Send a test email to yourself.</li>
+        </ol>
+        <div class="note"><b>Thin white lines between the tiles?</b> Classic Outlook sometimes adds them. Use the new Outlook or Outlook on the web instead (the toggle top-right of classic Outlook says <b>Try the new Outlook</b>). Both read the same signature.</div>
+      </div>
+
+      <div class="pane" id="p-phone">
+        <ol class="steps">
+          <li>On your computer, press <b>Copy text-only version</b> and email it to yourself. (Phone apps don't show the full design.)</li>
+          <li><b>Outlook app:</b> tap your profile picture &#8594; <b>Settings (gear)</b> &#8594; <b>Signature</b>.</li>
+          <li><b>iPhone Mail:</b> <b>Settings &#8594; Apps &#8594; Mail &#8594; Signature</b>.</li>
+          <li>Delete "Sent from my iPhone" (or similar) and paste the text version.</li>
+          <li>Tap back to save.</li>
+        </ol>
+      </div>
+
+      <div class="pane" id="p-gmail">
+        <ol class="steps">
+          <li>Press <b>Copy signature</b> above.</li>
+          <li>In Gmail, click the <b>gear icon &#8594; See all settings</b>.</li>
+          <li>On the <b>General</b> tab, scroll to <b>Signature</b> and click <b>+ Create new</b>, name it <b>Orion</b>.</li>
+          <li>Click in the box and press <kbd>Ctrl</kbd> + <kbd>V</kbd>.</li>
+          <li>Set <b>Signature defaults</b> to <b>Orion</b> for new emails and replies.</li>
+          <li>Scroll to the very bottom and click <b>Save Changes</b>.</li>
+        </ol>
+      </div>
+
+      <div class="note"><b>Don't edit or resize it after pasting.</b> If something looks wrong, change your details on this page and copy again. Some people will see "Click to download pictures" the first time you email them. That's normal and the text still shows.</div>
+    </div>
+  </div>
+
+  <footer>Orion MIS · British technology house · orionmis.co.uk</footer>
+</div>
+
+<script>
+(function(){
+  var IMG = 'https://orionmis.co.uk/images/email/';
+  var $ = function(id){ return document.getElementById(id); };
+  var F = { name:$('f-name'), title:$('f-title'), email:$('f-email'), mobile:$('f-mobile'), office:$('f-office'), linkedin:$('f-linkedin') };
+
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function tel(n){ var d = n.replace(/[^\d+]/g,''); if (d.charAt(0)==='0') d = '+44' + d.slice(1); return d; }
+  function val(k){ return F[k].value.trim(); }
+
+  var LBL = 'font-family:Consolas,\'Courier New\',monospace;font-size:10px;color:#1E90FF;';
+  var TXT = 'color:#E8EEF6;text-decoration:none;';
+  function line(label, inner){ return '<span style="'+LBL+'">'+label+'&nbsp;</span>'+inner; }
+  function tile(img, href, alt){
+    return '<td width="200" style="width:200px;padding:0;"><a href="'+href+'" style="text-decoration:none;"><img src="'+IMG+img+'" width="200" height="110" alt="'+alt+'" style="display:block;width:200px;height:110px;border:0;color:#ffffff;font-family:Arial,sans-serif;font-size:12px;font-weight:bold;"></a></td>';
+  }
+
+  function build(){
+    var name = val('name') || 'Your Name', title = val('title') || 'Job title';
+    var email = val('email'), mob = val('mobile'), off = val('office'), li = val('linkedin');
+    var rows = [];
+    if (mob) rows.push(line('M', '<a href="tel:'+esc(tel(mob))+'" style="'+TXT+'">'+esc(mob)+'</a>'));
+    if (off) rows.push(line('T', '<a href="tel:'+esc(tel(off))+'" style="'+TXT+'">'+esc(off)+'</a>'));
+    if (email) rows.push(line('E', '<a href="mailto:'+esc(email)+'" style="'+TXT+'">'+esc(email)+'</a>'));
+    var web = line('W', '<a href="https://orionmis.co.uk" style="'+TXT+'">orionmis.co.uk</a>');
+    if (/^https?:\/\/([a-z]+\.)?linkedin\.com\//i.test(li)) web += '&nbsp;&nbsp;' + line('IN', '<a href="'+esc(li)+'" style="'+TXT+'">LinkedIn</a>');
+    rows.push(web);
+
+    return ''
+    + '<table cellpadding="0" cellspacing="0" border="0" width="600" bgcolor="#050B14" style="width:600px;border-collapse:collapse;background:#050B14;font-family:Arial,Helvetica,sans-serif;">'
+    +  '<tr>'
+    +   '<td width="340" valign="middle" style="width:340px;padding:14px 0 14px 26px;">'
+    +    '<div style="font-size:26px;line-height:28px;font-weight:bold;letter-spacing:-0.5px;color:#F7FAFF;">'+esc(name)+'</div>'
+    +    '<div style="font-family:Consolas,\'Courier New\',monospace;font-size:11px;letter-spacing:2px;color:#1E90FF;padding-top:6px;text-transform:uppercase;">&#8212;&nbsp;'+esc(title)+'&nbsp;&#183;&nbsp;Orion&nbsp;MIS</div>'
+    +    '<div style="height:12px;line-height:12px;font-size:0;">&nbsp;</div>'
+    +    '<div style="font-size:13px;line-height:21px;color:#E8EEF6;">'+rows.join('<br>')+'</div>'
+    +   '</td>'
+    +   '<td width="260" valign="top" style="width:260px;padding:0;"><a href="https://orionmis.co.uk" style="text-decoration:none;"><img src="'+IMG+'sig-w-logo.jpg" width="260" height="150" alt="ORION - British Engineering" style="display:block;width:260px;height:150px;border:0;color:#ffffff;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;"></a></td>'
+    +  '</tr>'
+    +  '<tr><td colspan="2" style="padding:0;"><table cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;border-collapse:collapse;"><tr>'
+    +    tile('sig-w-helix.jpg',   'https://orionmis.co.uk/call', 'Helix 20,000 parcels/hr per line - watch it run')
+    +    tile('sig-w-factory.jpg', 'https://orionmis.co.uk/call', 'See it built - book a factory visit')
+    +    tile('sig-w-ppp.jpg',     'https://orionmis.co.uk/sortation-system-finance', 'Pay per parcel - get your price')
+    +  '</tr></table></td></tr>'
+    +  '<tr><td colspan="2" style="padding:10px 26px 12px 26px;border-top:1px solid #13213A;font-family:Consolas,\'Courier New\',monospace;font-size:9px;line-height:14px;color:#5E6B7E;">'
+    +    '<span style="color:#1E90FF;">FACTORY</span>&nbsp; UNIT 2, 1 FORT ROAD, LITTLEHAMPTON BN17 7QU<br>'
+    +    '<span style="color:#1E90FF;">HEAD OFFICE</span>&nbsp; 1 FONTWELL AVE, EASTERGATE, CHICHESTER PO20 3RU<br>'
+    +    'ORION MIS LTD &#183; REGISTERED IN ENGLAND &amp; WALES NO. 11735049 &#183; REGISTERED OFFICE AS HEAD OFFICE'
+    +  '</td></tr>'
+    + '</table>';
+  }
+
+  function buildText(){
+    var out = [val('name') || 'Your Name', (val('title') || 'Job title') + ' | Orion MIS'];
+    if (val('mobile')) out.push('M: ' + val('mobile'));
+    if (val('office')) out.push('T: ' + val('office'));
+    if (val('email')) out.push('E: ' + val('email'));
+    out.push('orionmis.co.uk');
+    return out.join('\n');
+  }
+
+  function validate(){
+    var e = val('email');
+    F.email.classList.toggle('bad', !!e && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e));
+    var l = val('linkedin');
+    F.linkedin.classList.toggle('bad', !!l && !/^https?:\/\/([a-z]+\.)?linkedin\.com\//i.test(l));
+  }
+
+  function render(){ validate(); $('sig').innerHTML = build(); }
+  Object.keys(F).forEach(function(k){ F[k].addEventListener('input', render); });
+  render();
+
+  function flash(msg){ var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(flash.t); flash.t = setTimeout(function(){ t.classList.remove('show'); }, 4000); }
+
+  function selectionCopy(node){
+    var r = document.createRange(); r.selectNode(node);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    var ok = false; try { ok = document.execCommand('copy'); } catch(e){}
+    s.removeAllRanges(); return ok;
+  }
+
+  $('copy').addEventListener('click', function(){
+    if (!val('name') || !val('title') || !val('email')) { flash('Fill in name, job title and email first.'); $('toast').style.color = 'var(--red)'; return; }
+    $('toast').style.color = '';
+    var html = build();
+    if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+      navigator.clipboard.write([new ClipboardItem({
+        'text/html': new Blob([html], {type:'text/html'}),
+        'text/plain': new Blob([buildText()], {type:'text/plain'})
+      })]).then(function(){ flash('Copied. Now paste it into Outlook (step 03).'); },
+               function(){ flash(selectionCopy($('sig').firstChild) ? 'Copied. Now paste it into Outlook (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.'); });
+    } else {
+      flash(selectionCopy($('sig').firstChild) ? 'Copied. Now paste it into Outlook (step 03).' : 'Copy blocked. Select the signature and press Ctrl+C.');
+    }
+  });
+
+  $('copy-text').addEventListener('click', function(){
+    var t = buildText();
+    (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(
+      function(){ $('toast').style.color=''; flash('Text version copied.'); },
+      function(){ $('toast').style.color=''; flash('Copy blocked. Select and copy manually.'); });
+  });
+
+  $('bg-light').addEventListener('click', function(){ $('stage').className = 'stage light'; this.classList.add('on'); $('bg-dark').classList.remove('on'); });
+  $('bg-dark').addEventListener('click', function(){ $('stage').className = 'stage dark'; this.classList.add('on'); $('bg-light').classList.remove('on'); });
+
+  document.querySelectorAll('.tabs button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.tabs button').forEach(function(x){ x.classList.remove('on'); });
+      document.querySelectorAll('.pane').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on'); $(b.getAttribute('data-pane')).classList.add('on');
+    });
+  });
+})();
+</script>
+</body></html>
