@@ -325,6 +325,7 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
 .pr .o-card p{font-size:.94rem}
 .pr-person{display:flex;gap:18px;align-items:center;margin-bottom:22px}
 .pr-mono-mark{width:64px;height:64px;border-radius:12px;border:1px solid var(--o-acc-edge);background:var(--o-acc-wash);display:grid;place-items:center;font-family:var(--o-display);font-weight:700;color:var(--o-acc);font-size:1.4rem}
+.pr-head{width:96px;height:96px;border-radius:12px;object-fit:cover;border:1px solid var(--o-acc-edge);flex-shrink:0}
 .pr-person b{display:block;font-family:var(--o-display);color:var(--o-white);font-size:1.4rem;letter-spacing:-.01em}
 .pr-person span{font-family:var(--o-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--o-soft)}
 .pr-contact{margin-top:22px;display:grid;gap:8px}
@@ -348,6 +349,9 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
 .pr-img .cap small{display:block;font-family:var(--o-mono);font-size:.66rem;letter-spacing:.08em;color:var(--o-soft);text-transform:uppercase;margin-top:4px}
 .pr-dl{flex-shrink:0;font-family:var(--o-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--o-acc);border:1px solid var(--o-acc-edge);border-radius:99px;padding:5px 10px;white-space:nowrap}
 .pr-dl:hover{background:var(--o-acc-wash)}
+.pr-live{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}
+.pr-live video{display:block;width:100%;aspect-ratio:2.25/1;object-fit:cover;background:#000}
+@media(max-width:760px){.pr-live{grid-template-columns:1fr}}
 .pr-note{font-family:var(--o-mono);font-size:.72rem;letter-spacing:.06em;color:var(--o-soft);margin-top:18px}
 .pr-tbl{width:100%;border-collapse:collapse}
 .pr-tbl td{padding:12px 0;border-bottom:1px solid var(--o-line);vertical-align:top;color:var(--o-text);font-size:.95rem}
@@ -400,6 +404,25 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
   </div>
 </section>
 
+<!-- HELIOS -->
+<section class="pr-band" style="overflow:hidden">
+  <div class="o-grid-bg"></div>
+  <div class="pr-wrap pr-grid2" style="align-items:center">
+    <div>
+      <div class="pr-label">HeliOS · warehouse operating system</div>
+      <h2 class="o-h2">An operating system, <span>not middleware.</span></h2>
+      <p class="pr-lead">HeliOS runs the whole warehouse from one place: planning, scaling, flow, people, costs, maintenance and the automation itself. Built by engineers, made for the operators and ground team who run the site every day.</p>
+      <div style="display:grid;gap:14px;margin-top:26px">
+        <div class="o-card"><div class="o-label">Not a WCS bolt-on</div><p>Most warehouse control software is custom middleware, built for one site and changed only by specialists. HeliOS is a product, the same on every site, configured by the operator without code.</p></div>
+        <div class="o-card"><div class="o-label">AI built on engineering knowledge</div><p>The AI works from Orion's own knowledge base: the faults, drawings, maintenance history and site experience of the team that builds the machines. It supports the team; the experience is Orion's.</p></div>
+        <div class="o-card"><div class="o-label">Runs Orion and third-party kit</div><p>Native on Helix, and connects to Siemens and Beckhoff PLCs, Interroll conveyors and AMR fleets. Live at APC Overnight's Cannock hub, controlling the Jupiter line.</p></div>
+      </div>
+      <div class="pr-hero-actions"><a class="pr-btn" href="helios">See HeliOS &rarr;</a></div>
+    </div>
+    <figure class="pr-img"><img src="images/brand/helios-twin.webp" alt="HeliOS live 3D digital twin of a sort line" loading="lazy" style="aspect-ratio:4/3"><figcaption class="cap"><div><b>HeliOS digital twin</b><small>Live 3D model of the line, with alarms</small></div><a class="pr-dl" href="images/press/helios-twin.jpg" download>JPG &darr;</a></figcaption></figure>
+  </div>
+</section>
+
 <!-- SPOKESPERSON -->
 <section class="pr-band">
   <div class="o-grid-bg"></div>
@@ -407,8 +430,8 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
     <div>
       <div class="pr-label">Spokesperson</div>
       <div class="pr-person">
-        <div class="pr-mono-mark" aria-hidden="true">DG</div>
-        <div><b>Danny Grigg</b><span>Founder, Orion MIS</span></div>
+        <img class="pr-head" src="images/press/danny-grigg-square.jpg" alt="Danny Grigg, founder of Orion MIS" width="96" height="96">
+        <div><b>Danny Grigg</b><span>Founder, Orion MIS</span><br><a class="pr-dl" style="display:inline-block;margin-top:10px" href="images/press/danny-grigg-founder.jpg" download>Headshot JPG &darr;</a></div>
       </div>
       <p>Danny Grigg founded Orion MIS in 2019. The company designs and builds parcel sortation and warehouse automation for UK carriers, fulfilment operators and manufacturers, and runs its quoting, design and project delivery on its own AI-assisted systems.</p>
       <p style="margin-top:12px">Danny comments on parcel logistics, warehouse automation, and how small British firms use AI and automation to compete with global suppliers. He is available for interview, live or recorded, at short notice.</p>
@@ -434,7 +457,11 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
   <div class="pr-wrap">
     <div class="pr-label">Footage</div>
     <h2 class="o-h2">Orion systems <span>running live.</span></h2>
-    <p class="pr-lead" style="margin-bottom:36px">Click to play. Broadcast-quality originals and on-site filming can be arranged through Danny.</p>
+    <p class="pr-lead" style="margin-bottom:36px">Live site footage first, then the full library. Broadcast-quality originals and on-site filming can be arranged through Danny.</p>
+    <div class="pr-live">
+      <figure class="pr-img"><video src="videos/press/jupiter-live-1.mp4" poster="images/press/jupiter-live-1-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption class="cap"><div><b>Jupiter running live · mixed parcels</b><small>APC Overnight, Cannock · Helix + HeliOS · Oct 2026</small></div><a class="pr-dl" href="videos/press/jupiter-live-1.mp4" download>MP4 &darr;</a></figcaption></figure>
+      <figure class="pr-img"><video src="videos/press/jupiter-live-2.mp4" poster="images/press/jupiter-live-2-poster.jpg" autoplay muted loop playsinline preload="metadata"></video><figcaption class="cap"><div><b>Jupiter running live · tyres and irregulars</b><small>APC Overnight, Cannock · Helix + HeliOS · Oct 2026</small></div><a class="pr-dl" href="videos/press/jupiter-live-2.mp4" download>MP4 &darr;</a></figcaption></figure>
+    </div>
     <div class="pr-vids" id="prVids"></div>
   </div>
 </section>
@@ -447,6 +474,11 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
     <h2 class="o-h2">Images, free to use <span>with credit.</span></h2>
     <p class="pr-lead" style="margin-bottom:36px">Credit: Orion MIS. Larger originals for print on request.</p>
     <div class="pr-imgs">
+      <figure class="pr-img"><img src="images/press/jupiter-live-stream.jpg" alt="Parcels flowing on the Jupiter Helix line at APC Overnight, Cannock" loading="lazy"><figcaption class="cap"><div><b>Jupiter live · full line</b><small>APC Overnight · Cannock · Oct 2026</small></div><a class="pr-dl" href="images/press/jupiter-live-stream.jpg" download>JPG &darr;</a></figcaption></figure>
+      <figure class="pr-img"><img src="images/press/jupiter-live-peak.jpg" alt="Parcels on the Jupiter line during a live shift" loading="lazy"><figcaption class="cap"><div><b>Jupiter live · shift running</b><small>APC Overnight · Cannock · Oct 2026</small></div><a class="pr-dl" href="images/press/jupiter-live-peak.jpg" download>JPG &darr;</a></figcaption></figure>
+      <figure class="pr-img"><img src="images/press/jupiter-live-mixed.jpg" alt="A large flat item and cartons on the Jupiter line" loading="lazy"><figcaption class="cap"><div><b>Jupiter live · mixed freight</b><small>Flat items, cartons, tyres</small></div><a class="pr-dl" href="images/press/jupiter-live-mixed.jpg" download>JPG &darr;</a></figcaption></figure>
+      <figure class="pr-img"><img src="images/press/jupiter-live-tyres.jpg" alt="Tyres and cartons sorting on the Jupiter line" loading="lazy"><figcaption class="cap"><div><b>Jupiter live · tyres</b><small>Non-standard items on one line</small></div><a class="pr-dl" href="images/press/jupiter-live-tyres.jpg" download>JPG &darr;</a></figcaption></figure>
+      <figure class="pr-img"><img src="images/press/jupiter-live-overview.jpg" alt="Overhead view of the Jupiter sort hall" loading="lazy"><figcaption class="cap"><div><b>Jupiter live · overhead</b><small>Sort hall and outfeeds</small></div><a class="pr-dl" href="images/press/jupiter-live-overview.jpg" download>JPG &darr;</a></figcaption></figure>
       <figure class="pr-img"><img src="images/brand/jupiter-hall.webp" alt="Jupiter sort hall at APC Overnight, Cannock" loading="lazy"><figcaption class="cap"><div><b>Jupiter sort hall</b><small>APC Overnight · Cannock</small></div><a class="pr-dl" href="images/press/jupiter-hall.jpg" download>JPG &darr;</a></figcaption></figure>
       <figure class="pr-img"><img src="images/brand/helix-wheels.webp" alt="Helix steerable pivot wheels" loading="lazy"><figcaption class="cap"><div><b>Helix pivot wheels</b><small>Steerable wheel sorter</small></div><a class="pr-dl" href="images/press/helix-wheels.jpg" download>JPG &darr;</a></figcaption></figure>
       <figure class="pr-img"><img src="images/brand/helix-jupiter-banks.webp" alt="Helix sort banks running on the Jupiter line" loading="lazy"><figcaption class="cap"><div><b>Helix sort banks</b><small>Running on the Jupiter line</small></div><a class="pr-dl" href="images/press/helix-jupiter-banks.jpg" download>JPG &darr;</a></figcaption></figure>
