@@ -13,7 +13,7 @@ Nothing under `share/` is reachable without an entry in the register.
 2. Put `index.html` in it (served inline when the PIN is right) plus any
    downloads, e.g. `plan.pdf`, `tracker.xlsx`. Keep served filenames short;
    the download name the customer sees is set in the register.
-3. Pick an 8-digit PIN and hash it:
+3. Pick a PIN (letters and digits are fine) and hash it:
 
        python -c "import hashlib;print(hashlib.sha256(('12345678'+'orion-share-v1').encode()).hexdigest())"
 

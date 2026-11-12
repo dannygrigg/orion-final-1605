@@ -102,7 +102,7 @@ main{position:relative;flex:1;display:flex;align-items:flex-start;justify-conten
 h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;letter-spacing:-.02em;color:var(--white);line-height:1.1;margin:10px 0 6px}
 p{color:var(--soft);font-size:14px;line-height:1.55;margin-bottom:22px}
 p b{color:var(--text);font-weight:500}
-input{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--white);font-family:'IBM Plex Mono',monospace;font-size:28px;letter-spacing:10px;text-align:center;padding:12px 10px;border-radius:8px}
+input{width:100%;background:var(--panel);border:1px solid var(--line);color:var(--white);font-family:'IBM Plex Mono',monospace;font-size:26px;letter-spacing:6px;text-align:center;padding:12px 10px;border-radius:8px}
 input:focus{outline:none;border-color:var(--acc)}
 button{width:100%;margin-top:12px;background:var(--acc);border:1px solid var(--acc);color:#041223;font-family:'Inter',sans-serif;font-weight:600;font-size:15px;padding:12px 0;border-radius:8px;cursor:pointer}
 button:hover{filter:brightness(1.08)}
@@ -117,7 +117,7 @@ button:hover{filter:brightness(1.08)}
 <span class="lbl">${esc(doc.ref)}</span>
 <h1>${esc(doc.title)}</h1>
 <p>Prepared for <b>${esc(doc.customer)}</b>. Enter the PIN Orion gave you to open it. The PIN is sent separately from the link.</p>
-<input id="pin" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="16" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autofocus>
+<input id="pin" type="password" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="one-time-code" maxlength="32" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autofocus>
 <button id="go">Open document</button>
 <div id="err">${esc(msg)}</div>
 <div class="foot">Commercial in confidence<br>Orion MIS Ltd · orionmis.co.uk</div>

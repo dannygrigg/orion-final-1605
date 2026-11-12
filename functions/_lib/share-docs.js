@@ -28,7 +28,7 @@ export const DOCS = {
     title: 'Sorter 1 Corrective Action Plan',
     ref: 'ORI-CAN-CAP-001 · Rev A',
     customer: 'APC Overnight Ltd',
-    pinHash: '1f45f83c803f02a3a22321456f02464126b18c8fb58e9b6ca15b146be7c6f4f3',
+    pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',
     expires: null,                      // 'YYYY-MM-DD' or null
     files: {
       // served path  → { name shown on download, type }
