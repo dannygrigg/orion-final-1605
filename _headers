@@ -38,6 +38,12 @@
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store
 
+# Customer document share — PIN-gated packs (HTML + PDF + XLSX) sent as links
+# instead of attachments. Register: functions/_lib/share-docs.js.
+/share/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
+
 /track-180021fb/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store
