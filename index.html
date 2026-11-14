@@ -118,7 +118,7 @@ body{padding-top:calc(var(--nav-h) + 34px)}
    ink, blueprint grid, mono kicker, one blue phrase, stat rules.
    Fallbacks keep it right before the brand tokens file is deployed. */
 .hero{position:relative;overflow:hidden;background:var(--o-ink,#060A16);padding:96px 36px 64px;border-bottom:1px solid var(--line);min-height:min(820px,92vh);display:flex;align-items:center}
-.hero-bleed{position:absolute;inset:0;background:#060A16 url('images/brand/hero-helix-wheels.webp') 65% center/cover no-repeat}
+.hero-bleed{position:absolute;inset:0;background:#060A16 url('video/helix-live-1-poster.webp') 62% center/cover no-repeat}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,22,.97) 0%,rgba(6,10,22,.86) 36%,rgba(6,10,22,.25) 72%,rgba(6,10,22,.05) 100%),linear-gradient(0deg,rgba(6,10,22,.85) 0%,rgba(6,10,22,0) 30%)}
 .hero-grid{position:absolute;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(rgba(150,180,230,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(150,180,230,.18) 1px,transparent 1px);background-size:46px 46px}
 .hero-inner{position:relative;z-index:1;max-width:var(--max);width:100%;margin:0 auto}
@@ -139,11 +139,28 @@ body{padding-top:calc(var(--nav-h) + 34px)}
 .hero-proof span{border:1px solid rgba(150,180,230,.18);background:rgba(16,28,54,.8);border-radius:999px;padding:6px 12px;font-family:var(--o-mono,var(--mono));font-size:12px;letter-spacing:.06em;color:#F4F7FC}
 .hero-cap{position:absolute;right:36px;bottom:24px;z-index:2;font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#C9D3E6;text-decoration:none;border:1px solid rgba(150,180,230,.25);background:rgba(6,10,22,.6);backdrop-filter:blur(6px);padding:8px 14px;border-radius:999px}
 .hero-cap:hover{color:#fff;border-color:var(--o-acc,#3AA0FF)}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% center}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#7CF3D0;margin-right:9px;vertical-align:1px;box-shadow:0 0 0 0 rgba(124,243,208,.6);animation:livePulse 2s infinite}
+@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(124,243,208,.6)}70%{box-shadow:0 0 0 8px rgba(124,243,208,0)}100%{box-shadow:0 0 0 0 rgba(124,243,208,0)}}
+@media (prefers-reduced-motion:reduce){.live-dot{animation:none}}
+.live-band{position:relative;overflow:hidden;background:var(--o-navy,#0B1428);padding:80px 36px;border-bottom:1px solid rgba(150,180,230,.18)}
+.live-band .grid{position:absolute;inset:0;pointer-events:none;opacity:.3;background-image:linear-gradient(rgba(150,180,230,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(150,180,230,.18) 1px,transparent 1px);background-size:46px 46px}
+.live-inner{position:relative;max-width:1240px;margin:0 auto}
+.live-head{max-width:920px;margin-bottom:36px}
+.live-kicker{font-family:var(--o-mono,var(--mono));font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0;margin-bottom:16px}
+.live-band h2{font-family:var(--o-display,var(--sans));font-weight:700;letter-spacing:-.02em;font-size:clamp(30px,3.4vw,46px);line-height:1.06;color:#F4F7FC;margin-bottom:16px}
+.live-band h2 span{color:var(--o-acc,#3AA0FF)}
+.live-band p{font-size:16px;line-height:1.65;color:#C9D3E6}
+.live-clips{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.live-clip{margin:0;border:1px solid rgba(150,180,230,.18);border-radius:12px;overflow:hidden;background:#060A16}
+.live-clip video{display:block;width:100%;aspect-ratio:16/7.2;object-fit:cover;background:#060A16}
+.live-clip figcaption{font-family:var(--o-mono,var(--mono));font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8592AD;padding:12px 16px;border-top:1px solid rgba(150,180,230,.18)}
+@media (max-width:760px){.live-band{padding:56px 20px}.live-clips{grid-template-columns:1fr}}
 @media (max-width:820px){
   .hero{min-height:0;padding-top:72px;flex-direction:column;align-items:stretch}
   .hero-cap{align-self:flex-start}
   .hero-cap-more{display:none}
-  .hero-bleed{background-image:url('images/brand/hero-helix-wheels-960.webp');background-position:70% center}
+  .hero-bleed{background-position:62% center}
   .hero-shade{background:linear-gradient(90deg,rgba(6,10,22,.94) 0%,rgba(6,10,22,.8) 60%,rgba(6,10,22,.55) 100%),linear-gradient(0deg,rgba(6,10,22,.9) 0%,rgba(6,10,22,0) 40%)}
   .hero-stats{gap:20px}
   .hero-cap{position:static;display:inline-block;margin-top:22px}
@@ -740,7 +757,9 @@ tr:last-child td{border-bottom:none}
 
 <!-- ── HERO ── -->
 <section class="hero" id="top">
-  <div class="hero-bleed" role="img" aria-label="Helix steerable pivot wheels on a live sort line"></div>
+  <div class="hero-bleed">
+    <video class="hero-video" muted loop playsinline preload="none" poster="video/helix-live-1-poster.webp" data-src-lg="video/helix-live-1-1280.mp4" data-src-sm="video/helix-live-1-720.mp4" aria-label="Helix sorting parcels on a live UK sort line"></video>
+  </div>
   <div class="hero-shade"></div>
   <div class="hero-grid"></div>
   <div class="hero-inner">
@@ -764,7 +783,7 @@ tr:last-child td{border-bottom:none}
       </div>
     </div>
   </div>
-  <a class="hero-cap" href="https://www.youtube.com/watch?v=ZJhXlXHJ_5c" target="_blank" rel="noopener">▶ Watch Helix running<span class="hero-cap-more"> · live site footage</span></a>
+  <a class="hero-cap" href="#live"><span class="live-dot"></span>Live site footage<span class="hero-cap-more"> · real shift, no edits</span></a>
 </section>
 
 <!-- ── TRUSTED BY · moving marquee of customer wordmarks ── -->
@@ -808,6 +827,28 @@ tr:last-child td{border-bottom:none}
       <img src="images/logos/hellofresh.png" alt="" loading="lazy">
       <img src="images/logos/rolls-royce.png" alt="" loading="lazy">
       <img src="images/logos/royal-mail.png" alt="" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ── LIVE FOOTAGE · Helix running on a live parcel hub ── -->
+<section class="live-band" id="live">
+  <div class="grid"></div>
+  <div class="live-inner">
+    <div class="live-head">
+      <div class="live-kicker"><span class="live-dot"></span>Live site · real shift</div>
+      <h2>Real parcels. A real shift. <span>No factory demo.</span></h2>
+      <p>Helix and HeliOS running on a live UK parcel hub: parcels inducted, tracked and diverted at a 200 mm gap. Designed, built and programmed in Chichester.</p>
+    </div>
+    <div class="live-clips">
+      <figure class="live-clip">
+        <video muted loop playsinline preload="none" poster="video/helix-live-1-poster.webp" data-src="video/helix-live-1-960.mp4" aria-label="Helix inducting and diverting parcels on a live shift"></video>
+        <figcaption>Induct and divert · live shift</figcaption>
+      </figure>
+      <figure class="live-clip">
+        <video muted loop playsinline preload="none" poster="video/helix-live-2-poster.webp" data-src="video/helix-live-2-960.mp4" aria-label="Helix sorting mixed freight including tyres and cartons"></video>
+        <figcaption>Mixed freight · tyres, bags, cartons</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -2301,6 +2342,45 @@ if ('IntersectionObserver' in window && sections.length) {
 
 <!-- Media carousel widget (loads media.json, renders any .media-slot placeholders on the page) -->
 <script src="media-carousel.js" defer></script>
+
+<!-- Live footage: the hero clip starts once the page has loaded; the band clips only load
+     when scrolled into view and pause again when off screen. Posters show until then. -->
+<script>
+(function () {
+  function shouldPlayVideo() {
+    // Still poster for visitors who asked for less motion or are on data saver.
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return false; }
+    if (navigator.connection && navigator.connection.saveData) { return false; }
+    return true;
+  }
+
+  function start(v, src) {
+    if (!v.src) { v.src = src; }
+    var p = v.play();
+    if (p && p.catch) { p.catch(function () {}); }
+  }
+
+  if (!shouldPlayVideo()) { return; }
+
+  var hero = document.querySelector('.hero-video');
+  if (hero) {
+    var src = window.innerWidth < 768 ? hero.dataset.srcSm : hero.dataset.srcLg;
+    if (document.readyState === 'complete') { start(hero, src); }
+    else { window.addEventListener('load', function () { start(hero, src); }); }
+  }
+
+  var clips = document.querySelectorAll('.live-clip video');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { start(e.target, e.target.dataset.src); }
+        else if (e.target.src) { e.target.pause(); }
+      });
+    }, { threshold: 0.25 });
+    clips.forEach(function (v) { io.observe(v); });
+  }
+})();
+</script>
 
 </body>
 </html>
