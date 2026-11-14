@@ -306,6 +306,22 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   </div>
 </section>
 
+<!-- ── LIVE FOOTAGE · helix-hall ── -->
+<section class="o-reel" id="live-footage">
+  <div class="o-reel-inner">
+    <div class="o-reel-copy">
+      <div class="o-reel-kicker"><span class="o-live-dot"></span>Live site footage</div>
+      <h2>A Helix sort hall, <span>built in Chichester.</span></h2>
+      <p>Walk the line on a live UK parcel hub: induct, sorter and chute banks, all designed, built and programmed by Orion.</p>
+    </div>
+    <figure class="o-reel-clip">
+      <video data-reel muted loop playsinline preload="none" poster="/video/helix-hall-poster.webp" data-src-lg="/video/helix-hall-1280.mp4" data-src-sm="/video/helix-hall-720.mp4" aria-label="Helix sort hall on a live UK parcel hub"></video>
+      <figcaption>Helix sort hall · live UK parcel hub</figcaption>
+    </figure>
+  </div>
+</section>
+
+
 <section class="section light">
   <div class="section-head">
     <div class="eyebrow">The 3PL problem</div>
@@ -485,5 +501,6 @@ mobileNav.querySelectorAll('a').forEach(a=>{a.addEventListener('click',()=>{hamb
 document.addEventListener('click',(e)=>{if(mobileNav.classList.contains('open')&&!mobileNav.contains(e.target)&&!hamburger.contains(e.target)){hamburger.classList.remove('open');mobileNav.classList.remove('open')}});
 const nav=document.getElementById('mainNav');window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>10)},{passive:true});
 </script>
+<script src="/brand/reels.js" defer></script>
 </body>
 </html>

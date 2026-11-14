@@ -232,6 +232,22 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 46px)}
   </div>
 </section>
 
+<!-- ── LIVE FOOTAGE · helix-detail ── -->
+<section class="o-reel" id="live-footage">
+  <div class="o-reel-inner">
+    <div class="o-reel-copy">
+      <div class="o-reel-kicker"><span class="o-live-dot"></span>Live site footage</div>
+      <h2>Up close: <span>scan and pivot wheels.</span></h2>
+      <p>The scan tunnel reads each label. Helix pivot wheels then steer each parcel to its exit, at a 200 mm gap.</p>
+    </div>
+    <figure class="o-reel-clip">
+      <video data-reel muted loop playsinline preload="none" poster="/video/helix-detail-poster.webp" data-src-lg="/video/helix-detail-1280.mp4" data-src-sm="/video/helix-detail-720.mp4" aria-label="Scan tunnel and Helix pivot wheels on a live sort line"></video>
+      <figcaption>Scan tunnel and Helix pivot wheels · live site</figcaption>
+    </figure>
+  </div>
+</section>
+
+
 <section class="section light">
   <div class="section-head">
     <div class="eyebrow">What can be financed</div>
@@ -328,5 +344,6 @@ document.addEventListener('click',(e)=>{if(mobileNav.classList.contains('open')&
 const nav=document.getElementById('mainNav');window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>10)},{passive:true});
 </script>
 <script src="media-carousel.js" defer></script>
+<script src="/brand/reels.js" defer></script>
 </body>
 </html>
