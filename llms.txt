@@ -1,20 +1,32 @@
 # Orion MIS
 
-> Orion MIS is a UK warehouse automation OEM. We design, build and install
-> complete automation systems — conveyors, the Helix modular parcel sorter,
-> robotics, vision and the Helios warehouse operating system — from one UK
-> facility, with pay-monthly finance available on every system.
+> Orion MIS is a British technology house based in Chichester, West Sussex.
+> We design, build and program our own warehouse automation: the Helix parcel
+> sorter, the HeliOS warehouse control software, conveyors and controls, all
+> made in the UK under one roof. Orion is the manufacturer, not a reseller of
+> third-party sorters.
 
 Key facts:
 
-- Helix is a modular parcel sortation system: it sorts parcels on a 200mm gap,
-  scales in 200mm modules up to 20,000 parcels per hour, and handles bags,
-  boxes and awkward freight.
-- Helios is the warehouse operating system built alongside Orion hardware:
-  routing, live dashboards, fault detection and reporting, live on UK sites now.
-- Every system can be bought outright or paid for monthly through finance.
-- Customers are UK parcel centres, 3PLs and fulfilment operations.
+- Founded 2019. About 40 people, all designing and building in the UK.
+- Helix is a modular pivot-wheel parcel sorter. It sorts on a 200 mm gap,
+  is built in 200 mm modules, and has up to 20,000 parcels per hour of
+  single-line capacity. It handles boxes, bags, tyres and non-conveyables.
+- On a live UK parcel hub, a Helix line running HeliOS went from 4,500 to
+  13,000 items per hour at peak.
+- HeliOS is Orion's own warehouse control software, written alongside the
+  hardware: parcel tracking, device control, a live 3D twin of the site, and
+  faults located by device, door and code in real time.
+- Three ways to buy: pay per parcel, pay monthly, or buy outright. The first
+  two need no capital expenditure. Per-parcel rates are agreed per site,
+  based on volume and parcel mix.
+- Order to go-live in as little as six weeks; every line is built and tested
+  in Orion's factory before it ships.
+- Two years parts and labour warranty as standard.
+- Two years of Helix installs are on order.
+- Customers are UK parcel centres, couriers, 3PLs and fulfilment operations.
 - Contact: info@orionmis.co.uk · book a call at https://orionmis.co.uk/call
+- Press and media: https://orionmis.co.uk/press
 
 ## Main pages
 
@@ -24,6 +36,8 @@ Key facts:
 - [Helios](https://orionmis.co.uk/helios): the warehouse operating system
 - [News & builds](https://orionmis.co.uk/news): Helix tests, factory builds
   and site work
+- [Press & media](https://orionmis.co.uk/press): approved facts, photos,
+  footage and spokesperson details
 - [Solution builder](https://orionmis.co.uk/solution-builder): spec a
   system interactively
 
