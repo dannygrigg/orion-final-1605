@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://orionmis.co.uk/</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -86,7 +86,7 @@
   </url>
   <url>
     <loc>https://orionmis.co.uk/fulfilment-automation</loc>
-    <lastmod>2026-11-14</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -98,7 +98,7 @@
   </url>
   <url>
     <loc>https://orionmis.co.uk/insights</loc>
-    <lastmod>2026-11-06</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -110,7 +110,7 @@
   </url>
   <url>
     <loc>https://orionmis.co.uk/warehouse-automation-cost-uk</loc>
-    <lastmod>2026-11-06</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -128,7 +128,7 @@
   </url>
   <url>
     <loc>https://orionmis.co.uk/warehouse-automation-installation-time</loc>
-    <lastmod>2026-11-06</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
