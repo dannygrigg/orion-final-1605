@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HeliOS: an overview and a shift run-through | Orion MIS</title>
+<meta name="description" content="Industry 4.0 never reached most warehouse floors. HeliOS is the warehouse operating system built for the people who run the site: an overview and a run-through of one shift, from first induct to the end-of-day report.">
+<link rel="canonical" href="https://orionmis.co.uk/helios-tour">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://orionmis.co.uk/helios-tour">
+<meta property="og:title" content="HeliOS: the warehouse software Industry 4.0 promised">
+<meta property="og:description" content="Built for the operators, owners and shift leads who read the information, not only the engineers who wrote it. An overview and a run-through of one shift.">
+<meta property="og:image" content="https://orionmis.co.uk/images/press/helios-twin.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/brand/orion-tokens.css">
+<style>
+:root{--ink:#060A16;--navy:#0B1428;--panel:#101C36;--line:rgba(150,180,230,.18);--white:#F4F7FC;--text:#C9D3E6;--lead:#DCE4F2;--soft:#8592AD;--acc:#3AA0FF;--acc2:#7CF3D0;--warn:#FDB022;--bad:#F97066;
+--d:"Space Grotesk",system-ui,sans-serif;--b:"Inter",system-ui,-apple-system,sans-serif;--m:"IBM Plex Mono",ui-monospace,monospace;--g:clamp(16px,4vw,56px);--max:1180px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font:400 17px/1.6 var(--b);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img,video{display:block;max-width:100%;height:auto}
+.media img,.media video{width:100%}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--g)}
+.grid-bg{background-image:linear-gradient(rgba(150,180,230,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(150,180,230,.06) 1px,transparent 1px);background-size:46px 46px}
+.kick{font:600 13px var(--m);letter-spacing:.16em;text-transform:uppercase;color:var(--acc);display:flex;align-items:center;gap:12px}
+.kick:before{content:"";width:28px;height:2px;background:var(--acc)}
+h1,h2,h3{font-family:var(--d);color:var(--white);letter-spacing:-.02em;line-height:1.05}
+h2{font-size:clamp(30px,4.2vw,48px);margin:14px 0 18px}
+h3{font-size:22px;line-height:1.2;margin-bottom:8px}
+.lead{font-size:clamp(18px,1.6vw,21px);color:var(--lead);max-width:760px}
+section{padding:clamp(64px,9vw,120px) 0;border-top:1px solid var(--line)}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(6,10,22,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.bar img{height:30px;width:auto;filter:brightness(0) invert(1)}
+.bar nav{display:flex;gap:22px;align-items:center;font:500 14px var(--b)}
+.bar nav a.hide-s{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:8px;font:600 15px var(--b);border:1px solid var(--acc);background:var(--acc);color:#04101F;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--white);border-color:rgba(220,228,242,.35)}
+@media(max-width:700px){.bar .hide-s{display:none}.bar .btn{padding:9px 14px;font-size:14px}}
+
+/* hero */
+.hero{padding:clamp(70px,11vw,150px) 0 clamp(60px,8vw,110px);border-top:0;position:relative}
+.hero h1{font-size:clamp(40px,6.6vw,84px);max-width:1000px;margin:22px 0 28px}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero .lead+.lead{margin-top:18px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:36px}
+.strike{color:var(--soft);text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:2px}
+
+/* problem cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+.card{background:var(--navy);border:1px solid var(--line);border-radius:12px;padding:26px}
+.card .n{font:600 13px var(--m);color:var(--bad);letter-spacing:.12em;margin-bottom:14px}
+.card p{font-size:16px}
+@media(max-width:900px){.cards{grid-template-columns:1fr}}
+
+/* overview */
+.split{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.media{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000;position:relative}
+.media figcaption{position:absolute;left:12px;bottom:12px;font:600 11px var(--m);letter-spacing:.12em;text-transform:uppercase;background:rgba(6,10,22,.8);color:var(--lead);padding:6px 10px;border-radius:6px}
+.ticks{list-style:none;margin-top:22px;display:grid;gap:12px}
+.ticks li{padding-left:28px;position:relative}
+.ticks li:before{content:"";position:absolute;left:0;top:.62em;width:14px;height:2px;background:var(--acc)}
+.ticks b{color:var(--white);font-weight:600}
+
+/* nodes diagram */
+.nodes{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;margin-top:40px}
+.col{display:grid;gap:10px}
+.node{border:1px solid var(--line);background:var(--navy);border-radius:10px;padding:12px 14px;font:500 14px var(--b);color:var(--lead);display:flex;align-items:center;gap:10px}
+.node:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--acc);flex:0 0 8px}
+.col.third .node:before{background:var(--acc2)}
+.core{border:1px solid var(--acc);border-radius:14px;padding:26px 24px;text-align:center;background:radial-gradient(circle at 50% 30%,rgba(58,160,255,.18),transparent 70%)}
+.core b{display:block;font:700 28px var(--d);color:var(--white)}
+.core span{font:600 11px var(--m);letter-spacing:.14em;color:var(--acc);text-transform:uppercase}
+.colh{font:600 11px var(--m);letter-spacing:.14em;text-transform:uppercase;color:var(--soft);margin-bottom:2px}
+@media(max-width:800px){.nodes{grid-template-columns:1fr}.core{order:-1}}
+
+/* run-through */
+.shift{margin-top:46px;position:relative}
+.shift:before{content:"";position:absolute;left:83px;top:10px;bottom:10px;width:2px;background:linear-gradient(var(--acc),rgba(58,160,255,.1))}
+.step{display:grid;grid-template-columns:70px 1fr;gap:28px;padding:22px 0;position:relative}
+.step .t{font:600 15px var(--m);color:var(--white);padding-top:3px;text-align:right}
+.step .t:after{content:"";position:absolute;left:78px;top:30px;width:12px;height:12px;border-radius:50%;background:var(--ink);border:2px solid var(--acc)}
+.step .body{padding-left:24px;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.step .mod{font:600 11px var(--m);letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
+.step p{font-size:16px}
+.readout{background:var(--navy);border:1px solid var(--line);border-radius:10px;padding:16px 18px;font:500 13.5px/1.7 var(--m);color:var(--lead)}
+.readout .k{color:var(--soft)}
+.readout .ok{color:var(--acc2)} .readout .w{color:var(--warn)} .readout .x{color:var(--bad)}
+.readout .h{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}
+.step .media{margin-top:0}
+@media(max-width:800px){.shift:before{left:7px}.step{grid-template-columns:1fr;gap:6px;padding-left:30px}.step .t{text-align:left}.step .t:after{left:2px;top:27px}.step .body{padding-left:0;grid-template-columns:1fr}}
+.step>*,.step .body>*,.split>*,.nodes>*{min-width:0}
+.readout{overflow-wrap:anywhere}
+.note{font:500 12px var(--m);color:var(--soft);letter-spacing:.06em;margin-top:18px}
+
+/* proof */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:40px 0 28px}
+.stat{border-top:2px solid var(--acc);padding-top:16px}
+.stat b{display:block;font:700 clamp(38px,5vw,60px)/1 var(--d);color:var(--white)}
+.stat span{font-size:15px;color:var(--text)}
+.pics{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:800px){.stats,.pics{grid-template-columns:1fr}}
+
+/* people */
+.people{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:40px}
+.person{border:1px solid var(--line);border-radius:12px;padding:24px;background:var(--navy)}
+.person .who{font:600 12px var(--m);letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:12px}
+.person p{font-size:15.5px}
+.person q{display:block;color:var(--white);font:600 18px/1.35 var(--d);margin-bottom:12px;quotes:none}
+@media(max-width:1000px){.people{grid-template-columns:1fr 1fr}}@media(max-width:600px){.people{grid-template-columns:1fr}}
+
+/* tiers */
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+.tier{border:1px solid var(--line);border-radius:12px;padding:22px}
+.tier b{font:700 20px var(--d);color:var(--white);display:block;margin-bottom:6px}
+.tier p{font-size:15px}
+@media(max-width:900px){.tiers{grid-template-columns:1fr 1fr}}@media(max-width:520px){.tiers{grid-template-columns:1fr}}
+
+.end{text-align:left}
+.end .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+footer{border-top:1px solid var(--line);padding:30px 0;font-size:14px;color:var(--soft)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="wrap">
+  <a href="/"><img src="images/orion-logo.png" alt="Orion MIS"></a>
+  <nav><a class="hide-s" href="#problem">The problem</a><a class="hide-s" href="#shift">A shift with HeliOS</a><a class="hide-s" href="/helios">HeliOS</a><a class="btn" href="/call">Book a demo</a></nav>
+</div></header>
+
+<section class="hero grid-bg"><div class="wrap">
+  <div class="kick">HeliOS · overview and run-through</div>
+  <h1>We've talked about Industry 4.0 for ten years. <em>Most warehouse floors never saw it.</em></h1>
+  <p class="lead">IoT, smart factories, connected warehouses. The industry has been promising them for a decade. Walk onto most sites and you'll find the same thing: grey screens, cryptic alarm codes, spreadsheets exported at the end of the shift, and a phone number for the one specialist who can change anything.</p>
+  <p class="lead">That's because most warehouse software is designed by engineers for engineers. The operators, the shift leads and the owners, the people who actually have to read the information and act on it, were never the brief. HeliOS is built the other way round.</p>
+  <div class="cta"><a class="btn" href="#shift">Walk through a shift</a><a class="btn ghost" href="/call">Book a live demo</a></div>
+</div></section>
+
+<section id="problem"><div class="wrap">
+  <div class="kick">The problem, plainly</div>
+  <h2>Why Industry 4.0 stalled on the warehouse floor</h2>
+  <p class="lead">The sensors were never the problem. Most automated sites already collect more data than anyone uses. What failed is everything between the data and the person who needs it.</p>
+  <div class="cards">
+    <div class="card"><div class="n">01 · BUILT FOR THE WRONG USER</div><h3>Designed for engineers</h3><p>Screens show PLC tags, fault codes and raw counts. That makes sense to the person who wrote the program. The shift lead with forty people on the floor needs to know what's wrong, where it is, and what to do next.</p></div>
+    <div class="card"><div class="n">02 · MIDDLEWARE, NOT A PRODUCT</div><h3>Different on every site</h3><p>Warehouse control software is usually custom code written to connect one site's machines to its management system, often by a different company from the one that built the machines. Every change means a specialist, a quote and a wait.</p></div>
+    <div class="card"><div class="n">03 · NUMBERS, NOT DECISIONS</div><h3>Data with no "so what"</h3><p>A dashboard that says read rate is 97.2% doesn't tell you it drops every day at the 14:00 shift change, or that chute 17 is up 28% this week. Reports arrive after the problem has already cost you a shift.</p></div>
+  </div>
+</div></section>
+
+<section id="overview"><div class="wrap split">
+  <div>
+    <div class="kick">What HeliOS is</div>
+    <h2>An operating system for the whole warehouse</h2>
+    <p class="lead">HeliOS runs the operation from one place: planning, flow, people, costs, maintenance and the automation itself. It's a product, the same on every site, and configured by the operator, not rewritten by a contractor.</p>
+    <ul class="ticks">
+      <li><b>Made for the ground team.</b> Each user arranges their own screen. Routing, dashboards and reports change without writing code.</li>
+      <li><b>Built by the people who build the machines.</b> Orion designs the Helix sorter, the controls and HeliOS in West Sussex. One team, one system, one phone number.</li>
+      <li><b>AI that knows the kit.</b> HeliOS's AI works from Orion's own engineering knowledge base: the fault records, drawings, maintenance history and site experience of the team that builds the machines.</li>
+      <li><b>Open to every operator.</b> Native on Orion lines, and connected to the third-party automation you already run.</li>
+    </ul>
+  </div>
+  <figure class="media">
+    <video autoplay muted loop playsinline preload="metadata" poster="video/helios-in-use-poster.webp">
+      <source src="video/helios-in-use-1280.mp4" type="video/mp4" media="(min-width:700px)">
+      <source src="video/helios-in-use-720.mp4" type="video/mp4">
+    </video>
+    <figcaption>HeliOS on a live UK parcel hub</figcaption>
+  </figure>
+</div>
+<div class="wrap">
+  <div class="nodes">
+    <div class="col"><div class="colh">Orion, native</div><div class="node">Helix sortation</div><div class="node">Conveyor systems</div><div class="node">Scan tunnels and print &amp; apply</div><div class="node">Robotics and AMRs</div></div>
+    <div class="core"><span>Operating system</span><b>HeliOS</b><span>one live operation</span></div>
+    <div class="col third"><div class="colh">Third-party, connected</div><div class="node">Siemens and Beckhoff PLCs</div><div class="node">Interroll conveyor modules</div><div class="node">Keyence sensing and vision</div><div class="node">AMR fleets, your WMS and ERP</div></div>
+  </div>
+</div></section>
+
+<section id="shift" class="grid-bg"><div class="wrap">
+  <div class="kick">Run-through</div>
+  <h2>A shift with HeliOS</h2>
+  <p class="lead">Eight modules, one shift. This is how a parcel hub uses HeliOS from first induct to the end-of-day report.</p>
+
+  <div class="shift">
+    <div class="step"><div class="t">05:45</div><div class="body">
+      <div><div class="mod">Home · command surface</div><h3>The shift lead opens their own screen</h3><p>Every user builds their own dashboard by drag and drop: throughput, read rate, active sorters, routing, a 365-day heatmap. The shift lead sees the shift. The site manager sees the week. Nobody squints at someone else's layout.</p></div>
+      <div class="readout"><span class="h">Shift lead · today</span><span class="k">Target</span> 96,000 items<br><span class="k">Sorters</span> <span class="ok">3 of 3 ready</span><br><span class="k">Staff on</span> 38<br><span class="k">Open work orders</span> <span class="w">2</span></div>
+    </div></div>
+
+    <div class="step"><div class="t">06:00</div><div class="body">
+      <div><div class="mod">Stats · live operations</div><h3>Induct starts and the numbers are live</h3><p>Throughput, good, multi and no-read rates, uptime and active sorters, site-wide or per sorter, from a 10-minute window to the whole day. No waiting for a report to find out how the first hour went.</p></div>
+      <div class="readout"><span class="h">Live · last 10 minutes</span><span class="k">Throughput</span> <span class="ok">rising</span><br><span class="k">Good reads</span> <span class="ok">on target</span><br><span class="k">No-reads</span> routed to reject<br><span class="k">Export</span> CSV, any window</div>
+    </div></div>
+
+    <div class="step"><div class="t">07:10</div><div class="body">
+      <div><div class="mod">Parcels · live traceability</div><h3>"Where's my parcel?" answered in seconds</h3><p>Search any barcode and see the parcel: dimensions, weight, destination, chute, service and read status, with its capture image from the scan tunnel. Customer service gets an answer, not a ticket.</p></div>
+      <div class="readout"><span class="h">Parcel search</span><span class="k">Barcode</span> scanned at induct<br><span class="k">Dims / weight</span> captured<br><span class="k">Destination</span> depot → chute<br><span class="k">Image</span> from scan tunnel</div>
+    </div></div>
+
+    <div class="step"><div class="t">09:30</div><div class="body">
+      <div><div class="mod">Chute routing</div><h3>A destination surges, so the shift lead moves it</h3><p>Assign depots to chutes in a few clicks and push the new configuration straight to the sorter through its edge agent. Rebalancing for peak no longer needs a controls engineer on site.</p></div>
+      <figure class="media"><img src="images/press/helios-chute-board.jpg" alt="HeliOS chute board showing live counts per chute on a parcel hub" loading="lazy" width="1520" height="855"><figcaption>Chute board, live site</figcaption></figure>
+    </div></div>
+
+    <div class="step"><div class="t">11:05</div><div class="body">
+      <div><div class="mod">SCADA · live 3D twin</div><h3>A fault, located by device, door and code</h3><p>A real-time 3D model of the actual sorters and conveyors, with parcels moving as they move on the floor. When something stops, the twin shows which device, which door to open and the fault code, and alarms are acknowledged on the same screen.</p></div>
+      <figure class="media"><img src="images/press/helios-twin.jpg" alt="HeliOS live 3D digital twin of a Helix sortation line" loading="lazy" width="1478" height="831"><figcaption>3D twin, live site</figcaption></figure>
+    </div></div>
+
+    <div class="step"><div class="t">11:12</div><div class="body">
+      <div><div class="mod">Engineering · Maintenance</div><h3>The engineer has the drawings and the job card</h3><p>The full electrical schematics live in HeliOS next to the machine they describe: panel layouts, cable runs, PROFINET, power supplies and E-stops. The fix is logged as a work order against the asset, with spares, datasheets and reorder levels, so it becomes planned maintenance next time.</p></div>
+      <div class="readout"><span class="h">Work order</span><span class="k">Asset</span> named device on the line<br><span class="k">Drawing</span> current schematic, linked<br><span class="k">Spares</span> stock and reorder level<br><span class="k">Status</span> <span class="ok">closed · logged to history</span></div>
+    </div></div>
+
+    <div class="step"><div class="t">14:00</div><div class="body">
+      <div><div class="mod">Ask Orion · AI assistant</div><h3>HeliOS spots what a person wouldn't</h3><p>The AI watches the data and says what matters in plain English, grounded in what Orion's engineers have learned on live sites, not general internet data.</p></div>
+      <div class="readout"><span class="h">Ask Orion</span><span class="w">▸</span> Read rate drops 2–3% at the 14:00 shift change. Check lighting or cleaning at the tunnel.<br><span class="w">▸</span> Chute 17 is up 28% week on week. It may need rebalancing.</div>
+    </div></div>
+
+    <div class="step"><div class="t">18:00</div><div class="body">
+      <div><div class="mod">Reports · analytics</div><h3>The day, explained, in one click</h3><p>Daily volume against target, shift breakdowns, sorter leaderboards, out-of-gauge and volumetric reports, with automatic notes on what changed. Exported to PDF or CSV for the owner, the client or the board.</p></div>
+      <div class="readout"><span class="h">End of day</span><span class="k">Volume vs target</span> per shift<br><span class="k">Out of gauge</span> counted and reported<br><span class="k">What changed</span> written for you<br><span class="k">Send</span> PDF · CSV</div>
+    </div></div>
+  </div>
+  <p class="note">Times and readouts illustrate a typical parcel-hub shift. Features shown are in production on live sites.</p>
+</div></section>
+
+<section id="proof"><div class="wrap">
+  <div class="kick">Proof · APC Overnight, Cannock</div>
+  <h2>Running a live parcel hub today</h2>
+  <p class="lead">Project Jupiter is a Helix sortation line at APC Overnight's Cannock hub, designed, built and programmed by Orion and controlled by HeliOS. Same line, same team, two months.</p>
+  <div class="stats">
+    <div class="stat"><b>4,500</b><span>items an hour when proving began, October 2026</span></div>
+    <div class="stat"><b>13,000</b><span>items an hour at peak, November 2026</span></div>
+    <div class="stat"><b>Mixed</b><span>boxes, bags, tyres and irregular items on one line</span></div>
+  </div>
+  <figure class="media"><video autoplay muted loop playsinline preload="metadata" poster="video/helix-live-1-poster.webp"><source src="video/helix-live-1-1280.mp4" type="video/mp4" media="(min-width:700px)"><source src="video/helix-live-1-720.mp4" type="video/mp4"></video><figcaption>Helix and HeliOS, live shift, overhead camera</figcaption></figure>
+</div></section>
+
+<section id="people"><div class="wrap">
+  <div class="kick">Who it's for</div>
+  <h2>Everyone who reads the information</h2>
+  <div class="people">
+    <div class="person"><div class="who">Operators</div><q>What's my chute doing?</q><p>Live counts, blockages and misses on the board at the chute. No codes to decode.</p></div>
+    <div class="person"><div class="who">Shift leads</div><q>Where's the problem, and what do I do?</q><p>Faults by device, door and code. Routing changes in clicks, without waiting for an engineer.</p></div>
+    <div class="person"><div class="who">Engineers</div><q>Give me the drawing and the history.</q><p>Live schematics, alarms, work orders and spares in one place, next to the machine.</p></div>
+    <div class="person"><div class="who">Owners and directors</div><q>Are we hitting the number?</q><p>Volume against target, uptime and payback, tracked live and reported in one click.</p></div>
+  </div>
+</div></section>
+
+<section id="buy"><div class="wrap">
+  <div class="kick">How you buy it</div>
+  <h2>A monthly subscription per site, in four tiers</h2>
+  <p class="lead">Start with visibility and step up as the operation is ready, with no re-install.</p>
+  <div class="tiers">
+    <div class="tier"><b>Core</b><p>Operational visibility: live dashboards, throughput KPIs, alerts and monthly reports.</p></div>
+    <div class="tier"><b>Intelligent</b><p>Prediction and decision support: bottleneck forecasts, demand prediction and trend analytics.</p></div>
+    <div class="tier"><b>Autonomous</b><p>Optimisation and AI actions: dynamic rerouting, labour recommendations, root-cause analysis.</p></div>
+    <div class="tier"><b>Enterprise</b><p>Network-wide intelligence: multi-site control, custom integrations and partner API access.</p></div>
+  </div>
+</div></section>
+
+<section class="end grid-bg"><div class="wrap">
+  <div class="kick">See it running</div>
+  <h2>Industry 4.0, finally on the floor.</h2>
+  <p class="lead">We'll show you HeliOS live, on a system like yours, and talk through which tier fits. Or come to our factory in West Sussex and see a Helix line being built and tested.</p>
+  <div class="cta"><a class="btn" href="/call">Book a live demo</a><a class="btn ghost" href="/visit">Visit the factory</a><a class="btn ghost" href="/helios">HeliOS product page</a></div>
+</div></section>
+
+<footer><div class="wrap"><span>© 2026 Orion MIS Ltd · Designed, built and programmed in West Sussex</span><span><a href="/press">Press</a> · <a href="mailto:info@orionmis.co.uk">info@orionmis.co.uk</a> · +44 333 335 5269</span></div></footer>
+</body>
+</html>
