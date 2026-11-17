@@ -1,0 +1,409 @@
+<!DOCTYPE html><html lang="en-GB"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>APC Cannock Phase 2 — Costs and Programme · Orion MIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#060A16;--navy:#0B1428;--panel:#101C36;--line:rgba(150,180,230,.18);--text:#C9D3E6;--soft:#8592AD;--white:#F4F7FC;--acc:#3AA0FF;--acc2:#7CF3D0;
+  --k1:#F2D04B;--k2:#9B6BFF;--k3:#7CCB5A;--k4:#3FC3F5;--k5:#F0565A}
+@page{size:297mm 210mm;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1b1f27;font-family:'Inter',sans-serif;color:var(--text);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pg{width:297mm;height:210mm;margin:16px auto;background:var(--ink);position:relative;overflow:hidden;break-after:page}
+.pg:last-child{break-after:auto}
+@media print{body{background:var(--ink)}.pg{margin:0}}
+.mono{font-family:'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;font-size:8.5pt}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:12mm 12mm;opacity:.35;pointer-events:none}
+.bleed{position:absolute;inset:0;background-size:cover;background-position:center}
+.shade-l{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,22,.97) 0%,rgba(6,10,22,.86) 40%,rgba(6,10,22,.2) 78%,rgba(6,10,22,0) 100%)}
+.top{position:absolute;top:8mm;left:14mm;right:14mm;display:flex;justify-content:space-between;align-items:center;z-index:3}
+.top img{height:12.5mm}
+.top .mono{color:var(--white);display:flex;align-items:center;gap:3mm}
+.top .mono:before{content:"";width:1.2mm;height:5mm;background:var(--acc);display:inline-block}
+.foot{position:absolute;bottom:8mm;left:14mm;right:14mm;display:flex;justify-content:space-between;color:var(--soft);z-index:3;font-size:7.5pt}
+.tag{color:var(--acc);margin-bottom:4mm}
+h1,h2,h3,.num{font-family:'Space Grotesk',sans-serif;color:var(--white);letter-spacing:-.02em}
+h1{font-size:42pt;line-height:1.02;font-weight:700}
+h1 span,h2 span{color:var(--acc)}
+h2{font-size:26pt;line-height:1.06;font-weight:700;margin-bottom:5mm}
+h3{font-size:12pt;font-weight:600;margin-bottom:1.5mm}
+p{font-size:10pt;line-height:1.6;color:var(--text)}
+.lead{font-size:12pt;line-height:1.55;color:#DCE4F2}
+.z{position:relative;z-index:2}
+.num{font-weight:700;line-height:.95}
+.unit{color:var(--acc);margin-top:2mm}
+.stat{border-left:1.2mm solid var(--acc);padding-left:4mm}
+.card{background:linear-gradient(160deg,rgba(20,36,70,.9),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:3mm;padding:5mm 6mm}
+.card.hot{border-color:var(--acc);background:linear-gradient(160deg,rgba(30,70,140,.75),rgba(11,20,40,.95))}
+.card .mono{color:var(--acc);font-size:7.5pt;margin-bottom:2mm}
+.cap{font-family:'IBM Plex Mono',monospace;font-size:7pt;color:var(--soft);margin-top:1.8mm;letter-spacing:.04em;text-transform:uppercase}
+.dot{display:inline-block;width:2.6mm;height:2.6mm;border-radius:50%;margin-right:2.5mm;vertical-align:middle;position:relative;top:-.3mm}
+
+/* cost table */
+.ct{width:100%;border-collapse:collapse;font-size:10pt}
+.ct th{font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600;text-align:right;padding:0 0 2.5mm;border-bottom:1px solid var(--line)}
+.ct th:first-child{text-align:left}
+.ct td{padding:3mm 0;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;color:var(--text)}
+.ct td:first-child{text-align:left;font-family:'Space Grotesk';font-weight:600;color:var(--white);font-size:11pt}
+.ct td.t{color:var(--white);font-weight:600}
+.ct tr.sub td{border-bottom:1px solid rgba(150,180,230,.4);color:var(--white);font-weight:600}
+.ct tr.less td{color:var(--soft)}
+.ct tr.less td:first-child{color:var(--soft);font-weight:500}
+.ct tr.bal td{border:0;padding-top:4mm;font-family:'Space Grotesk';font-size:15pt;font-weight:700;color:var(--white)}
+.ct tr.bal td.t{color:var(--acc)}
+
+/* renders */
+.rend{border-radius:2.5mm;overflow:hidden;border:1px solid var(--line);background:var(--navy);background-size:cover;background-position:center;position:relative}
+.rend.pending{display:flex;align-items:center;justify-content:center;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:6mm 6mm}
+.rend.pending span{font-family:'IBM Plex Mono';font-size:8pt;letter-spacing:.14em;color:var(--soft);text-transform:uppercase}
+.rend .lab{position:absolute;left:4mm;top:4mm;font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--white);background:rgba(6,10,22,.75);border:1px solid var(--line);padding:1.2mm 2.6mm;border-radius:99px}
+
+/* gantt */
+.gantt{position:relative;margin-top:2mm}
+.g-row{display:grid;grid-template-columns:62mm 1fr 34mm;align-items:center;border-bottom:1px solid var(--line);padding:2.4mm 0}
+.g-name{font-family:'Space Grotesk';font-weight:600;color:var(--white);font-size:10.5pt}
+.g-track{position:relative;height:11mm}
+.g-bar{position:absolute;left:0;height:4.2mm;border-radius:1mm;display:flex;align-items:center;padding-left:2mm;font-family:'IBM Plex Mono';font-size:6.8pt;letter-spacing:.06em;white-space:nowrap}
+.g-bar.std{top:0;background:rgba(133,146,173,.22);border:1px solid rgba(133,146,173,.55);color:var(--text)}
+.g-bar.exp{top:6.2mm;background:var(--acc);color:var(--ink);font-weight:600}
+.g-bar.be{top:6.2mm;background:transparent;border:1px dashed var(--acc);color:var(--acc)}
+.g-save{text-align:right;font-family:'Space Grotesk';font-weight:700;color:var(--acc);font-size:12pt}
+.g-save small{display:block;font-family:'IBM Plex Mono';font-size:6.8pt;color:var(--soft);font-weight:400;letter-spacing:.08em;text-transform:uppercase}
+.g-scale{display:grid;grid-template-columns:62mm 1fr 34mm}
+.g-ticks{position:relative;height:5mm}
+.g-ticks span{position:absolute;transform:translateX(-50%);font-family:'IBM Plex Mono';font-size:6.8pt;color:var(--soft)}
+.g-grid{position:absolute;top:0;bottom:0;left:62mm;right:34mm;pointer-events:none}
+.g-grid i{position:absolute;top:0;bottom:0;width:1px;background:rgba(150,180,230,.08)}
+.key{display:flex;gap:6mm;margin-top:3mm;font-family:'IBM Plex Mono';font-size:7pt;color:var(--soft);letter-spacing:.06em;text-transform:uppercase}
+.key b{display:inline-block;width:7mm;height:2.6mm;border-radius:.6mm;margin-right:2mm;vertical-align:middle}
+
+.opt{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.opt .big{font-family:'Space Grotesk';font-size:24pt;font-weight:700;color:var(--white);line-height:1;margin:2mm 0 3mm}
+.opt .card.hot .big{color:var(--white)}
+.opt ul{list-style:none;font-size:9pt;line-height:1.5}
+.opt li{padding:1.3mm 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:4mm}
+.opt li b{color:var(--white);font-weight:500;white-space:nowrap}
+.step{display:flex;gap:4mm;align-items:flex-start;padding:3mm 0;border-bottom:1px solid var(--line)}
+.step .n{font-family:'IBM Plex Mono';color:var(--acc);font-size:9pt;min-width:9mm}
+.step p{font-size:9.5pt}
+
+/* key dates */
+.kd{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:8mm}
+.kd-c{padding:6mm 6mm 5mm}
+.kd-h{font-family:'Space Grotesk';font-weight:600;color:var(--white);font-size:11pt}
+.kd-was{font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin-top:5mm}
+.kd-was s{display:block;font-family:'Space Grotesk';font-weight:700;font-size:25pt;letter-spacing:-.02em;line-height:1.05;text-transform:none;margin-top:1.5mm;color:#7D89A3;text-decoration-color:rgba(240,86,90,.95);text-decoration-thickness:3px}
+.kd-date::before{content:"Handover";display:block;font-family:'IBM Plex Mono';font-size:7.5pt;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin:4mm 0 1.5mm}
+.kd-date{font-family:'Space Grotesk';font-weight:700;color:var(--white);font-size:25pt;letter-spacing:-.02em;line-height:1.05;margin-top:1.5mm}
+.kd-foot{display:flex;justify-content:space-between;align-items:center;margin-top:5mm;padding-top:3mm;border-top:1px solid rgba(58,160,255,.5)}
+.kd-save{font-family:'IBM Plex Mono';font-size:8.5pt;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--acc2);padding:1.2mm 2.6mm;border-radius:99px}
+.kd-wk{font-family:'IBM Plex Mono';font-size:8pt;color:var(--acc);letter-spacing:.06em}
+.kd-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm;margin-top:9mm}
+.g-ms{position:absolute;top:6.4mm;width:3.6mm;height:3.6mm;background:var(--acc2);transform:translateX(-50%) rotate(45deg);border:1px solid var(--ink);z-index:2}
+.g-grid i.g-now{background:var(--acc);width:1.5px}
+.g-grid i.g-target{background:none;border-left:1.5px dashed var(--acc2)}
+.g-grid i.g-target em{position:absolute;bottom:-5.5mm;left:1.5mm;white-space:nowrap;font-style:normal;font-family:'IBM Plex Mono';font-size:6.8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--acc2)}
+
+.gal{display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:auto auto;gap:5mm 6mm}
+.gal .g-big{grid-row:1/3;display:flex;flex-direction:column}
+.gal .g-big .rend{flex:1;min-height:130mm}
+.g-ticks span{white-space:nowrap}
+.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.rend{position:relative}
+
+.logos{display:flex;align-items:center;gap:5mm}
+.logos .lsep{width:1px;height:11mm;background:rgba(255,255,255,.35)}
+.top .logos img.apc{height:14.5mm}
+.play{position:absolute;right:4mm;top:4mm;z-index:2;font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--acc2);padding:1.4mm 3mm;border-radius:99px;text-decoration:none;font-weight:600}
+.pay td.pc{font-family:'Space Grotesk';font-weight:700;color:var(--white);font-size:13pt;width:22mm}
+.ct.pays{table-layout:fixed;width:100%}.ct.pays th,.ct.pays td{padding-left:1.2mm;padding-right:1.2mm;white-space:nowrap;font-size:8pt}.ct.pays th:first-child,.ct.pays td:first-child{width:52mm}.ct.pays tr.bal td{font-size:9pt}.ct.pays tr.bal td:last-child{font-size:10.5pt}
+
+.scr-video{display:none}
+@media screen{
+  .vwrap .scr-video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:2.5mm;border:1px solid var(--line);background:#000;z-index:4}
+}
+
+@media screen{
+  html{background:#02050C}
+  body{padding:64px 0 40px}
+  .pg{margin:0 auto 10mm;box-shadow:0 10px 40px rgba(0,0,0,.55)}
+  .webbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(6,10,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(150,180,230,.18);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8592AD}
+  .webbar a{color:#041223;background:#3AA0FF;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:600;letter-spacing:.08em}
+}
+@media print{.webbar{display:none}}
+</style></head><body>
+<div class="webbar"><span>Orion MIS · APC Cannock phase 2 · private</span><a href="document.pdf">Download PDF</a></div>
+
+
+<!-- 1 · COVER -->
+<section class="pg">
+  <div class="bleed"><img class="fill" src="f/assets-jupiter-hall.jpg" alt="" style="object-position:70% center"></div>
+  <div class="shade-l"></div><div class="grid-bg" style="opacity:.16"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Prepared for APC Overnight · Cannock</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:46mm;width:160mm">
+    <div class="mono tag">— Cannock phase 2 · costs and programme</div>
+    <h1>Two new lines.<br>Two upgrades.<br><span>One programme.</span></h1>
+    <p class="lead" style="margin-top:7mm;width:138mm">This document sets out the price of each work package, the handover dates and the payment terms.</p>
+    <div style="display:flex;gap:10mm;margin-top:12mm">
+      <div class="stat"><div class="num" style="font-size:28pt">£2.57m</div><div class="mono unit" style="font-size:7.5pt">Balance · four packages</div></div>
+      <div class="stat"><div class="num" style="font-size:28pt;white-space:nowrap">Apr 2027</div><div class="mono unit" style="font-size:7.5pt">Mars Line live</div></div>
+      <div class="stat"><div class="num" style="font-size:28pt;white-space:nowrap">Jun 2027</div><div class="mono unit" style="font-size:7.5pt">Both new lines live</div></div>
+    </div>
+  </div>
+  <div class="foot mono"><span>orionmis.co.uk · All prices £ excl. VAT</span><span>Commercial in confidence</span></div>
+</section>
+
+<!-- 2 · THE PACKAGES + COSTS -->
+<section class="pg">
+  <div class="grid-bg"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">01 · Scope and cost</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm;display:grid;grid-template-columns:78mm 1fr;gap:12mm">
+    <div>
+      <div class="mono tag">— Four work packages</div>
+      <h2>What the <span>£2.57m</span> covers.</h2>
+      <p>Two new sortation lines, the bottom sorter camera upgrade and the Jupiter 1 conveyor upgrade. Each package is priced separately so it can be tracked on its own.</p>
+      <p style="margin-top:4mm">Funds already received are deducted from the total.</p>
+      <div class="card" style="margin-top:7mm">
+        <div class="mono">Colour key</div>
+        <p style="font-size:8.5pt">Package colours match the cost sheet and the layout drawings.</p>
+      </div>
+    </div>
+    <table class="ct">
+      <tr><th>Package</th><th>Price</th></tr>
+      <tr><td><span class="dot" style="background:var(--k1)"></span>Mars Line · 10 lanes</td><td class="t">1,597,582.90</td></tr>
+      <tr><td><span class="dot" style="background:var(--k2)"></span>Earth Line</td><td class="t">1,228,120.90</td></tr>
+      <tr><td><span class="dot" style="background:var(--k3)"></span>Bottom sorter camera upgrade</td><td class="t">221,574.66</td></tr>
+      <tr><td><span class="dot" style="background:var(--k4)"></span>Jupiter 1 conveyor upgrades</td><td class="t">108,553.15</td></tr>
+      <tr class="sub"><td>Programme total</td><td class="t">3,155,831.61</td></tr>
+      <tr class="less"><td>Less funds received</td><td class="t" style="color:var(--soft)">−587,777.00</td></tr>
+      <tr class="bal"><td>Balance</td><td class="t">£2,568,054.61</td></tr>
+    </table>
+  </div>
+  <div class="foot mono"><span>All figures £ excl. VAT</span><span>02</span></div>
+</section>
+
+<!-- 3 · MARS LINE -->
+<section class="pg">
+  <div class="grid-bg"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">02 · Mars Line</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag"><span class="dot" style="background:var(--k1)"></span>Package 1 · new line</div><h2 style="margin:0">Mars <span>Line.</span></h2></div>
+      <p style="width:110mm;font-size:9.5pt">Ten-lane Helix sortation line controlled by HeliOS, the same technology running on Jupiter 1 at Cannock. Parcels enter on the straight infeed belt, pass the scan arch and divert at ten sort points into lanes with cages on both sides.</p>
+    </div>
+    <div class="rend" style="height:72mm"><img class="fill" src="f/renders-gallery-line2-plan-overview.jpg" alt=""></div>
+    <div class="cap">Layout as drawn · outfeeds towards viewer</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6mm;margin-top:4mm">
+      <div class="card" style="padding:6mm">
+        <div class="mono">Price</div>
+        <div class="num" style="font-family:'Space Grotesk';font-weight:700;font-size:24pt;color:var(--white);margin-top:3mm">£1,597,582.90</div>
+        <p style="font-size:8.5pt;margin-top:2mm">Excl. VAT · 10 lanes</p>
+      </div>
+      <div class="card hot" style="padding:6mm">
+        <div class="mono">Handover</div>
+        <div class="num" style="font-family:'Space Grotesk';font-weight:700;font-size:24pt;color:var(--white);margin-top:3mm">April 2027</div>
+        <p style="font-size:8.5pt;margin-top:2mm">For an order in November 2026</p>
+      </div>
+      <div class="vwrap" style="position:relative"><a href="https://orionmis.co.uk/apc-360-147bba09/#mars" style="display:block;text-decoration:none">
+        <div class="rend" style="height:100%;min-height:40mm"><img class="fill" src="f/renders-gallery-line2-360-thumb.jpg" alt="">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,10,22,.35)"><div style="width:15mm;height:15mm;border-radius:50%;background:var(--acc2);display:flex;align-items:center;justify-content:center;font-size:16pt;color:var(--ink);padding-left:1mm">▶</div></div>
+          <span class="play" style="top:auto;bottom:3mm;right:3mm">360° video</span>
+        </div>
+      </a><video class="scr-video" src="https://orionmis.co.uk/apc-360-147bba09/mars-line-360.mp4" poster="f/renders-gallery-line2-360-thumb.jpg" controls loop playsinline preload="metadata"></video></div>
+    </div>
+  </div>
+  <div class="foot mono"><span>Render from Orion layout drawing · indicative · 360° video · orionmis.co.uk/apc-360-147bba09</span><span>03</span></div>
+</section>
+
+<!-- GALLERY · Mars Line · 10 lanes -->
+<section class="pg">
+  <div class="grid-bg"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">02 · Mars Line · gallery</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:28mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag"><span class="dot" style="background:var(--k1)"></span>Mars Line · 10 lanes</div><h2 style="margin:0">Ten sort lanes, <span>one main line.</span></h2></div>
+      <p style="width:100mm;font-size:9pt">Parcels enter on the straight infeed belt, pass the scan arch, and divert at ten sort points into lanes with cages on both sides.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4mm 6mm">
+      <div style="grid-column:1/3"><div class="rend" style="height:73mm"><img class="fill" src="f/renders-gallery-line2-plan-aerial.jpg" alt=""></div><div class="cap">Aerial · full layout, as drawn</div></div>
+      <div><div class="rend" style="height:52mm"><img class="fill" src="f/renders-gallery-line2-3-sortpoints.jpg" alt=""></div><div class="cap">Operator view · sort points into cage lanes</div></div>
+      <div><div class="rend" style="height:52mm"><img class="fill" src="f/renders-gallery-line2-4-scan.jpg" alt=""></div><div class="cap">Scan arch and infeed belt</div></div>
+    </div>
+  </div>
+  <div class="foot mono"><span>Renders from Orion layout drawings · indicative</span><span>04</span></div>
+</section>
+
+<!-- 3b · EARTH LINE -->
+<section class="pg">
+  <div class="grid-bg"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">03 · Earth Line</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag"><span class="dot" style="background:var(--k2)"></span>Package 2 · new line</div><h2 style="margin:0">Earth <span>Line.</span></h2></div>
+      <p style="width:110mm;font-size:9.5pt">Recirculating Helix sortation loop controlled by HeliOS, the same technology running on Jupiter 1 at Cannock. Parcels circulate past the scan arch and divert into five take-away lanes, with 99 cage positions on the lanes.</p>
+    </div>
+    <div class="rend" style="height:72mm"><img class="fill" src="f/renders-gallery-jup2-plan-overview.jpg" alt=""></div>
+    <div class="cap">Layout · take-away lanes towards viewer</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6mm;margin-top:4mm">
+      <div class="card" style="padding:6mm">
+        <div class="mono">Price</div>
+        <div class="num" style="font-family:'Space Grotesk';font-weight:700;font-size:24pt;color:var(--white);margin-top:3mm">£1,228,120.90</div>
+        <p style="font-size:8.5pt;margin-top:2mm">Excl. VAT · 5 take-away lanes</p>
+      </div>
+      <div class="card hot" style="padding:6mm">
+        <div class="mono">Handover</div>
+        <div class="num" style="font-family:'Space Grotesk';font-weight:700;font-size:24pt;color:var(--white);margin-top:3mm">June 2027</div>
+        <p style="font-size:8.5pt;margin-top:2mm">For an order in November 2026</p>
+      </div>
+      <div class="vwrap" style="position:relative"><a href="https://orionmis.co.uk/apc-360-147bba09/#earth" style="display:block;text-decoration:none">
+        <div class="rend" style="height:100%;min-height:40mm"><img class="fill" src="f/renders-gallery-jup2-360-thumb.jpg" alt="">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(6,10,22,.35)"><div style="width:15mm;height:15mm;border-radius:50%;background:var(--acc2);display:flex;align-items:center;justify-content:center;font-size:16pt;color:var(--ink);padding-left:1mm">▶</div></div>
+          <span class="play" style="top:auto;bottom:3mm;right:3mm">360° video</span>
+        </div>
+      </a><video class="scr-video" src="https://orionmis.co.uk/apc-360-147bba09/earth-line-360.mp4" poster="f/renders-gallery-jup2-360-thumb.jpg" controls loop playsinline preload="metadata"></video></div>
+    </div>
+  </div>
+  <div class="foot mono"><span>Render from Orion layout drawing · indicative · 360° video · orionmis.co.uk/apc-360-147bba09</span><span>05</span></div>
+</section>
+
+<!-- GALLERY · Earth Line -->
+<section class="pg">
+  <div class="grid-bg"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">03 · Earth Line · gallery</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:28mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag"><span class="dot" style="background:var(--k2)"></span>Earth Line</div><h2 style="margin:0">One loop, <span>five take-away lanes.</span></h2></div>
+      <p style="width:100mm;font-size:9pt">Parcels circulate on the loop past the scan arch and divert into five take-away lanes, with 99 cage positions on the lanes.</p>
+    </div>
+    <div class="gal">
+      <div class="g-big"><div class="rend" style="height:100%"><img class="fill" src="f/renders-gallery-jup2-plan-aerial.jpg" alt=""></div><div class="cap">Aerial · take-away lanes towards viewer</div></div>
+      <div><div class="rend" style="height:62mm"><img class="fill" src="f/renders-gallery-jup2-3-lanes.jpg" alt=""></div><div class="cap">Operator view · take-away lane between cage rows</div></div>
+      <div><div class="rend" style="height:62mm"><img class="fill" src="f/renders-gallery-jup2-4-loop.jpg" alt=""></div><div class="cap">Loop end and scan arch</div></div>
+    </div>
+  </div>
+  <div class="foot mono"><span>Renders from Orion layout drawings · indicative</span><span>06</span></div>
+</section>
+
+<!-- 5 · BOTTOM SORTER CAMERA UPGRADE -->
+<section class="pg">
+  <div class="grid-bg"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">04 · Bottom sorter camera upgrade</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag"><span class="dot" style="background:var(--k3)"></span>Package 3 · upgrade</div><h2 style="margin:0">Bottom sorter <span>camera upgrade.</span></h2></div>
+      <p style="width:110mm;font-size:9.5pt">Camera upgrades.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:5mm">
+      <div class="rend" style="height:92mm"><img class="fill" src="f/renders-tunnel-tunnel-hero.jpg" alt=""></div>
+      <div style="display:grid;grid-template-rows:1fr 1fr;gap:5mm">
+        <div class="rend"><img class="fill" src="f/renders-tunnel-tunnel-side.jpg" alt=""></div>
+        <div class="rend"><img class="fill" src="f/renders-tunnel-tunnel-front.jpg" alt=""></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6mm;margin-top:5mm">
+      <div class="card" style="padding:6mm">
+        <div class="mono">Price</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:24pt;color:var(--white);margin-top:3mm">£221,574.66</div>
+        <p style="font-size:8.5pt;margin-top:2mm">Excl. VAT · bottom sorter</p>
+      </div>
+      <div class="card hot" style="padding:6mm">
+        <div class="mono">Handover</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:24pt;color:var(--white);margin-top:3mm">February 2027</div>
+        <p style="font-size:8.5pt;margin-top:2mm">For an order in November 2026</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot mono"><span>Renders · indicative · panel artwork subject to APC approval</span><span>07</span></div>
+</section>
+
+<!-- 6 · JUPITER 1 CONVEYOR UPGRADES -->
+<section class="pg">
+  <div class="grid-bg"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">05 · Jupiter 1 conveyor upgrades</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag"><span class="dot" style="background:var(--k4)"></span>Package 4 · upgrade</div><h2 style="margin:0">Jupiter 1 <span>conveyor upgrades.</span></h2></div>
+      <p style="width:110mm;font-size:9.5pt">Upgrades to the Jupiter 1 conveyor system.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:5mm">
+      <div class="rend" style="height:92mm"><img class="fill" src="f/assets-helix-module.jpg" alt=""></div>
+      <div class="rend" style="height:92mm"><img class="fill" src="f/assets-helix-jupiter-banks.jpg" alt=""></div>
+      <div class="rend" style="height:92mm"><img class="fill" src="f/assets-helix-wheels.jpg" alt=""></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6mm;margin-top:6mm">
+      <div class="card" style="padding:6mm">
+        <div class="mono">Price</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:24pt;color:var(--white);margin-top:3mm">£108,553.15</div>
+        <p style="font-size:8.5pt;margin-top:2mm">Excl. VAT</p>
+      </div>
+      <div class="card hot" style="padding:6mm">
+        <div class="mono">Handover</div>
+        <div style="font-family:'Space Grotesk';font-weight:700;font-size:24pt;color:var(--white);margin-top:3mm">February 2027</div>
+        <p style="font-size:8.5pt;margin-top:2mm">For an order in November 2026</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot mono"><span>All figures £ excl. VAT</span><span>08</span></div>
+</section>
+
+<!-- 4 · KEY DATES -->
+<section class="pg">
+  <div class="bleed" style="opacity:.22"><img class="fill" src="f/assets-jupiter-live-overview.jpg" alt=""></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,10,22,.75),rgba(6,10,22,.98) 60%)"></div>
+  <div class="grid-bg"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">06 · Programme</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:28mm;right:14mm">
+    <div class="mono tag">— Handover months</div>
+    <h2 style="font-size:30pt;margin-bottom:3mm">Both new lines live by <span>June 2027.</span></h2>
+    <p class="lead" style="width:190mm">Mars Line hands over in April 2027 and Earth Line in June 2027.</p>
+
+    <div class="kd" style="grid-template-columns:repeat(2,1fr)">
+      <div class="card hot kd-c">
+        <div class="kd-h"><span class="dot" style="background:var(--k1)"></span>Mars Line · 10 lanes</div>
+        <div class="kd-date">Apr 2027</div>
+        <div class="kd-foot"><span class="kd-save">Mars Line live</span><span class="kd-wk">Helix · HeliOS</span></div>
+      </div>
+      <div class="card hot kd-c">
+        <div class="kd-h"><span class="dot" style="background:var(--k2)"></span>Earth Line</div>
+        <div class="kd-date">Jun 2027</div>
+        <div class="kd-foot"><span class="kd-save">Earth Line live</span><span class="kd-wk">Helix · HeliOS</span></div>
+      </div>
+    </div>
+
+    <div class="kd-strip">
+      <div class="stat"><div class="num" style="font-size:24pt">Jun 2027</div><div class="mono unit" style="font-size:7pt">Both new lines live</div></div>
+      <div class="stat"><div class="num" style="font-size:24pt">Apr 2027</div><div class="mono unit" style="font-size:7pt">Mars Line live</div></div>
+      <div class="stat"><div class="num" style="font-size:24pt">Feb 2027</div><div class="mono unit" style="font-size:7pt">Upgrades complete</div></div>
+      <div class="stat"><div class="num" style="font-size:24pt">4</div><div class="mono unit" style="font-size:7pt">Packages · one programme</div></div>
+    </div>
+  </div>
+  <div class="foot mono"><span>Handover months assume order received in November 2026 · each week later moves handover by one week</span><span>09</span></div>
+</section>
+
+<!-- 5 · PAYMENT TERMS AND TIMESCALES -->
+<section class="pg">
+  <div class="grid-bg"></div>
+  <div class="top"><span class="logos"><img src="f/assets-orion-logo-white.png" alt="Orion"><i class="lsep"></i><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">07 · Payment terms and timescales</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:6mm">
+      <div><div class="mono tag">— Payment terms and timescales</div><h2 style="margin:0">Payment <span>schedule.</span></h2></div>
+      <p style="width:120mm;font-size:9.5pt">Each package is paid in three stages: <b style="color:var(--white)">50% with the order</b>, <b style="color:var(--white)">30% the month before handover</b> and <b style="color:var(--white)">20% on handover</b>.</p>
+    </div>
+    <table class="ct pays" style="font-size:8.6pt">
+      <tr><th>Package</th><th class="t">Handover</th><th class="t">Nov 26</th><th class="t">Jan 27</th><th class="t">Feb 27</th><th class="t">Mar 27</th><th class="t">Apr 27</th><th class="t">May 27</th><th class="t">Jun 27</th><th class="t">Total</th></tr>
+      <tr><td><span class="dot" style="background:var(--k1)"></span>Mars Line · 10 lanes</td><td class="t">Apr 2027</td><td class="t">504,902.95</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t">302,941.77</td><td class="t">201,961.18</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--white)">1,009,805.90</td></tr><tr><td><span class="dot" style="background:var(--k2)"></span>Earth Line</td><td class="t">Jun 2027</td><td class="t">614,060.45</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t">368,436.27</td><td class="t">245,624.18</td><td class="t" style="color:var(--white)">1,228,120.90</td></tr><tr><td><span class="dot" style="background:var(--k3)"></span>Bottom sorter camera upgrade</td><td class="t">Feb 2027</td><td class="t">110,787.33</td><td class="t">66,472.40</td><td class="t">44,314.93</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--white)">221,574.66</td></tr><tr><td><span class="dot" style="background:var(--k4)"></span>Jupiter 1 conveyor upgrades</td><td class="t">Feb 2027</td><td class="t">54,276.58</td><td class="t">32,565.95</td><td class="t">21,710.62</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--soft)">—</td><td class="t" style="color:var(--white)">108,553.15</td></tr>
+      <tr class="bal"><td>Balance</td><td></td><td class="t">1,284,027.31</td><td class="t">99,038.35</td><td class="t">66,025.55</td><td class="t">302,941.77</td><td class="t">201,961.18</td><td class="t">368,436.27</td><td class="t">245,624.18</td><td class="t">£2,568,054.61</td></tr>
+    </table>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6mm;margin-top:8mm">
+      <div class="card" style="padding:5mm 6mm"><div class="mono">With order · Nov 2026</div><div style="font-family:'Space Grotesk';font-weight:700;font-size:20pt;color:var(--white);margin-top:2mm">£1,284,027.31</div><p style="font-size:8.5pt;margin-top:1mm">50% of every package</p></div>
+      <div class="card" style="padding:5mm 6mm"><div class="mono">Both new lines live</div><div style="font-family:'Space Grotesk';font-weight:700;font-size:20pt;color:var(--white);margin-top:2mm">June 2027</div><p style="font-size:8.5pt;margin-top:1mm">Mars Line April · Earth Line June</p></div>
+      <div class="card hot" style="padding:5mm 6mm"><div class="mono">Balance</div><div style="font-family:'Space Grotesk';font-weight:700;font-size:20pt;color:var(--white);margin-top:2mm">£2,568,054.61</div><p style="font-size:8.5pt;margin-top:1mm">After £587,777.00 funds received on Mars Line</p></div>
+    </div>
+  </div>
+  <div class="foot mono"><span>All figures £ excl. VAT · months assume order received in November 2026</span><span>10</span></div>
+</section>
+
+<script>
+(function(){function fit(){var w=document.querySelector('.pg');if(!w)return;var pw=w.offsetWidth,s=Math.min(1,(window.innerWidth-24)/pw);document.body.style.zoom=s;}
+window.addEventListener('resize',fit);window.addEventListener('load',fit);fit();})();
+</script>
+</body></html>
