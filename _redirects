@@ -11,6 +11,10 @@
 /go/li-install /warehouse-automation-installation-time 302
 /go/li-call https://calendly.com/danny-grigg-orionmis/30min 302
 
+# HeliOS tour merged into the HeliOS page (17 Nov 2026)
+/helios-tour /helios 301
+/helios-tour.html /helios 301
+
 
 # ── Legacy URLs from the old site ──────────────────────────────────────
 # Search engines and AI crawlers still hold the old site's URLs (blog
