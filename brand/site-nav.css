@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Site nav: the standard Orion top banner, nav bar and phone menu.
+   Values are the ones the main pages render with (after site-bridge.css),
+   written out in full so this file works on pages that use a different
+   set of CSS variables (helios.html, why-finance.html, privacy, terms).
+   Pair with /brand/site-nav.js on pages that have no menu script of their own.
+   ========================================================================== */
+
+.top-banner{position:fixed;top:0;left:0;right:0;z-index:60;height:34px;background:#0B1428;color:#C9D3E6;border-bottom:1px solid rgba(150,180,230,.18);overflow:hidden;display:flex;align-items:center;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.top-banner-track{display:flex;gap:0;align-items:center;animation:topBanner 48s linear infinite;white-space:nowrap}
+.top-banner-track:hover{animation-play-state:paused}
+.top-banner-content{display:flex;align-items:center;gap:0;flex-shrink:0;padding-right:56px}
+.tb-item{flex-shrink:0;padding:0 18px}
+.tb-sep{flex-shrink:0;opacity:.45}
+.tb-item a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(201,211,230,.4);padding-bottom:1px}
+@keyframes topBanner{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.nav{position:fixed;top:34px;left:0;right:0;z-index:50;height:88px;background:rgba(5,11,20,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.10);padding:0 36px;display:flex;align-items:center;justify-content:space-between;transition:box-shadow .2s;font-family:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif;line-height:1.55;letter-spacing:-.005em}
+.nav.scrolled{box-shadow:0 8px 28px rgba(0,0,0,.4)}
+.nav a{color:inherit;text-decoration:none}
+.nav .logo img{height:64px;width:auto;filter:brightness(0) invert(1);display:block}
+.news-dot{display:inline-block;width:8px;height:8px;background:#3AA0FF;border-radius:50%;margin-left:7px;box-shadow:0 0 10px #3AA0FF,0 0 3px rgba(58,160,255,.7);animation:newsPulse 2.4s ease-in-out infinite;vertical-align:super;position:relative;top:-3px}
+@keyframes newsPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.45}}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:13px;color:rgba(247,250,255,.68)}
+.nav li a{padding:6px 0;position:relative;transition:color .2s}
+.nav li a:hover{color:#fff}
+.nav li a.page-active{color:#3AA0FF}
+.nav li a.page-active::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:#3AA0FF;box-shadow:0 0 12px #3AA0FF}
+.nav-actions{display:flex;align-items:center;gap:14px}
+.nav .phone{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;letter-spacing:.11em;color:rgba(247,250,255,.45);text-transform:uppercase}
+@media(max-width:1360px){.nav .phone{display:none}}
+.nav .quote{background:#fff;color:#07111F;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;display:inline-flex;align-items:center;gap:6px;transition:transform .15s,background .2s}
+.nav .quote:hover{transform:translateY(-1px);background:#3AA0FF;color:#00111d}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:transparent;border:none}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:122px;left:0;right:0;background:rgba(5,11,20,.98);backdrop-filter:blur(20px);border-bottom:1px solid rgba(58,160,255,.28);padding:18px 24px 24px;z-index:49;flex-direction:column;gap:2px;font-family:"Inter","Inter Fallback",system-ui,-apple-system,sans-serif}
+.mobile-nav.open{display:flex}
+.mobile-nav a{font-size:16px;color:#fff;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.10);text-decoration:none}
+.mobile-nav a:last-of-type{border-bottom:none}
+.mobile-nav a.mobile-cta{background:#fff;color:#07111F!important;border-radius:999px;padding:14px;margin-top:10px;font-weight:800;text-align:center}
+
+@media(max-width:1050px){
+  .nav ul,.nav .phone{display:none}
+  .hamburger{display:flex}
+  .nav .quote{display:none}
+}
+@media(max-width:700px){
+  .top-banner{display:none!important}
+  .nav{top:0!important;height:64px;padding-left:20px;padding-right:20px}
+  .mobile-nav{top:64px!important}
+  .nav .logo img{height:40px!important}
+}

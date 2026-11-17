@@ -132,6 +132,7 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
 .section-head h2 em{font-style:italic;color:var(--cyan)}
 .section-head p{font-size:16px;line-height:1.6;max-width:540px}
 .section-head .head-left{flex:1;min-width:280px}
+@media(max-width:600px){.section-head .head-left{min-width:0}.section-head>*{max-width:100%}.section-head h2{overflow-wrap:anywhere}.section-head .head-right{flex-wrap:wrap}.crt-video-container{overflow:hidden}.crt-video-container video{max-width:100%}}
 .section-head .head-right{display:flex;gap:10px;align-items:center}
 
 /* ── NEWS SECTION (Curator feed) ── */
@@ -262,24 +263,22 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
 <nav class="nav" id="mainNav">
   <a class="logo" href="index.html"><img src="images/orion-logo.png" alt="Orion MIS"></a>
   <ul>
-    <li><a href="index.html#helix">Helix</a></li><li><a href="helios.html">Helios</a></li><li><a href="explainer-why-orion.html">Why Orion</a></li>
+    <li><a href="index.html#helix">Helix</a></li>
+    <li><a href="helios.html">Helios</a></li>
+    <li><a href="explainer-why-orion.html">Why Orion</a></li>
     <li><a href="index.html#roi">ROI</a></li>
     <li><a href="warehouse-automation-finance.html">Finance</a></li>
     <li><a href="products.html">Products</a></li>
     <li><a href="index.html#proof">Case studies</a></li>
     <li><a href="news.html" class="page-active">News &amp; builds</a></li>
-    <li><a href="sketch.html?type=sketch">Send a sketch</a></li><li><a href="solution-builder.html">Solution builder</a></li>
+    <li><a href="sketch.html?type=sketch">Send a sketch</a></li>
+    <li><a href="solution-builder.html">Solution builder</a></li>
     <li><a href="index.html#faq">FAQs</a></li>
   </ul>
   <div class="nav-actions">
     <span class="phone">UK-built automation</span>
-    <a class="quote" href="sketch.html?type=visit">
-      Book a site visit
-      <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-    <button class="hamburger" id="hamburger" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
+    <a class="quote" href="sketch.html?type=visit">Book a site visit<svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -289,7 +288,6 @@ padding:80px 36px 60px;border-bottom:1px solid var(--line)}
   <a href="explainer-why-orion.html">Why Orion</a>
   <a href="index.html#roi">ROI</a>
   <a href="warehouse-automation-finance.html">Finance</a>
-  <a href="index.html#sectors">Sectors</a>
   <a href="products.html">Products</a>
   <a href="index.html#proof">Case studies</a>
   <a href="news.html">News &amp; builds</a>

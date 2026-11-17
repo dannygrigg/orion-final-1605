@@ -87,6 +87,7 @@ img{display:block;max-width:100%;height:auto}
 <link rel="stylesheet" href="mobile.css?v=1">
 <link rel="stylesheet" href="/brand/site-bridge.css">
 <link rel="stylesheet" href="/brand/site-sections.css">
+<link rel="stylesheet" href="/brand/site-nav.css">
 </head>
 <body>
 
@@ -117,22 +118,42 @@ img{display:block;max-width:100%;height:auto}
   </div>
 </div>
 
-<nav class="nav">
+<nav class="nav" id="mainNav">
   <a class="logo" href="index.html"><img src="images/orion-logo.png" alt="Orion MIS"></a>
   <ul>
-    <li><a href="index.html#helix">Helix</a></li><li><a href="helios.html">Helios</a></li><li><a href="explainer-why-orion.html">Why Orion</a></li>
+    <li><a href="index.html#helix">Helix</a></li>
+    <li><a href="helios.html">Helios</a></li>
+    <li><a href="explainer-why-orion.html">Why Orion</a></li>
     <li><a href="index.html#roi">ROI</a></li>
     <li><a href="warehouse-automation-finance.html">Finance</a></li>
     <li><a href="products.html">Products</a></li>
     <li><a href="index.html#proof">Case studies</a></li>
-    <li><a href="news.html">News &amp; builds</a></li><li><a href="press">Press &amp; media</a></li>
-    <li><a href="sketch.html?type=sketch">Send a sketch</a></li><li><a href="solution-builder.html">Solution builder</a></li><li><a href="insights.html">Insights &amp; guides</a></li>
+    <li><a href="news.html">News &amp; builds<span class="news-dot" aria-label="new updates"></span></a></li>
+    <li><a href="sketch.html?type=sketch">Send a sketch</a></li>
+    <li><a href="solution-builder.html">Solution builder</a></li>
     <li><a href="index.html#faq">FAQs</a></li>
   </ul>
-  <a class="quote" href="sketch.html?type=visit">Book a site visit
-    <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </a>
+  <div class="nav-actions">
+    <span class="phone">UK-built automation</span>
+    <a class="quote" href="sketch.html?type=visit">Book a site visit<svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
 </nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html#helix">Helix</a>
+  <a href="helios.html">Helios</a>
+  <a href="explainer-why-orion.html">Why Orion</a>
+  <a href="index.html#roi">ROI</a>
+  <a href="warehouse-automation-finance.html">Finance</a>
+  <a href="products.html">Products</a>
+  <a href="index.html#proof">Case studies</a>
+  <a href="news.html">News &amp; builds<span class="news-dot" aria-label="new updates"></span></a>
+  <a href="sketch.html?type=sketch">Send a sketch</a>
+  <a href="solution-builder.html">Solution builder</a>
+  <a href="index.html#faq">FAQs</a>
+  <a href="sketch.html?type=visit" class="mobile-cta">Book a site visit</a>
+</div>
 
 <section class="hero">
   <div class="hero-inner">
@@ -212,5 +233,6 @@ img{display:block;max-width:100%;height:auto}
 </footer>
 
 <script src="site.js" defer></script>
+<script src="/brand/site-nav.js" defer></script>
 </body>
 </html>
