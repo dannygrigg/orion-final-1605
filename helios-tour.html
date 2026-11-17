@@ -96,6 +96,14 @@ section{padding:clamp(64px,9vw,120px) 0;border-top:1px solid var(--line)}
 .readout .ok{color:var(--acc2)} .readout .w{color:var(--warn)} .readout .x{color:var(--bad)}
 .readout .h{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:8px}
 .step .media{margin-top:0}
+.step.wide .body{grid-template-columns:1fr}
+.step.wide .body>div:first-child{max-width:780px}
+.screen{border-radius:12px;overflow:hidden;border:1px solid rgba(58,160,255,.35);box-shadow:0 30px 80px -30px rgba(58,160,255,.35);background:#0a0f1c;position:relative}
+.screen .chrome{display:flex;align-items:center;gap:7px;padding:9px 12px;border-bottom:1px solid var(--line);background:#0d1424}
+.screen .chrome i{width:9px;height:9px;border-radius:50%;background:#2a3550;display:block}
+.screen .chrome span{margin-left:8px;font:500 11.5px var(--m);color:var(--soft);letter-spacing:.04em}
+.real{display:inline-flex;align-items:center;gap:6px;font:600 10.5px var(--m);letter-spacing:.14em;text-transform:uppercase;color:var(--acc2);margin-left:10px}
+.real:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc2)}
 @media(max-width:800px){.shift:before{left:7px}.step{grid-template-columns:1fr;gap:6px;padding-left:30px}.step .t{text-align:left}.step .t:after{left:2px;top:27px}.step .body{padding-left:0;grid-template-columns:1fr}}
 .step>*,.step .body>*,.split>*,.nodes>*{min-width:0}
 .readout{overflow-wrap:anywhere}
@@ -195,9 +203,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <div class="readout"><span class="h">Shift lead · today</span><span class="k">Target</span> 96,000 items<br><span class="k">Sorters</span> <span class="ok">3 of 3 ready</span><br><span class="k">Staff on</span> 38<br><span class="k">Open work orders</span> <span class="w">2</span></div>
     </div></div>
 
-    <div class="step"><div class="t">06:00</div><div class="body">
-      <div><div class="mod">Stats · live operations</div><h3>Induct starts and the numbers are live</h3><p>Throughput, good, multi and no-read rates, uptime and active sorters, site-wide or per sorter, from a 10-minute window to the whole day. No waiting for a report to find out how the first hour went.</p></div>
-      <div class="readout"><span class="h">Live · last 10 minutes</span><span class="k">Throughput</span> <span class="ok">rising</span><br><span class="k">Good reads</span> <span class="ok">on target</span><br><span class="k">No-reads</span> routed to reject<br><span class="k">Export</span> CSV, any window</div>
+    <div class="step wide"><div class="t">06:00</div><div class="body">
+      <div><div class="mod">Stats · live operations<span class="real">Real screen</span></div><h3>Induct starts and the numbers are live</h3><p>Throughput, good, multi and no-read rates, uptime and active sorters, site-wide or per sorter, from a 10-minute window to the whole day. Every chute is scored two ways: <b>delivered</b>, the share of parcels routed there that arrived, and <b>clean</b>, whether anything landed there that didn't belong. On Sorter 1 at Cannock, every chute reads 100% clean.</p></div>
+      <figure class="screen"><div class="chrome"><i></i><i></i><i></i><span>HeliOS · Stats</span></div><img src="images/helios-tour/accuracy.webp" alt="HeliOS per-chute accuracy on Sorter 1 at APC Overnight Cannock: delivered 98.3% to 99.9%, clean 100% on every chute" loading="lazy" width="1143" height="224"></figure>
     </div></div>
 
     <div class="step"><div class="t">07:10</div><div class="body">
@@ -205,32 +213,32 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
       <div class="readout"><span class="h">Parcel search</span><span class="k">Barcode</span> scanned at induct<br><span class="k">Dims / weight</span> captured<br><span class="k">Destination</span> depot → chute<br><span class="k">Image</span> from scan tunnel</div>
     </div></div>
 
-    <div class="step"><div class="t">09:30</div><div class="body">
-      <div><div class="mod">Chute routing</div><h3>A destination surges, so the shift lead moves it</h3><p>Assign depots to chutes in a few clicks and push the new configuration straight to the sorter through its edge agent. Rebalancing for peak no longer needs a controls engineer on site.</p></div>
-      <figure class="media"><img src="images/press/helios-chute-board.jpg" alt="HeliOS chute board showing live counts per chute on a parcel hub" loading="lazy" width="1520" height="855"><figcaption>Chute board, live site</figcaption></figure>
+    <div class="step wide"><div class="t">09:30</div><div class="body">
+      <div><div class="mod">Chute routing<span class="real">Real screen</span></div><h3>A destination surges, so the shift lead moves it</h3><p>Assign depots to chutes in a few clicks and push the new configuration straight to the sorter through its edge agent. HeliOS also suggests the move itself: here, three cage moves would cut the busiest chute from 5,991 to 5,309 parcels. Rebalancing for peak no longer needs a controls engineer on site.</p></div>
+      <figure class="screen"><div class="chrome"><i></i><i></i><i></i><span>HeliOS · Chute routing</span></div><img src="images/helios-tour/routing.webp" alt="HeliOS chute routing for Sorter 1 with a suggested load rebalance and the edge agent synced" loading="lazy" width="1152" height="420"></figure>
     </div></div>
 
-    <div class="step"><div class="t">11:05</div><div class="body">
-      <div><div class="mod">SCADA · live 3D twin</div><h3>A fault, located by device, door and code</h3><p>A real-time 3D model of the actual sorters and conveyors, with parcels moving as they move on the floor. When something stops, the twin shows which device, which door to open and the fault code, and alarms are acknowledged on the same screen.</p></div>
-      <figure class="media"><img src="images/press/helios-twin.jpg" alt="HeliOS live 3D digital twin of a Helix sortation line" loading="lazy" width="1478" height="831"><figcaption>3D twin, live site</figcaption></figure>
+    <div class="step wide"><div class="t">11:05</div><div class="body">
+      <div><div class="mod">SCADA · live 3D twin<span class="real">Real screen</span></div><h3>A fault, located by device, door and code</h3><p>A real-time 3D model of the actual sorter, with parcels moving as they move on the floor. When something stops, the twin shows which device, which door to open and the fault code, and alarms are acknowledged on the same screen. Alongside it, the Insights panel explains in plain English where parcels lost tracking and what to check first.</p></div>
+      <figure class="screen"><div class="chrome"><i></i><i></i><i></i><span>HeliOS · SCADA</span></div><img src="images/helios-tour/twin.webp" alt="HeliOS live 3D twin of Mixed Freight Sorter 1 at APC Overnight Cannock with the Insights panel" loading="lazy" width="1143" height="492"></figure>
     </div></div>
 
-    <div class="step"><div class="t">11:12</div><div class="body">
-      <div><div class="mod">Engineering · Maintenance</div><h3>The engineer has the drawings and the job card</h3><p>The full electrical schematics live in HeliOS next to the machine they describe: panel layouts, cable runs, PROFINET, power supplies and E-stops. The fix is logged as a work order against the asset, with spares, datasheets and reorder levels, so it becomes planned maintenance next time.</p></div>
-      <div class="readout"><span class="h">Work order</span><span class="k">Asset</span> named device on the line<br><span class="k">Drawing</span> current schematic, linked<br><span class="k">Spares</span> stock and reorder level<br><span class="k">Status</span> <span class="ok">closed · logged to history</span></div>
+    <div class="step wide"><div class="t">11:12</div><div class="body">
+      <div><div class="mod">Engineering · Maintenance<span class="real">Real screen</span></div><h3>The engineer has the drawings and the job card</h3><p>The full electrical schematics live in HeliOS next to the machine they describe: panel layouts, cable runs, PROFINET, power supplies and E-stops. The fix is logged as a work order against the asset, with spares, datasheets and reorder levels, so it becomes planned maintenance next time.</p></div>
+      <figure class="screen"><div class="chrome"><i></i><i></i><i></i><span>HeliOS · Engineering</span></div><img src="images/helios-tour/eplan.webp" alt="HeliOS Engineering module showing the Sorter 1 EPLAN electrical schematic, 436 pages, searchable by component" loading="lazy" width="1143" height="610"></figure>
     </div></div>
 
     <div class="step"><div class="t">14:00</div><div class="body">
-      <div><div class="mod">Ask Orion · AI assistant</div><h3>HeliOS spots what a person wouldn't</h3><p>The AI watches the data and says what matters in plain English, grounded in what Orion's engineers have learned on live sites, not general internet data.</p></div>
-      <div class="readout"><span class="h">Ask Orion</span><span class="w">▸</span> Read rate drops 2–3% at the 14:00 shift change. Check lighting or cleaning at the tunnel.<br><span class="w">▸</span> Chute 17 is up 28% week on week. It may need rebalancing.</div>
+      <div><div class="mod">Ask Orion · AI insights<span class="real">Real output</span></div><h3>HeliOS spots what a person wouldn't</h3><p>The AI watches the data and says what matters in plain English, grounded in what Orion's engineers have learned on live sites, not general internet data.</p></div>
+      <div class="readout"><span class="h">Insight · Sorter 1, APC Cannock</span><span class="w">▸</span> No-read rate 11.0% over the last 200 parcels (was 7.5% over the previous 200).<br>All 22 were correctly rejected to the error chute, so sortation handled them right: the loss is re-handling, not mis-sorts. Rising no-reads usually mean label print quality, camera focus, or the read triggering at the wrong moment. Check recent label stock and the camera panel before touching the sorter.</div>
     </div></div>
 
-    <div class="step"><div class="t">18:00</div><div class="body">
-      <div><div class="mod">Reports · analytics</div><h3>The day, explained, in one click</h3><p>Daily volume against target, shift breakdowns, sorter leaderboards, out-of-gauge and volumetric reports, with automatic notes on what changed. Exported to PDF or CSV for the owner, the client or the board.</p></div>
-      <div class="readout"><span class="h">End of day</span><span class="k">Volume vs target</span> per shift<br><span class="k">Out of gauge</span> counted and reported<br><span class="k">What changed</span> written for you<br><span class="k">Send</span> PDF · CSV</div>
+    <div class="step wide"><div class="t">18:00</div><div class="body">
+      <div><div class="mod">Reports · ask in plain English<span class="real">Real screen</span></div><h3>The month, explained, in one question</h3><p>Type the question you'd ask an analyst, such as "read rate by day for the last 30 days", and HeliOS builds the report: headline numbers against the previous period, the trend, the daily breakdown and a note on what changed. Night reviews, out-of-gauge and volumetric reports sit alongside, exported to PDF or CSV for the owner, the client or the board.</p></div>
+      <figure class="screen"><div class="chrome"><i></i><i></i><i></i><span>HeliOS · Reports</span></div><img src="images/helios-tour/report.webp" alt="HeliOS report for Sorter 1: 455.2k parcels and a 96.98% read rate over 30 days" loading="lazy" width="1143" height="475"></figure>
     </div></div>
   </div>
-  <p class="note">Times and readouts illustrate a typical parcel-hub shift. Features shown are in production on live sites.</p>
+  <p class="note">Screens marked "real" are from HeliOS running Sorter 1 at APC Overnight, Cannock, captured 17 November 2026. Times, and the panels not marked real, illustrate a typical shift.</p>
 </div></section>
 
 <section id="proof"><div class="wrap">
@@ -240,7 +248,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <div class="stats">
     <div class="stat"><b>4,500</b><span>items an hour when proving began, October 2026</span></div>
     <div class="stat"><b>13,000</b><span>items an hour at peak, November 2026</span></div>
-    <div class="stat"><b>Mixed</b><span>boxes, bags, tyres and irregular items on one line</span></div>
+    <div class="stat"><b>455,200</b><span>parcels through Sorter 1 in 30 days, at a 96.98% read rate</span></div>
   </div>
   <figure class="media"><video autoplay muted loop playsinline preload="metadata" poster="video/helix-live-1-poster.webp"><source src="video/helix-live-1-1280.mp4" type="video/mp4" media="(min-width:700px)"><source src="video/helix-live-1-720.mp4" type="video/mp4"></video><figcaption>Helix and HeliOS, live shift, overhead camera</figcaption></figure>
 </div></section>
