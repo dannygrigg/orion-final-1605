@@ -59,6 +59,7 @@ export const DOCS = {
       'f/renders-tunnel-tunnel-front.jpg': { name: 'renders-tunnel-tunnel-front.jpg', type: 'image/jpeg' },
       'f/renders-tunnel-tunnel-hero.jpg': { name: 'renders-tunnel-tunnel-hero.jpg', type: 'image/jpeg' },
       'f/renders-tunnel-tunnel-side.jpg': { name: 'renders-tunnel-tunnel-side.jpg', type: 'image/jpeg' },
+      'presentation.pptx': { name: 'Orion - APC Cannock Phase 2 - Costs and Programme.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
     },
   },
 };
