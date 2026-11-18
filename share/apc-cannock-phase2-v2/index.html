@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en-GB"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>APC Cannock Phase 2 — Costs and Programme · Orion MIS</title>
+<title>APC Cannock Phase 2 · Costs and Programme</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#060A16;--navy:#0B1428;--panel:#101C36;--line:rgba(150,180,230,.18);--text:#C9D3E6;--soft:#8592AD;--white:#F4F7FC;--acc:#3AA0FF;--acc2:#7CF3D0;
@@ -128,6 +128,14 @@ tr.rxrow td{text-decoration:line-through;text-decoration-color:#F0565A;text-deco
 /* v2: Aptos throughout (falls back to Segoe UI where browsers can't use Aptos) */
 body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe UI',system-ui,sans-serif !important}
 
+/* WS footer band (v2) */
+.wsfoot{position:absolute;left:0;right:0;bottom:0;height:24mm;z-index:4;pointer-events:none}
+.wsbar{position:absolute;left:0;right:0;bottom:8.2mm;height:2.6mm;background:linear-gradient(90deg,#165CA1 0%,#166AAB 25%,#1C83C0 50%,#26A1D9 75%,#2CB1E5 100%);box-shadow:0 0 6mm rgba(44,177,229,.35)}
+.wsbar::after{content:"";position:absolute;left:0;right:0;top:0;height:42%;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0))}
+.wslogo{position:absolute;right:13mm;bottom:3.6mm;height:12mm;filter:drop-shadow(0 1.2mm 2mm rgba(0,0,0,.45))}
+.wspn{position:absolute;left:14mm;bottom:3mm;font-size:8pt;font-weight:600;letter-spacing:.06em;color:#9FB3E8}
+.wsnote{position:absolute;left:24mm;bottom:3.2mm;font-size:6.8pt;letter-spacing:.12em;text-transform:uppercase;color:#7D89A3}
+
 .hero-video{object-fit:cover;object-position:50% 58%;background:#000}
 @media screen{
   html{background:#02050C}
@@ -156,7 +164,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div class="stat"><div class="num" style="font-size:28pt;white-space:nowrap">Jun 2027</div><div class="mono unit" style="font-size:7.5pt">Both new lines live</div></div>
     </div>
   </div>
-  <div class="foot mono"><span>orionmis.co.uk · All prices £ excl. VAT</span><span>Commercial in confidence</span></div>
+  <div class="wsfoot"><div class="wsnote" style="left:14mm">All prices £ excl. VAT · Commercial in confidence</div><div class="wsbar"></div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <!-- 2 · THE PACKAGES + COSTS -->
@@ -186,7 +194,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <tr class="bal"><td>Balance</td><td class="t">£2,685,311.46</td></tr>
     </table>
   </div>
-  <div class="foot mono"><span>All figures £ excl. VAT</span><span>02</span></div>
+  <div class="wsfoot"><div class="wsnote">All figures £ excl. VAT</div><div class="wsbar"></div><div class="wspn">02</div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <!-- 3 · MARS LINE -->
@@ -198,7 +206,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div><div class="mono tag"><span class="dot" style="background:var(--k1)"></span>Package 1 · new line</div><h2 style="margin:0">Mars <span>Line.</span></h2></div>
       <p style="width:110mm;font-size:9.5pt">Ten-lane Helix sortation line controlled by HeliOS, the same technology running on Jupiter 1 at Cannock. Parcels enter on the straight infeed belt, pass the scan arch and divert at ten sort points into lanes with cages on both sides.</p>
     </div>
-    <div class="rend" style="height:80mm"><video class="fill hero-video" autoplay muted loop playsinline preload="auto" poster="f/renders-gallery-line2-plan-overview.jpg" src="https://orionmis.co.uk/apc-360-147bba09/mars-line-360.mp4"></video></div>
+    <div class="rend" style="height:80mm"><video class="fill hero-video" autoplay muted loop playsinline preload="auto" poster="f/renders-gallery-line2-plan-overview.jpg" src="/apc-360-147bba09/mars-line-360.mp4"></video></div>
     <div class="cap">360° view</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6mm;margin-top:4mm">
       <div class="card" style="padding:6mm">
@@ -214,7 +222,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div class="rend" style="height:100%;min-height:40mm"><img class="fill" src="f/renders-gallery-line2-plan-overview.jpg" alt="" style="object-fit:contain;background:#0B1226"><span class="play" style="top:auto;bottom:3mm;right:3mm;background:rgba(6,10,22,.8);color:#C9D3E6;border:1px solid rgba(150,180,230,.25)">Layout as drawn</span></div>
     </div>
   </div>
-  <div class="foot mono"><span>Render from Orion layout drawing · indicative · 360° video · orionmis.co.uk/apc-360-147bba09</span><span>03</span></div>
+  <div class="wsfoot"><div class="wsnote">Render from layout drawing · indicative</div><div class="wsbar"></div><div class="wspn">03</div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <!-- GALLERY · Mars Line · 10 lanes -->
@@ -231,7 +239,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div><div class="rend" style="height:45mm"><img class="fill" src="f/renders-gallery-line2-4-scan.jpg" alt=""></div><div class="cap">Scan arch and infeed belt</div></div>
     </div>
   </div>
-  <div class="foot mono"><span>Renders from Orion layout drawings · indicative</span><span>04</span></div>
+  <div class="wsfoot"><div class="wsnote">Renders from layout drawings · indicative</div><div class="wsbar"></div><div class="wspn">04</div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <!-- 3b · EARTH LINE -->
@@ -243,7 +251,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div><div class="mono tag"><span class="dot" style="background:var(--k2)"></span>Package 2 · new line</div><h2 style="margin:0">Earth <span>Line.</span></h2></div>
       <p style="width:110mm;font-size:9.5pt">Recirculating Helix sortation loop controlled by HeliOS, the same technology running on Jupiter 1 at Cannock. Parcels circulate past the scan arch and divert into five take-away lanes, with 99 cage positions on the lanes.</p>
     </div>
-    <div class="rend" style="height:80mm"><video class="fill hero-video" autoplay muted loop playsinline preload="auto" poster="f/renders-gallery-jup2-plan-overview.jpg" src="https://orionmis.co.uk/apc-360-147bba09/earth-line-360.mp4"></video></div>
+    <div class="rend" style="height:80mm"><video class="fill hero-video" autoplay muted loop playsinline preload="auto" poster="f/renders-gallery-jup2-plan-overview.jpg" src="/apc-360-147bba09/earth-line-360.mp4"></video></div>
     <div class="cap">360° view</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6mm;margin-top:4mm">
       <div class="card" style="padding:6mm">
@@ -259,7 +267,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div class="rend" style="height:100%;min-height:40mm"><img class="fill" src="f/renders-gallery-jup2-plan-overview.jpg" alt="" style="object-fit:contain;background:#0B1226"><span class="play" style="top:auto;bottom:3mm;right:3mm;background:rgba(6,10,22,.8);color:#C9D3E6;border:1px solid rgba(150,180,230,.25)">Layout as drawn</span></div>
     </div>
   </div>
-  <div class="foot mono"><span>Render from Orion layout drawing · indicative · 360° video · orionmis.co.uk/apc-360-147bba09</span><span>05</span></div>
+  <div class="wsfoot"><div class="wsnote">Render from layout drawing · indicative</div><div class="wsbar"></div><div class="wspn">05</div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <!-- GALLERY · Earth Line -->
@@ -276,7 +284,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div><div class="rend" style="height:52mm"><img class="fill" src="f/renders-gallery-jup2-4-loop.jpg" alt=""></div><div class="cap">Loop end and scan arch</div></div>
     </div>
   </div>
-  <div class="foot mono"><span>Renders from Orion layout drawings · indicative</span><span>06</span></div>
+  <div class="wsfoot"><div class="wsnote">Renders from layout drawings · indicative</div><div class="wsbar"></div><div class="wspn">06</div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <!-- 5 · BLUE SORTER CAMERA AND SOFTWARE UPGRADES -->
@@ -289,10 +297,10 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <p style="width:110mm;font-size:9.5pt">Camera upgrades.</p>
     </div>
     <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:5mm">
-      <div class="rend" style="height:82mm"><img class="fill" src="f/renders-tunnel-tunnel-hero.jpg" alt=""></div>
+      <div class="rend" style="height:82mm"><img class="fill" src="f/renders-tunnel-v2-tunnel-hero.jpg" alt=""></div>
       <div style="display:grid;grid-template-rows:1fr 1fr;gap:5mm">
-        <div class="rend"><img class="fill" src="f/renders-tunnel-tunnel-side.jpg" alt=""></div>
-        <div class="rend"><img class="fill" src="f/renders-tunnel-tunnel-front.jpg" alt=""></div>
+        <div class="rend"><img class="fill" src="f/renders-tunnel-v2-tunnel-side.jpg" alt=""></div>
+        <div class="rend"><img class="fill" src="f/renders-tunnel-v2-tunnel-front.jpg" alt=""></div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6mm;margin-top:5mm">
@@ -308,7 +316,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       </div>
     </div>
   </div>
-  <div class="foot mono"><span>Renders · indicative · panel artwork subject to APC approval</span><span>07</span></div>
+  <div class="wsfoot"><div class="wsnote">Renders · indicative · panel artwork subject to APC approval</div><div class="wsbar"></div><div class="wspn">07</div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <!-- 6 · JUPITER 1 CONVEYOR UPGRADES -->
@@ -320,7 +328,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div><div class="mono tag"><span class="dot" style="background:var(--k4)"></span>Package 4 · <s class="rx">completion</s></div><h2 style="margin:0"><s class="rx">Jupiter 1 <span>completion.</span></s></h2></div>
       <p style="width:110mm;font-size:9.5pt"><s class="rx">Completion of the Jupiter 1 conveyor system.</s></p>
     </div>
-    <div class="vwrap rend" style="position:relative;height:86mm"><img class="fill" src="f/assets-helix-loop-poster.jpg" alt=""><video class="scr-video" autoplay muted loop playsinline preload="auto" poster="f/assets-helix-loop-poster.jpg" src="https://orionmis.co.uk/apc-360-147bba09/helix-loop.mp4"></video></div>
+    <div class="vwrap rend" style="position:relative;height:86mm"><img class="fill" src="f/assets-helix-loop-poster.jpg" alt=""><video class="scr-video" autoplay muted loop playsinline preload="auto" poster="f/assets-helix-loop-poster.jpg" src="/apc-360-147bba09/helix-loop.mp4"></video></div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6mm;margin-top:6mm">
       <div class="card" style="padding:6mm">
         <div class="mono">Price</div>
@@ -334,7 +342,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       </div>
     </div>
   </div>
-  <div class="foot mono"><span>All figures £ excl. VAT</span><span>08</span></div>
+  <div class="wsfoot"><div class="wsnote">All figures £ excl. VAT</div><div class="wsbar"></div><div class="wspn">08</div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <!-- 4 · KEY DATES -->
@@ -369,7 +377,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div class="stat"><div class="num" style="font-size:24pt">5</div><div class="mono unit" style="font-size:7pt">Packages · one programme</div></div>
     </div>
   </div>
-  <div class="foot mono"><span>Handover months assume order received in November 2026 · each week later moves handover by one week</span><span>09</span></div>
+  <div class="wsfoot"><div class="wsnote">Handover months assume order received in November 2026 · each week later moves handover by one week</div><div class="wsbar"></div><div class="wspn">09</div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <!-- 5 · PAYMENT TERMS AND TIMESCALES -->
@@ -392,7 +400,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div class="card hot" style="padding:5mm 6mm"><div class="mono">Balance</div><div style="font-family:'Space Grotesk';font-weight:700;font-size:20pt;color:var(--white);margin-top:2mm">£2,685,311.46</div><p style="font-size:8.5pt;margin-top:1mm">After £1,709,976.00 funds received · Mars Line £587,777.00 · Jupiter 1 £1,122,199.00</p></div>
     </div>
   </div>
-  <div class="foot mono"><span>All figures £ excl. VAT · months assume order received in November 2026</span><span>10</span></div>
+  <div class="wsfoot"><div class="wsnote">All figures £ excl. VAT · months assume order received in November 2026</div><div class="wsbar"></div><div class="wspn">10</div><img class="wslogo" src="f/assets-ws-logo.svg" alt="WS"></div>
 </section>
 
 <script>

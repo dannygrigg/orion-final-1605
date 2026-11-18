@@ -112,15 +112,15 @@ button:hover{filter:brightness(1.08)}
 </head>
 <body>
 <div class="grid"></div>
-<header><div class="head"><div class="mark">ORION</div><div class="meta">Private document · Orion MIS</div></div></header>
+<header><div class="head"><div class="mark">${doc.neutral ? '' : 'ORION'}</div><div class="meta">${doc.neutral ? 'Private document' : 'Private document · Orion MIS'}</div></div></header>
 <main><div class="card">
 <span class="lbl">${esc(doc.ref)}</span>
 <h1>${esc(doc.title)}</h1>
-<p>Prepared for <b>${esc(doc.customer)}</b>. Enter the PIN Orion gave you to open it. The PIN is sent separately from the link.</p>
+<p>Prepared for <b>${esc(doc.customer)}</b>. Enter the PIN ${doc.neutral ? 'you were given' : 'Orion gave you'} to open it. The PIN is sent separately from the link.</p>
 <input id="pin" type="password" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="one-time-code" maxlength="32" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autofocus>
 <button id="go">Open document</button>
 <div id="err">${esc(msg)}</div>
-<div class="foot">Commercial in confidence<br>Orion MIS Ltd · orionmis.co.uk</div>
+<div class="foot">Commercial in confidence${doc.neutral ? '' : '<br>Orion MIS Ltd · orionmis.co.uk'}</div>
 </div></main>
 <script>
 var pin=document.getElementById('pin'),err=document.getElementById('err');
