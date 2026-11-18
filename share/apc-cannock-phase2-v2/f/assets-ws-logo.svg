@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-14 -8 252 118">
-  <g transform="skewX(-14)" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">
-    <path fill="#0055A4" d="M24 0 H48 L52 58 L66 22 H84 L95 58 L104 0 H128 L112 100 H86 L75 60 L62 100 H36 Z"/>
-    <path fill="#00C7F9" d="M150 0 H226 L221 22 H160 Q152 22 152 30 Q152 38 160 38 H196 Q222 38 222 62 V76 Q222 100 198 100 H118 L123 78 H189 Q197 78 197 70 Q197 62 189 62 H154 Q127 62 127 38 V24 Q127 0 150 0 Z"/>
-  </g>
-</svg>

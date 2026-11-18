@@ -70,12 +70,11 @@ export const DOCS = {
     pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',   // same PIN as apc-cannock-phase2 / apc-sorter1-cap
     expires: null,
     files: {
-      'document.pdf': { name: 'APC Cannock Phase 2 - WS version.pdf', type: 'application/pdf' },
+      'document.pdf': { name: 'APC Cannock Phase 2 - v2.pdf', type: 'application/pdf' },
       'f/assets-apc-logo-2026.svg': { name: 'assets-apc-logo-2026.svg', type: 'image/svg+xml' },
       'f/assets-helix-loop-poster.jpg': { name: 'assets-helix-loop-poster.jpg', type: 'image/jpeg' },
       'f/assets-jupiter-hall.jpg': { name: 'assets-jupiter-hall.jpg', type: 'image/jpeg' },
       'f/assets-jupiter-live-overview.jpg': { name: 'assets-jupiter-live-overview.jpg', type: 'image/jpeg' },
-      'f/assets-ws-logo.svg': { name: 'assets-ws-logo.svg', type: 'image/svg+xml' },
       'f/renders-gallery-jup2-3-lanes.jpg': { name: 'renders-gallery-jup2-3-lanes.jpg', type: 'image/jpeg' },
       'f/renders-gallery-jup2-4-loop.jpg': { name: 'renders-gallery-jup2-4-loop.jpg', type: 'image/jpeg' },
       'f/renders-gallery-jup2-plan-aerial.jpg': { name: 'renders-gallery-jup2-plan-aerial.jpg', type: 'image/jpeg' },
@@ -87,7 +86,7 @@ export const DOCS = {
       'f/renders-tunnel-v2-tunnel-front.jpg': { name: 'renders-tunnel-v2-tunnel-front.jpg', type: 'image/jpeg' },
       'f/renders-tunnel-v2-tunnel-hero.jpg': { name: 'renders-tunnel-v2-tunnel-hero.jpg', type: 'image/jpeg' },
       'f/renders-tunnel-v2-tunnel-side.jpg': { name: 'renders-tunnel-v2-tunnel-side.jpg', type: 'image/jpeg' },
-      'presentation.pptx': { name: 'APC Cannock Phase 2 - WS version.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
+      'presentation.pptx': { name: 'APC Cannock Phase 2 - v2.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
     },
   },
   'apc-cannock-phase2-as-sent': {
