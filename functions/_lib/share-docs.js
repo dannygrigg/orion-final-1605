@@ -45,9 +45,7 @@ export const DOCS = {
     files: {
       'document.pdf': { name: 'Orion - APC Cannock Phase 2 - Costs and Programme.pdf', type: 'application/pdf' },
       'f/assets-apc-logo-2026.svg': { name: 'assets-apc-logo-2026.svg', type: 'image/svg+xml' },
-      'f/assets-helix-jupiter-banks.jpg': { name: 'assets-helix-jupiter-banks.jpg', type: 'image/jpeg' },
-      'f/assets-helix-module.jpg': { name: 'assets-helix-module.jpg', type: 'image/jpeg' },
-      'f/assets-helix-wheels.jpg': { name: 'assets-helix-wheels.jpg', type: 'image/jpeg' },
+      'f/assets-helix-loop-poster.jpg': { name: 'assets-helix-loop-poster.jpg', type: 'image/jpeg' },
       'f/assets-jupiter-hall.jpg': { name: 'assets-jupiter-hall.jpg', type: 'image/jpeg' },
       'f/assets-jupiter-live-overview.jpg': { name: 'assets-jupiter-live-overview.jpg', type: 'image/jpeg' },
       'f/renders-gallery-jup2-3-lanes.jpg': { name: 'renders-gallery-jup2-3-lanes.jpg', type: 'image/jpeg' },
