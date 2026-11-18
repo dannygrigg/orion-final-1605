@@ -15,7 +15,7 @@ body{background:#1b1f27;font-family:'Inter',sans-serif;color:var(--text);-webkit
 .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:12mm 12mm;opacity:.35;pointer-events:none}
 .bleed{position:absolute;inset:0;background-size:cover;background-position:center}
 .shade-l{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,22,.97) 0%,rgba(6,10,22,.86) 40%,rgba(6,10,22,.2) 78%,rgba(6,10,22,0) 100%)}
-.top{position:absolute;top:8mm;left:14mm;right:14mm;display:flex;justify-content:space-between;align-items:center;z-index:3}
+.top{position:absolute;top:6mm;left:14mm;right:14mm;display:flex;justify-content:space-between;align-items:center;z-index:3}
 .top img{height:12.5mm}
 .top .mono{color:var(--white);display:flex;align-items:center;gap:3mm}
 .top .mono:before{content:"";width:1.2mm;height:5mm;background:var(--acc);display:inline-block}
@@ -105,14 +105,14 @@ p{font-size:10pt;line-height:1.6;color:var(--text)}
 
 .gal{display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:auto auto;gap:5mm 6mm}
 .gal .g-big{grid-row:1/3;display:flex;flex-direction:column}
-.gal .g-big .rend{flex:1;min-height:130mm}
+.gal .g-big .rend{flex:1;min-height:110mm}
 .g-ticks span{white-space:nowrap}
 .fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .rend{position:relative}
 
 .logos{display:flex;align-items:center;gap:5mm}
 .logos .lsep{width:1px;height:11mm;background:rgba(255,255,255,.35)}
-.top .logos img.apc{height:14.5mm}
+.top .logos img.apc{height:29mm}
 .play{position:absolute;right:4mm;top:4mm;z-index:2;font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--acc2);padding:1.4mm 3mm;border-radius:99px;text-decoration:none;font-weight:600}
 .pay td.pc{font-family:'Space Grotesk';font-weight:700;color:var(--white);font-size:13pt;width:22mm}
 .ct.pays{table-layout:fixed;width:100%}.ct.pays th,.ct.pays td{padding-left:1mm;padding-right:1mm;white-space:nowrap;font-size:7.6pt}.ct.pays th:first-child,.ct.pays td:first-child{width:46mm}.ct.pays tr.bal td{font-size:8.4pt}.ct.pays tr.bal td:last-child{font-size:9pt}.ct.pays th:last-child,.ct.pays td:last-child{width:27mm}.ct.pays th:nth-child(2),.ct.pays td:nth-child(2){width:17mm}
@@ -158,7 +158,7 @@ s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-
 <section class="pg">
   <div class="grid-bg"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">01 · Scope and cost</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm;display:grid;grid-template-columns:78mm 1fr;gap:12mm">
+  <div class="z" style="position:absolute;left:14mm;top:38mm;right:14mm;display:grid;grid-template-columns:78mm 1fr;gap:12mm">
     <div>
       <div class="mono tag">— Five work packages</div>
       <h2>What the <span>£4.09m</span> covers.</h2>
@@ -188,7 +188,7 @@ s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-
 <section class="pg">
   <div class="grid-bg"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">02 · Mars Line</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+  <div class="z" style="position:absolute;left:14mm;top:38mm;right:14mm">
     <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
       <div><div class="mono tag"><span class="dot" style="background:var(--k1)"></span>Package 1 · new line</div><h2 style="margin:0">Mars <span>Line.</span></h2></div>
       <p style="width:110mm;font-size:9.5pt">Ten-lane Helix sortation line controlled by HeliOS, the same technology running on Jupiter 1 at Cannock. Parcels enter on the straight infeed belt, pass the scan arch and divert at ten sort points into lanes with cages on both sides.</p>
@@ -216,15 +216,15 @@ s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-
 <section class="pg">
   <div class="grid-bg"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">02 · Mars Line · gallery</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:28mm;right:14mm">
+  <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
     <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
       <div><div class="mono tag"><span class="dot" style="background:var(--k1)"></span>Mars Line · 10 lanes</div><h2 style="margin:0">Ten sort lanes, <span>one main line.</span></h2></div>
       <p style="width:100mm;font-size:9pt">Parcels enter on the straight infeed belt, pass the scan arch, and divert at ten sort points into lanes with cages on both sides.</p>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4mm 6mm">
-      <div style="grid-column:1/3"><div class="rend" style="height:73mm"><img class="fill" src="f/renders-gallery-line2-plan-aerial.jpg" alt=""></div><div class="cap">Aerial · full layout, as drawn</div></div>
-      <div><div class="rend" style="height:52mm"><img class="fill" src="f/renders-gallery-line2-3-sortpoints.jpg" alt=""></div><div class="cap">Operator view · sort points into cage lanes</div></div>
-      <div><div class="rend" style="height:52mm"><img class="fill" src="f/renders-gallery-line2-4-scan.jpg" alt=""></div><div class="cap">Scan arch and infeed belt</div></div>
+      <div style="grid-column:1/3"><div class="rend" style="height:64mm"><img class="fill" src="f/renders-gallery-line2-plan-aerial.jpg" alt=""></div><div class="cap">Aerial · full layout, as drawn</div></div>
+      <div><div class="rend" style="height:45mm"><img class="fill" src="f/renders-gallery-line2-3-sortpoints.jpg" alt=""></div><div class="cap">Operator view · sort points into cage lanes</div></div>
+      <div><div class="rend" style="height:45mm"><img class="fill" src="f/renders-gallery-line2-4-scan.jpg" alt=""></div><div class="cap">Scan arch and infeed belt</div></div>
     </div>
   </div>
   <div class="foot mono"><span>Renders from Orion layout drawings · indicative</span><span>04</span></div>
@@ -234,7 +234,7 @@ s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-
 <section class="pg">
   <div class="grid-bg"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">03 · Earth Line</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+  <div class="z" style="position:absolute;left:14mm;top:38mm;right:14mm">
     <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
       <div><div class="mono tag"><span class="dot" style="background:var(--k2)"></span>Package 2 · new line</div><h2 style="margin:0">Earth <span>Line.</span></h2></div>
       <p style="width:110mm;font-size:9.5pt">Recirculating Helix sortation loop controlled by HeliOS, the same technology running on Jupiter 1 at Cannock. Parcels circulate past the scan arch and divert into five take-away lanes, with 99 cage positions on the lanes.</p>
@@ -262,15 +262,15 @@ s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-
 <section class="pg">
   <div class="grid-bg"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">03 · Earth Line · gallery</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:28mm;right:14mm">
+  <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
     <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
       <div><div class="mono tag"><span class="dot" style="background:var(--k2)"></span>Earth Line</div><h2 style="margin:0">One loop, <span>five take-away lanes.</span></h2></div>
       <p style="width:100mm;font-size:9pt">Parcels circulate on the loop past the scan arch and divert into five take-away lanes, with 99 cage positions on the lanes.</p>
     </div>
     <div class="gal">
       <div class="g-big"><div class="rend" style="height:100%"><img class="fill" src="f/renders-gallery-jup2-plan-aerial.jpg" alt=""></div><div class="cap">Aerial · take-away lanes towards viewer</div></div>
-      <div><div class="rend" style="height:62mm"><img class="fill" src="f/renders-gallery-jup2-3-lanes.jpg" alt=""></div><div class="cap">Operator view · take-away lane between cage rows</div></div>
-      <div><div class="rend" style="height:62mm"><img class="fill" src="f/renders-gallery-jup2-4-loop.jpg" alt=""></div><div class="cap">Loop end and scan arch</div></div>
+      <div><div class="rend" style="height:52mm"><img class="fill" src="f/renders-gallery-jup2-3-lanes.jpg" alt=""></div><div class="cap">Operator view · take-away lane between cage rows</div></div>
+      <div><div class="rend" style="height:52mm"><img class="fill" src="f/renders-gallery-jup2-4-loop.jpg" alt=""></div><div class="cap">Loop end and scan arch</div></div>
     </div>
   </div>
   <div class="foot mono"><span>Renders from Orion layout drawings · indicative</span><span>06</span></div>
@@ -280,13 +280,13 @@ s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-
 <section class="pg">
   <div class="grid-bg"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">04 · Bottom sorter camera upgrade</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+  <div class="z" style="position:absolute;left:14mm;top:38mm;right:14mm">
     <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
       <div><div class="mono tag"><span class="dot" style="background:var(--k3)"></span>Package 3 · upgrade</div><h2 style="margin:0">Bottom sorter <span>camera upgrade.</span></h2></div>
       <p style="width:110mm;font-size:9.5pt">Camera upgrades.</p>
     </div>
     <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:5mm">
-      <div class="rend" style="height:92mm"><img class="fill" src="f/renders-tunnel-tunnel-hero.jpg" alt=""></div>
+      <div class="rend" style="height:82mm"><img class="fill" src="f/renders-tunnel-tunnel-hero.jpg" alt=""></div>
       <div style="display:grid;grid-template-rows:1fr 1fr;gap:5mm">
         <div class="rend"><img class="fill" src="f/renders-tunnel-tunnel-side.jpg" alt=""></div>
         <div class="rend"><img class="fill" src="f/renders-tunnel-tunnel-front.jpg" alt=""></div>
@@ -312,15 +312,15 @@ s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-
 <section class="pg">
   <div class="grid-bg"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">05 · <s class="rx">Jupiter 1 completion</s></div></div>
-  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+  <div class="z" style="position:absolute;left:14mm;top:38mm;right:14mm">
     <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
       <div><div class="mono tag"><span class="dot" style="background:var(--k4)"></span>Package 4 · <s class="rx">completion</s></div><h2 style="margin:0"><s class="rx">Jupiter 1 <span>completion.</span></s></h2></div>
       <p style="width:110mm;font-size:9.5pt"><s class="rx">Completion of the Jupiter 1 conveyor system.</s></p>
     </div>
     <div style="display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:5mm">
-      <div class="rend" style="height:92mm"><img class="fill" src="f/assets-helix-module.jpg" alt=""></div>
-      <div class="rend" style="height:92mm"><img class="fill" src="f/assets-helix-jupiter-banks.jpg" alt=""></div>
-      <div class="rend" style="height:92mm"><img class="fill" src="f/assets-helix-wheels.jpg" alt=""></div>
+      <div class="rend" style="height:82mm"><img class="fill" src="f/assets-helix-module.jpg" alt=""></div>
+      <div class="rend" style="height:82mm"><img class="fill" src="f/assets-helix-jupiter-banks.jpg" alt=""></div>
+      <div class="rend" style="height:82mm"><img class="fill" src="f/assets-helix-wheels.jpg" alt=""></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:6mm;margin-top:6mm">
       <div class="card" style="padding:6mm">
@@ -344,7 +344,7 @@ s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-
   <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,10,22,.75),rgba(6,10,22,.98) 60%)"></div>
   <div class="grid-bg"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">06 · Programme</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:28mm;right:14mm">
+  <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
     <div class="mono tag">— Handover months</div>
     <h2 style="font-size:30pt;margin-bottom:3mm">Both new lines live by <span>June 2027.</span></h2>
     <p class="lead" style="width:190mm">Mars Line hands over in April 2027 and Earth Line in June 2027.</p>
@@ -376,7 +376,7 @@ s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-
 <section class="pg">
   <div class="grid-bg"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">07 · Payment terms and timescales</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:30mm;right:14mm">
+  <div class="z" style="position:absolute;left:14mm;top:38mm;right:14mm">
     <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:6mm">
       <div><div class="mono tag">— Payment terms and timescales</div><h2 style="margin:0">Payment <span>schedule.</span></h2></div>
       <p style="width:120mm;font-size:9.5pt">Each package is paid in three stages: <b style="color:var(--white)">50% with the order</b>, <b style="color:var(--white)">30% the month before handover</b> and <b style="color:var(--white)">20% on handover</b>.</p>
