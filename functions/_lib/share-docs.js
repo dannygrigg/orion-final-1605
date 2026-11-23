@@ -210,7 +210,7 @@ export const DOCS = {
       'f/assets-hubs-twin-twin-poster.jpg': { name: 'assets-hubs-twin-twin-poster.jpg', type: 'image/jpeg' },
       'f/assets-v3-van-fleet.jpg': { name: 'assets-v3-van-fleet.jpg', type: 'image/jpeg' },
       'f/twin.html': { name: 'APC Central Hub - Orion digital twin.html', type: 'text/html; charset=utf-8', inline: true },
-      'presentation.pptx': { name: 'APC Business Plan - v4.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
+      'presentation.pptx': { name: 'APC Business Plan - v4 (editable).pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
     },
   },
 };
