@@ -364,6 +364,36 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .kgrid .mono{color:var(--acc)}
 .kv>.card.rev-tbc,.kgrid>.card.rev-tbc{border:1px dashed rgba(242,208,75,.75);background:rgba(242,208,75,.06)}
 .kgrid>.card.rev-tbc .mono,.kgrid>.card.rev-tbc .big-num{color:#F2D04B}
+.q2-pill{border:1px solid #7CF3D0;background:rgba(124,243,208,.1);border-radius:2mm;padding:2mm 4mm;text-align:right}
+.q2-pill b{display:block;font-family:'Space Grotesk',sans-serif;font-size:20pt;color:#7CF3D0;line-height:1}
+.q2-pill span{font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:#C9D3E6}
+.q2-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:5mm;margin-top:4mm}
+.q2-wf{padding:4mm 5mm}
+.q2-wf>.mono,.q2-side .mono,.q2-open .mono{color:var(--acc)}
+.wf{position:relative;height:72mm;display:flex;align-items:flex-end;gap:6mm;padding:0 2mm;border-bottom:1px solid rgba(150,180,230,.3);margin-top:2mm}
+.wf-col{flex:1;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-end;height:100%;position:relative}
+.wf-bar{border-radius:1.2mm 1.2mm 0 0;opacity:.92}
+.wf-col.tot .wf-bar{background:linear-gradient(180deg,#7CF3D0,#3AA0FF)}
+.wf-val{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13pt;color:#F4F7FC;text-align:center;margin-bottom:1.2mm}
+.wf-lab{position:absolute;top:100%;left:0;right:0;margin-top:1.5mm;font-size:7.5pt;color:#F4F7FC;text-align:center;line-height:1.2}
+.wf-lab span{display:block;font-size:6.5pt;color:#8592AD;margin-top:.4mm}
+.wf-target{position:absolute;left:0;right:0;border-top:.5mm dashed #F2D04B;z-index:2}
+.wf-target span{position:absolute;left:0;top:-4.2mm;font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:#F2D04B}
+.q2-wf{padding-bottom:11mm}
+.q2-side .card{padding:4mm 5mm;height:100%}
+.q2chain{display:flex;flex-direction:column;gap:1.2mm;margin-top:3mm}
+.q2chain>div{border:1px solid rgba(58,160,255,.4);background:rgba(16,28,54,.7);border-radius:1.5mm;padding:2.4mm 3.5mm}
+.q2chain>div.hot{border-color:#7CF3D0;background:rgba(124,243,208,.1)}
+.q2chain b{display:block;font-family:'Space Grotesk',sans-serif;font-size:14pt;color:#F4F7FC;line-height:1.05}
+.q2chain>div.hot b{color:#7CF3D0}
+.q2chain span{display:block;font-size:8pt;color:#C9D3E6;margin-top:.6mm}
+.q2chain i{font-style:normal;text-align:center;color:#7CF3D0;font-size:10pt;line-height:1}
+.q2-open{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:3.5mm}
+.q2-open>div{border:1px dashed rgba(242,208,75,.6);border-radius:2mm;padding:2.4mm 3.5mm;background:rgba(242,208,75,.04)}
+.q2-open>div:first-child{border-style:solid;border-color:rgba(58,160,255,.45);background:rgba(16,28,54,.7)}
+.q2-open b{display:block;font-family:'Space Grotesk',sans-serif;font-size:12pt;color:#F2D04B;margin-top:.8mm}
+.q2-open>div:first-child b{color:#F4F7FC}
+.q2-open em{display:block;font-style:normal;font-size:7pt;color:#8592AD;margin-top:.6mm;line-height:1.3}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -522,7 +552,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     </div><div class="qa" data-key="q2" data-q="How do we deliver a minimum of £10m from the hub upgrade and cages?" data-detail="Confirm the net savings, timing, ownership and dependencies.">
       <div class="qa-h"><b>02</b><span>Hub upgrade and cages</span></div>
       <div class="qa-q">How do we deliver a minimum of £10m from the hub upgrade and cages?</div>
-      <div class="qa-a empty" data-ph="To be completed"></div>
+      <div class="qa-a" data-ph="To be completed">Full-year delivered saving for the hub upgrades and cages: £2.2m labour efficiencies and £1.5m in-trunking efficiencies. In addition, £1.5m on new infeeds to the blue sorter reduces segregation for members from 13 to 4, so less empty trunking, fewer routes and improved trailer fill. Each route saves £140k and we know the potential to reduce 60 routes: £8.4m savings.</div>
     </div><div class="qa" data-key="q3" data-q="How do we deliver a minimum of £10m from removing financial support?" data-detail="Combining members, WS carriers to take over regions, operational consulting and support for members (organisation, IT, sales, route planning etc), differentiated pricing for difficult regions, how do we create friction and make it difficult for members to ask for support (eg before proving support I would want to know detailed info about what they do, pricing, volumes, workflows in their sites, staff costs, route planning etc).">
       <div class="qa-h"><b>03</b><span>Financial support</span></div>
       <div class="qa-q">How do we deliver a minimum of £10m from removing financial support?</div>
@@ -551,6 +581,43 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     <div class="qa-hint">Click any box to fill it in · saves automatically · everyone with the PIN sees the same answers</div>
   </div>
   <div class="apcfoot"><i class="l1"></i><b>8</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q2">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end">
+      <div><div class="mono tag">— APC plan to 2030 · question 02 · hub upgrade and cages</div>
+        <h2 style="margin:0">£12.1m a year. <span>Target £10m.</span></h2></div>
+      <div class="q2-pill"><b>+£2.1m</b><span>above the £10m minimum</span></div>
+    </div>
+    <div class="q2-grid">
+      <div class="card q2-wf">
+        <div class="mono">Full-year savings · £m a year</div>
+        <div class="wf">
+          <div class="wf-target" style="bottom:46.28mm"><span>£10m minimum</span></div>
+          <div class="wf-col"><div class="wf-val">£2.2m</div><div class="wf-bar" style="height:10.18mm;margin-bottom:0.0mm;background:#3AA0FF"></div><div class="wf-lab">Labour efficiencies<span>Hub upgrade and cages</span></div></div><div class="wf-col"><div class="wf-val">£1.5m</div><div class="wf-bar" style="height:6.94mm;margin-bottom:10.18mm;background:#3AA0FF"></div><div class="wf-lab">In-trunking efficiencies<span>Hub upgrade and cages</span></div></div><div class="wf-col"><div class="wf-val">£8.4m</div><div class="wf-bar" style="height:38.88mm;margin-bottom:17.12mm;background:#7CF3D0"></div><div class="wf-lab">Route reduction<span>60 routes × £140k</span></div></div><div class="wf-col tot"><div class="wf-val">£12.1m</div><div class="wf-bar" style="height:56.0mm"></div><div class="wf-lab">Total a year<span>gross savings</span></div></div>
+        </div>
+      </div>
+      <div class="q2-side">
+        <div class="card"><div class="mono">How the route saving works</div>
+          <div class="q2chain">
+            <div><b>£1.5m</b><span>New infeeds to the blue sorter</span></div><i>↓</i>
+            <div><b>13 → 4</b><span>Segregations for members</span></div><i>↓</i>
+            <div><b>Fuller trailers</b><span>Less empty trunking · improved trailer fill</span></div><i>↓</i>
+            <div class="hot"><b>60 routes</b><span>× £140k a route = £8.4m a year</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="q2-open">
+      <div><span class="mono">Net savings</span><b>£12.1m gross</b><em>Net of the £1.5m infeed investment and running costs: to confirm</em></div>
+      <div><span class="mono">Timing</span><b>To confirm</b><em>Full year from hub upgrade handover</em></div>
+      <div><span class="mono">Ownership</span><b>To confirm</b><em>Owner for each saving line</em></div>
+      <div><span class="mono">Dependencies</span><b>To confirm</b><em>Infeeds installed · members on 4 segregations · route plan for 60 fewer routes</em></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>9</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <script>
 (function(){function fit(){document.querySelectorAll('.qa-a').forEach(function(el){var f=9;el.style.fontSize=f+'pt';
