@@ -466,8 +466,8 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .q3-levers{display:flex;flex-wrap:wrap;align-items:center;gap:1.4mm;margin-top:2mm;justify-content:flex-end}
 .q3-levers em{font-style:normal;font-size:6.8pt;color:#8592AD;margin-right:1mm}
 .q3-levers span{font-size:6.6pt;color:#F2D04B;border:1px solid rgba(242,208,75,.45);border-radius:5mm;padding:.7mm 2.4mm;background:rgba(242,208,75,.05)}
-.acq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:5mm}
-.acq{min-height:108mm;background:linear-gradient(170deg,rgba(20,36,70,.95),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:3mm;padding:6mm 5.5mm 5mm;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.acq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:6mm}
+.acq{min-height:128mm;background:linear-gradient(170deg,rgba(20,36,70,.95),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:3mm;padding:6mm 5.5mm 5mm;display:flex;flex-direction:column;position:relative;overflow:hidden}
 .acq::before{content:'';position:absolute;left:0;right:0;top:0;height:1mm;background:linear-gradient(90deg,#3AA0FF,#7CF3D0)}
 .acq-h{display:flex;justify-content:space-between;align-items:baseline}
 .acq-h b{font-family:'Space Grotesk',sans-serif;font-size:22pt;color:rgba(58,160,255,.5);line-height:1}
@@ -610,23 +610,15 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 <section class="pg">
   <div class="grid-bg" style="opacity:.5"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
-    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
-      <div><div class="mono tag">— Regional hub 02</div><h2 style="margin:0">Cannock <span>Sortation Hub.</span></h2></div>
-      <p style="width:120mm;font-size:9.5pt">Serves the member depots in the Cannock sortation hub area, between the two dashed lines. Layout as drawn by APC.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 88mm;gap:6mm">
-      <div class="dwg" style="height:74.7mm"><img src="f/assets-hubs-cannock-layout.jpg" alt="Cannock sortation hub layout" style="width:100%;height:100%;object-fit:contain"></div>
-      <div style="position:relative;height:55.5mm;border-radius:2.5mm;border:1px solid var(--line);background:rgba(6,10,22,.5);overflow:hidden">
-        <div class="map" style="inset:0"><img src="f/assets-hubs-map-cannock.png" alt="Map of APC member depots"><div class="hub" style="left:59.0%;top:52.5%"><i></i><b class="l">Cannock Sortation Hub</b></div><div class="area" style="top:26.43%"><span></span></div><div class="area up" style="top:81.07%"><span>Cannock Sortation Hub area</span></div></div>
+  <div class="z" style="position:absolute;left:14mm;top:31mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:6mm">
+      <div style="padding-bottom:1mm"><div class="mono tag">— Regional hub 02</div><h2 style="margin:0">Cannock <span>Sortation Hub.</span></h2>
+        <p style="width:150mm;font-size:9.5pt;margin-top:3mm">Serves the member depots in the Cannock sortation hub area, between the two dashed lines on the map. Layout as drawn by APC.</p></div>
+      <div style="position:relative;width:72mm;height:45.4mm;flex:none;border-radius:2.5mm;border:1px solid var(--line);background:rgba(6,10,22,.5);overflow:hidden">
+        <div class="map" style="inset:0"><img src="f/assets-hubs-map-cannock.png" alt="Map of APC member depots"><div class="hub" style="left:59.0%;top:52.5%"><i></i></div><div class="area" style="top:26.43%"><span></span></div><div class="area up" style="top:81.07%"><span>Cannock Sortation Hub area</span></div></div>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:5mm">
-      <div class="card hot" style="padding:3.5mm 5mm"><div class="mono">Sorting areas</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">2</div><p style="font-size:8pt;margin-top:1mm">Areas 1 and 2</p></div>
-      <div class="card" style="padding:3.5mm 5mm"><div class="mono">Artic loading lanes</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">45</div><p style="font-size:8pt;margin-top:1mm">22 covered tipping · 20 front canopy · 3 side canopy</p></div>
-      <div class="card" style="padding:3.5mm 5mm"><div class="mono">New sortation</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">72</div><p style="font-size:8pt;margin-top:1mm">double cages · 100 m × 20 m</p></div>
-      <div class="card" style="padding:3.5mm 5mm"><div class="mono">On site</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">2-day</div><p style="font-size:8pt;margin-top:1mm">stock area · forklift workshop</p></div>
-    </div>
+    <div class="dwg" style="height:108mm;margin-top:4mm"><img src="f/assets-hubs-cannock-layout.jpg" alt="Cannock sortation hub layout" style="width:100%;height:100%;object-fit:contain"></div>
   </div>
   <div class="apcfoot"><i class="l1"></i><b>3</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
@@ -706,23 +698,6 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
   <div class="twin-badge" style="left:auto;right:14mm;bottom:auto;top:36mm"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin stills</span></div>
   <div class="apcfoot"><i class="l1"></i><b>7</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
-<section class="pg q1t">
-  <div class="grid-bg" style="opacity:.5"></div>
-  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
-  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
-    <div class="mono tag">— APC plan to 2030 · the target</div>
-    <h2 style="margin:0">£50m EBITDA by 2030. <span>£18.0m identified so far.</span></h2>
-    <div class="sb"><div class="sb-row met"><div class="sb-name"><b>Hub upgrade and cages</b><span>Labour, trunking and 60 fewer routes · page 9</span></div><div class="sb-track"><div class="sb-fill" style="width:100.0%"></div><span class="ov">+£2.1m</span></div><div class="sb-val"><b>£12.1m</b><span>of ≥ £10m</span></div></div><div class="sb-row part"><div class="sb-name"><b>Removing financial support</b><span>Depot support reduction programme · £4.1m still to find · page 10</span></div><div class="sb-track"><div class="sb-fill" style="width:59.0%"></div></div><div class="sb-val"><b>£5.9m</b><span>of ≥ £10m</span></div></div><div class="sb-row none"><div class="sb-name"><b>Additional EBITDA</b><span>Market growth, acquisitions, marketing · not yet quantified · page 11</span></div><div class="sb-track"><div class="sb-fill" style="width:0.0%"></div></div><div class="sb-val"><b>To quantify</b><span>of £20m</span></div></div>
-      <div class="sb-tot"><span class="mono">Identified</span><b>£18.0m</b><em>of the £40m in the three buckets</em></div>
-    </div>
-    <div class="q1-open">
-      <div class="ok"><span class="mono">Scope</span><b>APC stand-alone</b><em>Excluding last-mile and carrier activities</em></div>
-      <div><span class="mono">The other £10m</span><b>To confirm</b><em>The three buckets add to £40m of the £50m target: base EBITDA to confirm</em></div>
-      <div><span class="mono">Nationwide service</span><b>To confirm</b><em>Service commitments in or out, and investment constraints</em></div>
-    </div>
-  </div>
-  <div class="apcfoot"><i class="l1"></i><b>8</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
-</section>
 <section class="pg q2">
   <div class="grid-bg" style="opacity:.5"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
@@ -757,7 +732,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <div class="ok"><span class="mono">Ownership</span><b>David Whitmore / Orion</b></div>
     </div>
   </div>
-  <div class="apcfoot"><i class="l1"></i><b>9</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+  <div class="apcfoot"><i class="l1"></i><b>8</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <section class="pg dsr">
   <div class="grid-bg" style="opacity:.5"></div>
@@ -791,7 +766,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     </div>
     <p class="dsr-foot">FY28: April 2027 to March 2028. Targeted gross support reductions, before replacement and implementation costs. Quarter-end implementation; benefits recognised from the following month. Budget phasing subject to Finance confirmation.</p>
   </div>
-  <div class="apcfoot"><i class="l1"></i><b>10</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+  <div class="apcfoot"><i class="l1"></i><b>9</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <section class="pg mkt">
   <div class="grid-bg" style="opacity:.5"></div>
@@ -824,7 +799,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       </div>
     </div>
   </div>
-  <div class="apcfoot"><i class="l1"></i><b>11</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+  <div class="apcfoot"><i class="l1"></i><b>10</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <section class="pg q5">
   <div class="grid-bg" style="opacity:.5"></div>
@@ -835,19 +810,18 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     <div class="acq-grid"><div class="acq">
         <div class="acq-h"><b>01</b><span>Technology</span></div>
         <h3>Orion</h3><p class="acq-why">Own the automation behind the plan</p>
-        <div class="acq-ev"><div><b>Helix sortation and HeliOS control</b><span>running on Jupiter 1 at Cannock</span></div><div><b>£12.1m a year</b><span>hub upgrade and cages savings · page 9</span></div><div><b>Dark warehouse design</b><span>new central sortation hub and digital twin · pages 6 and 7</span></div></div>
+        <div class="acq-ev"><div><b>Helix sortation and HeliOS control</b><span>running on Jupiter 1 at Cannock</span></div><div><b>£12.1m a year</b><span>hub upgrade and cages savings · page 8</span></div><div><b>Dark warehouse design</b><span>new central sortation hub and digital twin · pages 6 and 7</span></div></div>
       </div><div class="acq">
         <div class="acq-h"><b>02</b><span>Market share</span></div>
         <h3>Relevant competitors</h3><p class="acq-why">Buy volume in the core market</p>
-        <div class="acq-ev"><div><b>~4% of volume · ~7% of value</b><span>APC share of its core market · page 11</span></div><div><b>£2.97bn → £3.3bn</b><span>core market, 2025 to 2028</span></div><div><b>~£30m revenue</b><span>for each 1% of core market value (2025)</span></div></div>
+        <div class="acq-ev"><div><b>~4% of volume · ~7% of value</b><span>APC share of its core market · page 10</span></div><div><b>£2.97bn → £3.3bn</b><span>core market, 2025 to 2028</span></div><div><b>~£30m revenue</b><span>for each 1% of core market value (2025)</span></div></div>
       </div><div class="acq">
         <div class="acq-h"><b>03</b><span>Network</span></div>
         <h3>Existing large depots</h3><p class="acq-why">Take control of key depots in the network</p>
-        <div class="acq-ev"><div><b>£5.9m a year</b><span>depot support reduction programme · page 10</span></div><div><b>London super depot</b><span>fewer, larger partners</span></div><div><b>Combining members</b><span>a lever for the remaining £4.1m</span></div></div>
+        <div class="acq-ev"><div><b>£5.9m a year</b><span>depot support reduction programme · page 9</span></div><div><b>London super depot</b><span>fewer, larger partners</span></div><div><b>Combining members</b><span>a lever for the remaining £4.1m</span></div></div>
       </div></div>
-    <div class="acq-next"><span class="mono">For each</span><em>Shortlist</em><i>·</i><em>Valuation basis</em><i>·</i><em>Timing</em><i>·</i><em>Owner</em><b>To confirm</b></div>
   </div>
-  <div class="apcfoot"><i class="l1"></i><b>12</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+  <div class="apcfoot"><i class="l1"></i><b>11</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <section class="pg q6a">
   <div class="grid-bg" style="opacity:.5"></div>
@@ -871,7 +845,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       </div>
     </div>
   </div>
-  <div class="apcfoot"><i class="l1"></i><b>13</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+  <div class="apcfoot"><i class="l1"></i><b>12</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <section class="pg q6b">
   <div class="grid-bg" style="opacity:.5"></div>
@@ -890,7 +864,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       </div>
     </div>
   </div>
-  <div class="apcfoot"><i class="l1"></i><b>14</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+  <div class="apcfoot"><i class="l1"></i><b>13</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <section class="pg q7">
   <div class="grid-bg" style="opacity:.5"></div>
@@ -898,14 +872,14 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
   <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
     <div class="mono tag">— APC plan to 2030 · what enables the plan</div>
     <h2 style="margin:0">Four enablers. <span>Infrastructure, technology, sales, members.</span></h2>
-    <div class="en-grid"><div class="en"><div class="en-h">Infrastructure</div><div class="en-i"><b>£100m</b><span>new central sortation hub · p6</span></div><div class="en-i"><b>£1.5m</b><span>new infeeds to the blue sorter · p9</span></div><div class="en-i"><b>Cannock</b><span>hub upgrade and cages · p9</span></div></div><div class="en"><div class="en-h">Technology</div><div class="en-i"><b>Helix + HeliOS</b><span>sortation and control, running at Cannock · p6</span></div><div class="en-i"><b>Digital twin</b><span>dark warehouse design for the central hub · p7</span></div><div class="en-i"><b>Orion</b><span>acquisition option · p12</span></div></div><div class="en"><div class="en-h">Sales capability</div><div class="en-i"><b>Fleet</b><span>marketing across vans, trunks and trailers · p14</span></div><div class="en-i"><b>WS Transportation</b><span>affiliation in APC marketing · p14</span></div><div class="en-i"><b>Brand</b><span>awareness of APC and its six advantages · p14</span></div></div><div class="en"><div class="en-h">Member arrangements</div><div class="en-i"><b>£5.9m</b><span>depot support reduction programme · p10</span></div><div class="en-i"><b>Combining members</b><span>and WS carriers taking over regions · p10</span></div><div class="en-i"><b>Pricing and data</b><span>differentiated pricing; full site data before support · p10</span></div></div></div>
+    <div class="en-grid"><div class="en"><div class="en-h">Infrastructure</div><div class="en-i"><b>£100m</b><span>new central sortation hub · p6</span></div><div class="en-i"><b>£1.5m</b><span>new infeeds to the blue sorter · p8</span></div><div class="en-i"><b>Cannock</b><span>hub upgrade and cages · p8</span></div></div><div class="en"><div class="en-h">Technology</div><div class="en-i"><b>Helix + HeliOS</b><span>sortation and control, running at Cannock · p6</span></div><div class="en-i"><b>Digital twin</b><span>dark warehouse design for the central hub · p7</span></div><div class="en-i"><b>Orion</b><span>acquisition option · p11</span></div></div><div class="en"><div class="en-h">Sales capability</div><div class="en-i"><b>Fleet</b><span>marketing across vans, trunks and trailers · p13</span></div><div class="en-i"><b>WS Transportation</b><span>affiliation in APC marketing · p13</span></div><div class="en-i"><b>Brand</b><span>awareness of APC and its six advantages · p13</span></div></div><div class="en"><div class="en-h">Member arrangements</div><div class="en-i"><b>£5.9m</b><span>depot support reduction programme · p9</span></div><div class="en-i"><b>Combining members</b><span>and WS carriers taking over regions · p9</span></div><div class="en-i"><b>Pricing and data</b><span>differentiated pricing; full site data before support · p9</span></div></div></div>
     <div class="en-org"><span class="mono">Organisation</span>
-      <div><b>Dedicated network project</b><em>Openings, transfers and contract changes · page 10</em></div>
-      <div><b>David Whitmore / Orion</b><em>Hub upgrade and cages · page 9</em></div>
+      <div><b>Dedicated network project</b><em>Openings, transfers and contract changes · page 9</em></div>
+      <div><b>David Whitmore / Orion</b><em>Hub upgrade and cages · page 8</em></div>
       <div class="tbc8"><b>Sales and marketing lead</b><em>To confirm</em></div>
     </div>
   </div>
-  <div class="apcfoot"><i class="l1"></i><b>15</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+  <div class="apcfoot"><i class="l1"></i><b>14</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <section class="pg q8">
   <div class="grid-bg" style="opacity:.5"></div>
@@ -914,14 +888,14 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     <div class="mono tag">— APC plan to 2030 · who delivers what, by when</div>
     <h2 style="margin:0">Owners and dates. <span>Two set, five to confirm.</span></h2>
     <div class="card" style="padding:3mm 5mm;margin-top:4.5mm">
-      <table class="own"><thead><tr><th>Workstream</th><th>Value</th><th>Owner</th><th>When</th></tr></thead><tbody><tr><td><b>Hub upgrade and cages</b><span>page 9</span></td><td class="v">£12.1m a year</td><td>David Whitmore / Orion</td><td>2028 onwards</td></tr><tr><td><b>Depot support reduction programme</b><span>page 10</span></td><td class="v">£5.9m a year</td><td>Dedicated network project · D74 under Fraser</td><td>Q2 2027 to Q1 2028</td></tr><tr><td><b>Remaining financial support</b><span>page 10</span></td><td class="v">£4.1m a year</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr><tr><td><b>Additional EBITDA</b><span>page 11</span></td><td class="v">£20m</td><td class="tbc8">To confirm</td><td>By 2030</td></tr><tr><td><b>Acquisitions</b><span>page 12</span></td><td class="v">—</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr><tr><td><b>Marketing and sales</b><span>page 14</span></td><td class="v">—</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr><tr><td><b>New central sortation hub</b><span>page 6</span></td><td class="v">£100m investment</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr></tbody></table>
+      <table class="own"><thead><tr><th>Workstream</th><th>Value</th><th>Owner</th><th>When</th></tr></thead><tbody><tr><td><b>Hub upgrade and cages</b><span>page 8</span></td><td class="v">£12.1m a year</td><td>David Whitmore / Orion</td><td>2028 onwards</td></tr><tr><td><b>Depot support reduction programme</b><span>page 9</span></td><td class="v">£5.9m a year</td><td>Dedicated network project · D74 under Fraser</td><td>Q2 2027 to Q1 2028</td></tr><tr><td><b>Remaining financial support</b><span>page 9</span></td><td class="v">£4.1m a year</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr><tr><td><b>Additional EBITDA</b><span>page 10</span></td><td class="v">£20m</td><td class="tbc8">To confirm</td><td>By 2030</td></tr><tr><td><b>Acquisitions</b><span>page 11</span></td><td class="v">—</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr><tr><td><b>Marketing and sales</b><span>page 13</span></td><td class="v">—</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr><tr><td><b>New central sortation hub</b><span>page 6</span></td><td class="v">£100m investment</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr></tbody></table>
     </div>
     <div class="q8-next">
       <div><span class="mono">Integrated financial plan</span><b>To confirm</b></div>
       <div><span class="mono">Next 90 days</span><b>To confirm</b></div>
     </div>
   </div>
-  <div class="apcfoot"><i class="l1"></i><b>16</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+  <div class="apcfoot"><i class="l1"></i><b>15</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <script>
 (function(){function fit(){document.querySelectorAll('.qa-a').forEach(function(el){var f=9;el.style.fontSize=f+'pt';
