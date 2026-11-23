@@ -483,6 +483,47 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .acq-next em{font-style:normal;font-size:9pt;color:#F4F7FC}
 .acq-next i{font-style:normal;color:#8592AD}
 .acq-next b{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#F2D04B}
+.pos-row{display:flex;align-items:stretch;gap:2.5mm;margin-top:4mm}
+.pos-row>.mono{align-self:center;color:#8592AD;margin-right:1.5mm}
+.pos{flex:1;border-radius:2mm;padding:2mm 3.5mm}
+.pos b{display:block;font-family:'Space Grotesk',sans-serif;font-size:12pt}
+.pos em{display:block;font-style:normal;font-size:7pt;margin-top:.4mm}
+.pos.on{background:linear-gradient(135deg,rgba(58,160,255,.25),rgba(124,243,208,.12));border:1px solid rgba(124,243,208,.55)}
+.pos.on b{color:#F4F7FC}.pos.on em{color:#C9D3E6}
+.pos.off{border:1px dashed rgba(150,180,230,.3);background:rgba(255,255,255,.02)}
+.pos.off b{color:#8592AD;text-decoration:line-through}.pos.off em{color:#8592AD}
+.q6a-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:4mm;margin-top:4mm}
+.sv-list{display:flex;flex-direction:column;gap:2mm}
+.sv{display:grid;grid-template-columns:30mm 1fr;gap:3.5mm;align-items:center;background:linear-gradient(90deg,rgba(20,36,70,.9),rgba(11,20,40,.6));border:1px solid var(--line);border-radius:2mm;padding:2.2mm 3.5mm}
+.sv-k b{display:block;font-family:'Space Grotesk',sans-serif;font-size:15pt;color:#7CF3D0;line-height:1}
+.sv-k span{display:block;font-family:'IBM Plex Mono',monospace;font-size:6pt;letter-spacing:.1em;text-transform:uppercase;color:#8592AD;margin-top:.6mm}
+.sv p{font-size:8pt;line-height:1.35;color:#DCE4F2}
+.mx{padding:3.5mm 4.5mm}
+.mx .mono{color:var(--acc)}
+.mx-chart{display:flex;gap:3mm;height:62mm;margin-top:3mm;align-items:flex-end}
+.mx-col{flex:1;display:flex;flex-direction:column;height:100%}
+.mx-bar{flex:1;display:flex;flex-direction:column;border-radius:1mm;overflow:hidden;gap:.4mm}
+.mx-bar i,.mx-key i{display:block}
+.mx-bar .bg,.mx-key .bg{background:#1E6FD0}.mx-bar .bx,.mx-key .bx{background:#3AA0FF}.mx-bar .hl,.mx-key .hl{background:#7CF3D0}
+.mx-col span{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:6.3pt;color:#8592AD;margin-top:1.2mm}
+.mx-key{display:flex;gap:4mm;margin-top:2.5mm}
+.mx-key span{display:flex;align-items:center;gap:1.2mm;font-size:7pt;color:#C9D3E6}
+.mx-key i{width:2.6mm;height:2.6mm;border-radius:.6mm}
+.mx-note{font-size:7pt;color:#8592AD;margin-top:2mm;line-height:1.35}
+.usp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5mm;margin-top:3.5mm}
+.usp6{background:linear-gradient(160deg,rgba(20,36,70,.92),rgba(11,20,40,.85));border:1px solid var(--line);border-top:.8mm solid #3AA0FF;border-radius:2mm;padding:2.4mm 3.5mm}
+.usp6 b{display:block;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
+.usp6 p{font-size:7.8pt;line-height:1.35;color:#DCE4F2;margin-top:.8mm}
+.mk-plan{display:grid;grid-template-columns:78mm 1fr;gap:3.5mm;margin-top:4mm;height:74mm}
+.mk-photo{position:relative;border-radius:2.5mm;overflow:hidden;border:1px solid var(--line)}
+.mk-photo span{position:absolute;left:3mm;bottom:3mm;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#F4F7FC;background:rgba(6,10,22,.8);border:1px solid rgba(124,243,208,.55);border-radius:1.2mm;padding:1mm 2.4mm}
+.mk-acts{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2.5mm}
+.mk-a{display:flex;gap:3mm;align-items:flex-start;border:1px solid rgba(124,243,208,.5);background:rgba(124,243,208,.06);border-radius:2mm;padding:2.4mm 3.5mm}
+.mk-a>b{font-family:'Space Grotesk',sans-serif;font-size:18pt;color:#7CF3D0;line-height:1}
+.mk-a h4{font-family:'Space Grotesk',sans-serif;font-size:11.5pt;color:#F4F7FC;line-height:1.15}
+.mk-a p{font-size:7.8pt;color:#C9D3E6;margin-top:1mm;line-height:1.35}
+.mk-a.ask{border:1px dashed rgba(242,208,75,.6);background:rgba(242,208,75,.05)}
+.mk-a.ask>b,.mk-a.ask h4{color:#F2D04B}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -796,6 +837,49 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     <div class="acq-next"><span class="mono">For each</span><em>Shortlist</em><i>·</i><em>Valuation basis</em><i>·</i><em>Timing</em><i>·</i><em>Owner</em><b>To confirm</b></div>
   </div>
   <div class="apcfoot"><i class="l1"></i><b>12</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q6a">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · question 06 · marketing and sales · 1 of 2 · what we do today</div>
+    <h2 style="margin:0">High quality. Next day. <span>Local and personal.</span></h2>
+    <div class="pos-row">
+      <span class="mono">Positioning</span>
+      <div class="pos on"><b>Quality</b><em>High quality service</em></div>
+      <div class="pos on"><b>Next day</b><em>Nationwide</em></div>
+      <div class="pos on"><b>Personal service</b><em>Local members, SME relationships</em></div>
+      <div class="pos off"><b>Price</b><em>Not the basis: price-led senders are not targeted</em></div>
+    </div>
+    <div class="q6a-grid">
+      <div class="sv-list"><div class="sv"><div class="sv-k"><b>~88</b><span>member depots</span></div><p>Independent member depots and 3 APC-operated hubs give a nationwide next-day service.</p></div><div class="sv"><div class="sv-k"><b>Local</b><span>members own the customer</span></div><p>Members manage their own customer accounts, collection and delivery in their territories.</p></div><div class="sv"><div class="sv-k"><b>Unique</b><span>operating model</span></div><p>APC controls trunking and hubs; a network of independently owned members is not replicated by any other provider.</p></div><div class="sv"><div class="sv-k"><b>~40%</b><span>B2B</span></div><p>SME focus, B2B and B2C. Differentiated by local service and specialised parcels: security, fragile, liquid.</p></div><div class="sv"><div class="sv-k"><b>25–30k</b><span>shipping customers</span></div><p>In any rolling 12 months, giving strength in depth across a wide range of markets and sectors.</p></div></div>
+      <div class="card mx"><div class="mono">Consignment split by product type</div>
+        <div class="mx-chart"><div class="mx-col"><div class="mx-bar"><i style="flex:10" class="hl"></i><i style="flex:58" class="bx"></i><i style="flex:32" class="bg"></i></div><span>20/21</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:9" class="hl"></i><i style="flex:58.5" class="bx"></i><i style="flex:32.5" class="bg"></i></div><span>21/22</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:9" class="hl"></i><i style="flex:59" class="bx"></i><i style="flex:32" class="bg"></i></div><span>22/23</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:10.5" class="hl"></i><i style="flex:60" class="bx"></i><i style="flex:29.5" class="bg"></i></div><span>23/24</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:11.5" class="hl"></i><i style="flex:59" class="bx"></i><i style="flex:29.5" class="bg"></i></div><span>24/25</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:10.5" class="hl"></i><i style="flex:59" class="bx"></i><i style="flex:30.5" class="bg"></i></div><span>25/26</span></div></div>
+        <div class="mx-key"><span><i class="bg"></i>Bag</span><span><i class="bx"></i>Box</span><span><i class="hl"></i>H&amp;L</span></div>
+        <p class="mx-note">Roughly 30% bag, 60% box, 10% H&amp;L every year since 20/21. Shares read from APC's chart.</p>
+      </div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>13</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q6b">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · question 06 · marketing and sales · 2 of 2 · the plan</div>
+    <h2 style="margin:0">Six things APC does better. <span>Put them in front of more customers.</span></h2>
+    <div class="usp-grid"><div class="usp6"><b>Service</b><p>Higher touch, flexible service to smaller customers, such as flexing collection times. High volume players do not focus on smaller senders.</p></div><div class="usp6"><b>Sales relationships</b><p>Members are local businesses that build relationships with the SME community in their regions.</p></div><div class="usp6"><b>One-stop shop</b><p>Members also offer same-day delivery, pallet transport and more, which the scaled parcel players cannot.</p></div><div class="usp6"><b>Cage network</b><p>A bespoke cage design for safe, secure, efficient freight in a closed-loop network.</p></div><div class="usp6"><b>Care and handling</b><p>More manual handling: fewer breakages for fragile items; irregular items such as flowers and liquids.</p></div><div class="usp6"><b>Delivery quality</b><p>Members rely on each other for delivery, so all are incentivised to keep standards high.</p></div></div>
+    <div class="mk-plan">
+      <div class="mk-photo"><img class="fill" src="f/assets-v3-van-fleet.jpg" alt="APC fleet"><span>The fleet is the billboard</span></div>
+      <div class="mk-acts">
+        <div class="mk-a"><b>01</b><div><h4>Marketing across the fleet</h4><p>Increase APC branding and campaigns across the vans, trunks and trailers of the whole network.</p></div></div>
+        <div class="mk-a"><b>02</b><div><h4>Affiliation with WS Transportation</h4><p>Market APC with its WS Transportation affiliation.</p></div></div>
+        <div class="mk-a"><b>03</b><div><h4>Brand awareness</h4><p>Raise awareness of the APC brand and its six advantages with SME senders.</p></div></div>
+        <div class="mk-a ask"><b>?</b><div><h4>Marketing spend to sales</h4><p>Spend, channels (online, offline, TV) and conversion: to confirm.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>14</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <script>
 (function(){function fit(){document.querySelectorAll('.qa-a').forEach(function(el){var f=9;el.style.fontSize=f+'pt';
