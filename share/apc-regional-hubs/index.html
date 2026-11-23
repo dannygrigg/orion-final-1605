@@ -358,7 +358,9 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .qa-hint{display:none}
 .kgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:3mm;height:99mm}
 .kgrid>.card{display:flex;flex-direction:column;justify-content:center}
-.kgrid>.card.rev-tbc{grid-column:1 / span 2}
+.kgrid>.card.rev{grid-column:1 / span 2}
+.rev-row{display:grid;grid-template-columns:1fr 1fr;gap:4.5mm;margin-top:1.4mm}
+.rev-row>div+div{border-left:1px solid rgba(150,180,230,.2);padding-left:4.5mm}
 .kgrid .mono{color:var(--acc)}
 .kv>.card.rev-tbc,.kgrid>.card.rev-tbc{border:1px dashed rgba(242,208,75,.75);background:rgba(242,208,75,.06)}
 .kgrid>.card.rev-tbc .mono,.kgrid>.card.rev-tbc .big-num{color:#F2D04B}
@@ -471,7 +473,9 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
         <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Annual savings</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">£18m</div></div>
         <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Capacity</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">650,000</div><p style="font-size:7.5pt;margin-top:.8mm">parcels a night · 11 sortation lines</p></div>
         <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Commercial unit</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">500,000</div><p style="font-size:7.5pt;margin-top:.8mm">sq ft</p></div>
-        <div class="card rev-tbc" style="padding:3.2mm 4.5mm" ><div class="mono">Revenue</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">TBC</div><p style="font-size:7.5pt;margin-top:.8mm">on 120 million parcels</p></div>
+        <div class="card rev" style="padding:3.2mm 4.5mm"><div class="mono">Revenue · on 120 million parcels</div>
+          <div class="rev-row"><div><div class="big-num" style="font-size:19pt">£500m</div><p style="font-size:7.5pt;margin-top:.8mm">turnover</p></div>
+          <div><div class="big-num" style="font-size:19pt;color:#7CF3D0">£40m</div><p style="font-size:7.5pt;margin-top:.8mm">EBITDA</p></div></div></div>
       </div>
     </div>
   </div>
