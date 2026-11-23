@@ -122,14 +122,13 @@ export const DOCS = {
   'apc-cannock-phase2-v3': {
     title: 'APC Business Plan · v3 (working)',
     neutral: true,                      // PIN screen shows no Orion branding
-    ref: 'FY27 forecast · FY28–FY30 plan · Cannock phase 2',
+    ref: 'FY27 forecast · FY28–FY30 business plan',
     customer: 'APC Overnight Ltd',
     pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',   // same PIN as apc-cannock-phase2 / apc-sorter1-cap
     expires: null,
     files: {
-      'document.pdf': { name: 'APC Cannock Phase 2 - v3.pdf', type: 'application/pdf' },
+      'document.pdf': { name: 'APC Business Plan FY28-FY30 - v3.pdf', type: 'application/pdf' },
       'f/assets-apc-logo-2026.svg': { name: 'assets-apc-logo-2026.svg', type: 'image/svg+xml' },
-      'f/assets-helix-loop-poster.jpg': { name: 'assets-helix-loop-poster.jpg', type: 'image/jpeg' },
       'f/assets-jupiter-hall.jpg': { name: 'assets-jupiter-hall.jpg', type: 'image/jpeg' },
       'f/assets-jupiter-live-overview.jpg': { name: 'assets-jupiter-live-overview.jpg', type: 'image/jpeg' },
       'f/assets-v3-ai-ops.jpg': { name: 'assets-v3-ai-ops.jpg', type: 'image/jpeg' },
@@ -149,18 +148,7 @@ export const DOCS = {
       'f/assets-v3-sme-trends.jpg': { name: 'assets-v3-sme-trends.jpg', type: 'image/jpeg' },
       'f/assets-v3-trailers.jpg': { name: 'assets-v3-trailers.jpg', type: 'image/jpeg' },
       'f/assets-v3-what-changes.jpg': { name: 'assets-v3-what-changes.jpg', type: 'image/jpeg' },
-      'f/renders-gallery-jup2-3-lanes.jpg': { name: 'renders-gallery-jup2-3-lanes.jpg', type: 'image/jpeg' },
-      'f/renders-gallery-jup2-4-loop.jpg': { name: 'renders-gallery-jup2-4-loop.jpg', type: 'image/jpeg' },
-      'f/renders-gallery-jup2-plan-aerial.jpg': { name: 'renders-gallery-jup2-plan-aerial.jpg', type: 'image/jpeg' },
-      'f/renders-gallery-jup2-plan-overview.jpg': { name: 'renders-gallery-jup2-plan-overview.jpg', type: 'image/jpeg' },
-      'f/renders-gallery-line2-3-sortpoints.jpg': { name: 'renders-gallery-line2-3-sortpoints.jpg', type: 'image/jpeg' },
-      'f/renders-gallery-line2-4-scan.jpg': { name: 'renders-gallery-line2-4-scan.jpg', type: 'image/jpeg' },
-      'f/renders-gallery-line2-plan-aerial.jpg': { name: 'renders-gallery-line2-plan-aerial.jpg', type: 'image/jpeg' },
-      'f/renders-gallery-line2-plan-overview.jpg': { name: 'renders-gallery-line2-plan-overview.jpg', type: 'image/jpeg' },
-      'f/renders-tunnel-v2-tunnel-front.jpg': { name: 'renders-tunnel-v2-tunnel-front.jpg', type: 'image/jpeg' },
-      'f/renders-tunnel-v2-tunnel-hero.jpg': { name: 'renders-tunnel-v2-tunnel-hero.jpg', type: 'image/jpeg' },
-      'f/renders-tunnel-v2-tunnel-side.jpg': { name: 'renders-tunnel-v2-tunnel-side.jpg', type: 'image/jpeg' },
-      'presentation.pptx': { name: 'APC Cannock Phase 2 - v3.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
+      'presentation.pptx': { name: 'APC Business Plan FY28-FY30 - v3.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
     },
   },
 };
