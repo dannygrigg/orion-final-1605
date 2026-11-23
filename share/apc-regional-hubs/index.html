@@ -320,6 +320,9 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .twin-badge img{height:4.2mm;width:auto}
 .twin-badge span{font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
 @media print{.twin-live{display:none}}
+.flow{display:flex;align-items:center;gap:2.5mm;flex-wrap:wrap}
+.flow span{font-family:'IBM Plex Mono',monospace;font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#F4F7FC;background:rgba(16,28,54,.9);border:1px solid rgba(58,160,255,.55);border-radius:1.2mm;padding:1.6mm 3mm}
+.flow i{font-style:normal;color:#7CF3D0;font-size:11pt}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -337,8 +340,8 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     <p class="lead" style="margin-top:7mm;width:135mm">APC's member depots grouped into three regional hub areas, the parcels each hub sorts, the share that stays in its own area, and the new central sortation hub.</p>
     <div style="display:flex;gap:9mm;margin-top:12mm">
       <div class="stat"><div class="num" style="font-size:25pt">3</div><div class="mono unit" style="font-size:7pt">Regional hubs</div></div>
-      <div class="stat"><div class="num" style="font-size:25pt">£50m</div><div class="mono unit" style="font-size:7pt">Central hub investment</div></div>
-      <div class="stat"><div class="num" style="font-size:25pt">500,000</div><div class="mono unit" style="font-size:7pt">Parcels a night</div></div>
+      <div class="stat"><div class="num" style="font-size:25pt">£100m</div><div class="mono unit" style="font-size:7pt">Central hub investment</div></div>
+      <div class="stat"><div class="num" style="font-size:25pt">650,000</div><div class="mono unit" style="font-size:7pt">Parcels a night</div></div>
     </div>
   </div>
   <div class="apcfoot"><i class="l1"></i><b>1</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
@@ -419,20 +422,41 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
   <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
     <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
-      <div><div class="mono tag">— New central sortation hub</div><h2 style="margin:0">£50 million. <span>500,000 parcels a night.</span></h2></div>
-      <p style="width:96mm;font-size:9.5pt">A £50 million investment in a sortation centre: 11 sortation lines and 180 loading doors in a 500,000 sq ft unit. Shown as the Orion digital twin.</p>
+      <div><div class="mono tag">— New central sortation hub</div><h2 style="margin:0">£100 million. <span>650,000 parcels a night.</span></h2></div>
+      <p style="width:96mm;font-size:9.5pt">A £100 million investment in a sortation centre: 11 sortation lines and 180 loading doors in a 500,000 sq ft unit. Shown as the Orion digital twin.</p>
     </div>
     <div style="display:grid;grid-template-columns:176mm 1fr;gap:6mm">
       <div class="rend twin" style="height:99mm"><img class="fill" src="f/assets-hubs-twin-twin-poster.jpg" alt="Orion digital twin of the central sortation hub"><div class="twin-live" data-twin="f/twin.html"></div><div class="twin-badge"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin · live replay</span></div></div>
       <div class="kv" style="gap:3.5mm">
-        <div class="card hot" style="padding:3.5mm 5mm"><div class="mono">Investment</div><div class="big-num" style="font-size:21pt;margin-top:1mm">£50m</div></div>
-        <div class="card" style="padding:3.5mm 5mm"><div class="mono">Capacity</div><div class="big-num" style="font-size:21pt;margin-top:1mm">500,000</div><p style="font-size:8pt;margin-top:1mm">a night · 50,000 a line</p></div>
+        <div class="card hot" style="padding:3.5mm 5mm"><div class="mono">Investment</div><div class="big-num" style="font-size:21pt;margin-top:1mm">£100m</div></div>
+        <div class="card" style="padding:3.5mm 5mm"><div class="mono">Capacity</div><div class="big-num" style="font-size:21pt;margin-top:1mm">650,000</div><p style="font-size:8pt;margin-top:1mm">parcels a night · 11 sortation lines</p></div>
         <div class="card" style="padding:3.5mm 5mm"><div class="mono">Commercial unit</div><div class="big-num" style="font-size:21pt;margin-top:1mm">500,000</div><p style="font-size:8pt;margin-top:1mm">sq ft</p></div>
         <div class="card" style="padding:3.5mm 5mm"><div class="mono">Annual saving on FLTs</div><div class="big-num" style="font-size:21pt;margin-top:1mm">£1,500,000</div></div>
       </div>
     </div>
   </div>
   <div class="apcfoot"><i class="l1"></i><b>6</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="bleed"><img class="fill" src="f/assets-hubs-twin-still-spine.jpg" alt="Orion digital twin: X-Flow spine feeding a Helix loop" style="object-position:60% 50%"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,22,.97) 0%,rgba(6,10,22,.9) 34%,rgba(6,10,22,.35) 62%,rgba(6,10,22,.15) 100%)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:80mm;background:linear-gradient(0deg,rgba(6,10,22,.98) 30%,rgba(6,10,22,0))"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:36mm;width:150mm">
+    <div class="mono tag">— New central sortation hub · how it runs</div>
+    <h1 style="font-size:40pt;line-height:1.0">No operators.<br>No people.<br><span>A dark warehouse.</span></h1>
+    <p class="lead" style="margin-top:6mm;width:128mm;font-size:11pt">Drivers drop the trunks. From there robots unload, the X-Flow spine and Helix loops sort, and AMRs load the route trailers. No one works on the sort floor.</p>
+  </div>
+  <div class="z" style="position:absolute;left:14mm;right:14mm;bottom:16mm">
+    <div class="flow"><span>Trunk</span><i>→</i><span>Robot unload</span><i>→</i><span>X-Flow spine</span><i>→</i><span>Helix loop</span><i>→</i><span>AMR</span><i>→</i><span>Route trailer</span></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:5mm">
+      <div class="rend" style="height:40mm"><img class="fill" src="f/assets-hubs-twin-still-entrance.jpg" alt="Hub entrance at night"><span class="lab" style="top:auto;bottom:3mm">Dock frontage · night</span></div>
+      <div class="rend" style="height:40mm"><img class="fill" src="f/assets-hubs-twin-still-loop.jpg" alt="Helix loop under the X-Flow spine"><span class="lab" style="top:auto;bottom:3mm">Helix loop · under the spine</span></div>
+      <div class="rend" style="height:40mm"><img class="fill" src="f/assets-hubs-twin-still-overview.jpg" alt="Whole hub overview" style="object-position:50% 55%"><span class="lab" style="top:auto;bottom:3mm">Whole hub · 11 loops</span></div>
+    </div>
+  </div>
+  <div class="twin-badge" style="left:auto;right:14mm;bottom:auto;top:36mm"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin stills</span></div>
+  <div class="apcfoot"><i class="l1"></i><b>7</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <script>
 (function(){function fit(){var w=document.querySelector('.pg');if(!w)return;var s=Math.min(1,(window.innerWidth-24)/w.offsetWidth);document.body.style.zoom=s;}
