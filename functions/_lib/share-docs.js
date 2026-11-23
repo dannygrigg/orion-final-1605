@@ -119,14 +119,4 @@ export const DOCS = {
       'f/renders-tunnel-tunnel-side.jpg': { name: 'renders-tunnel-tunnel-side.jpg', type: 'image/jpeg' },
     },
   },
-  'smoothedge-helix': {
-    title: '32-Divert Helix Sorter · ROM',
-    ref: 'ORI-SME-PRO-001 · Rev A',
-    customer: 'Smoothedge',
-    pinHash: '2008a00548641fb0e8919f1d36d35edc408394f8a3a4079a0fe4b4bc1b1e9ba0',   // PIN given to Danny 22 Nov 2026
-    expires: null,
-    files: {
-      'document.pdf': { name: 'ORI-SME-PRO-001 Rev A - Smoothedge 32-Divert Helix Sorter ROM.pdf', type: 'application/pdf' },
-    },
-  },
 };

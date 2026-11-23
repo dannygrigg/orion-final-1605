@@ -45,4 +45,3 @@ The link and PIN stay the same, so the customer's bookmark keeps working.
 | slug | document | customer |
 |---|---|---|
 | apc-sorter1-cap | ORI-CAN-CAP-001 Sorter 1 Corrective Action Plan | APC Overnight Ltd |
-| smoothedge-helix | ORI-SME-PRO-001 32-Divert Helix Sorter ROM | Smoothedge |
