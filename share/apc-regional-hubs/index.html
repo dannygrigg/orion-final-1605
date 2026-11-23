@@ -394,14 +394,14 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .q2-open b{display:block;font-family:'Space Grotesk',sans-serif;font-size:12pt;color:#F2D04B;margin-top:.8mm}
 .q2-open>div:first-child b,.q2-open>div.ok b{color:#F4F7FC}
 .q2-open em{display:block;font-style:normal;font-size:7pt;color:#8592AD;margin-top:.6mm;line-height:1.3}
-.dsr-grid{display:grid;grid-template-columns:1fr 1.12fr;gap:5mm;margin-top:4.5mm}
-.dsr-ws{display:flex;flex-direction:column;gap:2.2mm}
-.dsr-ws .ws{border-left:1mm solid #3AA0FF;background:linear-gradient(90deg,rgba(20,36,70,.9),rgba(11,20,40,.6));border-radius:0 2mm 2mm 0;padding:2.2mm 3.5mm}
+.dsr-grid{display:grid;grid-template-columns:1fr 1.12fr;gap:4mm;margin-top:3.5mm}
+.dsr-ws{display:flex;flex-direction:column;gap:1.6mm}
+.dsr-ws .ws{border-left:1mm solid #3AA0FF;background:linear-gradient(90deg,rgba(20,36,70,.9),rgba(11,20,40,.6));border-radius:0 2mm 2mm 0;padding:1.5mm 3.2mm}
 .dsr-ws .ws b{display:block;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
-.dsr-ws .ws p{font-size:8.2pt;line-height:1.38;color:#DCE4F2;margin-top:.8mm}
-.dsr-right{display:flex;flex-direction:column;gap:3mm}
+.dsr-ws .ws p{font-size:7.4pt;line-height:1.32;color:#DCE4F2;margin-top:.5mm}
+.dsr-right{display:flex;flex-direction:column;gap:2.2mm}
 .dsr-right .mono{color:var(--acc)}
-.rr{display:flex;align-items:flex-end;gap:5mm;height:42mm;margin-top:2mm;border-bottom:1px solid rgba(150,180,230,.3)}
+.rr{display:flex;align-items:flex-end;gap:5mm;height:27mm;margin-top:2mm;border-bottom:1px solid rgba(150,180,230,.3)}
 .rr-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative}
 .rr-b{background:linear-gradient(180deg,#7CF3D0,#3AA0FF);border-radius:1.2mm 1.2mm 0 0}
 .rr-col:last-child .rr-b{box-shadow:0 0 6mm rgba(124,243,208,.45)}
@@ -410,13 +410,62 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .dsr-right .card:first-child{padding-bottom:7mm!important}
 .dsr-t{width:100%;border-collapse:collapse;font-size:8pt}
 .dsr-t th{font-family:'IBM Plex Mono',monospace;font-size:6pt;letter-spacing:.1em;text-transform:uppercase;color:#8592AD;text-align:right;font-weight:500;padding:1.2mm 1.5mm;border-bottom:1px solid rgba(150,180,230,.35)}
-.dsr-t td{color:#DCE4F2;text-align:right;padding:1.5mm;border-bottom:1px solid rgba(150,180,230,.12);font-variant-numeric:tabular-nums}
+.dsr-t td{color:#DCE4F2;text-align:right;padding:1.1mm 1.5mm;border-bottom:1px solid rgba(150,180,230,.12);font-variant-numeric:tabular-nums}
 .dsr-t th:first-child,.dsr-t td:first-child{text-align:left;color:#F4F7FC;font-weight:600}
 .dsr-t td.hl{color:#7CF3D0;font-weight:600}
 .dsr-t tr:last-child td{border-bottom:0}
-.dsr-note{font-size:8pt;line-height:1.45;color:#C9D3E6;border:1px solid rgba(124,243,208,.4);background:rgba(124,243,208,.06);border-radius:2mm;padding:2.4mm 3.5mm}
+.dsr-note{font-size:7.4pt;line-height:1.4;color:#C9D3E6;border:1px solid rgba(124,243,208,.4);background:rgba(124,243,208,.06);border-radius:2mm;padding:2.4mm 3.5mm}
 .dsr-note b{color:#F4F7FC}
-.dsr-foot{font-size:6.8pt;color:#8592AD;font-style:italic;margin-top:3mm;line-height:1.4}
+.dsr-foot{font-size:6.4pt;color:#8592AD;font-style:italic;margin-top:2mm;line-height:1.35}
+.mk-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:4mm}
+.mk-stats .card{padding:2.8mm 4mm}
+.mk-stats .mono,.mk-fn>.mono,.mk-seg>.mono{color:var(--acc)}
+.mk-stats .big-num{font-size:15pt;margin-top:1mm}
+.mk-stats .big-num small{font-size:8pt;color:#8592AD;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em}
+.mk-stats p{font-size:7.2pt;line-height:1.35;color:#C9D3E6;margin-top:.8mm}
+.mk-grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-top:3.5mm}
+.mk-fn,.mk-seg{padding:3.5mm 4.5mm}
+.fn{display:flex;flex-direction:column;gap:2mm;margin-top:3mm}
+.fn-row{display:grid;grid-template-columns:62% 1fr;align-items:center;gap:3mm}
+.fn-bar{height:9.5mm;background:linear-gradient(90deg,#1E3A70,#2A5AA8);border-radius:1mm;display:flex;align-items:center;padding-left:2.5mm;min-width:20mm}
+.fn-row.core .fn-bar{background:linear-gradient(90deg,#3AA0FF,#7CF3D0);box-shadow:0 0 5mm rgba(124,243,208,.35)}
+.fn-bar b{font-family:'Space Grotesk',sans-serif;font-size:11pt;color:#F4F7FC}
+.fn-row.core .fn-bar b{color:#041223}
+.fn-lab{font-size:7.8pt;color:#F4F7FC;line-height:1.2}
+.fn-lab span{display:block;font-size:6.6pt;color:#8592AD;margin-top:.4mm}
+.fn-row.core .fn-lab{color:#7CF3D0;font-weight:600}
+.core-split{margin-top:3.5mm;border-top:1px solid rgba(150,180,230,.18);padding-top:2.5mm}
+.cs-bar{display:flex;height:4mm;border-radius:1mm;overflow:hidden;gap:.4mm}
+.cs-bar i{display:block}
+.cs-key{display:flex;flex-wrap:wrap;gap:1.2mm 4mm;margin-top:1.8mm}
+.cs-key span{font-size:6.6pt;color:#C9D3E6;display:flex;align-items:center;gap:1.2mm}
+.cs-key span i{width:2.6mm;height:2.6mm;border-radius:.6mm;display:inline-block}
+.seg{display:grid;grid-template-columns:20mm 1fr 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:1.6mm;margin-top:3mm;height:76mm}
+.seg .sh{font-family:'IBM Plex Mono',monospace;font-size:6.2pt;letter-spacing:.08em;text-transform:uppercase;color:#8592AD;align-self:end;line-height:1.3}
+.seg .sr{font-family:'IBM Plex Mono',monospace;font-size:6pt;letter-spacing:.06em;text-transform:uppercase;color:#8592AD;align-self:center;line-height:1.3}
+.seg .sc{border-radius:1.5mm;padding:2.2mm 2.6mm;font-size:6.8pt;line-height:1.35;color:#C9D3E6}
+.seg .sc b{display:block;font-size:7.4pt;color:#F4F7FC;margin-bottom:.8mm}
+.seg .sc.off{border:1px dashed rgba(150,180,230,.25);background:rgba(255,255,255,.02);color:#8592AD}
+.seg .sc.off b{color:#8592AD}
+.seg .sc.gap{border:1px dashed rgba(242,208,75,.55);background:rgba(242,208,75,.05)}
+.seg .sc.gap b{color:#F2D04B}
+.seg .sc.focus{background:linear-gradient(160deg,#3AA0FF,#1E6FD0);color:#EAF4FF;box-shadow:0 0 5mm rgba(58,160,255,.35)}
+.seg .sc.focus b{color:#fff;font-size:8.4pt}
+.seg .sc.ltd{border:1px solid rgba(124,243,208,.55);background:rgba(124,243,208,.08)}
+.seg .sc.ltd b{color:#7CF3D0}
+.q3-track{margin-top:3.5mm}
+.q3-bar{position:relative;display:flex;height:11mm;border-radius:1.5mm;overflow:visible}
+.q3-done{background:linear-gradient(90deg,#3AA0FF,#7CF3D0);border-radius:1.5mm 0 0 1.5mm;display:flex;align-items:center;gap:3mm;padding:0 3.5mm}
+.q3-done b{font-family:'Space Grotesk',sans-serif;font-size:14pt;color:#041223}
+.q3-done span{font-size:7pt;color:#062033;font-weight:600}
+.q3-gap{flex:1;border:.5mm dashed #F2D04B;border-left:0;border-radius:0 1.5mm 1.5mm 0;background:rgba(242,208,75,.07);display:flex;align-items:center;gap:2.5mm;padding:0 3.5mm}
+.q3-gap b{font-family:'Space Grotesk',sans-serif;font-size:14pt;color:#F2D04B}
+.q3-gap span{font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:#F2D04B}
+.q3-tgt{position:absolute;right:0;top:-4.2mm}
+.q3-tgt span{font-family:'IBM Plex Mono',monospace;font-size:6.3pt;letter-spacing:.12em;text-transform:uppercase;color:#F2D04B}
+.q3-levers{display:flex;flex-wrap:wrap;align-items:center;gap:1.4mm;margin-top:2mm;justify-content:flex-end}
+.q3-levers em{font-style:normal;font-size:6.8pt;color:#8592AD;margin-right:1mm}
+.q3-levers span{font-size:6.6pt;color:#F2D04B;border:1px solid rgba(242,208,75,.45);border-radius:5mm;padding:.7mm 2.4mm;background:rgba(242,208,75,.05)}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -645,16 +694,24 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
   <div class="grid-bg" style="opacity:.5"></div>
   <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
   <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
-    <div style="display:flex;justify-content:space-between;align-items:end">
-      <div><div class="mono tag">— Depot support · reduction programme</div>
-        <h2 style="margin:0">£2.8m in FY28. <span>£5.9m a year at full run-rate.</span></h2></div>
+    <div class="mono tag">— APC plan to 2030 · question 03 · £10m from removing financial support</div>
+    <h2 style="margin:0">£5.9m a year identified. <span>£4.1m still to find.</span></h2>
+    <div class="q3-track">
+      <div class="q3-bar">
+        <div class="q3-done" style="width:59.05%"><b>£5.9m</b><span>Depot support reduction programme · full annual run-rate</span></div>
+        <div class="q3-gap"><b>£4.1m</b><span>To find</span></div>
+        <div class="q3-tgt"><span>£10m minimum</span></div>
+      </div>
+      <div class="q3-levers"><em>Levers for the remaining £4.1m, from question 3:</em>
+        <span>Combining members</span><span>WS carriers take over regions</span><span>Operational consulting and support for members</span>
+        <span>Differentiated pricing for difficult regions</span><span>Full site data before any support is given</span></div>
     </div>
     <div class="dsr-grid">
       <div class="dsr-ws"><div class="ws"><b>London</b><p>Develop a London super depot, move to fewer, larger partners and review delivery pricing; transfer postcodes to D12 with full DOA membership.</p></div><div class="ws"><b>South West</b><p>Renegotiate contracted cover and consolidate four depots into two, supported by a regional depot model and revised delivery pricing.</p></div><div class="ws"><b>Depot consolidation</b><p>Move D45 into D35, prioritise takeover or replacement of D66, and consolidate D74 into other areas under Fraser's lead.</p></div><div class="ws"><b>Commercial renegotiation</b><p>Reset terms and territories for D23, D52, D60 and D299; align D78 with D227 consolidation, allowing for any support needed to retain the JLI account.</p></div><div class="ws"><b>Implementation</b><p>Deliver through a dedicated network project covering openings, transfers and contract changes, protecting service and validating net savings after replacement and implementation costs.</p></div></div>
       <div class="dsr-right">
         <div class="card" style="padding:3.5mm 4.5mm">
           <div class="mono">Cumulative annual run-rate · £m</div>
-          <div class="rr"><div class="rr-col"><div class="rr-v">£2.3m</div><div class="rr-b" style="height:11.54mm"></div><div class="rr-q">Q2 2027</div></div><div class="rr-col"><div class="rr-v">£4.2m</div><div class="rr-b" style="height:21.46mm"></div><div class="rr-q">Q3 2027</div></div><div class="rr-col"><div class="rr-v">£4.6m</div><div class="rr-b" style="height:23.24mm"></div><div class="rr-q">Q4 2027</div></div><div class="rr-col"><div class="rr-v">£5.9m</div><div class="rr-b" style="height:30.0mm"></div><div class="rr-q">Q1 2028</div></div></div>
+          <div class="rr"><div class="rr-col"><div class="rr-v">£2.3m</div><div class="rr-b" style="height:6.93mm"></div><div class="rr-q">Q2 2027</div></div><div class="rr-col"><div class="rr-v">£4.2m</div><div class="rr-b" style="height:12.87mm"></div><div class="rr-q">Q3 2027</div></div><div class="rr-col"><div class="rr-v">£4.6m</div><div class="rr-b" style="height:13.94mm"></div><div class="rr-q">Q4 2027</div></div><div class="rr-col"><div class="rr-v">£5.9m</div><div class="rr-b" style="height:18.0mm"></div><div class="rr-q">Q1 2028</div></div></div>
         </div>
         <div class="card" style="padding:3mm 4mm">
           <table class="dsr-t"><thead><tr><th>Quarter</th><th>Monthly reduction</th><th>Annual run-rate</th><th>Cumulative monthly</th><th>Cumulative annual</th></tr></thead>
@@ -666,6 +723,39 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     <p class="dsr-foot">FY28: April 2027 to March 2028. Targeted gross support reductions, before replacement and implementation costs. Quarter-end implementation; benefits recognised from the following month. Budget phasing subject to Finance confirmation.</p>
   </div>
   <div class="apcfoot"><i class="l1"></i><b>10</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg mkt">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · question 04 · where the additional £20m comes from</div>
+    <h2 style="margin:0">A £3bn core market. <span>APC holds about 7% of its value.</span></h2>
+    <div class="mk-stats">
+      <div class="card"><div class="mono">Core segment</div><div class="big-num">~£2.8bn</div><p>Domestic express and specialist SME deliveries · 21% of total market value</p></div>
+      <div class="card"><div class="mono">Addressable parcels</div><div class="big-num">~1.44bn</div><p>Core addressable market, out of ~4.2bn UK parcels a year</p></div>
+      <div class="card hot"><div class="mono">APC market share</div><div class="big-num">~4% <small>volume</small> · ~7% <small>value</small></div><p>Higher value parcels than its core market</p></div>
+      <div class="card"><div class="mono">Core market growth</div><div class="big-num">£2.97bn → £3.3bn</div><p>2025 to 2028 · about 3% a year</p></div>
+    </div>
+    <div class="mk-grid">
+      <div class="card mk-fn"><div class="mono">UK parcel volumes to APC core addressable market · 2025 · parcels a year</div>
+        <div class="fn"><div class="fn-row"><div class="fn-bar" style="width:100.0%"><b>4,200m</b></div><div class="fn-lab">UK parcels a year<span>Domestic and international</span></div></div><div class="fn-row"><div class="fn-bar" style="width:85.71%"><b>3,600m</b></div><div class="fn-lab">Domestic<span>International (600m) removed</span></div></div><div class="fn-row"><div class="fn-bar" style="width:47.14%"><b>1,980m</b></div><div class="fn-lab">Standard express and specialist<span>Specialist 360m · standard express 1,620m</span></div></div><div class="fn-row core"><div class="fn-bar" style="width:34.29%"><b>1,440m</b></div><div class="fn-lab">Low and medium volume senders<span>APC core addressable market</span></div></div></div>
+        <div class="core-split"><div class="cs-bar"><i style="flex:648;background:#3AA0FF" title="Standard express B2C"></i><i style="flex:432;background:#1E6FD0" title="Standard express B2B"></i><i style="flex:144;background:#7CF3D0" title="Specialist B2C"></i><i style="flex:216;background:#3FC3F5" title="Specialist B2B"></i></div><div class="cs-key"><span><i style="background:#3AA0FF"></i>Standard express B2C · 648m</span><span><i style="background:#1E6FD0"></i>Standard express B2B · 432m</span><span><i style="background:#7CF3D0"></i>Specialist B2C · 144m</span><span><i style="background:#3FC3F5"></i>Specialist B2B · 216m</span></div></div>
+      </div>
+      <div class="card mk-seg"><div class="mono">UK parcels market segmentation · estimate</div>
+        <div class="seg">
+          <div class="sh"></div><div class="sh">Domestic: standard</div><div class="sh">Domestic: standard express and specialist</div><div class="sh">International</div>
+          <div class="sr">100 to 10,000+ a day</div>
+          <div class="sc off" style="grid-row:span 2"><b>Not offered by APC</b>Mainly consumers and small businesses sending via Royal Mail</div>
+          <div class="sc gap"><b>Not targeted by APC members</b>Higher focus on price than SMEs</div>
+          <div class="sc gap"><b>Not targeted by APC members</b>Senders with international deliveries</div>
+          <div class="sr">1 to 100 a day</div>
+          <div class="sc focus"><b>£2.8bn · APC core market</b>Low and medium volume senders</div>
+          <div class="sc ltd"><b>APC limited offering</b>Existing customers with international deliveries, with Air Menzies International</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>11</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <script>
 (function(){function fit(){document.querySelectorAll('.qa-a').forEach(function(el){var f=9;el.style.fontSize=f+'pt';
