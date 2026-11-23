@@ -466,6 +466,23 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .q3-levers{display:flex;flex-wrap:wrap;align-items:center;gap:1.4mm;margin-top:2mm;justify-content:flex-end}
 .q3-levers em{font-style:normal;font-size:6.8pt;color:#8592AD;margin-right:1mm}
 .q3-levers span{font-size:6.6pt;color:#F2D04B;border:1px solid rgba(242,208,75,.45);border-radius:5mm;padding:.7mm 2.4mm;background:rgba(242,208,75,.05)}
+.acq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:5mm}
+.acq{min-height:108mm;background:linear-gradient(170deg,rgba(20,36,70,.95),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:3mm;padding:6mm 5.5mm 5mm;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.acq::before{content:'';position:absolute;left:0;right:0;top:0;height:1mm;background:linear-gradient(90deg,#3AA0FF,#7CF3D0)}
+.acq-h{display:flex;justify-content:space-between;align-items:baseline}
+.acq-h b{font-family:'Space Grotesk',sans-serif;font-size:22pt;color:rgba(58,160,255,.5);line-height:1}
+.acq-h span{font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0;border:1px solid rgba(124,243,208,.45);border-radius:5mm;padding:.8mm 2.6mm}
+.acq h3{font-family:'Space Grotesk',sans-serif;font-size:21pt;color:#F4F7FC;margin-top:3mm;line-height:1.05}
+.acq-why{font-size:9pt;color:#C9D3E6;margin-top:1.5mm}
+.acq-ev{flex:1;justify-content:space-around;display:flex;flex-direction:column;gap:2mm;margin-top:5mm;border-top:1px solid rgba(150,180,230,.18);padding-top:3.5mm}
+.acq-ev>div{border-left:.8mm solid #3AA0FF;padding-left:3mm}
+.acq-ev b{display:block;font-family:'Space Grotesk',sans-serif;font-size:13pt;color:#F4F7FC;line-height:1.15}
+.acq-ev span{display:block;font-size:8pt;color:#8592AD;margin-top:.5mm}
+.acq-next{display:flex;align-items:center;gap:2.5mm;margin-top:4.5mm;border:1px dashed rgba(242,208,75,.55);background:rgba(242,208,75,.05);border-radius:2mm;padding:2.6mm 4mm}
+.acq-next .mono{color:#8592AD;margin-right:2mm}
+.acq-next em{font-style:normal;font-size:9pt;color:#F4F7FC}
+.acq-next i{font-style:normal;color:#8592AD}
+.acq-next b{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#F2D04B}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -636,7 +653,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     </div><div class="qa" data-key="q5" data-q="Are there any companies we should consider buying?" data-detail="Potential acquisitions? Are there any companies we should consider buying?">
       <div class="qa-h"><b>05</b><span>Acquisitions</span></div>
       <div class="qa-q">Are there any companies we should consider buying?</div>
-      <div class="qa-a empty" data-ph="To be completed"></div>
+      <div class="qa-a" data-ph="To be completed">Orion, relevant competitors, and existing large depots within the network.</div>
     </div><div class="qa" data-key="q6" data-q="What are we doing now, how do we position the business, and what does marketing spend convert to?" data-detail="What are we currently doing? How do we position the business (focus on quality, next day, price, personal service,…), marketing plan (online, offline, TV,...), conversion of marketing spent to sales.">
       <div class="qa-h"><b>06</b><span>Marketing and sales</span></div>
       <div class="qa-q">What are we doing now, how do we position the business, and what does marketing spend convert to?</div>
@@ -756,6 +773,29 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     </div>
   </div>
   <div class="apcfoot"><i class="l1"></i><b>11</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q5">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · question 05 · acquisitions</div>
+    <h2 style="margin:0">Three to consider. <span>Technology, market share, network.</span></h2>
+    <div class="acq-grid"><div class="acq">
+        <div class="acq-h"><b>01</b><span>Technology</span></div>
+        <h3>Orion</h3><p class="acq-why">Own the automation behind the plan</p>
+        <div class="acq-ev"><div><b>Helix sortation and HeliOS control</b><span>running on Jupiter 1 at Cannock</span></div><div><b>£12.1m a year</b><span>hub upgrade and cages savings · page 9</span></div><div><b>Dark warehouse design</b><span>new central sortation hub and digital twin · pages 6 and 7</span></div></div>
+      </div><div class="acq">
+        <div class="acq-h"><b>02</b><span>Market share</span></div>
+        <h3>Relevant competitors</h3><p class="acq-why">Buy volume in the core market</p>
+        <div class="acq-ev"><div><b>~4% of volume · ~7% of value</b><span>APC share of its core market · page 11</span></div><div><b>£2.97bn → £3.3bn</b><span>core market, 2025 to 2028</span></div><div><b>~£30m revenue</b><span>for each 1% of core market value (2025)</span></div></div>
+      </div><div class="acq">
+        <div class="acq-h"><b>03</b><span>Network</span></div>
+        <h3>Existing large depots</h3><p class="acq-why">Take control of key depots in the network</p>
+        <div class="acq-ev"><div><b>£5.9m a year</b><span>depot support reduction programme · page 10</span></div><div><b>London super depot</b><span>fewer, larger partners</span></div><div><b>Combining members</b><span>a question 3 lever for the remaining £4.1m</span></div></div>
+      </div></div>
+    <div class="acq-next"><span class="mono">For each</span><em>Shortlist</em><i>·</i><em>Valuation basis</em><i>·</i><em>Timing</em><i>·</i><em>Owner</em><b>To confirm</b></div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>12</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <script>
 (function(){function fit(){document.querySelectorAll('.qa-a').forEach(function(el){var f=9;el.style.fontSize=f+'pt';
