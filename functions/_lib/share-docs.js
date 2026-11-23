@@ -160,4 +160,24 @@ export const DOCS = {
       'presentation.pptx': { name: 'APC Business Plan FY28-FY30 - v3.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
     },
   },
+  'apc-regional-hubs': {
+    title: 'APC Regional Hub Proposals',
+    neutral: true,                      // PIN screen shows no Orion branding
+    ref: 'Regional hubs · new central sortation hub',
+    customer: 'APC Overnight Ltd',
+    pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',   // same PIN as apc-cannock-phase2 / apc-sorter1-cap
+    expires: null,
+    files: {
+      'document.pdf': { name: 'APC Regional Hub Proposals.pdf', type: 'application/pdf' },
+      'f/assets-apc-logo-2026.svg': { name: 'assets-apc-logo-2026.svg', type: 'image/svg+xml' },
+      'f/assets-hubs-cannock-layout.jpg': { name: 'assets-hubs-cannock-layout.jpg', type: 'image/jpeg' },
+      'f/assets-hubs-central-hub.jpg': { name: 'assets-hubs-central-hub.jpg', type: 'image/jpeg' },
+      'f/assets-hubs-map-cannock.png': { name: 'assets-hubs-map-cannock.png', type: 'image/png' },
+      'f/assets-hubs-map-full.png': { name: 'assets-hubs-map-full.png', type: 'image/png' },
+      'f/assets-hubs-map-london.png': { name: 'assets-hubs-map-london.png', type: 'image/png' },
+      'f/assets-hubs-map-north.png': { name: 'assets-hubs-map-north.png', type: 'image/png' },
+      'f/assets-hubs-orion-logo-white.png': { name: 'assets-hubs-orion-logo-white.png', type: 'image/png' },
+      'presentation.pptx': { name: 'APC Regional Hub Proposals.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
+    },
+  },
 };

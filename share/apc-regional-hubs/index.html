@@ -1,0 +1,451 @@
+<!DOCTYPE html><html lang="en-GB"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>APC · Regional Hub Proposals</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#060A16;--navy:#0B1428;--panel:#101C36;--line:rgba(150,180,230,.18);--text:#C9D3E6;--soft:#8592AD;--white:#F4F7FC;--acc:#3AA0FF;--acc2:#7CF3D0;
+  --k1:#F2D04B;--k2:#9B6BFF;--k3:#7CCB5A;--k4:#3FC3F5;--k5:#F0565A}
+@page{size:297mm 210mm;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1b1f27;font-family:'Inter',sans-serif;color:var(--text);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pg{width:297mm;height:210mm;margin:16px auto;background:var(--ink);position:relative;overflow:hidden;break-after:page}
+.pg:last-child{break-after:auto}
+@media print{body{background:var(--ink)}.pg{margin:0}}
+.mono{font-family:'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;font-size:8.5pt}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:12mm 12mm;opacity:.35;pointer-events:none}
+.bleed{position:absolute;inset:0;background-size:cover;background-position:center}
+.shade-l{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,22,.97) 0%,rgba(6,10,22,.86) 40%,rgba(6,10,22,.2) 78%,rgba(6,10,22,0) 100%)}
+.top{position:absolute;top:6mm;left:14mm;right:14mm;display:flex;justify-content:space-between;align-items:center;z-index:3}
+.top img{height:12.5mm}
+.top .mono{color:var(--white);display:flex;align-items:center;gap:3mm}
+.top .mono:before{content:"";width:1.2mm;height:5mm;background:var(--acc);display:inline-block}
+.foot{position:absolute;bottom:8mm;left:14mm;right:14mm;display:flex;justify-content:space-between;color:var(--soft);z-index:3;font-size:7.5pt}
+.tag{color:var(--acc);margin-bottom:4mm}
+h1,h2,h3,.num{font-family:'Space Grotesk',sans-serif;color:var(--white);letter-spacing:-.02em}
+h1{font-size:42pt;line-height:1.02;font-weight:700}
+h1 span,h2 span{color:var(--acc)}
+h2{font-size:26pt;line-height:1.06;font-weight:700;margin-bottom:5mm}
+h3{font-size:12pt;font-weight:600;margin-bottom:1.5mm}
+p{font-size:10pt;line-height:1.6;color:var(--text)}
+.lead{font-size:12pt;line-height:1.55;color:#DCE4F2}
+.z{position:relative;z-index:2}
+.num{font-weight:700;line-height:.95}
+.unit{color:var(--acc);margin-top:2mm}
+.stat{border-left:1.2mm solid var(--acc);padding-left:4mm}
+.card{background:linear-gradient(160deg,rgba(20,36,70,.9),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:3mm;padding:5mm 6mm}
+.card.hot{border-color:var(--acc);background:linear-gradient(160deg,rgba(30,70,140,.75),rgba(11,20,40,.95))}
+.card .mono{color:var(--acc);font-size:7.5pt;margin-bottom:2mm}
+.cap{font-family:'IBM Plex Mono',monospace;font-size:7pt;color:var(--soft);margin-top:1.8mm;letter-spacing:.04em;text-transform:uppercase}
+.dot{display:inline-block;width:2.6mm;height:2.6mm;border-radius:50%;margin-right:2.5mm;vertical-align:middle;position:relative;top:-.3mm}
+
+/* cost table */
+.ct{width:100%;border-collapse:collapse;font-size:10pt}
+.ct th{font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600;text-align:right;padding:0 0 2.5mm;border-bottom:1px solid var(--line)}
+.ct th:first-child{text-align:left}
+.ct td{padding:3mm 0;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;color:var(--text)}
+.ct td:first-child{text-align:left;font-family:'Space Grotesk';font-weight:600;color:var(--white);font-size:11pt}
+.ct td.t{color:var(--white);font-weight:600}
+.ct tr.sub td{border-bottom:1px solid rgba(150,180,230,.4);color:var(--white);font-weight:600}
+.ct tr.less td{color:var(--soft)}
+.ct tr.less td:first-child{color:var(--soft);font-weight:500}
+.ct tr.bal td{border:0;padding-top:4mm;font-family:'Space Grotesk';font-size:15pt;font-weight:700;color:var(--white)}
+.ct tr.bal td.t{color:var(--acc)}
+
+/* renders */
+.rend{border-radius:2.5mm;overflow:hidden;border:1px solid var(--line);background:var(--navy);background-size:cover;background-position:center;position:relative}
+.rend.pending{display:flex;align-items:center;justify-content:center;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:6mm 6mm}
+.rend.pending span{font-family:'IBM Plex Mono';font-size:8pt;letter-spacing:.14em;color:var(--soft);text-transform:uppercase}
+.rend .lab{position:absolute;left:4mm;top:4mm;font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--white);background:rgba(6,10,22,.75);border:1px solid var(--line);padding:1.2mm 2.6mm;border-radius:99px}
+
+/* gantt */
+.gantt{position:relative;margin-top:2mm}
+.g-row{display:grid;grid-template-columns:62mm 1fr 34mm;align-items:center;border-bottom:1px solid var(--line);padding:2.4mm 0}
+.g-name{font-family:'Space Grotesk';font-weight:600;color:var(--white);font-size:10.5pt}
+.g-track{position:relative;height:11mm}
+.g-bar{position:absolute;left:0;height:4.2mm;border-radius:1mm;display:flex;align-items:center;padding-left:2mm;font-family:'IBM Plex Mono';font-size:6.8pt;letter-spacing:.06em;white-space:nowrap}
+.g-bar.std{top:0;background:rgba(133,146,173,.22);border:1px solid rgba(133,146,173,.55);color:var(--text)}
+.g-bar.exp{top:6.2mm;background:var(--acc);color:var(--ink);font-weight:600}
+.g-bar.be{top:6.2mm;background:transparent;border:1px dashed var(--acc);color:var(--acc)}
+.g-save{text-align:right;font-family:'Space Grotesk';font-weight:700;color:var(--acc);font-size:12pt}
+.g-save small{display:block;font-family:'IBM Plex Mono';font-size:6.8pt;color:var(--soft);font-weight:400;letter-spacing:.08em;text-transform:uppercase}
+.g-scale{display:grid;grid-template-columns:62mm 1fr 34mm}
+.g-ticks{position:relative;height:5mm}
+.g-ticks span{position:absolute;transform:translateX(-50%);font-family:'IBM Plex Mono';font-size:6.8pt;color:var(--soft)}
+.g-grid{position:absolute;top:0;bottom:0;left:62mm;right:34mm;pointer-events:none}
+.g-grid i{position:absolute;top:0;bottom:0;width:1px;background:rgba(150,180,230,.08)}
+.key{display:flex;gap:6mm;margin-top:3mm;font-family:'IBM Plex Mono';font-size:7pt;color:var(--soft);letter-spacing:.06em;text-transform:uppercase}
+.key b{display:inline-block;width:7mm;height:2.6mm;border-radius:.6mm;margin-right:2mm;vertical-align:middle}
+
+.opt{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.opt .big{font-family:'Space Grotesk';font-size:24pt;font-weight:700;color:var(--white);line-height:1;margin:2mm 0 3mm}
+.opt .card.hot .big{color:var(--white)}
+.opt ul{list-style:none;font-size:9pt;line-height:1.5}
+.opt li{padding:1.3mm 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:4mm}
+.opt li b{color:var(--white);font-weight:500;white-space:nowrap}
+.step{display:flex;gap:4mm;align-items:flex-start;padding:3mm 0;border-bottom:1px solid var(--line)}
+.step .n{font-family:'IBM Plex Mono';color:var(--acc);font-size:9pt;min-width:9mm}
+.step p{font-size:9.5pt}
+
+/* key dates */
+.kd{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:8mm}
+.kd-c{padding:6mm 6mm 5mm}
+.kd-h{font-family:'Space Grotesk';font-weight:600;color:var(--white);font-size:11pt}
+.kd-was{font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin-top:5mm}
+.kd-was s{display:block;font-family:'Space Grotesk';font-weight:700;font-size:25pt;letter-spacing:-.02em;line-height:1.05;text-transform:none;margin-top:1.5mm;color:#7D89A3;text-decoration-color:rgba(240,86,90,.95);text-decoration-thickness:3px}
+.kd-date::before{content:"Handover";display:block;font-family:'IBM Plex Mono';font-size:7.5pt;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin:4mm 0 1.5mm}
+.kd-date{font-family:'Space Grotesk';font-weight:700;color:var(--white);font-size:25pt;letter-spacing:-.02em;line-height:1.05;margin-top:1.5mm}
+.kd-foot{display:flex;justify-content:space-between;align-items:center;margin-top:5mm;padding-top:3mm;border-top:1px solid rgba(58,160,255,.5)}
+.kd-save{font-family:'IBM Plex Mono';font-size:8.5pt;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--acc2);padding:1.2mm 2.6mm;border-radius:99px}
+.kd-wk{font-family:'IBM Plex Mono';font-size:8pt;color:var(--acc);letter-spacing:.06em}
+.kd-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm;margin-top:9mm}
+.g-ms{position:absolute;top:6.4mm;width:3.6mm;height:3.6mm;background:var(--acc2);transform:translateX(-50%) rotate(45deg);border:1px solid var(--ink);z-index:2}
+.g-grid i.g-now{background:var(--acc);width:1.5px}
+.g-grid i.g-target{background:none;border-left:1.5px dashed var(--acc2)}
+.g-grid i.g-target em{position:absolute;bottom:-5.5mm;left:1.5mm;white-space:nowrap;font-style:normal;font-family:'IBM Plex Mono';font-size:6.8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--acc2)}
+
+.gal{display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:auto auto;gap:5mm 6mm}
+.gal .g-big{grid-row:1/3;display:flex;flex-direction:column}
+.gal .g-big .rend{flex:1;min-height:110mm}
+.g-ticks span{white-space:nowrap}
+.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.rend{position:relative}
+
+.logos{display:flex;align-items:center;gap:5mm}
+.logos .lsep{width:1px;height:11mm;background:rgba(255,255,255,.35)}
+.top .logos img.apc{height:24.65mm}
+.play{position:absolute;right:4mm;top:4mm;z-index:2;font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--acc2);padding:1.4mm 3mm;border-radius:99px;text-decoration:none;font-weight:600}
+.pay td.pc{font-family:'Space Grotesk';font-weight:700;color:var(--white);font-size:13pt;width:22mm}
+.ct.pays{table-layout:fixed;width:100%}.ct.pays th,.ct.pays td{padding-left:1mm;padding-right:1mm;white-space:nowrap;font-size:7.6pt}.ct.pays th:first-child,.ct.pays td:first-child{width:54mm}.ct.pays td:first-child{white-space:normal;line-height:1.25;padding-left:5.5mm;text-indent:-4.5mm}.ct.pays tr.bal td{font-size:8.4pt}.ct.pays tr.bal td:last-child{font-size:9pt}.ct.pays th:last-child,.ct.pays td:last-child{width:27mm}.ct.pays th:nth-child(2),.ct.pays td:nth-child(2){width:17mm}
+
+.scr-video{display:none}
+@media screen{
+  .vwrap .scr-video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:2.5mm;border:1px solid var(--line);background:#000;z-index:4}
+}
+s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-thickness:.09em;text-decoration-skip-ink:none}
+tr.rxrow td{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-thickness:.12em;text-decoration-skip-ink:none}
+.done{display:inline-block;text-decoration:none;margin-left:2mm;padding:.4mm 2mm;border-radius:99px;background:rgba(124,243,208,.16);border:1px solid rgba(124,243,208,.55);color:#7CF3D0;font-family:"IBM Plex Mono",monospace;font-size:6.6pt;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;vertical-align:middle}
+.done2{display:inline-block;text-decoration:none;color:#7CF3D0;font-family:"IBM Plex Mono",monospace;font-size:6.2pt;line-height:1.15;letter-spacing:.06em;text-transform:uppercase;text-align:right}
+/* v2: Aptos throughout (falls back to Segoe UI where browsers can't use Aptos) */
+body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe UI',system-ui,sans-serif !important}
+
+/* WS footer band (v2) */
+.wsfoot{position:absolute;left:0;right:0;bottom:0;height:24mm;z-index:4;pointer-events:none}
+.wsbar{position:absolute;left:0;right:0;bottom:8.2mm;height:2.6mm;background:linear-gradient(90deg,#165CA1 0%,#166AAB 25%,#1C83C0 50%,#26A1D9 75%,#2CB1E5 100%);box-shadow:0 0 6mm rgba(44,177,229,.35)}
+.wsbar::after{content:"";position:absolute;left:0;right:0;top:0;height:42%;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0))}
+.wslogo{position:absolute;right:13mm;bottom:3.6mm;height:12mm;filter:drop-shadow(0 1.2mm 2mm rgba(0,0,0,.45))}
+.wspn{position:absolute;left:14mm;bottom:3mm;font-size:8pt;font-weight:600;letter-spacing:.06em;color:#9FB3E8}
+.wsnote{position:absolute;left:24mm;bottom:3.2mm;font-size:6.8pt;letter-spacing:.12em;text-transform:uppercase;color:#7D89A3}
+
+/* APC presentation master footer */
+.apcfoot{position:absolute;left:0;right:0;bottom:7.9mm;height:2.6mm;z-index:4;pointer-events:none}
+.apcfoot .l1{position:absolute;left:0;width:262mm;top:0;bottom:0;background:#1AB7EA}
+.apcfoot b{position:absolute;left:262mm;width:9mm;top:50%;transform:translateY(-50%);text-align:center;font-weight:700;font-size:7pt;line-height:1;color:#FFFFFF}
+.apcfoot .l2{position:absolute;left:271mm;width:4mm;top:0;bottom:0;background:#1AB7EA}
+.apcfoot .apclogo{position:absolute;left:276.5mm;bottom:-4.6mm;height:12mm;width:auto}
+.apcfoot .l3{position:absolute;left:292.5mm;right:0;top:0;bottom:0;background:#1AB7EA}
+
+/* ---------- v3 additions ---------- */
+.dwg{background:#F6F8FC;border-radius:2.5mm;overflow:hidden;position:relative;border:1px solid rgba(150,180,230,.35);box-shadow:0 2mm 8mm rgba(0,0,0,.35)}
+.dwg img{display:block;width:100%;height:100%;object-fit:contain}
+.dwg .lab{position:absolute;left:3mm;top:3mm;font-size:6.8pt;letter-spacing:.14em;text-transform:uppercase;color:#0B1428;background:rgba(255,255,255,.9);border:1px solid rgba(11,20,40,.15);padding:1mm 2.4mm;border-radius:99px;font-weight:600}
+.obj{display:grid;grid-template-columns:repeat(3,1fr);gap:6mm}
+.obj .card{padding:8mm 8mm 7mm;min-height:84mm}
+.obj li{padding:4mm 0 !important;font-size:12pt !important}
+.obj ol{list-style:none;counter-reset:o;margin-top:4mm}
+.obj li{counter-increment:o;display:flex;gap:3.5mm;padding:2.6mm 0;border-top:1px solid var(--line);font-size:10.5pt;color:var(--white);line-height:1.3}
+.obj li:before{content:counter(o,decimal-leading-zero);color:var(--acc);font-size:8pt;font-weight:600;padding-top:.6mm;min-width:6mm}
+.toc{display:grid;grid-template-columns:repeat(7,1fr);gap:3mm;margin-top:14mm}
+.toc div{border-top:.8mm solid var(--acc);padding-top:2.4mm;font-size:8.5pt;color:var(--text);line-height:1.3}
+.toc b{display:block;color:var(--acc);font-size:7.5pt;letter-spacing:.12em;margin-bottom:1mm}
+.pill{display:inline-block;padding:.6mm 2.4mm;border-radius:99px;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+.pill.ok{background:rgba(124,243,208,.14);border:1px solid rgba(124,243,208,.55);color:#7CF3D0}
+.pill.go{background:rgba(58,160,255,.16);border:1px solid rgba(58,160,255,.7);color:#8CC8FF}
+.lu{width:100%;border-collapse:collapse}
+.lu th{font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600;text-align:left;padding:0 0 2.4mm;border-bottom:1px solid var(--line)}
+.lu td{padding:3.4mm 0;border-bottom:1px solid var(--line);vertical-align:middle;font-size:10pt}
+.lu .nm{font-weight:700;color:var(--white);font-size:12.5pt;letter-spacing:-.01em}
+.lu .ds{font-size:8.5pt;color:var(--soft);margin-top:.6mm}
+.lu .v{font-weight:700;color:var(--white);font-size:13pt;text-align:right;font-variant-numeric:tabular-nums;padding-right:6mm}
+.lu tr.tot td{border:0;padding-top:4.5mm}
+.lu tr.tot .v{color:var(--acc);font-size:16pt}
+.bar{height:3.2mm;border-radius:99px;background:rgba(150,180,230,.12);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1E6FD0,var(--acc))}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
+.cmp .card{padding:9mm 9mm 8mm}
+.cmp .row{display:grid;grid-template-columns:24mm 1fr 36mm;align-items:center;gap:4mm;margin-top:8mm}
+.cmp .row span{font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.cmp .row b{font-weight:700;color:var(--white);font-size:17pt;text-align:right;font-variant-numeric:tabular-nums}
+.cmp .bar{height:10mm;border-radius:1.4mm}.cmp .bar i{border-radius:1.4mm}
+.cmp .bar.was i{background:rgba(133,146,173,.55)}
+.delta{display:flex;align-items:baseline;gap:3mm;margin-top:9mm;padding-top:5mm;border-top:1px solid rgba(58,160,255,.5)}
+.delta b{font-weight:800;font-size:38pt;letter-spacing:-.02em;color:var(--acc2);line-height:1}
+.delta span{font-size:9pt;color:var(--text)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm}
+.tile{padding:8mm 7mm 7mm;min-height:88mm;display:flex;flex-direction:column}
+.tile .big{font-weight:800;font-size:38pt;letter-spacing:-.03em;color:var(--white);line-height:1;margin:4mm 0 3mm}
+.tile p{font-size:9pt;line-height:1.5}
+.tile .src{margin-top:auto;padding-top:3mm;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.cage{display:grid;grid-template-columns:34mm 1fr;gap:5mm;align-items:center}
+.cage .im{height:74mm;background:#F6F8FC;border-radius:2mm;display:flex;align-items:center;justify-content:center;padding:3mm}
+.cage .im img{max-height:100%;max-width:100%;display:block}
+.kv{display:flex;justify-content:space-between;align-items:baseline;padding:2.6mm 0;border-top:1px solid var(--line)}
+.kv span{font-size:8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.kv b{font-weight:700;font-size:17pt;color:var(--white);font-variant-numeric:tabular-nums}
+.kv.up b{color:var(--acc2)}
+.chain{display:flex;align-items:stretch;gap:0;margin-top:5mm}
+.chain div{flex:1;position:relative;padding:7mm 3mm 7mm 8mm;font-size:10.5pt !important;background:linear-gradient(160deg,rgba(20,36,70,.95),rgba(11,20,40,.95));border:1px solid var(--line);font-size:9pt;color:var(--white);font-weight:600;line-height:1.25;display:flex;align-items:center;clip-path:polygon(0 0,calc(100% - 5mm) 0,100% 50%,calc(100% - 5mm) 100%,0 100%,5mm 50%)}
+.chain div:first-child{clip-path:polygon(0 0,calc(100% - 5mm) 0,100% 50%,calc(100% - 5mm) 100%,0 100%);padding-left:4mm}
+.chain div.hub{background:linear-gradient(160deg,rgba(30,90,170,.95),rgba(15,40,90,.95));border-color:var(--acc)}
+.ticks{list-style:none}
+.ticks li{padding:3.2mm 0 3.2mm 6mm;border-top:1px solid var(--line);font-size:10.5pt;position:relative;color:var(--text)}
+.ticks li:before{content:"";position:absolute;left:0;top:5.2mm;width:2.2mm;height:2.2mm;border-radius:50%;background:var(--acc2)}
+.pos{counter-reset:p}
+.pos div{counter-increment:p;display:grid;grid-template-columns:16mm 1fr;align-items:baseline;padding:4.4mm 0;border-top:1px solid var(--line)}
+.pos div:before{content:counter(p,decimal-leading-zero);color:var(--acc);font-weight:700;font-size:14pt}
+.pos b{font-weight:700;font-size:16pt;color:var(--white);letter-spacing:-.01em;line-height:1.25}
+.pos b span{color:var(--acc2)}
+
+/* ---------- v3 business-plan pages ---------- */
+.agenda{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm 5mm;margin-top:2mm}
+.agenda div{padding:4.2mm 5mm;border:1px solid var(--line);border-radius:2.4mm;background:linear-gradient(160deg,rgba(20,36,70,.75),rgba(11,20,40,.75));font-size:11pt;font-weight:600;color:var(--white);display:flex;gap:4mm;align-items:baseline}
+.agenda div b{color:var(--acc);font-size:9pt;min-width:7mm}
+.agenda div.hl{border-color:var(--acc);background:linear-gradient(160deg,rgba(30,70,140,.8),rgba(11,20,40,.9))}
+.outline{list-style:none;counter-reset:q;width:200mm}
+.outline li{counter-increment:q;display:grid;grid-template-columns:14mm 1fr;padding:4.6mm 0;border-top:1px solid var(--line);font-size:12pt;line-height:1.45;color:#DCE4F2}
+.outline li:before{content:counter(q,decimal-leading-zero);color:var(--acc);font-weight:700;font-size:10pt;padding-top:.8mm}
+.tbc{display:inline-block;margin-left:4mm;vertical-align:middle;padding:1mm 3mm;border-radius:99px;border:1px dashed rgba(242,208,75,.8);color:#F2D04B;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.pts{list-style:none}
+.pts li{padding:2.8mm 0 2.8mm 6mm;border-top:1px solid var(--line);font-size:9.6pt;line-height:1.5;position:relative;color:var(--text)}
+.pts li:before{content:"";position:absolute;left:0;top:4.9mm;width:2mm;height:2mm;background:var(--acc);border-radius:.4mm}
+.pts li b{color:var(--white);font-weight:600}
+.usp{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm}
+.usp .card{padding:6mm;min-height:52mm}
+.usp h3{font-size:13pt;margin:1mm 0 2.5mm}
+.usp p{font-size:9pt;line-height:1.5}
+.chg{display:grid;grid-template-columns:1fr 1fr;gap:4.5mm}
+.chg .card{padding:4.6mm 5.5mm}
+.chg h3{font-size:10.5pt;margin-bottom:1.5mm}
+.chg p{font-size:8.8pt;line-height:1.45}
+.mkt{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm}
+.mkt .card{padding:5mm 5.5mm}
+.mkt .num{font-size:24pt;margin:2mm 0 2mm}
+.mkt p{font-size:8.6pt;line-height:1.45}
+.lightcard{background:#FFFFFF;border-radius:2.5mm;overflow:hidden;box-shadow:0 2mm 8mm rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
+.lightcard img{display:block;max-width:100%;max-height:100%;object-fit:contain}
+.trend{display:grid;grid-template-columns:repeat(3,1fr);gap:3.5mm}
+.trend div{padding:3.8mm 4.5mm;border:1px solid var(--line);border-radius:2mm;background:rgba(16,28,54,.7);font-size:8.8pt;line-height:1.45;color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:2.5mm}
+.chips span{padding:1.6mm 3.6mm;border-radius:99px;border:1px solid rgba(58,160,255,.55);background:rgba(58,160,255,.1);color:#CFE4FF;font-size:8.4pt;font-weight:500}
+.org{display:flex;flex-direction:column;align-items:center}
+.org .box{padding:4.5mm 6mm;border-radius:2mm;text-align:center;font-weight:600;color:var(--white);font-size:10pt;line-height:1.3}
+.org .boss{background:linear-gradient(160deg,rgba(30,90,170,.95),rgba(15,40,90,.95));border:1px solid var(--acc);min-width:62mm}
+.org .stem{width:1px;height:8mm;background:rgba(150,180,230,.5)}
+.org .rail{height:1px;background:rgba(150,180,230,.5);width:80%}
+.org .kids{display:grid;grid-template-columns:repeat(5,1fr);gap:4mm;width:100%}
+.org .kids>div{display:flex;flex-direction:column;align-items:center}
+.org .kids .box{background:rgba(16,28,54,.9);border:1px solid var(--line);width:100%;font-size:9pt;min-height:20mm;display:flex;align-items:center;justify-content:center}
+.org .kids .box.new{border:1px dashed var(--acc2);color:#BFF7E6}
+.it{width:100%;border-collapse:collapse;font-size:8.2pt;line-height:1.38}
+.it th{font-size:6.8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600;text-align:left;padding:0 2.5mm 2mm 0;border-bottom:1px solid rgba(150,180,230,.4)}
+.it td{padding:2.3mm 2.5mm 2.3mm 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--text)}
+.it td.a{color:var(--white);font-weight:600;font-size:8.8pt}
+.it td.c{text-align:center;white-space:nowrap}
+.it td.r{text-align:right;white-space:nowrap;color:var(--white);font-weight:600}
+.it tr.foot td{color:var(--soft);font-style:normal}
+.mat{display:inline-block;width:3.2mm;height:3.2mm;border-radius:50%;margin:0 .5mm;vertical-align:middle}
+.mat.g{background:#3DBE6B}.mat.a{background:#E8A520}.mat.r{background:#E5483F}
+.pn{display:inline-flex;width:6.5mm;height:6.5mm;border-radius:50%;background:var(--acc);color:#041223;font-weight:700;font-size:8.5pt;align-items:center;justify-content:center;margin-right:2.5mm;vertical-align:middle}
+.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm}
+.journey .card{padding:5mm;min-height:58mm;position:relative}
+.journey .card .mono{font-size:7pt}
+.journey h3{font-size:11pt;margin:1.5mm 0 2mm}
+.journey p{font-size:8.6pt;line-height:1.45}
+.opt2{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+.opt2 .card{padding:6mm 7mm}
+.opt2 h3{font-size:15pt;margin:1mm 0 3mm}
+.opt2 .fit{margin-top:3mm;padding-top:3mm;border-top:1px solid rgba(58,160,255,.5);font-size:9pt;color:#CFE4FF}
+.both{margin-top:5mm;padding:4.5mm 6mm;border-radius:2.4mm;background:linear-gradient(90deg,rgba(30,90,170,.9),rgba(15,40,90,.9));border:1px solid var(--acc);display:grid;grid-template-columns:30mm 1fr;gap:5mm;align-items:center;font-size:9pt;color:var(--white)}
+.risk2{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+.risk2 .card{padding:6mm}
+.big2{font-weight:800;font-size:34pt;letter-spacing:-.03em;color:var(--white);line-height:1}
+
+.hero-video{object-fit:cover;object-position:50% 58%;background:#000}
+@media screen{
+  html{background:#02050C}
+  body{padding:64px 0 40px}
+  .pg{margin:0 auto 10mm;box-shadow:0 10px 40px rgba(0,0,0,.55)}
+  .webbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(6,10,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(150,180,230,.18);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8592AD}
+  .webbar a{color:#041223;background:#3AA0FF;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:600;letter-spacing:.08em}
+}
+@media print{.webbar{display:none}}
+
+@media screen{
+  .pg{opacity:0;transform:translateY(18px) scale(.985);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .pg.in{opacity:1;transform:none}
+  .pg .bar i{transform-origin:left center;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.2,.7,.2,1) .25s}
+  .pg.in .bar i{transform:scaleX(1)}
+  .pg .card{transition:border-color .25s ease, box-shadow .25s ease}
+  .pg .card:hover{border-color:rgba(58,160,255,.75);box-shadow:0 0 0 1px rgba(58,160,255,.25),0 6px 24px rgba(10,40,90,.45)}
+  .webnav{position:fixed;right:10px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:3px}
+  .webnav a{width:5px;height:5px;border-radius:50%;background:rgba(150,180,230,.3);display:block;transition:all .2s}
+  .webnav a.on{background:#3AA0FF;height:14px;border-radius:3px}
+  @media (max-height:640px){.webnav{display:none}}
+  .webprog{position:fixed;left:0;top:52px;height:2px;background:linear-gradient(90deg,#1E6FD0,#7CF3D0);z-index:51;width:0}
+}
+@media print{.pg{opacity:1!important;transform:none!important}.webnav,.webprog{display:none}}
+</style><style>
+.map{position:absolute}
+.map>img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hub{position:absolute;width:0;height:0;z-index:3}
+.hub i{position:absolute;left:-2.6mm;top:-2.6mm;width:5.2mm;height:5.2mm;border-radius:50%;background:#3AA0FF;border:.7mm solid #F4F7FC;box-shadow:0 0 0 1.6mm rgba(58,160,255,.28),0 0 6mm rgba(58,160,255,.9)}
+.hub.big i{left:-3.6mm;top:-3.6mm;width:7.2mm;height:7.2mm;background:#7CF3D0;box-shadow:0 0 0 2.2mm rgba(124,243,208,.25),0 0 9mm rgba(124,243,208,.9)}
+.hub.dim i{background:#2A4F86;border-color:#8592AD;box-shadow:none;left:-1.8mm;top:-1.8mm;width:3.6mm;height:3.6mm}
+.hub b{position:absolute;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:#F4F7FC;
+  background:rgba(6,10,22,.82);border:1px solid rgba(58,160,255,.6);border-radius:1.2mm;padding:1.1mm 2.2mm;top:-3.2mm}
+.hub b.r{left:5mm}.hub b.l{right:5mm}
+.area{position:absolute;left:0;right:0;border-top:.45mm dashed rgba(124,243,208,.75)}
+.area span{position:absolute;left:0;top:1.2mm;font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
+.area.up span{top:auto;bottom:1.2mm}
+.big-num{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#F4F7FC;letter-spacing:-.02em;line-height:.95}
+.kv{display:flex;flex-direction:column;gap:5mm}
+.kv .card .mono{color:var(--acc)}
+.kv>.card{align-self:stretch;width:100%;display:block}
+.kv>.card.row{display:flex}
+.twin .twin-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.twin-badge{position:absolute;left:3mm;bottom:3mm;z-index:2;display:flex;align-items:center;gap:2.2mm;background:rgba(6,10,22,.86);border:1px solid rgba(124,243,208,.55);border-radius:1.5mm;padding:1.4mm 2.6mm}
+.twin-badge img{height:4.2mm;width:auto}
+.twin-badge span{font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
+@media print{.twin-video{display:none}}
+.glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
+</style>
+</head><body>
+<div class="webbar"><span>APC regional hub proposals · private</span><span style="display:flex;gap:10px"><a href="presentation.pptx">Download PowerPoint</a><a href="document.pdf">Download PDF</a></span></div>
+
+
+<!-- COVER -->
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div><div class="glow" style="right:10mm;top:60mm;width:150mm;height:150mm"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="map" style="right:20mm;top:12mm;width:117.9mm;height:186mm"><img src="f/assets-hubs-map-full.png" alt="Map of APC member depots"><div class="hub" style="left:80.7%;top:67.6%"><i></i></div><div class="hub" style="left:71.3%;top:76.7%"><i></i></div><div class="hub" style="left:87.6%;top:86.8%"><i></i></div></div>
+  <div class="z" style="position:absolute;left:14mm;top:46mm;width:150mm">
+    <div class="mono tag">— Regional hub proposals</div>
+    <h1 style="font-size:34pt">Three regional hubs.<br><span>One central sortation hub.</span></h1>
+    <p class="lead" style="margin-top:7mm;width:135mm">APC's member depots grouped into three regional hub areas, the parcels each hub sorts, the share that stays in its own area, and the new central sortation hub.</p>
+    <div style="display:flex;gap:9mm;margin-top:12mm">
+      <div class="stat"><div class="num" style="font-size:25pt">3</div><div class="mono unit" style="font-size:7pt">Regional hubs</div></div>
+      <div class="stat"><div class="num" style="font-size:25pt">£50m</div><div class="mono unit" style="font-size:7pt">Central hub investment</div></div>
+      <div class="stat"><div class="num" style="font-size:25pt">550,000</div><div class="mono unit" style="font-size:7pt">Parcels a night</div></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>1</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="map" style="right:18mm;top:22mm;width:141.8mm;height:162mm"><img src="f/assets-hubs-map-north.png" alt="Map of APC member depots"><div class="hub" style="left:80.31%;top:85.35%"><i></i><b class="l">Northern Regional Hub</b></div><div class="area up" style="top:87.89%"><span>Northern Regional Hub area</span></div></div>
+  <div class="z" style="position:absolute;left:14mm;top:37mm;width:100mm">
+    <div class="mono tag">— Regional hub 01</div>
+    <h2 style="margin:0">Northern <span>Regional Hub.</span></h2>
+    <p style="font-size:10pt;margin-top:4mm;line-height:1.5">Serves the member depots in the northern regional hub area, above the dashed line on the map.</p>
+    <div class="kv" style="margin-top:8mm">
+      <div class="card hot" style="padding:5mm 6mm"><div class="mono">Parcels sorted</div><div class="big-num" style="font-size:34pt;margin-top:2mm">1,512,333</div></div>
+      <div class="card" style="padding:5mm 6mm"><div class="mono">Stay in this area</div><div class="big-num" style="font-size:34pt;margin-top:2mm">5.2%</div>
+        <p style="font-size:9pt;margin-top:2mm">78,641 parcels</p></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>2</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag">— Regional hub 02</div><h2 style="margin:0">Cannock <span>Sortation Hub.</span></h2></div>
+      <p style="width:120mm;font-size:9.5pt">Serves the member depots in the Cannock sortation hub area, between the two dashed lines. Layout as drawn by APC.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 88mm;gap:6mm">
+      <div class="dwg" style="height:74.7mm"><img src="f/assets-hubs-cannock-layout.jpg" alt="Cannock sortation hub layout" style="width:100%;height:100%;object-fit:contain"></div>
+      <div style="position:relative;height:55.5mm;border-radius:2.5mm;border:1px solid var(--line);background:rgba(6,10,22,.5);overflow:hidden">
+        <div class="map" style="inset:0"><img src="f/assets-hubs-map-cannock.png" alt="Map of APC member depots"><div class="hub" style="left:59.0%;top:52.5%"><i></i><b class="l">Cannock Sortation Hub</b></div><div class="area" style="top:26.43%"><span></span></div><div class="area up" style="top:81.07%"><span>Cannock Sortation Hub area</span></div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:5mm">
+      <div class="card hot" style="padding:3.5mm 5mm"><div class="mono">Sorting areas</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">2</div><p style="font-size:8pt;margin-top:1mm">Areas 1 and 2</p></div>
+      <div class="card" style="padding:3.5mm 5mm"><div class="mono">Artic loading lanes</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">45</div><p style="font-size:8pt;margin-top:1mm">22 covered tipping · 20 front canopy · 3 side canopy</p></div>
+      <div class="card" style="padding:3.5mm 5mm"><div class="mono">New sortation</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">72</div><p style="font-size:8pt;margin-top:1mm">double cages · 100 m × 20 m</p></div>
+      <div class="card" style="padding:3.5mm 5mm"><div class="mono">On site</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">2-day</div><p style="font-size:8pt;margin-top:1mm">stock area · forklift workshop</p></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>3</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:37mm;width:80mm">
+    <div class="mono tag">— Regional hub 03</div>
+    <h2 style="margin:0;font-size:24pt">Central London &amp; <span>South West Regional Hub.</span></h2>
+    <p style="font-size:10pt;margin-top:4mm;line-height:1.5">Serves the member depots in the central London and South West regional hub area, below the dashed line on the map.</p>
+    <div class="kv" style="margin-top:7mm">
+      <div class="card hot" style="padding:5mm 6mm"><div class="mono">Parcels sorted</div><div class="big-num" style="font-size:30pt;margin-top:2mm">2,112,384</div></div>
+      <div class="card" style="padding:5mm 6mm"><div class="mono">Stay in this area</div><div class="big-num" style="font-size:30pt;margin-top:2mm">2.8%</div><p style="font-size:9pt;margin-top:2mm">59,540 parcels</p></div>
+    </div>
+  </div>
+  <div class="map" style="right:12mm;top:81.0mm;width:172mm;height:62.1mm"><img src="f/assets-hubs-map-london.png" alt="Map of APC member depots"><div class="hub" style="left:87.08%;top:40.0%"><i></i><b class="l">Central London &amp; SW Regional Hub</b></div><div class="area" style="top:30.45%"><span>Central London &amp; South West Regional Hub area</span></div></div>
+  <div class="apcfoot"><i class="l1"></i><b>4</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div><div class="glow" style="left:20mm;top:70mm;width:140mm;height:140mm"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="map" style="left:16mm;top:30mm;width:106.5mm;height:168mm"><img src="f/assets-hubs-map-full.png" alt="Map of APC member depots"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="80.7" y1="67.6" x2="71.3" y2="76.7" stroke="#7CF3D0" stroke-width=".5" stroke-dasharray="1.2 1" vector-effect="non-scaling-stroke" style="stroke-width:1.6px"/><line x1="87.6" y1="86.8" x2="71.3" y2="76.7" stroke="#7CF3D0" stroke-width=".5" stroke-dasharray="1.2 1" vector-effect="non-scaling-stroke" style="stroke-width:1.6px"/></svg><div class="hub" style="left:80.7%;top:67.6%"><i></i><b class="r">Northern Regional Hub</b></div><div class="hub" style="left:71.3%;top:76.7%"><i></i><b class="r">Cannock Sortation Hub</b></div><div class="hub" style="left:87.6%;top:86.8%"><i></i><b class="r">Central London &amp; SW Regional Hub</b></div></div>
+  <div class="z" style="position:absolute;right:14mm;top:37mm;width:120mm">
+    <div class="mono tag">— New central sortation hub</div>
+    <h2 style="margin:0">Three regional hubs. <span>One network.</span></h2>
+    <p style="font-size:10pt;margin-top:4mm;line-height:1.5">The northern, Cannock and central London and South West regional hubs, linked to a new central sortation hub.</p>
+    <div class="kv" style="margin-top:7mm;gap:3.5mm">
+      <div class="card row" style="padding:4mm 5mm;display:flex;justify-content:space-between;align-items:center"><div><div class="mono">Regional hub 01</div><div style="font-size:12pt;color:var(--white);font-weight:600;margin-top:1mm">Northern Regional Hub</div></div><div class="big-num" style="font-size:15pt">1,512,333</div></div>
+      <div class="card row" style="padding:4mm 5mm;display:flex;justify-content:space-between;align-items:center"><div><div class="mono">Regional hub 02</div><div style="font-size:12pt;color:var(--white);font-weight:600;margin-top:1mm">Cannock Sortation Hub</div></div><div class="mono" style="font-size:7pt;color:var(--soft)">Layout · page 3</div></div>
+      <div class="card row" style="padding:4mm 5mm;display:flex;justify-content:space-between;align-items:center"><div><div class="mono">Regional hub 03</div><div style="font-size:12pt;color:var(--white);font-weight:600;margin-top:1mm">Central London &amp; SW Regional Hub</div></div><div class="big-num" style="font-size:15pt">2,112,384</div></div>
+      <p class="mono" style="font-size:6.5pt;color:var(--soft);margin-top:1mm">Figures are parcels sorted, as given on the source slides</p>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>5</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag">— New central sortation hub</div><h2 style="margin:0">£50 million. <span>550,000 parcels a night.</span></h2></div>
+      <p style="width:96mm;font-size:9.5pt">A £50 million investment in a sortation centre: 11 sortation lines and 180 loading doors in a 450,000 sq ft unit.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:176mm 1fr;gap:6mm">
+      <div class="rend twin" style="height:99mm"><img class="fill" src="f/assets-hubs-central-hub.jpg" alt="Central sortation hub concept layout"><div class="twin-badge"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin · in build</span></div></div>
+      <div class="kv" style="gap:3.5mm">
+        <div class="card hot" style="padding:3.5mm 5mm"><div class="mono">Investment</div><div class="big-num" style="font-size:21pt;margin-top:1mm">£50m</div></div>
+        <div class="card" style="padding:3.5mm 5mm"><div class="mono">Capacity</div><div class="big-num" style="font-size:21pt;margin-top:1mm">550,000</div><p style="font-size:8pt;margin-top:1mm">a night · 50,000 a line</p></div>
+        <div class="card" style="padding:3.5mm 5mm"><div class="mono">Commercial unit</div><div class="big-num" style="font-size:21pt;margin-top:1mm">450,000</div><p style="font-size:8pt;margin-top:1mm">sq ft</p></div>
+        <div class="card" style="padding:3.5mm 5mm"><div class="mono">Annual saving on FLTs</div><div class="big-num" style="font-size:21pt;margin-top:1mm">£1,500,000</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>6</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<script>
+(function(){function fit(){var w=document.querySelector('.pg');if(!w)return;var s=Math.min(1,(window.innerWidth-24)/w.offsetWidth);document.body.style.zoom=s;}
+window.addEventListener('resize',fit);window.addEventListener('load',fit);fit();})();
+(function(){var pgs=[].slice.call(document.querySelectorAll('.pg'));var nav=document.createElement('div');nav.className='webnav';
+var prog=document.createElement('div');prog.className='webprog';document.body.appendChild(prog);
+pgs.forEach(function(p,i){p.id='p'+(i+1);var a=document.createElement('a');a.href='#p'+(i+1);a.title='Page '+(i+1);nav.appendChild(a);});document.body.appendChild(nav);
+var dots=nav.querySelectorAll('a');
+if(!('IntersectionObserver' in window)){pgs.forEach(function(p){p.classList.add('in')});return;}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');}});},{threshold:0.08});
+pgs.forEach(function(p){io.observe(p)});
+function cur(){var mid=window.innerHeight/2,c=0;pgs.forEach(function(p,i){if(p.getBoundingClientRect().top<mid)c=i;});return c;}
+function onScroll(){var h=document.documentElement;var f=h.scrollTop/((h.scrollHeight-h.clientHeight)||1);prog.style.width=(f*100)+'%';var c=cur();dots.forEach(function(d,i){d.classList.toggle('on',i===c)});}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+document.addEventListener('keydown',function(e){var k=e.key;if(['ArrowRight','ArrowLeft','PageDown','PageUp'].indexOf(k)<0)return;var c=cur();
+var n=(k==='ArrowRight'||k==='PageDown')?Math.min(c+1,pgs.length-1):Math.max(c-1,0);pgs[n].scrollIntoView({behavior:'smooth',block:'center'});e.preventDefault();});
+})();
+</script>
+</body></html>
