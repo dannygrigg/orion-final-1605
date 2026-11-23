@@ -163,6 +163,7 @@ export const DOCS = {
   'apc-regional-hubs': {
     title: 'APC Regional Hub Proposals',
     neutral: true,                      // PIN screen shows no Orion branding
+    answers: true,                      // page 8 fill-in list saves via /share/apc-regional-hubs/answers
     ref: 'Regional hubs · new central sortation hub',
     customer: 'APC Overnight Ltd',
     pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',   // same PIN as apc-cannock-phase2 / apc-sorter1-cap

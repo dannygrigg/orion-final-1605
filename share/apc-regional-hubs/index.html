@@ -287,6 +287,23 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
   .pg .card{transition:border-color .25s ease, box-shadow .25s ease}
   .pg .card:hover{border-color:rgba(58,160,255,.75);box-shadow:0 0 0 1px rgba(58,160,255,.25),0 6px 24px rgba(10,40,90,.45)}
   .twin-live{overflow:hidden}
+  .qa{cursor:pointer;transition:border-color .2s,box-shadow .2s}
+  .qa:hover{border-color:rgba(124,243,208,.7);box-shadow:0 0 0 1px rgba(124,243,208,.25)}
+  .qa.saving::after{content:'Saving…';position:absolute;right:3mm;top:2.6mm;font:600 6pt 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#7CF3D0}
+  .qa-hint{display:block;margin-top:2.5mm;font:500 6.5pt 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#7CF3D0}
+  .qa-modal{position:fixed;inset:0;z-index:100;background:rgba(2,5,12,.78);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
+  .qa-modal.on{display:flex}
+  .qa-box{width:min(860px,100%);max-height:92vh;overflow:auto;background:#0B1428;border:1px solid rgba(58,160,255,.5);border-radius:12px;padding:26px 28px;box-shadow:0 20px 60px rgba(0,0,0,.6);font-family:Inter,system-ui,sans-serif}
+  .qa-box .n{font:600 12px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#3AA0FF}
+  .qa-box h3{font:700 24px 'Space Grotesk',sans-serif;color:#F4F7FC;margin:6px 0 8px}
+  .qa-box p{font-size:14px;line-height:1.55;color:#C9D3E6;margin:0 0 16px}
+  .qa-box textarea{width:100%;min-height:260px;resize:vertical;background:#060A16;color:#F4F7FC;border:1px solid rgba(150,180,230,.3);border-radius:8px;padding:14px;font:15px/1.5 Inter,system-ui,sans-serif;outline:none}
+  .qa-box textarea:focus{border-color:#7CF3D0}
+  .qa-box .row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:12px}
+  .qa-box .st{font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.08em;color:#8592AD}
+  .qa-box .st.err{color:#F0565A}
+  .qa-box button{background:#3AA0FF;color:#041223;border:0;border-radius:6px;padding:10px 18px;font:600 12px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+  .qa-box button.ghost{background:transparent;color:#C9D3E6;border:1px solid rgba(150,180,230,.3)}
   .twin-full{position:absolute;right:3mm;top:3mm;z-index:3;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:#041223;background:#7CF3D0;padding:1.4mm 2.6mm;border-radius:1.5mm;text-decoration:none;font-weight:600}
   .webnav{position:fixed;right:10px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:3px}
   .webnav a{width:5px;height:5px;border-radius:50%;background:rgba(150,180,230,.3);display:block;transition:all .2s}
@@ -323,6 +340,22 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .flow{display:flex;align-items:center;gap:2.5mm;flex-wrap:wrap}
 .flow span{font-family:'IBM Plex Mono',monospace;font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#F4F7FC;background:rgba(16,28,54,.9);border:1px solid rgba(58,160,255,.55);border-radius:1.2mm;padding:1.6mm 3mm}
 .flow i{font-style:normal;color:#7CF3D0;font-size:11pt}
+.plan2030 .bridge{display:flex;align-items:center;gap:2mm}
+.plan2030 .bridge div{border:1px solid rgba(58,160,255,.45);background:rgba(16,28,54,.85);border-radius:1.5mm;padding:1.6mm 3mm;text-align:left}
+.plan2030 .bridge div.hot{border-color:#7CF3D0;background:rgba(124,243,208,.12)}
+.plan2030 .bridge b{display:block;font-family:'Space Grotesk',sans-serif;font-size:13pt;color:#F4F7FC;line-height:1}
+.plan2030 .bridge div.hot b{color:#7CF3D0}
+.plan2030 .bridge span{display:block;font-family:'IBM Plex Mono',monospace;font-size:5.6pt;letter-spacing:.1em;text-transform:uppercase;color:#8592AD;margin-top:1mm}
+.plan2030 .bridge i{font-style:normal;color:#7CF3D0;font-size:11pt}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,33.5mm);gap:3mm;margin-top:4.5mm}
+.qa{background:linear-gradient(160deg,rgba(20,36,70,.9),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:2.5mm;padding:2.6mm 4mm;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.qa-h{display:flex;align-items:baseline;gap:2.5mm}
+.qa-h b{font-family:'Space Grotesk',sans-serif;font-size:11pt;color:#3AA0FF}
+.qa-h span{font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#F4F7FC}
+.qa-q{font-size:7.5pt;color:#8592AD;margin-top:.8mm;line-height:1.3}
+.qa-a{flex:1;margin-top:1.6mm;font-size:9pt;line-height:1.35;color:#F4F7FC;white-space:pre-wrap;overflow:hidden;border-top:1px solid rgba(150,180,230,.14);padding-top:1.4mm}
+.qa-a.empty::before{content:attr(data-ph);color:rgba(133,146,173,.55);font-style:italic}
+.qa-hint{display:none}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -458,6 +491,61 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
   <div class="twin-badge" style="left:auto;right:14mm;bottom:auto;top:36mm"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin stills</span></div>
   <div class="apcfoot"><i class="l1"></i><b>7</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
+<section class="pg plan2030">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end">
+      <div><div class="mono tag">— APC plan to 2030 · part 1</div><h2 style="margin:0">£50m EBITDA <span>by 2030.</span></h2></div>
+      <div class="bridge">
+        <div><b>≥ £10m</b><span>Hub upgrade and cages</span></div><i>+</i>
+        <div><b>≥ £10m</b><span>Financial support</span></div><i>+</i>
+        <div><b>£20m</b><span>Additional EBITDA</span></div><i>→</i>
+        <div class="hot"><b>£50m</b><span>EBITDA target · 2030</span></div>
+      </div>
+    </div>
+    <div class="qa-grid"><div class="qa" data-key="q1" data-q="What do we want to achieve and by when?" data-detail="Target £50m EBITDA by 2030, taking into account nationwide service commitments (or not?) and investment constraints. This should be APC stand-alone, excluding any last-mile/carrier activities.">
+      <div class="qa-h"><b>01</b><span>Target</span></div>
+      <div class="qa-q">What do we want to achieve and by when?</div>
+      <div class="qa-a empty" data-ph="To be completed"></div>
+    </div><div class="qa" data-key="q2" data-q="How do we deliver a minimum of £10m from the hub upgrade and cages?" data-detail="Confirm the net savings, timing, ownership and dependencies.">
+      <div class="qa-h"><b>02</b><span>Hub upgrade and cages</span></div>
+      <div class="qa-q">How do we deliver a minimum of £10m from the hub upgrade and cages?</div>
+      <div class="qa-a empty" data-ph="To be completed"></div>
+    </div><div class="qa" data-key="q3" data-q="How do we deliver a minimum of £10m from removing financial support?" data-detail="Combining members, WS carriers to take over regions, operational consulting and support for members (organisation, IT, sales, route planning etc), differentiated pricing for difficult regions, how do we create friction and make it difficult for members to ask for support (eg before proving support I would want to know detailed info about what they do, pricing, volumes, workflows in their sites, staff costs, route planning etc).">
+      <div class="qa-h"><b>03</b><span>Financial support</span></div>
+      <div class="qa-q">How do we deliver a minimum of £10m from removing financial support?</div>
+      <div class="qa-a empty" data-ph="To be completed"></div>
+    </div><div class="qa" data-key="q4" data-q="Where will the additional £20m of EBITDA come from?" data-detail="Additional cost savings opportunities (automation, AI call centre, back office), volume increase, new customers, national accounts, parcel lockers, online offering, partnership with cornershops/retailers, can we be an option on Amazon, Shopify integration, or other e-commerce sites, new products (large, heavy, 2 day), price increases, providing and charging for services (eg. software for route planning, or a full software suite/operating system for partners offering a complete back office solution with finance, payments, HR, route planning, ERP, etc), utilisation of spare capacity in the hub (e.g. two day service, newspaper sortation during the day...).">
+      <div class="qa-h"><b>04</b><span>The additional £20m</span></div>
+      <div class="qa-q">Where will the additional £20m of EBITDA come from?</div>
+      <div class="qa-a empty" data-ph="To be completed"></div>
+    </div><div class="qa" data-key="q5" data-q="Are there any companies we should consider buying?" data-detail="Potential acquisitions? Are there any companies we should consider buying?">
+      <div class="qa-h"><b>05</b><span>Acquisitions</span></div>
+      <div class="qa-q">Are there any companies we should consider buying?</div>
+      <div class="qa-a empty" data-ph="To be completed"></div>
+    </div><div class="qa" data-key="q6" data-q="What are we doing now, how do we position the business, and what does marketing spend convert to?" data-detail="What are we currently doing? How do we position the business (focus on quality, next day, price, personal service,…), marketing plan (online, offline, TV,...), conversion of marketing spent to sales.">
+      <div class="qa-h"><b>06</b><span>Marketing and sales</span></div>
+      <div class="qa-q">What are we doing now, how do we position the business, and what does marketing spend convert to?</div>
+      <div class="qa-a empty" data-ph="To be completed"></div>
+    </div><div class="qa" data-key="q7" data-q="What investment and organisational changes enable that plan?" data-detail="Infrastructure, technology, sales capability and member arrangements.">
+      <div class="qa-h"><b>07</b><span>Investment and organisation</span></div>
+      <div class="qa-q">What investment and organisational changes enable that plan?</div>
+      <div class="qa-a empty" data-ph="To be completed"></div>
+    </div><div class="qa" data-key="q8" data-q="Who delivers what, by when?" data-detail="Agree the integrated financial plan, accountable owners and the next 90 days.">
+      <div class="qa-h"><b>08</b><span>Who, what, by when</span></div>
+      <div class="qa-q">Who delivers what, by when?</div>
+      <div class="qa-a empty" data-ph="To be completed"></div>
+    </div></div>
+    <div class="qa-hint">Click any box to fill it in · saves automatically · everyone with the PIN sees the same answers</div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>8</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<script>
+(function(){function fit(){document.querySelectorAll('.qa-a').forEach(function(el){var f=9;el.style.fontSize=f+'pt';
+while(el.scrollHeight>el.clientHeight+1&&f>5.6){f-=0.3;el.style.fontSize=f+'pt';}});}
+window.qaFit=fit;if(document.readyState!=='loading')fit();else document.addEventListener('DOMContentLoaded',fit);window.addEventListener('load',fit);})();
+</script>
 <script>
 (function(){function fit(){var w=document.querySelector('.pg');if(!w)return;var s=Math.min(1,(window.innerWidth-24)/w.offsetWidth);document.body.style.zoom=s;}
 window.addEventListener('resize',fit);window.addEventListener('load',fit);fit();})();
@@ -471,7 +559,7 @@ pgs.forEach(function(p){io.observe(p)});
 function cur(){var mid=window.innerHeight/2,c=0;pgs.forEach(function(p,i){if(p.getBoundingClientRect().top<mid)c=i;});return c;}
 function onScroll(){var h=document.documentElement;var f=h.scrollTop/((h.scrollHeight-h.clientHeight)||1);prog.style.width=(f*100)+'%';var c=cur();dots.forEach(function(d,i){d.classList.toggle('on',i===c)});}
 window.addEventListener('scroll',onScroll,{passive:true});onScroll();
-document.addEventListener('keydown',function(e){var k=e.key;if(['ArrowRight','ArrowLeft','PageDown','PageUp'].indexOf(k)<0)return;var c=cur();
+document.addEventListener('keydown',function(e){if(document.querySelector('.qa-modal.on'))return;var k=e.key;if(['ArrowRight','ArrowLeft','PageDown','PageUp'].indexOf(k)<0)return;var c=cur();
 var n=(k==='ArrowRight'||k==='PageDown')?Math.min(c+1,pgs.length-1):Math.max(c-1,0);pgs[n].scrollIntoView({behavior:'smooth',block:'center'});e.preventDefault();});
 })();
 
@@ -479,5 +567,30 @@ var n=(k==='ArrowRight'||k==='PageDown')?Math.min(c+1,pgs.length-1):Math.max(c-1
 function go(){if(on)return;on=true;var f=document.createElement('iframe');f.src=box.getAttribute('data-twin');f.title='Orion digital twin';f.allow='fullscreen';f.setAttribute('allowfullscreen','');f.loading='eager';f.style.cssText='position:absolute;left:0;top:0;width:1920px;height:1080px;border:0;transform-origin:0 0;background:#0B1226';box.appendChild(f);function sc(){f.style.transform='scale('+(box.clientWidth/1920)+')';}sc();window.addEventListener('resize',sc);window.addEventListener('load',sc);setTimeout(sc,300);}
 var a=document.createElement('a');a.className='twin-full';a.href=box.getAttribute('data-twin');a.target='_blank';a.rel='noopener';a.textContent='Open full screen ↗';box.parentNode.appendChild(a);
 if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)go();});},{rootMargin:'200px'}).observe(box);}else go();})();
+
+(function(){var cards=[].slice.call(document.querySelectorAll('.qa[data-key]'));if(!cards.length)return;
+var byKey={};cards.forEach(function(c){byKey[c.getAttribute('data-key')]=c;});
+function show(c,t){var a=c.querySelector('.qa-a');a.textContent=t||'';a.classList.toggle('empty',!t);if(window.qaFit)window.qaFit();}
+fetch('answers',{credentials:'same-origin'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.answers)return;
+Object.keys(d.answers).forEach(function(k){if(byKey[k])show(byKey[k],d.answers[k].text);});}).catch(function(){});
+var m=document.createElement('div');m.className='qa-modal';m.innerHTML='<div class="qa-box" role="dialog" aria-modal="true"><div class="n"></div><h3></h3><p></p>'+
+'<textarea placeholder="Type the answer here. It saves as you go."></textarea><div class="row"><span class="st"></span><span style="display:flex;gap:8px"><button class="ghost" data-x>Close</button><button data-s>Save and close</button></span></div></div>';
+document.documentElement.appendChild(m);var ta=m.querySelector('textarea'),st=m.querySelector('.st'),cur=null,timer=null,last='';
+function save(close){if(!cur)return Promise.resolve();var k=cur.getAttribute('data-key'),t=ta.value;if(t===last){if(close)hide();return Promise.resolve();}
+cur.classList.add('saving');st.className='st';st.textContent='Saving…';var c=cur;
+return fetch('answers',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,text:t})})
+.then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.error||('Error '+r.status));return d;});})
+.then(function(d){last=t;show(c,t);c.classList.remove('saving');st.textContent='Saved '+new Date(d.at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});if(close)hide();})
+.catch(function(e){c.classList.remove('saving');st.className='st err';st.textContent='Not saved: '+e.message;});}
+function hide(){m.classList.remove('on');cur=null;}
+cards.forEach(function(c,i){c.addEventListener('click',function(){cur=c;var a=c.querySelector('.qa-a');last=a.classList.contains('empty')?'':a.textContent;
+m.querySelector('.n').textContent=('0'+(i+1)).slice(-2)+' · '+c.querySelector('.qa-h span').textContent;m.querySelector('h3').textContent=c.getAttribute('data-q');
+m.querySelector('p').textContent=c.getAttribute('data-detail');ta.value=last;st.className='st';st.textContent='';m.classList.add('on');setTimeout(function(){ta.focus();},30);});});
+ta.addEventListener('input',function(){clearTimeout(timer);st.className='st';st.textContent='Typing…';timer=setTimeout(function(){save(false);},900);});
+m.querySelector('[data-s]').addEventListener('click',function(){clearTimeout(timer);save(true);});
+m.querySelector('[data-x]').addEventListener('click',function(){clearTimeout(timer);save(true);});
+m.addEventListener('click',function(e){if(e.target===m){clearTimeout(timer);save(true);}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('on')){clearTimeout(timer);save(true);}},true);
+})();
 </script>
 </body></html>

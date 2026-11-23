@@ -11,6 +11,7 @@
 //   GET  /share/<slug>/<file>      → download, named per the register
 //   POST /share/<slug>/login       → { pin } → sets cookie share_<slug>
 //   GET  /share/<slug>/logout      → clears the cookie
+//   GET|POST /share/<slug>/answers → shared fill-in fields (only if the register sets answers: true)
 //
 // Wrong PINs are rate-limited per IP and per document via SNAG_DB
 // (same limiter as functions/_lib/pin-guard.js, inlined below). No PIN is ever stored: the register holds
@@ -196,6 +197,36 @@ export async function onRequest(context) {
     if (!authed) await recordFail(db, request, scope + ':cookie');
   }
   if (!authed) return html(pinPage(slug, doc), 401);
+
+  // ── answers: shared fill-in fields, only for packs that opt in with `answers: true` ──
+  //   GET  /share/<slug>/answers  → { answers: { key: { text, at } } }
+  //   POST /share/<slug>/answers  → { key, text }  (same-site cookie; text stored as plain text)
+  if (rest === 'answers' && doc.answers) {
+    if (!db) return json({ error: 'Storage unavailable' }, 503);
+    if (!globalThis.__shareAnswersReady) {
+      await db.prepare('CREATE TABLE IF NOT EXISTS share_answers (slug TEXT NOT NULL, k TEXT NOT NULL, text TEXT NOT NULL, at TEXT NOT NULL, PRIMARY KEY (slug, k))').run();
+      globalThis.__shareAnswersReady = true;
+    }
+    if (method === 'GET') {
+      const { results } = await db.prepare('SELECT k, text, at FROM share_answers WHERE slug = ?').bind(slug).all();
+      const answers = {};
+      for (const r of results || []) answers[r.k] = { text: r.text, at: r.at };
+      return json({ answers });
+    }
+    if (method === 'POST') {
+      if (!(request.headers.get('Content-Type') || '').includes('application/json')) return json({ error: 'JSON only' }, 415);
+      let body = {};
+      try { body = await request.json(); } catch {}
+      const k = String(body.key || ''), text = String(body.text ?? '');
+      if (!/^[a-z0-9_-]{1,40}$/.test(k)) return json({ error: 'Bad key' }, 400);
+      if (text.length > 8000) return json({ error: 'Too long (8,000 characters max)' }, 413);
+      const at = new Date().toISOString();
+      await db.prepare('INSERT INTO share_answers (slug, k, text, at) VALUES (?,?,?,?) ON CONFLICT(slug, k) DO UPDATE SET text = excluded.text, at = excluded.at')
+        .bind(slug, k, text, at).run();
+      return json({ ok: true, at });
+    }
+    return json({ error: 'Method not allowed' }, 405);
+  }
 
   // ── authed: serve from the asset store ──
   if (rest === '' || rest === 'index.html') {
