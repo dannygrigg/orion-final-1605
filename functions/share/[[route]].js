@@ -213,6 +213,8 @@ export async function onRequest(context) {
   const h = new Headers();
   Object.entries(baseHeaders).forEach(([k, v]) => h.set(k, v));
   h.set('Content-Type', file.type || 'application/octet-stream');
-  h.set('Content-Disposition', `attachment; filename="${file.name.replace(/"/g, '')}"; filename*=UTF-8''${encodeURIComponent(file.name)}`);
+  // inline: true = open in the browser (e.g. an embedded digital-twin viewer page); everything else downloads
+  const disp = file.inline ? 'inline' : 'attachment';
+  h.set('Content-Disposition', `${disp}; filename="${file.name.replace(/"/g, '')}"; filename*=UTF-8''${encodeURIComponent(file.name)}`);
   return new Response(res.body, { status: 200, headers: h });
 }

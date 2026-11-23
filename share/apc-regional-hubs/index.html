@@ -277,7 +277,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
   .webbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(6,10,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(150,180,230,.18);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8592AD}
   .webbar a{color:#041223;background:#3AA0FF;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:600;letter-spacing:.08em}
 }
-@media print{.webbar{display:none}}
+@media print{.webbar{display:none}.twin-full{display:none}}
 
 @media screen{
   .pg{opacity:0;transform:translateY(18px) scale(.985);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
@@ -286,6 +286,8 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
   .pg.in .bar i{transform:scaleX(1)}
   .pg .card{transition:border-color .25s ease, box-shadow .25s ease}
   .pg .card:hover{border-color:rgba(58,160,255,.75);box-shadow:0 0 0 1px rgba(58,160,255,.25),0 6px 24px rgba(10,40,90,.45)}
+  .twin-live{overflow:hidden}
+  .twin-full{position:absolute;right:3mm;top:3mm;z-index:3;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:#041223;background:#7CF3D0;padding:1.4mm 2.6mm;border-radius:1.5mm;text-decoration:none;font-weight:600}
   .webnav{position:fixed;right:10px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:3px}
   .webnav a{width:5px;height:5px;border-radius:50%;background:rgba(150,180,230,.3);display:block;transition:all .2s}
   .webnav a.on{background:#3AA0FF;height:14px;border-radius:3px}
@@ -312,11 +314,12 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .kv .card .mono{color:var(--acc)}
 .kv>.card{align-self:stretch;width:100%;display:block}
 .kv>.card.row{display:flex}
-.twin .twin-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.twin .twin-live{position:absolute;inset:0;z-index:1}
+.twin .twin-live iframe{width:100%;height:100%;border:0;display:block;background:#0B1226}
 .twin-badge{position:absolute;left:3mm;bottom:3mm;z-index:2;display:flex;align-items:center;gap:2.2mm;background:rgba(6,10,22,.86);border:1px solid rgba(124,243,208,.55);border-radius:1.5mm;padding:1.4mm 2.6mm}
 .twin-badge img{height:4.2mm;width:auto}
 .twin-badge span{font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
-@media print{.twin-video{display:none}}
+@media print{.twin-live{display:none}}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -417,10 +420,10 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
   <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
     <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
       <div><div class="mono tag">— New central sortation hub</div><h2 style="margin:0">£50 million. <span>550,000 parcels a night.</span></h2></div>
-      <p style="width:96mm;font-size:9.5pt">A £50 million investment in a sortation centre: 11 sortation lines and 180 loading doors in a 450,000 sq ft unit.</p>
+      <p style="width:96mm;font-size:9.5pt">A £50 million investment in a sortation centre: 11 sortation lines and 180 loading doors in a 450,000 sq ft unit. Shown as the Orion digital twin.</p>
     </div>
     <div style="display:grid;grid-template-columns:176mm 1fr;gap:6mm">
-      <div class="rend twin" style="height:99mm"><img class="fill" src="f/assets-hubs-central-hub.jpg" alt="Central sortation hub concept layout"><div class="twin-badge"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin · in build</span></div></div>
+      <div class="rend twin" style="height:99mm"><img class="fill" src="f/assets-hubs-twin-twin-poster.jpg" alt="Orion digital twin of the central sortation hub"><div class="twin-live" data-twin="f/twin.html"></div><div class="twin-badge"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin · live replay</span></div></div>
       <div class="kv" style="gap:3.5mm">
         <div class="card hot" style="padding:3.5mm 5mm"><div class="mono">Investment</div><div class="big-num" style="font-size:21pt;margin-top:1mm">£50m</div></div>
         <div class="card" style="padding:3.5mm 5mm"><div class="mono">Capacity</div><div class="big-num" style="font-size:21pt;margin-top:1mm">550,000</div><p style="font-size:8pt;margin-top:1mm">a night · 50,000 a line</p></div>
@@ -447,5 +450,10 @@ window.addEventListener('scroll',onScroll,{passive:true});onScroll();
 document.addEventListener('keydown',function(e){var k=e.key;if(['ArrowRight','ArrowLeft','PageDown','PageUp'].indexOf(k)<0)return;var c=cur();
 var n=(k==='ArrowRight'||k==='PageDown')?Math.min(c+1,pgs.length-1):Math.max(c-1,0);pgs[n].scrollIntoView({behavior:'smooth',block:'center'});e.preventDefault();});
 })();
+
+(function(){var box=document.querySelector('.twin-live[data-twin]');if(!box)return;var on=false;
+function go(){if(on)return;on=true;var f=document.createElement('iframe');f.src=box.getAttribute('data-twin');f.title='Orion digital twin';f.allow='fullscreen';f.setAttribute('allowfullscreen','');f.loading='eager';f.style.cssText='position:absolute;left:0;top:0;width:1920px;height:1080px;border:0;transform-origin:0 0;background:#0B1226';box.appendChild(f);function sc(){f.style.transform='scale('+(box.clientWidth/1920)+')';}sc();window.addEventListener('resize',sc);window.addEventListener('load',sc);setTimeout(sc,300);}
+var a=document.createElement('a');a.className='twin-full';a.href=box.getAttribute('data-twin');a.target='_blank';a.rel='noopener';a.textContent='Open full screen ↗';box.parentNode.appendChild(a);
+if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)go();});},{rootMargin:'200px'}).observe(box);}else go();})();
 </script>
 </body></html>
