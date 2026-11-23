@@ -1,0 +1,978 @@
+<!DOCTYPE html><html lang="en-GB"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>APC · Regional Hub Proposals</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#060A16;--navy:#0B1428;--panel:#101C36;--line:rgba(150,180,230,.18);--text:#C9D3E6;--soft:#8592AD;--white:#F4F7FC;--acc:#3AA0FF;--acc2:#7CF3D0;
+  --k1:#F2D04B;--k2:#9B6BFF;--k3:#7CCB5A;--k4:#3FC3F5;--k5:#F0565A}
+@page{size:297mm 210mm;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1b1f27;font-family:'Inter',sans-serif;color:var(--text);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pg{width:297mm;height:210mm;margin:16px auto;background:var(--ink);position:relative;overflow:hidden;break-after:page}
+.pg:last-child{break-after:auto}
+@media print{body{background:var(--ink)}.pg{margin:0}}
+.mono{font-family:'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;font-size:8.5pt}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:12mm 12mm;opacity:.35;pointer-events:none}
+.bleed{position:absolute;inset:0;background-size:cover;background-position:center}
+.shade-l{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,22,.97) 0%,rgba(6,10,22,.86) 40%,rgba(6,10,22,.2) 78%,rgba(6,10,22,0) 100%)}
+.top{position:absolute;top:6mm;left:14mm;right:14mm;display:flex;justify-content:space-between;align-items:center;z-index:3}
+.top img{height:12.5mm}
+.top .mono{color:var(--white);display:flex;align-items:center;gap:3mm}
+.top .mono:before{content:"";width:1.2mm;height:5mm;background:var(--acc);display:inline-block}
+.foot{position:absolute;bottom:8mm;left:14mm;right:14mm;display:flex;justify-content:space-between;color:var(--soft);z-index:3;font-size:7.5pt}
+.tag{color:var(--acc);margin-bottom:4mm}
+h1,h2,h3,.num{font-family:'Space Grotesk',sans-serif;color:var(--white);letter-spacing:-.02em}
+h1{font-size:42pt;line-height:1.02;font-weight:700}
+h1 span,h2 span{color:var(--acc)}
+h2{font-size:26pt;line-height:1.06;font-weight:700;margin-bottom:5mm}
+h3{font-size:12pt;font-weight:600;margin-bottom:1.5mm}
+p{font-size:10pt;line-height:1.6;color:var(--text)}
+.lead{font-size:12pt;line-height:1.55;color:#DCE4F2}
+.z{position:relative;z-index:2}
+.num{font-weight:700;line-height:.95}
+.unit{color:var(--acc);margin-top:2mm}
+.stat{border-left:1.2mm solid var(--acc);padding-left:4mm}
+.card{background:linear-gradient(160deg,rgba(20,36,70,.9),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:3mm;padding:5mm 6mm}
+.card.hot{border-color:var(--acc);background:linear-gradient(160deg,rgba(30,70,140,.75),rgba(11,20,40,.95))}
+.card .mono{color:var(--acc);font-size:7.5pt;margin-bottom:2mm}
+.cap{font-family:'IBM Plex Mono',monospace;font-size:7pt;color:var(--soft);margin-top:1.8mm;letter-spacing:.04em;text-transform:uppercase}
+.dot{display:inline-block;width:2.6mm;height:2.6mm;border-radius:50%;margin-right:2.5mm;vertical-align:middle;position:relative;top:-.3mm}
+
+/* cost table */
+.ct{width:100%;border-collapse:collapse;font-size:10pt}
+.ct th{font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600;text-align:right;padding:0 0 2.5mm;border-bottom:1px solid var(--line)}
+.ct th:first-child{text-align:left}
+.ct td{padding:3mm 0;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;color:var(--text)}
+.ct td:first-child{text-align:left;font-family:'Space Grotesk';font-weight:600;color:var(--white);font-size:11pt}
+.ct td.t{color:var(--white);font-weight:600}
+.ct tr.sub td{border-bottom:1px solid rgba(150,180,230,.4);color:var(--white);font-weight:600}
+.ct tr.less td{color:var(--soft)}
+.ct tr.less td:first-child{color:var(--soft);font-weight:500}
+.ct tr.bal td{border:0;padding-top:4mm;font-family:'Space Grotesk';font-size:15pt;font-weight:700;color:var(--white)}
+.ct tr.bal td.t{color:var(--acc)}
+
+/* renders */
+.rend{border-radius:2.5mm;overflow:hidden;border:1px solid var(--line);background:var(--navy);background-size:cover;background-position:center;position:relative}
+.rend.pending{display:flex;align-items:center;justify-content:center;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:6mm 6mm}
+.rend.pending span{font-family:'IBM Plex Mono';font-size:8pt;letter-spacing:.14em;color:var(--soft);text-transform:uppercase}
+.rend .lab{position:absolute;left:4mm;top:4mm;font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:var(--white);background:rgba(6,10,22,.75);border:1px solid var(--line);padding:1.2mm 2.6mm;border-radius:99px}
+
+/* gantt */
+.gantt{position:relative;margin-top:2mm}
+.g-row{display:grid;grid-template-columns:62mm 1fr 34mm;align-items:center;border-bottom:1px solid var(--line);padding:2.4mm 0}
+.g-name{font-family:'Space Grotesk';font-weight:600;color:var(--white);font-size:10.5pt}
+.g-track{position:relative;height:11mm}
+.g-bar{position:absolute;left:0;height:4.2mm;border-radius:1mm;display:flex;align-items:center;padding-left:2mm;font-family:'IBM Plex Mono';font-size:6.8pt;letter-spacing:.06em;white-space:nowrap}
+.g-bar.std{top:0;background:rgba(133,146,173,.22);border:1px solid rgba(133,146,173,.55);color:var(--text)}
+.g-bar.exp{top:6.2mm;background:var(--acc);color:var(--ink);font-weight:600}
+.g-bar.be{top:6.2mm;background:transparent;border:1px dashed var(--acc);color:var(--acc)}
+.g-save{text-align:right;font-family:'Space Grotesk';font-weight:700;color:var(--acc);font-size:12pt}
+.g-save small{display:block;font-family:'IBM Plex Mono';font-size:6.8pt;color:var(--soft);font-weight:400;letter-spacing:.08em;text-transform:uppercase}
+.g-scale{display:grid;grid-template-columns:62mm 1fr 34mm}
+.g-ticks{position:relative;height:5mm}
+.g-ticks span{position:absolute;transform:translateX(-50%);font-family:'IBM Plex Mono';font-size:6.8pt;color:var(--soft)}
+.g-grid{position:absolute;top:0;bottom:0;left:62mm;right:34mm;pointer-events:none}
+.g-grid i{position:absolute;top:0;bottom:0;width:1px;background:rgba(150,180,230,.08)}
+.key{display:flex;gap:6mm;margin-top:3mm;font-family:'IBM Plex Mono';font-size:7pt;color:var(--soft);letter-spacing:.06em;text-transform:uppercase}
+.key b{display:inline-block;width:7mm;height:2.6mm;border-radius:.6mm;margin-right:2mm;vertical-align:middle}
+
+.opt{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.opt .big{font-family:'Space Grotesk';font-size:24pt;font-weight:700;color:var(--white);line-height:1;margin:2mm 0 3mm}
+.opt .card.hot .big{color:var(--white)}
+.opt ul{list-style:none;font-size:9pt;line-height:1.5}
+.opt li{padding:1.3mm 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:4mm}
+.opt li b{color:var(--white);font-weight:500;white-space:nowrap}
+.step{display:flex;gap:4mm;align-items:flex-start;padding:3mm 0;border-bottom:1px solid var(--line)}
+.step .n{font-family:'IBM Plex Mono';color:var(--acc);font-size:9pt;min-width:9mm}
+.step p{font-size:9.5pt}
+
+/* key dates */
+.kd{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:8mm}
+.kd-c{padding:6mm 6mm 5mm}
+.kd-h{font-family:'Space Grotesk';font-weight:600;color:var(--white);font-size:11pt}
+.kd-was{font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin-top:5mm}
+.kd-was s{display:block;font-family:'Space Grotesk';font-weight:700;font-size:25pt;letter-spacing:-.02em;line-height:1.05;text-transform:none;margin-top:1.5mm;color:#7D89A3;text-decoration-color:rgba(240,86,90,.95);text-decoration-thickness:3px}
+.kd-date::before{content:"Handover";display:block;font-family:'IBM Plex Mono';font-size:7.5pt;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin:4mm 0 1.5mm}
+.kd-date{font-family:'Space Grotesk';font-weight:700;color:var(--white);font-size:25pt;letter-spacing:-.02em;line-height:1.05;margin-top:1.5mm}
+.kd-foot{display:flex;justify-content:space-between;align-items:center;margin-top:5mm;padding-top:3mm;border-top:1px solid rgba(58,160,255,.5)}
+.kd-save{font-family:'IBM Plex Mono';font-size:8.5pt;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--acc2);padding:1.2mm 2.6mm;border-radius:99px}
+.kd-wk{font-family:'IBM Plex Mono';font-size:8pt;color:var(--acc);letter-spacing:.06em}
+.kd-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm;margin-top:9mm}
+.g-ms{position:absolute;top:6.4mm;width:3.6mm;height:3.6mm;background:var(--acc2);transform:translateX(-50%) rotate(45deg);border:1px solid var(--ink);z-index:2}
+.g-grid i.g-now{background:var(--acc);width:1.5px}
+.g-grid i.g-target{background:none;border-left:1.5px dashed var(--acc2)}
+.g-grid i.g-target em{position:absolute;bottom:-5.5mm;left:1.5mm;white-space:nowrap;font-style:normal;font-family:'IBM Plex Mono';font-size:6.8pt;letter-spacing:.08em;text-transform:uppercase;color:var(--acc2)}
+
+.gal{display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:auto auto;gap:5mm 6mm}
+.gal .g-big{grid-row:1/3;display:flex;flex-direction:column}
+.gal .g-big .rend{flex:1;min-height:110mm}
+.g-ticks span{white-space:nowrap}
+.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.rend{position:relative}
+
+.logos{display:flex;align-items:center;gap:5mm}
+.logos .lsep{width:1px;height:11mm;background:rgba(255,255,255,.35)}
+.top .logos img.apc{height:24.65mm}
+.play{position:absolute;right:4mm;top:4mm;z-index:2;font-family:'IBM Plex Mono';font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--acc2);padding:1.4mm 3mm;border-radius:99px;text-decoration:none;font-weight:600}
+.pay td.pc{font-family:'Space Grotesk';font-weight:700;color:var(--white);font-size:13pt;width:22mm}
+.ct.pays{table-layout:fixed;width:100%}.ct.pays th,.ct.pays td{padding-left:1mm;padding-right:1mm;white-space:nowrap;font-size:7.6pt}.ct.pays th:first-child,.ct.pays td:first-child{width:54mm}.ct.pays td:first-child{white-space:normal;line-height:1.25;padding-left:5.5mm;text-indent:-4.5mm}.ct.pays tr.bal td{font-size:8.4pt}.ct.pays tr.bal td:last-child{font-size:9pt}.ct.pays th:last-child,.ct.pays td:last-child{width:27mm}.ct.pays th:nth-child(2),.ct.pays td:nth-child(2){width:17mm}
+
+.scr-video{display:none}
+@media screen{
+  .vwrap .scr-video{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:2.5mm;border:1px solid var(--line);background:#000;z-index:4}
+}
+s.rx{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-thickness:.09em;text-decoration-skip-ink:none}
+tr.rxrow td{text-decoration:line-through;text-decoration-color:#F0565A;text-decoration-thickness:.12em;text-decoration-skip-ink:none}
+.done{display:inline-block;text-decoration:none;margin-left:2mm;padding:.4mm 2mm;border-radius:99px;background:rgba(124,243,208,.16);border:1px solid rgba(124,243,208,.55);color:#7CF3D0;font-family:"IBM Plex Mono",monospace;font-size:6.6pt;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;vertical-align:middle}
+.done2{display:inline-block;text-decoration:none;color:#7CF3D0;font-family:"IBM Plex Mono",monospace;font-size:6.2pt;line-height:1.15;letter-spacing:.06em;text-transform:uppercase;text-align:right}
+/* v2: Aptos throughout (falls back to Segoe UI where browsers can't use Aptos) */
+body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe UI',system-ui,sans-serif !important}
+
+/* WS footer band (v2) */
+.wsfoot{position:absolute;left:0;right:0;bottom:0;height:24mm;z-index:4;pointer-events:none}
+.wsbar{position:absolute;left:0;right:0;bottom:8.2mm;height:2.6mm;background:linear-gradient(90deg,#165CA1 0%,#166AAB 25%,#1C83C0 50%,#26A1D9 75%,#2CB1E5 100%);box-shadow:0 0 6mm rgba(44,177,229,.35)}
+.wsbar::after{content:"";position:absolute;left:0;right:0;top:0;height:42%;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0))}
+.wslogo{position:absolute;right:13mm;bottom:3.6mm;height:12mm;filter:drop-shadow(0 1.2mm 2mm rgba(0,0,0,.45))}
+.wspn{position:absolute;left:14mm;bottom:3mm;font-size:8pt;font-weight:600;letter-spacing:.06em;color:#9FB3E8}
+.wsnote{position:absolute;left:24mm;bottom:3.2mm;font-size:6.8pt;letter-spacing:.12em;text-transform:uppercase;color:#7D89A3}
+
+/* APC presentation master footer */
+.apcfoot{position:absolute;left:0;right:0;bottom:7.9mm;height:2.6mm;z-index:4;pointer-events:none}
+.apcfoot .l1{position:absolute;left:0;width:262mm;top:0;bottom:0;background:#1AB7EA}
+.apcfoot b{position:absolute;left:262mm;width:9mm;top:50%;transform:translateY(-50%);text-align:center;font-weight:700;font-size:7pt;line-height:1;color:#FFFFFF}
+.apcfoot .l2{position:absolute;left:271mm;width:4mm;top:0;bottom:0;background:#1AB7EA}
+.apcfoot .apclogo{position:absolute;left:276.5mm;bottom:-4.6mm;height:12mm;width:auto}
+.apcfoot .l3{position:absolute;left:292.5mm;right:0;top:0;bottom:0;background:#1AB7EA}
+
+/* ---------- v3 additions ---------- */
+.dwg{background:#F6F8FC;border-radius:2.5mm;overflow:hidden;position:relative;border:1px solid rgba(150,180,230,.35);box-shadow:0 2mm 8mm rgba(0,0,0,.35)}
+.dwg img{display:block;width:100%;height:100%;object-fit:contain}
+.dwg .lab{position:absolute;left:3mm;top:3mm;font-size:6.8pt;letter-spacing:.14em;text-transform:uppercase;color:#0B1428;background:rgba(255,255,255,.9);border:1px solid rgba(11,20,40,.15);padding:1mm 2.4mm;border-radius:99px;font-weight:600}
+.obj{display:grid;grid-template-columns:repeat(3,1fr);gap:6mm}
+.obj .card{padding:8mm 8mm 7mm;min-height:84mm}
+.obj li{padding:4mm 0 !important;font-size:12pt !important}
+.obj ol{list-style:none;counter-reset:o;margin-top:4mm}
+.obj li{counter-increment:o;display:flex;gap:3.5mm;padding:2.6mm 0;border-top:1px solid var(--line);font-size:10.5pt;color:var(--white);line-height:1.3}
+.obj li:before{content:counter(o,decimal-leading-zero);color:var(--acc);font-size:8pt;font-weight:600;padding-top:.6mm;min-width:6mm}
+.toc{display:grid;grid-template-columns:repeat(7,1fr);gap:3mm;margin-top:14mm}
+.toc div{border-top:.8mm solid var(--acc);padding-top:2.4mm;font-size:8.5pt;color:var(--text);line-height:1.3}
+.toc b{display:block;color:var(--acc);font-size:7.5pt;letter-spacing:.12em;margin-bottom:1mm}
+.pill{display:inline-block;padding:.6mm 2.4mm;border-radius:99px;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+.pill.ok{background:rgba(124,243,208,.14);border:1px solid rgba(124,243,208,.55);color:#7CF3D0}
+.pill.go{background:rgba(58,160,255,.16);border:1px solid rgba(58,160,255,.7);color:#8CC8FF}
+.lu{width:100%;border-collapse:collapse}
+.lu th{font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600;text-align:left;padding:0 0 2.4mm;border-bottom:1px solid var(--line)}
+.lu td{padding:3.4mm 0;border-bottom:1px solid var(--line);vertical-align:middle;font-size:10pt}
+.lu .nm{font-weight:700;color:var(--white);font-size:12.5pt;letter-spacing:-.01em}
+.lu .ds{font-size:8.5pt;color:var(--soft);margin-top:.6mm}
+.lu .v{font-weight:700;color:var(--white);font-size:13pt;text-align:right;font-variant-numeric:tabular-nums;padding-right:6mm}
+.lu tr.tot td{border:0;padding-top:4.5mm}
+.lu tr.tot .v{color:var(--acc);font-size:16pt}
+.bar{height:3.2mm;border-radius:99px;background:rgba(150,180,230,.12);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1E6FD0,var(--acc))}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
+.cmp .card{padding:9mm 9mm 8mm}
+.cmp .row{display:grid;grid-template-columns:24mm 1fr 36mm;align-items:center;gap:4mm;margin-top:8mm}
+.cmp .row span{font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.cmp .row b{font-weight:700;color:var(--white);font-size:17pt;text-align:right;font-variant-numeric:tabular-nums}
+.cmp .bar{height:10mm;border-radius:1.4mm}.cmp .bar i{border-radius:1.4mm}
+.cmp .bar.was i{background:rgba(133,146,173,.55)}
+.delta{display:flex;align-items:baseline;gap:3mm;margin-top:9mm;padding-top:5mm;border-top:1px solid rgba(58,160,255,.5)}
+.delta b{font-weight:800;font-size:38pt;letter-spacing:-.02em;color:var(--acc2);line-height:1}
+.delta span{font-size:9pt;color:var(--text)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm}
+.tile{padding:8mm 7mm 7mm;min-height:88mm;display:flex;flex-direction:column}
+.tile .big{font-weight:800;font-size:38pt;letter-spacing:-.03em;color:var(--white);line-height:1;margin:4mm 0 3mm}
+.tile p{font-size:9pt;line-height:1.5}
+.tile .src{margin-top:auto;padding-top:3mm;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.cage{display:grid;grid-template-columns:34mm 1fr;gap:5mm;align-items:center}
+.cage .im{height:74mm;background:#F6F8FC;border-radius:2mm;display:flex;align-items:center;justify-content:center;padding:3mm}
+.cage .im img{max-height:100%;max-width:100%;display:block}
+.kv{display:flex;justify-content:space-between;align-items:baseline;padding:2.6mm 0;border-top:1px solid var(--line)}
+.kv span{font-size:8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.kv b{font-weight:700;font-size:17pt;color:var(--white);font-variant-numeric:tabular-nums}
+.kv.up b{color:var(--acc2)}
+.chain{display:flex;align-items:stretch;gap:0;margin-top:5mm}
+.chain div{flex:1;position:relative;padding:7mm 3mm 7mm 8mm;font-size:10.5pt !important;background:linear-gradient(160deg,rgba(20,36,70,.95),rgba(11,20,40,.95));border:1px solid var(--line);font-size:9pt;color:var(--white);font-weight:600;line-height:1.25;display:flex;align-items:center;clip-path:polygon(0 0,calc(100% - 5mm) 0,100% 50%,calc(100% - 5mm) 100%,0 100%,5mm 50%)}
+.chain div:first-child{clip-path:polygon(0 0,calc(100% - 5mm) 0,100% 50%,calc(100% - 5mm) 100%,0 100%);padding-left:4mm}
+.chain div.hub{background:linear-gradient(160deg,rgba(30,90,170,.95),rgba(15,40,90,.95));border-color:var(--acc)}
+.ticks{list-style:none}
+.ticks li{padding:3.2mm 0 3.2mm 6mm;border-top:1px solid var(--line);font-size:10.5pt;position:relative;color:var(--text)}
+.ticks li:before{content:"";position:absolute;left:0;top:5.2mm;width:2.2mm;height:2.2mm;border-radius:50%;background:var(--acc2)}
+.pos{counter-reset:p}
+.pos div{counter-increment:p;display:grid;grid-template-columns:16mm 1fr;align-items:baseline;padding:4.4mm 0;border-top:1px solid var(--line)}
+.pos div:before{content:counter(p,decimal-leading-zero);color:var(--acc);font-weight:700;font-size:14pt}
+.pos b{font-weight:700;font-size:16pt;color:var(--white);letter-spacing:-.01em;line-height:1.25}
+.pos b span{color:var(--acc2)}
+
+/* ---------- v3 business-plan pages ---------- */
+.agenda{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm 5mm;margin-top:2mm}
+.agenda div{padding:4.2mm 5mm;border:1px solid var(--line);border-radius:2.4mm;background:linear-gradient(160deg,rgba(20,36,70,.75),rgba(11,20,40,.75));font-size:11pt;font-weight:600;color:var(--white);display:flex;gap:4mm;align-items:baseline}
+.agenda div b{color:var(--acc);font-size:9pt;min-width:7mm}
+.agenda div.hl{border-color:var(--acc);background:linear-gradient(160deg,rgba(30,70,140,.8),rgba(11,20,40,.9))}
+.outline{list-style:none;counter-reset:q;width:200mm}
+.outline li{counter-increment:q;display:grid;grid-template-columns:14mm 1fr;padding:4.6mm 0;border-top:1px solid var(--line);font-size:12pt;line-height:1.45;color:#DCE4F2}
+.outline li:before{content:counter(q,decimal-leading-zero);color:var(--acc);font-weight:700;font-size:10pt;padding-top:.8mm}
+.tbc{display:inline-block;margin-left:4mm;vertical-align:middle;padding:1mm 3mm;border-radius:99px;border:1px dashed rgba(242,208,75,.8);color:#F2D04B;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.pts{list-style:none}
+.pts li{padding:2.8mm 0 2.8mm 6mm;border-top:1px solid var(--line);font-size:9.6pt;line-height:1.5;position:relative;color:var(--text)}
+.pts li:before{content:"";position:absolute;left:0;top:4.9mm;width:2mm;height:2mm;background:var(--acc);border-radius:.4mm}
+.pts li b{color:var(--white);font-weight:600}
+.usp{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm}
+.usp .card{padding:6mm;min-height:52mm}
+.usp h3{font-size:13pt;margin:1mm 0 2.5mm}
+.usp p{font-size:9pt;line-height:1.5}
+.chg{display:grid;grid-template-columns:1fr 1fr;gap:4.5mm}
+.chg .card{padding:4.6mm 5.5mm}
+.chg h3{font-size:10.5pt;margin-bottom:1.5mm}
+.chg p{font-size:8.8pt;line-height:1.45}
+.mkt{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm}
+.mkt .card{padding:5mm 5.5mm}
+.mkt .num{font-size:24pt;margin:2mm 0 2mm}
+.mkt p{font-size:8.6pt;line-height:1.45}
+.lightcard{background:#FFFFFF;border-radius:2.5mm;overflow:hidden;box-shadow:0 2mm 8mm rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
+.lightcard img{display:block;max-width:100%;max-height:100%;object-fit:contain}
+.trend{display:grid;grid-template-columns:repeat(3,1fr);gap:3.5mm}
+.trend div{padding:3.8mm 4.5mm;border:1px solid var(--line);border-radius:2mm;background:rgba(16,28,54,.7);font-size:8.8pt;line-height:1.45;color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:2.5mm}
+.chips span{padding:1.6mm 3.6mm;border-radius:99px;border:1px solid rgba(58,160,255,.55);background:rgba(58,160,255,.1);color:#CFE4FF;font-size:8.4pt;font-weight:500}
+.org{display:flex;flex-direction:column;align-items:center}
+.org .box{padding:4.5mm 6mm;border-radius:2mm;text-align:center;font-weight:600;color:var(--white);font-size:10pt;line-height:1.3}
+.org .boss{background:linear-gradient(160deg,rgba(30,90,170,.95),rgba(15,40,90,.95));border:1px solid var(--acc);min-width:62mm}
+.org .stem{width:1px;height:8mm;background:rgba(150,180,230,.5)}
+.org .rail{height:1px;background:rgba(150,180,230,.5);width:80%}
+.org .kids{display:grid;grid-template-columns:repeat(5,1fr);gap:4mm;width:100%}
+.org .kids>div{display:flex;flex-direction:column;align-items:center}
+.org .kids .box{background:rgba(16,28,54,.9);border:1px solid var(--line);width:100%;font-size:9pt;min-height:20mm;display:flex;align-items:center;justify-content:center}
+.org .kids .box.new{border:1px dashed var(--acc2);color:#BFF7E6}
+.it{width:100%;border-collapse:collapse;font-size:8.2pt;line-height:1.38}
+.it th{font-size:6.8pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);font-weight:600;text-align:left;padding:0 2.5mm 2mm 0;border-bottom:1px solid rgba(150,180,230,.4)}
+.it td{padding:2.3mm 2.5mm 2.3mm 0;border-bottom:1px solid var(--line);vertical-align:top;color:var(--text)}
+.it td.a{color:var(--white);font-weight:600;font-size:8.8pt}
+.it td.c{text-align:center;white-space:nowrap}
+.it td.r{text-align:right;white-space:nowrap;color:var(--white);font-weight:600}
+.it tr.foot td{color:var(--soft);font-style:normal}
+.mat{display:inline-block;width:3.2mm;height:3.2mm;border-radius:50%;margin:0 .5mm;vertical-align:middle}
+.mat.g{background:#3DBE6B}.mat.a{background:#E8A520}.mat.r{background:#E5483F}
+.pn{display:inline-flex;width:6.5mm;height:6.5mm;border-radius:50%;background:var(--acc);color:#041223;font-weight:700;font-size:8.5pt;align-items:center;justify-content:center;margin-right:2.5mm;vertical-align:middle}
+.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm}
+.journey .card{padding:5mm;min-height:58mm;position:relative}
+.journey .card .mono{font-size:7pt}
+.journey h3{font-size:11pt;margin:1.5mm 0 2mm}
+.journey p{font-size:8.6pt;line-height:1.45}
+.opt2{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+.opt2 .card{padding:6mm 7mm}
+.opt2 h3{font-size:15pt;margin:1mm 0 3mm}
+.opt2 .fit{margin-top:3mm;padding-top:3mm;border-top:1px solid rgba(58,160,255,.5);font-size:9pt;color:#CFE4FF}
+.both{margin-top:5mm;padding:4.5mm 6mm;border-radius:2.4mm;background:linear-gradient(90deg,rgba(30,90,170,.9),rgba(15,40,90,.9));border:1px solid var(--acc);display:grid;grid-template-columns:30mm 1fr;gap:5mm;align-items:center;font-size:9pt;color:var(--white)}
+.risk2{display:grid;grid-template-columns:1fr 1fr;gap:6mm}
+.risk2 .card{padding:6mm}
+.big2{font-weight:800;font-size:34pt;letter-spacing:-.03em;color:var(--white);line-height:1}
+
+.hero-video{object-fit:cover;object-position:50% 58%;background:#000}
+@media screen{
+  html{background:#02050C}
+  body{padding:64px 0 40px}
+  .pg{margin:0 auto 10mm;box-shadow:0 10px 40px rgba(0,0,0,.55)}
+  .webbar{position:fixed;top:0;left:0;right:0;height:52px;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:rgba(6,10,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(150,180,230,.18);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8592AD}
+  .webbar a{color:#041223;background:#3AA0FF;padding:8px 14px;border-radius:6px;text-decoration:none;font-weight:600;letter-spacing:.08em}
+}
+@media print{.webbar{display:none}.twin-full{display:none}}
+
+@media screen{
+  .pg{opacity:0;transform:translateY(18px) scale(.985);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .pg.in{opacity:1;transform:none}
+  .pg .bar i{transform-origin:left center;transform:scaleX(0);transition:transform 1.1s cubic-bezier(.2,.7,.2,1) .25s}
+  .pg.in .bar i{transform:scaleX(1)}
+  .pg .card{transition:border-color .25s ease, box-shadow .25s ease}
+  .pg .card:hover{border-color:rgba(58,160,255,.75);box-shadow:0 0 0 1px rgba(58,160,255,.25),0 6px 24px rgba(10,40,90,.45)}
+  .twin-live{overflow:hidden}
+  .qa{cursor:pointer;transition:border-color .2s,box-shadow .2s}
+  .qa:hover{border-color:rgba(124,243,208,.7);box-shadow:0 0 0 1px rgba(124,243,208,.25)}
+  .qa.saving::after{content:'Saving…';position:absolute;right:3mm;top:2.6mm;font:600 6pt 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#7CF3D0}
+  .qa-hint{display:block;margin-top:2.5mm;font:500 6.5pt 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#7CF3D0}
+  .qa-modal{position:fixed;inset:0;z-index:100;background:rgba(2,5,12,.78);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
+  .qa-modal.on{display:flex}
+  .qa-box{width:min(860px,100%);max-height:92vh;overflow:auto;background:#0B1428;border:1px solid rgba(58,160,255,.5);border-radius:12px;padding:26px 28px;box-shadow:0 20px 60px rgba(0,0,0,.6);font-family:Inter,system-ui,sans-serif}
+  .qa-box .n{font:600 12px 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#3AA0FF}
+  .qa-box h3{font:700 24px 'Space Grotesk',sans-serif;color:#F4F7FC;margin:6px 0 8px}
+  .qa-box p{font-size:14px;line-height:1.55;color:#C9D3E6;margin:0 0 16px}
+  .qa-box textarea{width:100%;min-height:260px;resize:vertical;background:#060A16;color:#F4F7FC;border:1px solid rgba(150,180,230,.3);border-radius:8px;padding:14px;font:15px/1.5 Inter,system-ui,sans-serif;outline:none}
+  .qa-box textarea:focus{border-color:#7CF3D0}
+  .qa-box .row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:12px}
+  .qa-box .st{font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.08em;color:#8592AD}
+  .qa-box .st.err{color:#F0565A}
+  .qa-box button{background:#3AA0FF;color:#041223;border:0;border-radius:6px;padding:10px 18px;font:600 12px 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+  .qa-box button.ghost{background:transparent;color:#C9D3E6;border:1px solid rgba(150,180,230,.3)}
+  .twin-full{position:absolute;right:3mm;top:3mm;z-index:3;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:#041223;background:#7CF3D0;padding:1.4mm 2.6mm;border-radius:1.5mm;text-decoration:none;font-weight:600}
+  .webnav{position:fixed;right:10px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:3px}
+  .webnav a{width:5px;height:5px;border-radius:50%;background:rgba(150,180,230,.3);display:block;transition:all .2s}
+  .webnav a.on{background:#3AA0FF;height:14px;border-radius:3px}
+  @media (max-height:640px){.webnav{display:none}}
+  .webprog{position:fixed;left:0;top:52px;height:2px;background:linear-gradient(90deg,#1E6FD0,#7CF3D0);z-index:51;width:0}
+}
+@media print{.pg{opacity:1!important;transform:none!important}.webnav,.webprog{display:none}}
+</style><style>
+.map{position:absolute}
+.map>img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.map svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hub{position:absolute;width:0;height:0;z-index:3}
+.hub i{position:absolute;left:-2.6mm;top:-2.6mm;width:5.2mm;height:5.2mm;border-radius:50%;background:#3AA0FF;border:.7mm solid #F4F7FC;box-shadow:0 0 0 1.6mm rgba(58,160,255,.28),0 0 6mm rgba(58,160,255,.9)}
+.hub.big i{left:-3.6mm;top:-3.6mm;width:7.2mm;height:7.2mm;background:#7CF3D0;box-shadow:0 0 0 2.2mm rgba(124,243,208,.25),0 0 9mm rgba(124,243,208,.9)}
+.hub.dim i{background:#2A4F86;border-color:#8592AD;box-shadow:none;left:-1.8mm;top:-1.8mm;width:3.6mm;height:3.6mm}
+.hub b{position:absolute;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:#F4F7FC;
+  background:rgba(6,10,22,.82);border:1px solid rgba(58,160,255,.6);border-radius:1.2mm;padding:1.1mm 2.2mm;top:-3.2mm}
+.hub b.r{left:5mm}.hub b.l{right:5mm}
+.area{position:absolute;left:0;right:0;border-top:.45mm dashed rgba(124,243,208,.75)}
+.area span{position:absolute;left:0;top:1.2mm;font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
+.area.up span{top:auto;bottom:1.2mm}
+.big-num{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#F4F7FC;letter-spacing:-.02em;line-height:.95}
+.kv{display:flex;flex-direction:column;gap:5mm}
+.kv .card .mono{color:var(--acc)}
+.kv>.card{align-self:stretch;width:100%;display:block}
+.kv>.card.row{display:flex}
+.twin .twin-live{position:absolute;inset:0;z-index:1}
+.twin .twin-live iframe{width:100%;height:100%;border:0;display:block;background:#0B1226}
+.twin-badge{position:absolute;left:3mm;bottom:3mm;z-index:2;display:flex;align-items:center;gap:2.2mm;background:rgba(6,10,22,.86);border:1px solid rgba(124,243,208,.55);border-radius:1.5mm;padding:1.4mm 2.6mm}
+.twin-badge img{height:4.2mm;width:auto}
+.twin-badge span{font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
+@media print{.twin-live{display:none}}
+.flow{display:flex;align-items:center;gap:2.5mm;flex-wrap:wrap}
+.flow span{font-family:'IBM Plex Mono',monospace;font-size:7.5pt;letter-spacing:.12em;text-transform:uppercase;color:#F4F7FC;background:rgba(16,28,54,.9);border:1px solid rgba(58,160,255,.55);border-radius:1.2mm;padding:1.6mm 3mm}
+.flow i{font-style:normal;color:#7CF3D0;font-size:11pt}
+.plan2030 .bridge{display:flex;align-items:center;gap:2mm}
+.plan2030 .bridge div{border:1px solid rgba(58,160,255,.45);background:rgba(16,28,54,.85);border-radius:1.5mm;padding:1.6mm 3mm;text-align:left}
+.plan2030 .bridge div.hot{border-color:#7CF3D0;background:rgba(124,243,208,.12)}
+.plan2030 .bridge b{display:block;font-family:'Space Grotesk',sans-serif;font-size:13pt;color:#F4F7FC;line-height:1}
+.plan2030 .bridge div.hot b{color:#7CF3D0}
+.plan2030 .bridge span{display:block;font-family:'IBM Plex Mono',monospace;font-size:5.6pt;letter-spacing:.1em;text-transform:uppercase;color:#8592AD;margin-top:1mm}
+.plan2030 .bridge i{font-style:normal;color:#7CF3D0;font-size:11pt}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,33.5mm);gap:3mm;margin-top:4.5mm}
+.qa{background:linear-gradient(160deg,rgba(20,36,70,.9),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:2.5mm;padding:2.6mm 4mm;display:flex;flex-direction:column;overflow:hidden;position:relative}
+.qa-h{display:flex;align-items:baseline;gap:2.5mm}
+.qa-h b{font-family:'Space Grotesk',sans-serif;font-size:11pt;color:#3AA0FF}
+.qa-h span{font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#F4F7FC}
+.qa-q{font-size:7.5pt;color:#8592AD;margin-top:.8mm;line-height:1.3}
+.qa-a{flex:1;margin-top:1.6mm;font-size:9pt;line-height:1.35;color:#F4F7FC;white-space:pre-wrap;overflow:hidden;border-top:1px solid rgba(150,180,230,.14);padding-top:1.4mm}
+.qa-a.empty::before{content:attr(data-ph);color:rgba(133,146,173,.55);font-style:italic}
+.qa-hint{display:none}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:3mm;height:99mm}
+.kgrid>.card{display:flex;flex-direction:column;justify-content:center}
+.kgrid>.card.rev{grid-column:1 / span 2}
+.rev-row{display:grid;grid-template-columns:1fr 1fr;gap:4.5mm;margin-top:1.4mm}
+.rev-row>div+div{border-left:1px solid rgba(150,180,230,.2);padding-left:4.5mm}
+.kgrid .mono{color:var(--acc)}
+.kv>.card.rev-tbc,.kgrid>.card.rev-tbc{border:1px dashed rgba(242,208,75,.75);background:rgba(242,208,75,.06)}
+.kgrid>.card.rev-tbc .mono,.kgrid>.card.rev-tbc .big-num{color:#F2D04B}
+.q2-pill{border:1px solid #7CF3D0;background:rgba(124,243,208,.1);border-radius:2mm;padding:2mm 4mm;text-align:right}
+.q2-pill b{display:block;font-family:'Space Grotesk',sans-serif;font-size:20pt;color:#7CF3D0;line-height:1}
+.q2-pill span{font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:#C9D3E6}
+.q2-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:5mm;margin-top:4mm}
+.q2-wf{padding:4mm 5mm}
+.q2-wf>.mono,.q2-side .mono,.q2-open .mono{color:var(--acc)}
+.wf{position:relative;height:72mm;display:flex;align-items:flex-end;gap:6mm;padding:0 2mm;border-bottom:1px solid rgba(150,180,230,.3);margin-top:2mm}
+.wf-col{flex:1;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-end;height:100%;position:relative}
+.wf-bar{border-radius:1.2mm 1.2mm 0 0;opacity:.92}
+.wf-col.tot .wf-bar{background:linear-gradient(180deg,#7CF3D0,#3AA0FF)}
+.wf-val{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13pt;color:#F4F7FC;text-align:center;margin-bottom:1.2mm}
+.wf-lab{position:absolute;top:100%;left:0;right:0;margin-top:1.5mm;font-size:7.5pt;color:#F4F7FC;text-align:center;line-height:1.2}
+.wf-lab span{display:block;font-size:6.5pt;color:#8592AD;margin-top:.4mm}
+.wf-target{position:absolute;left:0;right:0;border-top:.5mm dashed #F2D04B;z-index:2}
+.wf-target span{position:absolute;left:0;top:-4.2mm;font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:#F2D04B}
+.q2-wf{padding-bottom:11mm}
+.q2-side .card{padding:4mm 5mm;height:100%}
+.q2chain{display:flex;flex-direction:column;gap:1.2mm;margin-top:3mm}
+.q2chain>div{border:1px solid rgba(58,160,255,.4);background:rgba(16,28,54,.7);border-radius:1.5mm;padding:2.4mm 3.5mm}
+.q2chain>div.hot{border-color:#7CF3D0;background:rgba(124,243,208,.1)}
+.q2chain b{display:block;font-family:'Space Grotesk',sans-serif;font-size:14pt;color:#F4F7FC;line-height:1.05}
+.q2chain>div.hot b{color:#7CF3D0}
+.q2chain span{display:block;font-size:8pt;color:#C9D3E6;margin-top:.6mm}
+.q2chain i{font-style:normal;text-align:center;color:#7CF3D0;font-size:10pt;line-height:1}
+.q2-open{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin-top:3.5mm}
+.q2-open>div{border:1px dashed rgba(242,208,75,.6);border-radius:2mm;padding:2.4mm 3.5mm;background:rgba(242,208,75,.04)}
+.q2-open>div:first-child,.q2-open>div.ok{border-style:solid;border-color:rgba(58,160,255,.45);background:rgba(16,28,54,.7)}
+.q2-open b{display:block;font-family:'Space Grotesk',sans-serif;font-size:12pt;color:#F2D04B;margin-top:.8mm}
+.q2-open>div:first-child b,.q2-open>div.ok b{color:#F4F7FC}
+.q2-open em{display:block;font-style:normal;font-size:7pt;color:#8592AD;margin-top:.6mm;line-height:1.3}
+.dsr-grid{display:grid;grid-template-columns:1fr 1.12fr;gap:4mm;margin-top:3.5mm}
+.dsr-ws{display:flex;flex-direction:column;gap:1.6mm}
+.dsr-ws .ws{border-left:1mm solid #3AA0FF;background:linear-gradient(90deg,rgba(20,36,70,.9),rgba(11,20,40,.6));border-radius:0 2mm 2mm 0;padding:1.5mm 3.2mm}
+.dsr-ws .ws b{display:block;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
+.dsr-ws .ws p{font-size:7.4pt;line-height:1.32;color:#DCE4F2;margin-top:.5mm}
+.dsr-right{display:flex;flex-direction:column;gap:2.2mm}
+.dsr-right .mono{color:var(--acc)}
+.rr{display:flex;align-items:flex-end;gap:5mm;height:27mm;margin-top:2mm;border-bottom:1px solid rgba(150,180,230,.3)}
+.rr-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative}
+.rr-b{background:linear-gradient(180deg,#7CF3D0,#3AA0FF);border-radius:1.2mm 1.2mm 0 0}
+.rr-col:last-child .rr-b{box-shadow:0 0 6mm rgba(124,243,208,.45)}
+.rr-v{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12pt;color:#F4F7FC;text-align:center;margin-bottom:1mm}
+.rr-q{position:absolute;top:100%;left:0;right:0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.1em;color:#8592AD;margin-top:1.2mm}
+.dsr-right .card:first-child{padding-bottom:7mm!important}
+.dsr-t{width:100%;border-collapse:collapse;font-size:8pt}
+.dsr-t th{font-family:'IBM Plex Mono',monospace;font-size:6pt;letter-spacing:.1em;text-transform:uppercase;color:#8592AD;text-align:right;font-weight:500;padding:1.2mm 1.5mm;border-bottom:1px solid rgba(150,180,230,.35)}
+.dsr-t td{color:#DCE4F2;text-align:right;padding:1.1mm 1.5mm;border-bottom:1px solid rgba(150,180,230,.12);font-variant-numeric:tabular-nums}
+.dsr-t th:first-child,.dsr-t td:first-child{text-align:left;color:#F4F7FC;font-weight:600}
+.dsr-t td.hl{color:#7CF3D0;font-weight:600}
+.dsr-t tr:last-child td{border-bottom:0}
+.dsr-note{font-size:7.4pt;line-height:1.4;color:#C9D3E6;border:1px solid rgba(124,243,208,.4);background:rgba(124,243,208,.06);border-radius:2mm;padding:2.4mm 3.5mm}
+.dsr-note b{color:#F4F7FC}
+.dsr-foot{font-size:6.4pt;color:#8592AD;font-style:italic;margin-top:2mm;line-height:1.35}
+.mk-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:4mm}
+.mk-stats .card{padding:2.8mm 4mm}
+.mk-stats .mono,.mk-fn>.mono,.mk-seg>.mono{color:var(--acc)}
+.mk-stats .big-num{font-size:15pt;margin-top:1mm}
+.mk-stats .big-num small{font-size:8pt;color:#8592AD;font-family:'IBM Plex Mono',monospace;letter-spacing:.06em}
+.mk-stats p{font-size:7.2pt;line-height:1.35;color:#C9D3E6;margin-top:.8mm}
+.mk-grid{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-top:3.5mm}
+.mk-fn,.mk-seg{padding:3.5mm 4.5mm}
+.fn{display:flex;flex-direction:column;gap:2mm;margin-top:3mm}
+.fn-row{display:grid;grid-template-columns:62% 1fr;align-items:center;gap:3mm}
+.fn-bar{height:9.5mm;background:linear-gradient(90deg,#1E3A70,#2A5AA8);border-radius:1mm;display:flex;align-items:center;padding-left:2.5mm;min-width:20mm}
+.fn-row.core .fn-bar{background:linear-gradient(90deg,#3AA0FF,#7CF3D0);box-shadow:0 0 5mm rgba(124,243,208,.35)}
+.fn-bar b{font-family:'Space Grotesk',sans-serif;font-size:11pt;color:#F4F7FC}
+.fn-row.core .fn-bar b{color:#041223}
+.fn-lab{font-size:7.8pt;color:#F4F7FC;line-height:1.2}
+.fn-lab span{display:block;font-size:6.6pt;color:#8592AD;margin-top:.4mm}
+.fn-row.core .fn-lab{color:#7CF3D0;font-weight:600}
+.core-split{margin-top:3.5mm;border-top:1px solid rgba(150,180,230,.18);padding-top:2.5mm}
+.cs-bar{display:flex;height:4mm;border-radius:1mm;overflow:hidden;gap:.4mm}
+.cs-bar i{display:block}
+.cs-key{display:flex;flex-wrap:wrap;gap:1.2mm 4mm;margin-top:1.8mm}
+.cs-key span{font-size:6.6pt;color:#C9D3E6;display:flex;align-items:center;gap:1.2mm}
+.cs-key span i{width:2.6mm;height:2.6mm;border-radius:.6mm;display:inline-block}
+.seg{display:grid;grid-template-columns:20mm 1fr 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:1.6mm;margin-top:3mm;height:76mm}
+.seg .sh{font-family:'IBM Plex Mono',monospace;font-size:6.2pt;letter-spacing:.08em;text-transform:uppercase;color:#8592AD;align-self:end;line-height:1.3}
+.seg .sr{font-family:'IBM Plex Mono',monospace;font-size:6pt;letter-spacing:.06em;text-transform:uppercase;color:#8592AD;align-self:center;line-height:1.3}
+.seg .sc{border-radius:1.5mm;padding:2.2mm 2.6mm;font-size:6.8pt;line-height:1.35;color:#C9D3E6}
+.seg .sc b{display:block;font-size:7.4pt;color:#F4F7FC;margin-bottom:.8mm}
+.seg .sc.off{border:1px dashed rgba(150,180,230,.25);background:rgba(255,255,255,.02);color:#8592AD}
+.seg .sc.off b{color:#8592AD}
+.seg .sc.gap{border:1px dashed rgba(242,208,75,.55);background:rgba(242,208,75,.05)}
+.seg .sc.gap b{color:#F2D04B}
+.seg .sc.focus{background:linear-gradient(160deg,#3AA0FF,#1E6FD0);color:#EAF4FF;box-shadow:0 0 5mm rgba(58,160,255,.35)}
+.seg .sc.focus b{color:#fff;font-size:8.4pt}
+.seg .sc.ltd{border:1px solid rgba(124,243,208,.55);background:rgba(124,243,208,.08)}
+.seg .sc.ltd b{color:#7CF3D0}
+.q3-track{margin-top:3.5mm}
+.q3-bar{position:relative;display:flex;height:11mm;border-radius:1.5mm;overflow:visible}
+.q3-done{background:linear-gradient(90deg,#3AA0FF,#7CF3D0);border-radius:1.5mm 0 0 1.5mm;display:flex;align-items:center;gap:3mm;padding:0 3.5mm}
+.q3-done b{font-family:'Space Grotesk',sans-serif;font-size:14pt;color:#041223}
+.q3-done span{font-size:7pt;color:#062033;font-weight:600}
+.q3-gap{flex:1;border:.5mm dashed #F2D04B;border-left:0;border-radius:0 1.5mm 1.5mm 0;background:rgba(242,208,75,.07);display:flex;align-items:center;gap:2.5mm;padding:0 3.5mm}
+.q3-gap b{font-family:'Space Grotesk',sans-serif;font-size:14pt;color:#F2D04B}
+.q3-gap span{font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:#F2D04B}
+.q3-tgt{position:absolute;right:0;top:-4.2mm}
+.q3-tgt span{font-family:'IBM Plex Mono',monospace;font-size:6.3pt;letter-spacing:.12em;text-transform:uppercase;color:#F2D04B}
+.q3-levers{display:flex;flex-wrap:wrap;align-items:center;gap:1.4mm;margin-top:2mm;justify-content:flex-end}
+.q3-levers em{font-style:normal;font-size:6.8pt;color:#8592AD;margin-right:1mm}
+.q3-levers span{font-size:6.6pt;color:#F2D04B;border:1px solid rgba(242,208,75,.45);border-radius:5mm;padding:.7mm 2.4mm;background:rgba(242,208,75,.05)}
+.acq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin-top:5mm}
+.acq{min-height:108mm;background:linear-gradient(170deg,rgba(20,36,70,.95),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:3mm;padding:6mm 5.5mm 5mm;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.acq::before{content:'';position:absolute;left:0;right:0;top:0;height:1mm;background:linear-gradient(90deg,#3AA0FF,#7CF3D0)}
+.acq-h{display:flex;justify-content:space-between;align-items:baseline}
+.acq-h b{font-family:'Space Grotesk',sans-serif;font-size:22pt;color:rgba(58,160,255,.5);line-height:1}
+.acq-h span{font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0;border:1px solid rgba(124,243,208,.45);border-radius:5mm;padding:.8mm 2.6mm}
+.acq h3{font-family:'Space Grotesk',sans-serif;font-size:21pt;color:#F4F7FC;margin-top:3mm;line-height:1.05}
+.acq-why{font-size:9pt;color:#C9D3E6;margin-top:1.5mm}
+.acq-ev{flex:1;justify-content:space-around;display:flex;flex-direction:column;gap:2mm;margin-top:5mm;border-top:1px solid rgba(150,180,230,.18);padding-top:3.5mm}
+.acq-ev>div{border-left:.8mm solid #3AA0FF;padding-left:3mm}
+.acq-ev b{display:block;font-family:'Space Grotesk',sans-serif;font-size:13pt;color:#F4F7FC;line-height:1.15}
+.acq-ev span{display:block;font-size:8pt;color:#8592AD;margin-top:.5mm}
+.acq-next{display:flex;align-items:center;gap:2.5mm;margin-top:4.5mm;border:1px dashed rgba(242,208,75,.55);background:rgba(242,208,75,.05);border-radius:2mm;padding:2.6mm 4mm}
+.acq-next .mono{color:#8592AD;margin-right:2mm}
+.acq-next em{font-style:normal;font-size:9pt;color:#F4F7FC}
+.acq-next i{font-style:normal;color:#8592AD}
+.acq-next b{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#F2D04B}
+.pos-row{display:flex;align-items:stretch;gap:2.5mm;margin-top:4mm}
+.pos-row>.mono{align-self:center;color:#8592AD;margin-right:1.5mm}
+.pos{flex:1;border-radius:2mm;padding:2mm 3.5mm}
+.pos b{display:block;font-family:'Space Grotesk',sans-serif;font-size:12pt}
+.pos em{display:block;font-style:normal;font-size:7pt;margin-top:.4mm}
+.pos.on{background:linear-gradient(135deg,rgba(58,160,255,.25),rgba(124,243,208,.12));border:1px solid rgba(124,243,208,.55)}
+.pos.on b{color:#F4F7FC}.pos.on em{color:#C9D3E6}
+.pos.off{border:1px dashed rgba(150,180,230,.3);background:rgba(255,255,255,.02)}
+.pos.off b{color:#8592AD;text-decoration:line-through}.pos.off em{color:#8592AD}
+.q6a-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:4mm;margin-top:4mm}
+.sv-list{display:flex;flex-direction:column;gap:2mm}
+.sv{display:grid;grid-template-columns:30mm 1fr;gap:3.5mm;align-items:center;background:linear-gradient(90deg,rgba(20,36,70,.9),rgba(11,20,40,.6));border:1px solid var(--line);border-radius:2mm;padding:2.2mm 3.5mm}
+.sv-k b{display:block;font-family:'Space Grotesk',sans-serif;font-size:15pt;color:#7CF3D0;line-height:1}
+.sv-k span{display:block;font-family:'IBM Plex Mono',monospace;font-size:6pt;letter-spacing:.1em;text-transform:uppercase;color:#8592AD;margin-top:.6mm}
+.sv p{font-size:8pt;line-height:1.35;color:#DCE4F2}
+.mx{padding:3.5mm 4.5mm}
+.mx .mono{color:var(--acc)}
+.mx-chart{display:flex;gap:3mm;height:62mm;margin-top:3mm;align-items:flex-end}
+.mx-col{flex:1;display:flex;flex-direction:column;height:100%}
+.mx-bar{flex:1;display:flex;flex-direction:column;border-radius:1mm;overflow:hidden;gap:.4mm}
+.mx-bar i,.mx-key i{display:block}
+.mx-bar .bg,.mx-key .bg{background:#1E6FD0}.mx-bar .bx,.mx-key .bx{background:#3AA0FF}.mx-bar .hl,.mx-key .hl{background:#7CF3D0}
+.mx-col span{text-align:center;font-family:'IBM Plex Mono',monospace;font-size:6.3pt;color:#8592AD;margin-top:1.2mm}
+.mx-key{display:flex;gap:4mm;margin-top:2.5mm}
+.mx-key span{display:flex;align-items:center;gap:1.2mm;font-size:7pt;color:#C9D3E6}
+.mx-key i{width:2.6mm;height:2.6mm;border-radius:.6mm}
+.mx-note{font-size:7pt;color:#8592AD;margin-top:2mm;line-height:1.35}
+.usp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5mm;margin-top:3.5mm}
+.usp6{background:linear-gradient(160deg,rgba(20,36,70,.92),rgba(11,20,40,.85));border:1px solid var(--line);border-top:.8mm solid #3AA0FF;border-radius:2mm;padding:2.4mm 3.5mm}
+.usp6 b{display:block;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
+.usp6 p{font-size:7.8pt;line-height:1.35;color:#DCE4F2;margin-top:.8mm}
+.mk-plan{display:grid;grid-template-columns:78mm 1fr;gap:3.5mm;margin-top:4mm;height:74mm}
+.mk-photo{position:relative;border-radius:2.5mm;overflow:hidden;border:1px solid var(--line)}
+.mk-photo span{position:absolute;left:3mm;bottom:3mm;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#F4F7FC;background:rgba(6,10,22,.8);border:1px solid rgba(124,243,208,.55);border-radius:1.2mm;padding:1mm 2.4mm}
+.mk-acts{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2.5mm}
+.mk-a{display:flex;gap:3mm;align-items:flex-start;border:1px solid rgba(124,243,208,.5);background:rgba(124,243,208,.06);border-radius:2mm;padding:2.4mm 3.5mm}
+.mk-a>b{font-family:'Space Grotesk',sans-serif;font-size:18pt;color:#7CF3D0;line-height:1}
+.mk-a h4{font-family:'Space Grotesk',sans-serif;font-size:11.5pt;color:#F4F7FC;line-height:1.15}
+.mk-a p{font-size:7.8pt;color:#C9D3E6;margin-top:1mm;line-height:1.35}
+.mk-a.ask{border:1px dashed rgba(242,208,75,.6);background:rgba(242,208,75,.05)}
+.mk-a.ask>b,.mk-a.ask h4{color:#F2D04B}
+.sb{display:flex;flex-direction:column;gap:3mm;margin-top:6mm}
+.sb-row{display:grid;grid-template-columns:72mm 1fr 34mm;gap:5mm;align-items:center;background:linear-gradient(90deg,rgba(20,36,70,.9),rgba(11,20,40,.6));border:1px solid var(--line);border-radius:2.5mm;padding:4mm 5mm}
+.sb-name b{display:block;font-family:'Space Grotesk',sans-serif;font-size:14pt;color:#F4F7FC}
+.sb-name span{display:block;font-size:7.4pt;color:#8592AD;margin-top:.8mm}
+.sb-track{position:relative;height:7mm;border-radius:1.5mm;background:rgba(150,180,230,.1);border:1px dashed rgba(242,208,75,.5)}
+.sb-fill{height:100%;border-radius:1.5mm;background:linear-gradient(90deg,#3AA0FF,#7CF3D0)}
+.sb-row.part .sb-fill{background:linear-gradient(90deg,#3AA0FF,#5FB8FF)}
+.sb-track .ov{position:absolute;right:-1mm;top:-5mm;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.1em;color:#7CF3D0}
+.sb-val{text-align:right}
+.sb-val b{display:block;font-family:'Space Grotesk',sans-serif;font-size:17pt;color:#F4F7FC;line-height:1}
+.sb-row.met .sb-val b{color:#7CF3D0}.sb-row.none .sb-val b{color:#F2D04B;font-size:13pt}
+.sb-val span{display:block;font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.1em;text-transform:uppercase;color:#8592AD;margin-top:1mm}
+.sb-tot{display:flex;align-items:baseline;gap:4mm;justify-content:flex-end;padding:1mm 5mm}
+.sb-tot .mono{color:#8592AD}.sb-tot b{font-family:'Space Grotesk',sans-serif;font-size:24pt;color:#7CF3D0}.sb-tot em{font-style:normal;font-size:9pt;color:#C9D3E6}
+.q1-open,.q8-next{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;margin-top:4mm}
+.q8-next{grid-template-columns:1fr 1fr}
+.q1-open>div,.q8-next>div{border:1px dashed rgba(242,208,75,.6);background:rgba(242,208,75,.05);border-radius:2mm;padding:3mm 4mm}
+.q1-open>div.ok{border:1px solid rgba(58,160,255,.45);background:rgba(16,28,54,.7)}
+.q1-open .mono,.q8-next .mono{color:var(--acc)}
+.q1-open b,.q8-next b{display:block;font-family:'Space Grotesk',sans-serif;font-size:13pt;color:#F2D04B;margin-top:.8mm}
+.q1-open>div.ok b{color:#F4F7FC}
+.q1-open em{display:block;font-style:normal;font-size:7.4pt;color:#8592AD;margin-top:.6mm}
+.en-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3.5mm;margin-top:5mm}
+.en{min-height:96mm;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(170deg,rgba(20,36,70,.95),rgba(11,20,40,.9));border:1px solid var(--line);border-radius:2.5mm;padding:5mm 4.5mm;position:relative;overflow:hidden}
+.en::before{content:'';position:absolute;left:0;right:0;top:0;height:.9mm;background:linear-gradient(90deg,#3AA0FF,#7CF3D0)}
+.en-h{font-family:'IBM Plex Mono',monospace;font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0;margin-bottom:3mm}
+.en-i{border-left:.8mm solid #3AA0FF;padding-left:2.8mm;margin-top:3.2mm}
+.en-i b{display:block;font-family:'Space Grotesk',sans-serif;font-size:15pt;color:#F4F7FC;line-height:1.1}
+.en-i span{display:block;font-size:8pt;color:#8592AD;margin-top:.6mm;line-height:1.3}
+.en-org{display:grid;grid-template-columns:28mm 1fr 1fr 1fr;gap:3mm;align-items:stretch;margin-top:4.5mm}
+.en-org>.mono{align-self:center;color:#8592AD}
+.en-org>div{border:1px solid rgba(58,160,255,.45);background:rgba(16,28,54,.7);border-radius:2mm;padding:2.6mm 3.5mm}
+.en-org>div.tbc8{border:1px dashed rgba(242,208,75,.6);background:rgba(242,208,75,.05)}
+.en-org b{display:block;font-family:'Space Grotesk',sans-serif;font-size:11pt;color:#F4F7FC}
+.en-org .tbc8 b{color:#F4F7FC}.en-org .tbc8 em{color:#F2D04B}
+.en-org em{display:block;font-style:normal;font-size:7.2pt;color:#8592AD;margin-top:.5mm}
+.own{width:100%;border-collapse:collapse}
+.own th{font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.12em;text-transform:uppercase;color:#8592AD;text-align:left;font-weight:500;padding:2mm;border-bottom:1px solid rgba(150,180,230,.35)}
+.own td{font-size:9pt;color:#DCE4F2;padding:2.4mm 2mm;border-bottom:1px solid rgba(150,180,230,.12);vertical-align:middle}
+.own td b{display:block;color:#F4F7FC;font-size:10pt}
+.own td span{display:block;font-family:'IBM Plex Mono',monospace;font-size:6pt;letter-spacing:.08em;color:#8592AD;margin-top:.4mm}
+.own td.v{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#7CF3D0}
+.own td.tbc8{color:#F2D04B;font-style:italic}
+.own tr:last-child td{border-bottom:0}
+.glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
+</style>
+</head><body>
+<div class="webbar"><span>APC business plan · v4 · private</span><span style="display:flex;gap:10px"><a href="presentation.pptx">Download PowerPoint</a><a href="document.pdf">Download PDF</a></span></div>
+
+
+<!-- COVER -->
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div><div class="glow" style="right:10mm;top:60mm;width:150mm;height:150mm"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="map" style="right:20mm;top:12mm;width:117.9mm;height:186mm"><img src="f/assets-hubs-map-full.png" alt="Map of APC member depots"><div class="hub" style="left:80.7%;top:67.6%"><i></i></div><div class="hub" style="left:71.3%;top:76.7%"><i></i></div><div class="hub" style="left:87.6%;top:86.8%"><i></i></div></div>
+  <div class="z" style="position:absolute;left:14mm;top:46mm;width:150mm">
+    <div class="mono tag">— Regional hub proposals</div>
+    <h1 style="font-size:34pt">Three regional hubs.<br><span>One central sortation hub.</span></h1>
+    <p class="lead" style="margin-top:7mm;width:135mm">APC's member depots grouped into three regional hub areas, the parcels each hub sorts, the share that stays in its own area, and the new central sortation hub.</p>
+    <div style="display:flex;gap:9mm;margin-top:12mm">
+      <div class="stat"><div class="num" style="font-size:25pt">3</div><div class="mono unit" style="font-size:7pt">Regional hubs</div></div>
+      <div class="stat"><div class="num" style="font-size:25pt">£100m</div><div class="mono unit" style="font-size:7pt">Central hub investment</div></div>
+      <div class="stat"><div class="num" style="font-size:25pt">650,000</div><div class="mono unit" style="font-size:7pt">Parcels a night</div></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>1</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="map" style="right:18mm;top:22mm;width:141.8mm;height:162mm"><img src="f/assets-hubs-map-north.png" alt="Map of APC member depots"><div class="hub" style="left:80.31%;top:85.35%"><i></i><b class="l">Northern Regional Hub</b></div><div class="area up" style="top:87.89%"><span>Northern Regional Hub area</span></div></div>
+  <div class="z" style="position:absolute;left:14mm;top:37mm;width:100mm">
+    <div class="mono tag">— Regional hub 01</div>
+    <h2 style="margin:0">Northern <span>Regional Hub.</span></h2>
+    <p style="font-size:10pt;margin-top:4mm;line-height:1.5">Serves the member depots in the northern regional hub area, above the dashed line on the map.</p>
+    <div class="kv" style="margin-top:8mm">
+      <div class="card hot" style="padding:5mm 6mm"><div class="mono">Parcels sorted</div><div class="big-num" style="font-size:34pt;margin-top:2mm">1,512,333</div></div>
+      <div class="card" style="padding:5mm 6mm"><div class="mono">Stay in this area</div><div class="big-num" style="font-size:34pt;margin-top:2mm">5.2%</div>
+        <p style="font-size:9pt;margin-top:2mm">78,641 parcels</p></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>2</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag">— Regional hub 02</div><h2 style="margin:0">Cannock <span>Sortation Hub.</span></h2></div>
+      <p style="width:120mm;font-size:9.5pt">Serves the member depots in the Cannock sortation hub area, between the two dashed lines. Layout as drawn by APC.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 88mm;gap:6mm">
+      <div class="dwg" style="height:74.7mm"><img src="f/assets-hubs-cannock-layout.jpg" alt="Cannock sortation hub layout" style="width:100%;height:100%;object-fit:contain"></div>
+      <div style="position:relative;height:55.5mm;border-radius:2.5mm;border:1px solid var(--line);background:rgba(6,10,22,.5);overflow:hidden">
+        <div class="map" style="inset:0"><img src="f/assets-hubs-map-cannock.png" alt="Map of APC member depots"><div class="hub" style="left:59.0%;top:52.5%"><i></i><b class="l">Cannock Sortation Hub</b></div><div class="area" style="top:26.43%"><span></span></div><div class="area up" style="top:81.07%"><span>Cannock Sortation Hub area</span></div></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:5mm">
+      <div class="card hot" style="padding:3.5mm 5mm"><div class="mono">Sorting areas</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">2</div><p style="font-size:8pt;margin-top:1mm">Areas 1 and 2</p></div>
+      <div class="card" style="padding:3.5mm 5mm"><div class="mono">Artic loading lanes</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">45</div><p style="font-size:8pt;margin-top:1mm">22 covered tipping · 20 front canopy · 3 side canopy</p></div>
+      <div class="card" style="padding:3.5mm 5mm"><div class="mono">New sortation</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">72</div><p style="font-size:8pt;margin-top:1mm">double cages · 100 m × 20 m</p></div>
+      <div class="card" style="padding:3.5mm 5mm"><div class="mono">On site</div><div class="big-num" style="font-size:20pt;margin-top:1.5mm">2-day</div><p style="font-size:8pt;margin-top:1mm">stock area · forklift workshop</p></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>3</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:37mm;width:80mm">
+    <div class="mono tag">— Regional hub 03</div>
+    <h2 style="margin:0;font-size:24pt">Central London &amp; <span>South West Regional Hub.</span></h2>
+    <p style="font-size:10pt;margin-top:4mm;line-height:1.5">Serves the member depots in the central London and South West regional hub area, below the dashed line on the map.</p>
+    <div class="kv" style="margin-top:7mm">
+      <div class="card hot" style="padding:5mm 6mm"><div class="mono">Parcels sorted</div><div class="big-num" style="font-size:30pt;margin-top:2mm">2,112,384</div></div>
+      <div class="card" style="padding:5mm 6mm"><div class="mono">Stay in this area</div><div class="big-num" style="font-size:30pt;margin-top:2mm">2.8%</div><p style="font-size:9pt;margin-top:2mm">59,540 parcels</p></div>
+    </div>
+  </div>
+  <div class="map" style="right:12mm;top:81.0mm;width:172mm;height:62.1mm"><img src="f/assets-hubs-map-london.png" alt="Map of APC member depots"><div class="hub" style="left:87.08%;top:40.0%"><i></i><b class="l">Central London &amp; SW Regional Hub</b></div><div class="area" style="top:30.45%"><span>Central London &amp; South West Regional Hub area</span></div></div>
+  <div class="apcfoot"><i class="l1"></i><b>4</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div><div class="glow" style="left:20mm;top:70mm;width:140mm;height:140mm"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="map" style="left:16mm;top:30mm;width:106.5mm;height:168mm"><img src="f/assets-hubs-map-full.png" alt="Map of APC member depots"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="80.7" y1="67.6" x2="71.3" y2="76.7" stroke="#7CF3D0" stroke-width=".5" stroke-dasharray="1.2 1" vector-effect="non-scaling-stroke" style="stroke-width:1.6px"/><line x1="87.6" y1="86.8" x2="71.3" y2="76.7" stroke="#7CF3D0" stroke-width=".5" stroke-dasharray="1.2 1" vector-effect="non-scaling-stroke" style="stroke-width:1.6px"/></svg><div class="hub" style="left:80.7%;top:67.6%"><i></i><b class="r">Northern Regional Hub</b></div><div class="hub" style="left:71.3%;top:76.7%"><i></i><b class="r">Cannock Sortation Hub</b></div><div class="hub" style="left:87.6%;top:86.8%"><i></i><b class="r">Central London &amp; SW Regional Hub</b></div></div>
+  <div class="z" style="position:absolute;right:14mm;top:37mm;width:120mm">
+    <div class="mono tag">— New central sortation hub</div>
+    <h2 style="margin:0">Three regional hubs. <span>One network.</span></h2>
+    <p style="font-size:10pt;margin-top:4mm;line-height:1.5">The northern, Cannock and central London and South West regional hubs, linked to a new central sortation hub.</p>
+    <div class="kv" style="margin-top:7mm;gap:3.5mm">
+      <div class="card row" style="padding:4mm 5mm;display:flex;justify-content:space-between;align-items:center"><div><div class="mono">Regional hub 01</div><div style="font-size:12pt;color:var(--white);font-weight:600;margin-top:1mm">Northern Regional Hub</div></div><div class="big-num" style="font-size:15pt">1,512,333</div></div>
+      <div class="card row" style="padding:4mm 5mm;display:flex;justify-content:space-between;align-items:center"><div><div class="mono">Regional hub 02</div><div style="font-size:12pt;color:var(--white);font-weight:600;margin-top:1mm">Cannock Sortation Hub</div></div><div class="mono" style="font-size:7pt;color:var(--soft)">Layout · page 3</div></div>
+      <div class="card row" style="padding:4mm 5mm;display:flex;justify-content:space-between;align-items:center"><div><div class="mono">Regional hub 03</div><div style="font-size:12pt;color:var(--white);font-weight:600;margin-top:1mm">Central London &amp; SW Regional Hub</div></div><div class="big-num" style="font-size:15pt">2,112,384</div></div>
+      <p class="mono" style="font-size:6.5pt;color:var(--soft);margin-top:1mm">Figures are parcels sorted, as given on the source slides</p>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>5</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:37mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end;margin-bottom:5mm">
+      <div><div class="mono tag">— New central sortation hub</div><h2 style="margin:0">£100 million. <span>650,000 parcels a night.</span></h2></div>
+      <p style="width:96mm;font-size:9.5pt">A £100 million investment in a sortation centre: 11 sortation lines and 180 loading doors in a 500,000 sq ft unit. Shown as the Orion digital twin.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:176mm 1fr;gap:6mm">
+      <div class="rend twin" style="height:99mm"><img class="fill" src="f/assets-hubs-twin-twin-poster.jpg" alt="Orion digital twin of the central sortation hub"><div class="twin-live" data-twin="f/twin.html"></div><div class="twin-badge"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin · live replay</span></div></div>
+      <div class="kgrid">
+        <div class="card hot" style="padding:3.2mm 4.5mm"><div class="mono">Investment</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">£100m</div></div>
+        <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Annual savings</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">£18m</div></div>
+        <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Capacity</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">650,000</div><p style="font-size:7.5pt;margin-top:.8mm">parcels a night · 11 sortation lines</p></div>
+        <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Commercial unit</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">500,000</div><p style="font-size:7.5pt;margin-top:.8mm">sq ft</p></div>
+        <div class="card rev" style="padding:3.2mm 4.5mm"><div class="mono">Revenue · on 120 million parcels</div>
+          <div class="rev-row"><div><div class="big-num" style="font-size:19pt">£500m</div><p style="font-size:7.5pt;margin-top:.8mm">turnover</p></div>
+          <div><div class="big-num" style="font-size:19pt;color:#7CF3D0">£40m</div><p style="font-size:7.5pt;margin-top:.8mm">EBITDA</p></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>6</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg">
+  <div class="bleed"><img class="fill" src="f/assets-hubs-twin-still-spine.jpg" alt="Orion digital twin: X-Flow spine feeding a Helix loop" style="object-position:60% 50%"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,22,.97) 0%,rgba(6,10,22,.9) 34%,rgba(6,10,22,.35) 62%,rgba(6,10,22,.15) 100%)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:80mm;background:linear-gradient(0deg,rgba(6,10,22,.98) 30%,rgba(6,10,22,0))"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:36mm;width:150mm">
+    <div class="mono tag">— New central sortation hub · how it runs</div>
+    <h1 style="font-size:40pt;line-height:1.0">No operators.<br>No people.<br><span>A dark warehouse.</span></h1>
+    <p class="lead" style="margin-top:6mm;width:128mm;font-size:11pt">Drivers drop the trunks. From there robots unload, the X-Flow spine and Helix loops sort, and AMRs load the route trailers. No one works on the sort floor.</p>
+  </div>
+  <div class="z" style="position:absolute;left:14mm;right:14mm;bottom:16mm">
+    <div class="flow"><span>Trunk</span><i>→</i><span>Robot unload</span><i>→</i><span>X-Flow spine</span><i>→</i><span>Helix loop</span><i>→</i><span>AMR</span><i>→</i><span>Route trailer</span></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:5mm">
+      <div class="rend" style="height:40mm"><img class="fill" src="f/assets-hubs-twin-still-entrance.jpg" alt="Hub entrance at night"><span class="lab" style="top:auto;bottom:3mm">Dock frontage · night</span></div>
+      <div class="rend" style="height:40mm"><img class="fill" src="f/assets-hubs-twin-still-loop.jpg" alt="Helix loop under the X-Flow spine"><span class="lab" style="top:auto;bottom:3mm">Helix loop · under the spine</span></div>
+      <div class="rend" style="height:40mm"><img class="fill" src="f/assets-hubs-twin-still-overview.jpg" alt="Whole hub overview" style="object-position:50% 55%"><span class="lab" style="top:auto;bottom:3mm">Whole hub · 11 loops</span></div>
+    </div>
+  </div>
+  <div class="twin-badge" style="left:auto;right:14mm;bottom:auto;top:36mm"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin stills</span></div>
+  <div class="apcfoot"><i class="l1"></i><b>7</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q1t">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · the target</div>
+    <h2 style="margin:0">£50m EBITDA by 2030. <span>£18.0m identified so far.</span></h2>
+    <div class="sb"><div class="sb-row met"><div class="sb-name"><b>Hub upgrade and cages</b><span>Labour, trunking and 60 fewer routes · page 9</span></div><div class="sb-track"><div class="sb-fill" style="width:100.0%"></div><span class="ov">+£2.1m</span></div><div class="sb-val"><b>£12.1m</b><span>of ≥ £10m</span></div></div><div class="sb-row part"><div class="sb-name"><b>Removing financial support</b><span>Depot support reduction programme · £4.1m still to find · page 10</span></div><div class="sb-track"><div class="sb-fill" style="width:59.0%"></div></div><div class="sb-val"><b>£5.9m</b><span>of ≥ £10m</span></div></div><div class="sb-row none"><div class="sb-name"><b>Additional EBITDA</b><span>Market growth, acquisitions, marketing · not yet quantified · page 11</span></div><div class="sb-track"><div class="sb-fill" style="width:0.0%"></div></div><div class="sb-val"><b>To quantify</b><span>of £20m</span></div></div>
+      <div class="sb-tot"><span class="mono">Identified</span><b>£18.0m</b><em>of the £40m in the three buckets</em></div>
+    </div>
+    <div class="q1-open">
+      <div class="ok"><span class="mono">Scope</span><b>APC stand-alone</b><em>Excluding last-mile and carrier activities</em></div>
+      <div><span class="mono">The other £10m</span><b>To confirm</b><em>The three buckets add to £40m of the £50m target: base EBITDA to confirm</em></div>
+      <div><span class="mono">Nationwide service</span><b>To confirm</b><em>Service commitments in or out, and investment constraints</em></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>8</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q2">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end">
+      <div><div class="mono tag">— APC plan to 2030 · hub upgrade and cages</div>
+        <h2 style="margin:0">£12.1m a year. <span>Target £10m.</span></h2></div>
+      <div class="q2-pill"><b>+£2.1m</b><span>above the £10m minimum</span></div>
+    </div>
+    <div class="q2-grid">
+      <div class="card q2-wf">
+        <div class="mono">Full-year savings · £m a year</div>
+        <div class="wf">
+          <div class="wf-target" style="bottom:46.28mm"><span>£10m minimum</span></div>
+          <div class="wf-col"><div class="wf-val">£2.2m</div><div class="wf-bar" style="height:10.18mm;margin-bottom:0.0mm;background:#3AA0FF"></div><div class="wf-lab">Labour efficiencies<span>Hub upgrade and cages</span></div></div><div class="wf-col"><div class="wf-val">£1.5m</div><div class="wf-bar" style="height:6.94mm;margin-bottom:10.18mm;background:#3AA0FF"></div><div class="wf-lab">Trunking efficiencies<span>Hub upgrade and cages</span></div></div><div class="wf-col"><div class="wf-val">£8.4m</div><div class="wf-bar" style="height:38.88mm;margin-bottom:17.12mm;background:#7CF3D0"></div><div class="wf-lab">Route reduction<span>60 routes × £140k</span></div></div><div class="wf-col tot"><div class="wf-val">£12.1m</div><div class="wf-bar" style="height:56.0mm"></div><div class="wf-lab">Total a year<span>gross savings</span></div></div>
+        </div>
+      </div>
+      <div class="q2-side">
+        <div class="card"><div class="mono">How the route saving works</div>
+          <div class="q2chain">
+            <div><b>£1.5m</b><span>New infeeds to the blue sorter</span></div><i>↓</i>
+            <div><b>13 → 4</b><span>Segregations for members</span></div><i>↓</i>
+            <div><b>Fuller trailers</b><span>Less empty trunking · improved trailer fill</span></div><i>↓</i>
+            <div class="hot"><b>60 routes</b><span>× £140k a route = £8.4m a year</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="q2-open">
+      <div><span class="mono">Net savings</span><b>£12.1m gross</b><em>Net of the £1.5m infeed investment and running costs: to confirm</em></div>
+      <div class="ok"><span class="mono">Timing</span><b>2028 onwards</b><em>Full-year savings from 2028</em></div>
+      <div class="ok"><span class="mono">Ownership</span><b>David Whitmore / Orion</b></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>9</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg dsr">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · £10m from removing financial support</div>
+    <h2 style="margin:0">£5.9m a year identified. <span>£4.1m still to find.</span></h2>
+    <div class="q3-track">
+      <div class="q3-bar">
+        <div class="q3-done" style="width:59.05%"><b>£5.9m</b><span>Depot support reduction programme · full annual run-rate</span></div>
+        <div class="q3-gap"><b>£4.1m</b><span>To find</span></div>
+        <div class="q3-tgt"><span>£10m minimum</span></div>
+      </div>
+      <div class="q3-levers"><em>Levers for the remaining £4.1m:</em>
+        <span>Combining members</span><span>WS carriers take over regions</span><span>Operational consulting and support for members</span>
+        <span>Differentiated pricing for difficult regions</span><span>Full site data before any support is given</span></div>
+    </div>
+    <div class="dsr-grid">
+      <div class="dsr-ws"><div class="ws"><b>London</b><p>Develop a London super depot, move to fewer, larger partners and review delivery pricing; transfer postcodes to D12 with full DOA membership.</p></div><div class="ws"><b>South West</b><p>Renegotiate contracted cover and consolidate four depots into two, supported by a regional depot model and revised delivery pricing.</p></div><div class="ws"><b>Depot consolidation</b><p>Move D45 into D35, prioritise takeover or replacement of D66, and consolidate D74 into other areas under Fraser's lead.</p></div><div class="ws"><b>Commercial renegotiation</b><p>Reset terms and territories for D23, D52, D60 and D299; align D78 with D227 consolidation, allowing for any support needed to retain the JLI account.</p></div><div class="ws"><b>Implementation</b><p>Deliver through a dedicated network project covering openings, transfers and contract changes, protecting service and validating net savings after replacement and implementation costs.</p></div></div>
+      <div class="dsr-right">
+        <div class="card" style="padding:3.5mm 4.5mm">
+          <div class="mono">Cumulative annual run-rate · £m</div>
+          <div class="rr"><div class="rr-col"><div class="rr-v">£2.3m</div><div class="rr-b" style="height:6.93mm"></div><div class="rr-q">Q2 2027</div></div><div class="rr-col"><div class="rr-v">£4.2m</div><div class="rr-b" style="height:12.87mm"></div><div class="rr-q">Q3 2027</div></div><div class="rr-col"><div class="rr-v">£4.6m</div><div class="rr-b" style="height:13.94mm"></div><div class="rr-q">Q4 2027</div></div><div class="rr-col"><div class="rr-v">£5.9m</div><div class="rr-b" style="height:18.0mm"></div><div class="rr-q">Q1 2028</div></div></div>
+        </div>
+        <div class="card" style="padding:3mm 4mm">
+          <table class="dsr-t"><thead><tr><th>Quarter</th><th>Monthly reduction</th><th>Annual run-rate</th><th>Cumulative monthly</th><th>Cumulative annual</th></tr></thead>
+          <tbody><tr><td>Q2 2027</td><td>£189,338</td><td>£2,272,050</td><td>£189,338</td><td class="hl">£2,272,050</td></tr><tr><td>Q3 2027</td><td>£162,625</td><td>£1,951,502</td><td>£351,963</td><td class="hl">£4,223,552</td></tr><tr><td>Q4 2027</td><td>£29,210</td><td>£350,517</td><td>£381,172</td><td class="hl">£4,574,069</td></tr><tr><td>Q1 2028</td><td>£110,936</td><td>£1,331,230</td><td>£492,108</td><td class="hl">£5,905,299</td></tr></tbody></table>
+        </div>
+        <div class="dsr-note"><b>£2,767,418</b> in FY28 in the current budget model, about 80% of it October to March. <b>£492,108</b> a month, <b>£5,905,299</b> a year once fully implemented.</div>
+      </div>
+    </div>
+    <p class="dsr-foot">FY28: April 2027 to March 2028. Targeted gross support reductions, before replacement and implementation costs. Quarter-end implementation; benefits recognised from the following month. Budget phasing subject to Finance confirmation.</p>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>10</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg mkt">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · where the additional £20m comes from</div>
+    <h2 style="margin:0">A £3bn core market. <span>APC holds about 7% of its value.</span></h2>
+    <div class="mk-stats">
+      <div class="card"><div class="mono">Core segment</div><div class="big-num">~£2.8bn</div><p>Domestic express and specialist SME deliveries · 21% of total market value</p></div>
+      <div class="card"><div class="mono">Addressable parcels</div><div class="big-num">~1.44bn</div><p>Core addressable market, out of ~4.2bn UK parcels a year</p></div>
+      <div class="card hot"><div class="mono">APC market share</div><div class="big-num">~4% <small>volume</small> · ~7% <small>value</small></div><p>Higher value parcels than its core market</p></div>
+      <div class="card"><div class="mono">Core market growth</div><div class="big-num">£2.97bn → £3.3bn</div><p>2025 to 2028 · about 3% a year</p></div>
+    </div>
+    <div class="mk-grid">
+      <div class="card mk-fn"><div class="mono">UK parcel volumes to APC core addressable market · 2025 · parcels a year</div>
+        <div class="fn"><div class="fn-row"><div class="fn-bar" style="width:100.0%"><b>4,200m</b></div><div class="fn-lab">UK parcels a year<span>Domestic and international</span></div></div><div class="fn-row"><div class="fn-bar" style="width:85.71%"><b>3,600m</b></div><div class="fn-lab">Domestic<span>International (600m) removed</span></div></div><div class="fn-row"><div class="fn-bar" style="width:47.14%"><b>1,980m</b></div><div class="fn-lab">Standard express and specialist<span>Specialist 360m · standard express 1,620m</span></div></div><div class="fn-row core"><div class="fn-bar" style="width:34.29%"><b>1,440m</b></div><div class="fn-lab">Low and medium volume senders<span>APC core addressable market</span></div></div></div>
+        <div class="core-split"><div class="cs-bar"><i style="flex:648;background:#3AA0FF" title="Standard express B2C"></i><i style="flex:432;background:#1E6FD0" title="Standard express B2B"></i><i style="flex:144;background:#7CF3D0" title="Specialist B2C"></i><i style="flex:216;background:#3FC3F5" title="Specialist B2B"></i></div><div class="cs-key"><span><i style="background:#3AA0FF"></i>Standard express B2C · 648m</span><span><i style="background:#1E6FD0"></i>Standard express B2B · 432m</span><span><i style="background:#7CF3D0"></i>Specialist B2C · 144m</span><span><i style="background:#3FC3F5"></i>Specialist B2B · 216m</span></div></div>
+      </div>
+      <div class="card mk-seg"><div class="mono">UK parcels market segmentation · estimate</div>
+        <div class="seg">
+          <div class="sh"></div><div class="sh">Domestic: standard</div><div class="sh">Domestic: standard express and specialist</div><div class="sh">International</div>
+          <div class="sr">100 to 10,000+ a day</div>
+          <div class="sc off" style="grid-row:span 2"><b>Not offered by APC</b>Mainly consumers and small businesses sending via Royal Mail</div>
+          <div class="sc gap"><b>Not targeted by APC members</b>Higher focus on price than SMEs</div>
+          <div class="sc gap"><b>Not targeted by APC members</b>Senders with international deliveries</div>
+          <div class="sr">1 to 100 a day</div>
+          <div class="sc focus"><b>£2.8bn · APC core market</b>Low and medium volume senders</div>
+          <div class="sc ltd"><b>APC limited offering</b>Existing customers with international deliveries, with Air Menzies International</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>11</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q5">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · acquisitions</div>
+    <h2 style="margin:0">Three to consider. <span>Technology, market share, network.</span></h2>
+    <div class="acq-grid"><div class="acq">
+        <div class="acq-h"><b>01</b><span>Technology</span></div>
+        <h3>Orion</h3><p class="acq-why">Own the automation behind the plan</p>
+        <div class="acq-ev"><div><b>Helix sortation and HeliOS control</b><span>running on Jupiter 1 at Cannock</span></div><div><b>£12.1m a year</b><span>hub upgrade and cages savings · page 9</span></div><div><b>Dark warehouse design</b><span>new central sortation hub and digital twin · pages 6 and 7</span></div></div>
+      </div><div class="acq">
+        <div class="acq-h"><b>02</b><span>Market share</span></div>
+        <h3>Relevant competitors</h3><p class="acq-why">Buy volume in the core market</p>
+        <div class="acq-ev"><div><b>~4% of volume · ~7% of value</b><span>APC share of its core market · page 11</span></div><div><b>£2.97bn → £3.3bn</b><span>core market, 2025 to 2028</span></div><div><b>~£30m revenue</b><span>for each 1% of core market value (2025)</span></div></div>
+      </div><div class="acq">
+        <div class="acq-h"><b>03</b><span>Network</span></div>
+        <h3>Existing large depots</h3><p class="acq-why">Take control of key depots in the network</p>
+        <div class="acq-ev"><div><b>£5.9m a year</b><span>depot support reduction programme · page 10</span></div><div><b>London super depot</b><span>fewer, larger partners</span></div><div><b>Combining members</b><span>a lever for the remaining £4.1m</span></div></div>
+      </div></div>
+    <div class="acq-next"><span class="mono">For each</span><em>Shortlist</em><i>·</i><em>Valuation basis</em><i>·</i><em>Timing</em><i>·</i><em>Owner</em><b>To confirm</b></div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>12</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q6a">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · marketing and sales · 1 of 2 · what we do today</div>
+    <h2 style="margin:0">High quality. Next day. <span>Local and personal.</span></h2>
+    <div class="pos-row">
+      <span class="mono">Positioning</span>
+      <div class="pos on"><b>Quality</b><em>High quality service</em></div>
+      <div class="pos on"><b>Next day</b><em>Nationwide</em></div>
+      <div class="pos on"><b>Personal service</b><em>Local members, SME relationships</em></div>
+      <div class="pos off"><b>Price</b><em>Not the basis: price-led senders are not targeted</em></div>
+    </div>
+    <div class="q6a-grid">
+      <div class="sv-list"><div class="sv"><div class="sv-k"><b>~88</b><span>member depots</span></div><p>Independent member depots and 3 APC-operated hubs give a nationwide next-day service.</p></div><div class="sv"><div class="sv-k"><b>Local</b><span>members own the customer</span></div><p>Members manage their own customer accounts, collection and delivery in their territories.</p></div><div class="sv"><div class="sv-k"><b>Unique</b><span>operating model</span></div><p>APC controls trunking and hubs; a network of independently owned members is not replicated by any other provider.</p></div><div class="sv"><div class="sv-k"><b>~40%</b><span>B2B</span></div><p>SME focus, B2B and B2C. Differentiated by local service and specialised parcels: security, fragile, liquid.</p></div><div class="sv"><div class="sv-k"><b>25–30k</b><span>shipping customers</span></div><p>In any rolling 12 months, giving strength in depth across a wide range of markets and sectors.</p></div></div>
+      <div class="card mx"><div class="mono">Consignment split by product type</div>
+        <div class="mx-chart"><div class="mx-col"><div class="mx-bar"><i style="flex:10" class="hl"></i><i style="flex:58" class="bx"></i><i style="flex:32" class="bg"></i></div><span>20/21</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:9" class="hl"></i><i style="flex:58.5" class="bx"></i><i style="flex:32.5" class="bg"></i></div><span>21/22</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:9" class="hl"></i><i style="flex:59" class="bx"></i><i style="flex:32" class="bg"></i></div><span>22/23</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:10.5" class="hl"></i><i style="flex:60" class="bx"></i><i style="flex:29.5" class="bg"></i></div><span>23/24</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:11.5" class="hl"></i><i style="flex:59" class="bx"></i><i style="flex:29.5" class="bg"></i></div><span>24/25</span></div><div class="mx-col"><div class="mx-bar"><i style="flex:10.5" class="hl"></i><i style="flex:59" class="bx"></i><i style="flex:30.5" class="bg"></i></div><span>25/26</span></div></div>
+        <div class="mx-key"><span><i class="bg"></i>Bag</span><span><i class="bx"></i>Box</span><span><i class="hl"></i>H&amp;L</span></div>
+        <p class="mx-note">Roughly 30% bag, 60% box, 10% H&amp;L every year since 20/21. Shares read from APC's chart.</p>
+      </div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>13</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q6b">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · marketing and sales · 2 of 2 · the plan</div>
+    <h2 style="margin:0">Six things APC does better. <span>Put them in front of more customers.</span></h2>
+    <div class="usp-grid"><div class="usp6"><b>Service</b><p>Higher touch, flexible service to smaller customers, such as flexing collection times. High volume players do not focus on smaller senders.</p></div><div class="usp6"><b>Sales relationships</b><p>Members are local businesses that build relationships with the SME community in their regions.</p></div><div class="usp6"><b>One-stop shop</b><p>Members also offer same-day delivery, pallet transport and more, which the scaled parcel players cannot.</p></div><div class="usp6"><b>Cage network</b><p>A bespoke cage design for safe, secure, efficient freight in a closed-loop network.</p></div><div class="usp6"><b>Care and handling</b><p>More manual handling: fewer breakages for fragile items; irregular items such as flowers and liquids.</p></div><div class="usp6"><b>Delivery quality</b><p>Members rely on each other for delivery, so all are incentivised to keep standards high.</p></div></div>
+    <div class="mk-plan">
+      <div class="mk-photo"><img class="fill" src="f/assets-v3-van-fleet.jpg" alt="APC fleet"><span>The fleet is the billboard</span></div>
+      <div class="mk-acts">
+        <div class="mk-a"><b>01</b><div><h4>Marketing across the fleet</h4><p>Increase APC branding and campaigns across the vans, trunks and trailers of the whole network.</p></div></div>
+        <div class="mk-a"><b>02</b><div><h4>Affiliation with WS Transportation</h4><p>Market APC with its WS Transportation affiliation.</p></div></div>
+        <div class="mk-a"><b>03</b><div><h4>Brand awareness</h4><p>Raise awareness of the APC brand and its six advantages with SME senders.</p></div></div>
+        <div class="mk-a ask"><b>?</b><div><h4>Marketing spend to sales</h4><p>Spend, channels (online, offline, TV) and conversion: to confirm.</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>14</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q7">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · what enables the plan</div>
+    <h2 style="margin:0">Four enablers. <span>Infrastructure, technology, sales, members.</span></h2>
+    <div class="en-grid"><div class="en"><div class="en-h">Infrastructure</div><div class="en-i"><b>£100m</b><span>new central sortation hub · p6</span></div><div class="en-i"><b>£1.5m</b><span>new infeeds to the blue sorter · p9</span></div><div class="en-i"><b>Cannock</b><span>hub upgrade and cages · p9</span></div></div><div class="en"><div class="en-h">Technology</div><div class="en-i"><b>Helix + HeliOS</b><span>sortation and control, running at Cannock · p6</span></div><div class="en-i"><b>Digital twin</b><span>dark warehouse design for the central hub · p7</span></div><div class="en-i"><b>Orion</b><span>acquisition option · p12</span></div></div><div class="en"><div class="en-h">Sales capability</div><div class="en-i"><b>Fleet</b><span>marketing across vans, trunks and trailers · p14</span></div><div class="en-i"><b>WS Transportation</b><span>affiliation in APC marketing · p14</span></div><div class="en-i"><b>Brand</b><span>awareness of APC and its six advantages · p14</span></div></div><div class="en"><div class="en-h">Member arrangements</div><div class="en-i"><b>£5.9m</b><span>depot support reduction programme · p10</span></div><div class="en-i"><b>Combining members</b><span>and WS carriers taking over regions · p10</span></div><div class="en-i"><b>Pricing and data</b><span>differentiated pricing; full site data before support · p10</span></div></div></div>
+    <div class="en-org"><span class="mono">Organisation</span>
+      <div><b>Dedicated network project</b><em>Openings, transfers and contract changes · page 10</em></div>
+      <div><b>David Whitmore / Orion</b><em>Hub upgrade and cages · page 9</em></div>
+      <div class="tbc8"><b>Sales and marketing lead</b><em>To confirm</em></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>15</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg q8">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div class="mono tag">— APC plan to 2030 · who delivers what, by when</div>
+    <h2 style="margin:0">Owners and dates. <span>Two set, five to confirm.</span></h2>
+    <div class="card" style="padding:3mm 5mm;margin-top:4.5mm">
+      <table class="own"><thead><tr><th>Workstream</th><th>Value</th><th>Owner</th><th>When</th></tr></thead><tbody><tr><td><b>Hub upgrade and cages</b><span>page 9</span></td><td class="v">£12.1m a year</td><td>David Whitmore / Orion</td><td>2028 onwards</td></tr><tr><td><b>Depot support reduction programme</b><span>page 10</span></td><td class="v">£5.9m a year</td><td>Dedicated network project · D74 under Fraser</td><td>Q2 2027 to Q1 2028</td></tr><tr><td><b>Remaining financial support</b><span>page 10</span></td><td class="v">£4.1m a year</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr><tr><td><b>Additional EBITDA</b><span>page 11</span></td><td class="v">£20m</td><td class="tbc8">To confirm</td><td>By 2030</td></tr><tr><td><b>Acquisitions</b><span>page 12</span></td><td class="v">—</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr><tr><td><b>Marketing and sales</b><span>page 14</span></td><td class="v">—</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr><tr><td><b>New central sortation hub</b><span>page 6</span></td><td class="v">£100m investment</td><td class="tbc8">To confirm</td><td class="tbc8">To confirm</td></tr></tbody></table>
+    </div>
+    <div class="q8-next">
+      <div><span class="mono">Integrated financial plan</span><b>To confirm</b></div>
+      <div><span class="mono">Next 90 days</span><b>To confirm</b></div>
+    </div>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>16</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<script>
+(function(){function fit(){document.querySelectorAll('.qa-a').forEach(function(el){var f=9;el.style.fontSize=f+'pt';
+while(el.scrollHeight>el.clientHeight+1&&f>5.6){f-=0.3;el.style.fontSize=f+'pt';}});}
+window.qaFit=fit;if(document.readyState!=='loading')fit();else document.addEventListener('DOMContentLoaded',fit);window.addEventListener('load',fit);})();
+</script>
+<script>
+(function(){function fit(){var w=document.querySelector('.pg');if(!w)return;var s=Math.min(1,(window.innerWidth-24)/w.offsetWidth);document.body.style.zoom=s;}
+window.addEventListener('resize',fit);window.addEventListener('load',fit);fit();})();
+(function(){var pgs=[].slice.call(document.querySelectorAll('.pg'));var nav=document.createElement('div');nav.className='webnav';
+var prog=document.createElement('div');prog.className='webprog';document.body.appendChild(prog);
+pgs.forEach(function(p,i){p.id='p'+(i+1);var a=document.createElement('a');a.href='#p'+(i+1);a.title='Page '+(i+1);nav.appendChild(a);});document.body.appendChild(nav);
+var dots=nav.querySelectorAll('a');
+if(!('IntersectionObserver' in window)){pgs.forEach(function(p){p.classList.add('in')});return;}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');}});},{threshold:0.08});
+pgs.forEach(function(p){io.observe(p)});
+function cur(){var mid=window.innerHeight/2,c=0;pgs.forEach(function(p,i){if(p.getBoundingClientRect().top<mid)c=i;});return c;}
+function onScroll(){var h=document.documentElement;var f=h.scrollTop/((h.scrollHeight-h.clientHeight)||1);prog.style.width=(f*100)+'%';var c=cur();dots.forEach(function(d,i){d.classList.toggle('on',i===c)});}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+document.addEventListener('keydown',function(e){if(document.querySelector('.qa-modal.on'))return;var k=e.key;if(['ArrowRight','ArrowLeft','PageDown','PageUp'].indexOf(k)<0)return;var c=cur();
+var n=(k==='ArrowRight'||k==='PageDown')?Math.min(c+1,pgs.length-1):Math.max(c-1,0);pgs[n].scrollIntoView({behavior:'smooth',block:'center'});e.preventDefault();});
+})();
+
+(function(){var box=document.querySelector('.twin-live[data-twin]');if(!box)return;var on=false;
+function go(){if(on)return;on=true;var f=document.createElement('iframe');f.src=box.getAttribute('data-twin');f.title='Orion digital twin';f.allow='fullscreen';f.setAttribute('allowfullscreen','');f.loading='eager';f.style.cssText='position:absolute;left:0;top:0;width:1920px;height:1080px;border:0;transform-origin:0 0;background:#0B1226';box.appendChild(f);function sc(){f.style.transform='scale('+(box.clientWidth/1920)+')';}sc();window.addEventListener('resize',sc);window.addEventListener('load',sc);setTimeout(sc,300);}
+var a=document.createElement('a');a.className='twin-full';a.href=box.getAttribute('data-twin');a.target='_blank';a.rel='noopener';a.textContent='Open full screen ↗';box.parentNode.appendChild(a);
+if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)go();});},{rootMargin:'200px'}).observe(box);}else go();})();
+
+(function(){var cards=[].slice.call(document.querySelectorAll('.qa[data-key]'));if(!cards.length)return;
+var byKey={};cards.forEach(function(c){byKey[c.getAttribute('data-key')]=c;});
+function show(c,t){var a=c.querySelector('.qa-a');a.textContent=t||'';a.classList.toggle('empty',!t);if(window.qaFit)window.qaFit();}
+fetch('answers',{credentials:'same-origin'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d||!d.answers)return;
+Object.keys(d.answers).forEach(function(k){if(byKey[k])show(byKey[k],d.answers[k].text);});}).catch(function(){});
+var m=document.createElement('div');m.className='qa-modal';m.innerHTML='<div class="qa-box" role="dialog" aria-modal="true"><div class="n"></div><h3></h3><p></p>'+
+'<textarea placeholder="Type the answer here. It saves as you go."></textarea><div class="row"><span class="st"></span><span style="display:flex;gap:8px"><button class="ghost" data-x>Close</button><button data-s>Save and close</button></span></div></div>';
+document.documentElement.appendChild(m);var ta=m.querySelector('textarea'),st=m.querySelector('.st'),cur=null,timer=null,last='';
+function save(close){if(!cur)return Promise.resolve();var k=cur.getAttribute('data-key'),t=ta.value;if(t===last){if(close)hide();return Promise.resolve();}
+cur.classList.add('saving');st.className='st';st.textContent='Saving…';var c=cur;
+return fetch('answers',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,text:t})})
+.then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.error||('Error '+r.status));return d;});})
+.then(function(d){last=t;show(c,t);c.classList.remove('saving');st.textContent='Saved '+new Date(d.at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});if(close)hide();})
+.catch(function(e){c.classList.remove('saving');st.className='st err';st.textContent='Not saved: '+e.message;});}
+function hide(){m.classList.remove('on');cur=null;}
+cards.forEach(function(c,i){c.addEventListener('click',function(){cur=c;var a=c.querySelector('.qa-a');last=a.classList.contains('empty')?'':a.textContent;
+m.querySelector('.n').textContent=('0'+(i+1)).slice(-2)+' · '+c.querySelector('.qa-h span').textContent;m.querySelector('h3').textContent=c.getAttribute('data-q');
+m.querySelector('p').textContent=c.getAttribute('data-detail');ta.value=last;st.className='st';st.textContent='';m.classList.add('on');setTimeout(function(){ta.focus();},30);});});
+ta.addEventListener('input',function(){clearTimeout(timer);st.className='st';st.textContent='Typing…';timer=setTimeout(function(){save(false);},900);});
+m.querySelector('[data-s]').addEventListener('click',function(){clearTimeout(timer);save(true);});
+m.querySelector('[data-x]').addEventListener('click',function(){clearTimeout(timer);save(true);});
+m.addEventListener('click',function(e){if(e.target===m){clearTimeout(timer);save(true);}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('on')){clearTimeout(timer);save(true);}},true);
+})();
+</script>
+</body></html>

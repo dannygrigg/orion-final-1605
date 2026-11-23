@@ -187,4 +187,30 @@ export const DOCS = {
       'presentation.pptx': { name: 'APC Regional Hub Proposals.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
     },
   },
+  'apc-cannock-phase2-v4': {
+    title: 'APC Business Plan · v4',
+    neutral: true,                      // PIN screen shows no Orion branding
+    ref: 'Regional hubs · central hub · plan to 2030',
+    customer: 'APC Overnight Ltd',
+    pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',   // same PIN as apc-cannock-phase2 / apc-sorter1-cap
+    expires: null,
+    files: {
+      'document.pdf': { name: 'APC Business Plan - v4.pdf', type: 'application/pdf' },
+      'f/assets-apc-logo-2026.svg': { name: 'assets-apc-logo-2026.svg', type: 'image/svg+xml' },
+      'f/assets-hubs-cannock-layout.jpg': { name: 'assets-hubs-cannock-layout.jpg', type: 'image/jpeg' },
+      'f/assets-hubs-map-cannock.png': { name: 'assets-hubs-map-cannock.png', type: 'image/png' },
+      'f/assets-hubs-map-full.png': { name: 'assets-hubs-map-full.png', type: 'image/png' },
+      'f/assets-hubs-map-london.png': { name: 'assets-hubs-map-london.png', type: 'image/png' },
+      'f/assets-hubs-map-north.png': { name: 'assets-hubs-map-north.png', type: 'image/png' },
+      'f/assets-hubs-orion-logo-white.png': { name: 'assets-hubs-orion-logo-white.png', type: 'image/png' },
+      'f/assets-hubs-twin-still-entrance.jpg': { name: 'assets-hubs-twin-still-entrance.jpg', type: 'image/jpeg' },
+      'f/assets-hubs-twin-still-loop.jpg': { name: 'assets-hubs-twin-still-loop.jpg', type: 'image/jpeg' },
+      'f/assets-hubs-twin-still-overview.jpg': { name: 'assets-hubs-twin-still-overview.jpg', type: 'image/jpeg' },
+      'f/assets-hubs-twin-still-spine.jpg': { name: 'assets-hubs-twin-still-spine.jpg', type: 'image/jpeg' },
+      'f/assets-hubs-twin-twin-poster.jpg': { name: 'assets-hubs-twin-twin-poster.jpg', type: 'image/jpeg' },
+      'f/assets-v3-van-fleet.jpg': { name: 'assets-v3-van-fleet.jpg', type: 'image/jpeg' },
+      'f/twin.html': { name: 'APC Central Hub - Orion digital twin.html', type: 'text/html; charset=utf-8', inline: true },
+      'presentation.pptx': { name: 'APC Business Plan - v4.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
+    },
+  },
 };
