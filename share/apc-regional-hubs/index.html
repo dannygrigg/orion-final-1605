@@ -356,6 +356,12 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .qa-a{flex:1;margin-top:1.6mm;font-size:9pt;line-height:1.35;color:#F4F7FC;white-space:pre-wrap;overflow:hidden;border-top:1px solid rgba(150,180,230,.14);padding-top:1.4mm}
 .qa-a.empty::before{content:attr(data-ph);color:rgba(133,146,173,.55);font-style:italic}
 .qa-hint{display:none}
+.kgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:3mm;height:99mm}
+.kgrid>.card{display:flex;flex-direction:column;justify-content:center}
+.kgrid>.card.rev-tbc{grid-column:1 / span 2}
+.kgrid .mono{color:var(--acc)}
+.kv>.card.rev-tbc,.kgrid>.card.rev-tbc{border:1px dashed rgba(242,208,75,.75);background:rgba(242,208,75,.06)}
+.kgrid>.card.rev-tbc .mono,.kgrid>.card.rev-tbc .big-num{color:#F2D04B}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -460,11 +466,12 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     </div>
     <div style="display:grid;grid-template-columns:176mm 1fr;gap:6mm">
       <div class="rend twin" style="height:99mm"><img class="fill" src="f/assets-hubs-twin-twin-poster.jpg" alt="Orion digital twin of the central sortation hub"><div class="twin-live" data-twin="f/twin.html"></div><div class="twin-badge"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin · live replay</span></div></div>
-      <div class="kv" style="gap:3.5mm">
-        <div class="card hot" style="padding:3.5mm 5mm"><div class="mono">Investment</div><div class="big-num" style="font-size:21pt;margin-top:1mm">£100m</div></div>
-        <div class="card" style="padding:3.5mm 5mm"><div class="mono">Capacity</div><div class="big-num" style="font-size:21pt;margin-top:1mm">650,000</div><p style="font-size:8pt;margin-top:1mm">parcels a night · 11 sortation lines</p></div>
-        <div class="card" style="padding:3.5mm 5mm"><div class="mono">Commercial unit</div><div class="big-num" style="font-size:21pt;margin-top:1mm">500,000</div><p style="font-size:8pt;margin-top:1mm">sq ft</p></div>
-        <div class="card" style="padding:3.5mm 5mm"><div class="mono">Annual saving on FLTs</div><div class="big-num" style="font-size:21pt;margin-top:1mm">£1,500,000</div></div>
+      <div class="kgrid">
+        <div class="card hot" style="padding:3.2mm 4.5mm"><div class="mono">Investment</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">£100m</div></div>
+        <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Annual savings</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">£18m</div></div>
+        <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Capacity</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">650,000</div><p style="font-size:7.5pt;margin-top:.8mm">parcels a night · 11 sortation lines</p></div>
+        <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Commercial unit</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">500,000</div><p style="font-size:7.5pt;margin-top:.8mm">sq ft</p></div>
+        <div class="card rev-tbc" style="padding:3.2mm 4.5mm" ><div class="mono">Revenue</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">TBC</div><p style="font-size:7.5pt;margin-top:.8mm">on 120 million parcels</p></div>
       </div>
     </div>
   </div>
