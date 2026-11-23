@@ -394,6 +394,29 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .q2-open b{display:block;font-family:'Space Grotesk',sans-serif;font-size:12pt;color:#F2D04B;margin-top:.8mm}
 .q2-open>div:first-child b{color:#F4F7FC}
 .q2-open em{display:block;font-style:normal;font-size:7pt;color:#8592AD;margin-top:.6mm;line-height:1.3}
+.dsr-grid{display:grid;grid-template-columns:1fr 1.12fr;gap:5mm;margin-top:4.5mm}
+.dsr-ws{display:flex;flex-direction:column;gap:2.2mm}
+.dsr-ws .ws{border-left:1mm solid #3AA0FF;background:linear-gradient(90deg,rgba(20,36,70,.9),rgba(11,20,40,.6));border-radius:0 2mm 2mm 0;padding:2.2mm 3.5mm}
+.dsr-ws .ws b{display:block;font-family:'IBM Plex Mono',monospace;font-size:7pt;letter-spacing:.14em;text-transform:uppercase;color:#7CF3D0}
+.dsr-ws .ws p{font-size:8.2pt;line-height:1.38;color:#DCE4F2;margin-top:.8mm}
+.dsr-right{display:flex;flex-direction:column;gap:3mm}
+.dsr-right .mono{color:var(--acc)}
+.rr{display:flex;align-items:flex-end;gap:5mm;height:42mm;margin-top:2mm;border-bottom:1px solid rgba(150,180,230,.3)}
+.rr-col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative}
+.rr-b{background:linear-gradient(180deg,#7CF3D0,#3AA0FF);border-radius:1.2mm 1.2mm 0 0}
+.rr-col:last-child .rr-b{box-shadow:0 0 6mm rgba(124,243,208,.45)}
+.rr-v{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12pt;color:#F4F7FC;text-align:center;margin-bottom:1mm}
+.rr-q{position:absolute;top:100%;left:0;right:0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:6.5pt;letter-spacing:.1em;color:#8592AD;margin-top:1.2mm}
+.dsr-right .card:first-child{padding-bottom:7mm!important}
+.dsr-t{width:100%;border-collapse:collapse;font-size:8pt}
+.dsr-t th{font-family:'IBM Plex Mono',monospace;font-size:6pt;letter-spacing:.1em;text-transform:uppercase;color:#8592AD;text-align:right;font-weight:500;padding:1.2mm 1.5mm;border-bottom:1px solid rgba(150,180,230,.35)}
+.dsr-t td{color:#DCE4F2;text-align:right;padding:1.5mm;border-bottom:1px solid rgba(150,180,230,.12);font-variant-numeric:tabular-nums}
+.dsr-t th:first-child,.dsr-t td:first-child{text-align:left;color:#F4F7FC;font-weight:600}
+.dsr-t td.hl{color:#7CF3D0;font-weight:600}
+.dsr-t tr:last-child td{border-bottom:0}
+.dsr-note{font-size:8pt;line-height:1.45;color:#C9D3E6;border:1px solid rgba(124,243,208,.4);background:rgba(124,243,208,.06);border-radius:2mm;padding:2.4mm 3.5mm}
+.dsr-note b{color:#F4F7FC}
+.dsr-foot{font-size:6.8pt;color:#8592AD;font-style:italic;margin-top:3mm;line-height:1.4}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -618,6 +641,32 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     </div>
   </div>
   <div class="apcfoot"><i class="l1"></i><b>9</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
+</section>
+<section class="pg dsr">
+  <div class="grid-bg" style="opacity:.5"></div>
+  <div class="top"><span class="logos"><img class="apc" src="f/assets-apc-logo-2026.svg" alt="APC Overnight"></span><div class="mono">Regional hub proposals · APC business plan</div></div>
+  <div class="z" style="position:absolute;left:14mm;top:33mm;right:14mm">
+    <div style="display:flex;justify-content:space-between;align-items:end">
+      <div><div class="mono tag">— Depot support · reduction programme</div>
+        <h2 style="margin:0">£2.8m in FY28. <span>£5.9m a year at full run-rate.</span></h2></div>
+    </div>
+    <div class="dsr-grid">
+      <div class="dsr-ws"><div class="ws"><b>London</b><p>Develop a London super depot, move to fewer, larger partners and review delivery pricing; transfer postcodes to D12 with full DOA membership.</p></div><div class="ws"><b>South West</b><p>Renegotiate contracted cover and consolidate four depots into two, supported by a regional depot model and revised delivery pricing.</p></div><div class="ws"><b>Depot consolidation</b><p>Move D45 into D35, prioritise takeover or replacement of D66, and consolidate D74 into other areas under Fraser's lead.</p></div><div class="ws"><b>Commercial renegotiation</b><p>Reset terms and territories for D23, D52, D60 and D299; align D78 with D227 consolidation, allowing for any support needed to retain the JLI account.</p></div><div class="ws"><b>Implementation</b><p>Deliver through a dedicated network project covering openings, transfers and contract changes, protecting service and validating net savings after replacement and implementation costs.</p></div></div>
+      <div class="dsr-right">
+        <div class="card" style="padding:3.5mm 4.5mm">
+          <div class="mono">Cumulative annual run-rate · £m</div>
+          <div class="rr"><div class="rr-col"><div class="rr-v">£2.3m</div><div class="rr-b" style="height:11.54mm"></div><div class="rr-q">Q2 2027</div></div><div class="rr-col"><div class="rr-v">£4.2m</div><div class="rr-b" style="height:21.46mm"></div><div class="rr-q">Q3 2027</div></div><div class="rr-col"><div class="rr-v">£4.6m</div><div class="rr-b" style="height:23.24mm"></div><div class="rr-q">Q4 2027</div></div><div class="rr-col"><div class="rr-v">£5.9m</div><div class="rr-b" style="height:30.0mm"></div><div class="rr-q">Q1 2028</div></div></div>
+        </div>
+        <div class="card" style="padding:3mm 4mm">
+          <table class="dsr-t"><thead><tr><th>Quarter</th><th>Monthly reduction</th><th>Annual run-rate</th><th>Cumulative monthly</th><th>Cumulative annual</th></tr></thead>
+          <tbody><tr><td>Q2 2027</td><td>£189,338</td><td>£2,272,050</td><td>£189,338</td><td class="hl">£2,272,050</td></tr><tr><td>Q3 2027</td><td>£162,625</td><td>£1,951,502</td><td>£351,963</td><td class="hl">£4,223,552</td></tr><tr><td>Q4 2027</td><td>£29,210</td><td>£350,517</td><td>£381,172</td><td class="hl">£4,574,069</td></tr><tr><td>Q1 2028</td><td>£110,936</td><td>£1,331,230</td><td>£492,108</td><td class="hl">£5,905,299</td></tr></tbody></table>
+        </div>
+        <div class="dsr-note"><b>£2,767,418</b> in FY28 in the current budget model, about 80% of it October to March. <b>£492,108</b> a month, <b>£5,905,299</b> a year once fully implemented.</div>
+      </div>
+    </div>
+    <p class="dsr-foot">FY28: April 2027 to March 2028. Targeted gross support reductions, before replacement and implementation costs. Quarter-end implementation; benefits recognised from the following month. Budget phasing subject to Finance confirmation.</p>
+  </div>
+  <div class="apcfoot"><i class="l1"></i><b>10</b><i class="l2"></i><img class="apclogo" src="f/assets-apc-logo-2026.svg" alt="APC"><i class="l3"></i></div>
 </section>
 <script>
 (function(){function fit(){document.querySelectorAll('.qa-a').forEach(function(el){var f=9;el.style.fontSize=f+'pt';
