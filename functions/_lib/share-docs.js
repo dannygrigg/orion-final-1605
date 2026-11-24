@@ -212,7 +212,7 @@ export const DOCS = {
     files: {
       'document.pdf': { name: 'APC Business Plan - v4.pdf', type: 'application/pdf' },
       'f/assets-apc-logo-2026.svg': { name: 'assets-apc-logo-2026.svg', type: 'image/svg+xml' },
-      'f/assets-hubs-cannock-main.jpg': { name: 'assets-hubs-cannock-main.jpg', type: 'image/jpeg' },
+      'f/assets-hubs-cannock-main-v2.jpg': { name: 'assets-hubs-cannock-main-v2.jpg', type: 'image/jpeg' },
       'f/assets-hubs-map-cannock.png': { name: 'assets-hubs-map-cannock.png', type: 'image/png' },
       'f/assets-hubs-map-full.png': { name: 'assets-hubs-map-full.png', type: 'image/png' },
       'f/assets-hubs-map-london.png': { name: 'assets-hubs-map-london.png', type: 'image/png' },
