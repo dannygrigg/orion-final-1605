@@ -26,14 +26,14 @@ export const PIN_SALT = 'orion-share-v1';
 export const DOCS = {
   'apc-sorter1-cap': {
     title: 'Sorter 1 Corrective Action Plan',
-    ref: 'ORI-CAN-CAP-001 · Rev A',
+    ref: 'ORI-CAN-CAP-001 · Rev B · 24 Nov 2026',
     customer: 'APC Overnight Ltd',
     pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',
     expires: null,                      // 'YYYY-MM-DD' or null
     files: {
       // served path  → { name shown on download, type }
-      'plan.pdf':     { name: 'ORI-CAN-CAP-001 Rev A - APC Cannock Sorter 1 Corrective Action Plan.pdf', type: 'application/pdf' },
-      'tracker.xlsx': { name: 'ORI-CAN-CAP-001 Rev A - APC Cannock Sorter 1 Corrective Action Plan (tracker).xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
+      'plan.pdf':     { name: 'ORI-CAN-CAP-001 Rev B - APC Cannock Sorter 1 Corrective Action Plan.pdf', type: 'application/pdf' },
+      'tracker.xlsx': { name: 'ORI-CAN-CAP-001 Rev B - APC Cannock Sorter 1 Corrective Action Plan (tracker).xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
     },
   },
   'apc-cannock-phase2': {
