@@ -190,6 +190,17 @@ export const DOCS = {
       'presentation.pptx': { name: 'APC Regional Hub Proposals.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
     },
   },
+  'apc-network-accountability': {
+    title: 'APC Network Accountability',
+    neutral: true,                      // PIN screen shows no Orion branding
+    ref: 'Savings and growth accountability across the network',
+    customer: 'APC Overnight Ltd',
+    pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',   // same PIN as the other APC packs
+    expires: null,
+    files: {
+      'document.pdf': { name: 'APC Network Accountability.pdf', type: 'application/pdf' },
+    },
+  },
   'apc-cannock-phase2-v4': {
     title: 'APC Business Plan · v4',
     neutral: true,                      // PIN screen shows no Orion branding
