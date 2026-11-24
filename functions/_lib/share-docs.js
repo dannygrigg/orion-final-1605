@@ -34,6 +34,7 @@ export const DOCS = {
       // served path  → { name shown on download, type }
       'plan.pdf':     { name: 'ORI-CAN-CAP-001 Rev B - APC Cannock Sorter 1 Corrective Action Plan.pdf', type: 'application/pdf' },
       'tracker.xlsx': { name: 'ORI-CAN-CAP-001 Rev B - APC Cannock Sorter 1 Corrective Action Plan (tracker).xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' },
+      'audit.pdf':    { name: 'ORI-CAN-CAP-001 Rev B - Site audit report - nut and bolt inspection (w-c 16 Nov 2026).pdf', type: 'application/pdf' },
     },
   },
   'apc-cannock-phase2': {
