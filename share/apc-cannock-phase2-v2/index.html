@@ -97,6 +97,13 @@ p{font-size:10pt;line-height:1.6;color:var(--text)}
 .kd-foot{display:flex;justify-content:space-between;align-items:center;margin-top:5mm;padding-top:3mm;border-top:1px solid rgba(58,160,255,.5)}
 .kd-save{font-family:'IBM Plex Mono';font-size:8.5pt;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--acc2);padding:1.2mm 2.6mm;border-radius:99px}
 .kd-wk{font-family:'IBM Plex Mono';font-size:8pt;color:var(--acc);letter-spacing:.06em}
+.kd5{padding:4.5mm 4mm 4mm}
+.kd5 .kd-h{font-size:9.5pt;min-height:9mm}
+.kd5-l{font-family:'IBM Plex Mono';font-size:7pt;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin:3mm 0 1mm}
+.kd5-d{font-family:'Space Grotesk';font-weight:700;color:var(--white);font-size:17pt;letter-spacing:-.02em;line-height:1.05;white-space:nowrap}
+.kd5 .kd-foot{flex-direction:column;align-items:flex-start;gap:1.6mm;margin-top:4mm}
+.kd5 .kd-save{font-size:7pt;padding:1mm 2.2mm}.kd5 .kd-wk{font-size:7pt}
+.done5{border-color:var(--acc2)!important}.done5 .kd5-l,.done5 .kd5-d{color:var(--acc2)}
 .kd-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:6mm;margin-top:9mm}
 .g-ms{position:absolute;top:6.4mm;width:3.6mm;height:3.6mm;background:var(--acc2);transform:translateX(-50%) rotate(45deg);border:1px solid var(--ink);z-index:2}
 .g-grid i.g-now{background:var(--acc);width:1.5px}
@@ -367,16 +374,31 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
     <div class="mono tag">— Handover months</div>
     <h2 style="font-size:30pt;margin-bottom:6mm">All new lines live by <span>30 June 2027.</span></h2>
 
-    <div class="kd" style="grid-template-columns:repeat(2,1fr)">
-      <div class="card hot kd-c">
-        <div class="kd-h"><span class="dot" style="background:var(--k1)"></span>Mars Line · 10 lanes</div>
-        <div class="kd-date">Apr 2027</div>
-        <div class="kd-foot"><span class="kd-save">Mars Line live</span><span class="kd-wk">Helix · HeliOS</span></div>
+    <div class="kd" style="grid-template-columns:repeat(5,1fr);gap:3.5mm">
+      <div class="card hot kd-c kd5 done5">
+        <div class="kd-h"><span class="dot" style="background:var(--k4)"></span>Jupiter</div>
+        <div class="kd5-l">Complete</div><div class="kd5-d">Nov 2026</div>
+        <div class="kd-foot"><span class="kd-save">Complete</span><span class="kd-wk">HeliOS</span></div>
       </div>
-      <div class="card hot kd-c">
+      <div class="card hot kd-c kd5">
+        <div class="kd-h"><span class="dot" style="background:var(--k3)"></span>Blue sorter upgrades</div>
+        <div class="kd5-l">Complete by</div><div class="kd5-d">30 June 2027</div>
+        <div class="kd-foot"><span class="kd-save">Upgrade</span><span class="kd-wk">Cameras · software</span></div>
+      </div>
+      <div class="card hot kd-c kd5">
+        <div class="kd-h"><span class="dot" style="background:var(--k1)"></span>Mars Line · 10 lanes</div>
+        <div class="kd5-l">Complete by</div><div class="kd5-d">30 June 2027</div>
+        <div class="kd-foot"><span class="kd-save">New line</span><span class="kd-wk">Helix · HeliOS</span></div>
+      </div>
+      <div class="card hot kd-c kd5">
         <div class="kd-h"><span class="dot" style="background:var(--k2)"></span>Earth Line</div>
-        <div class="kd-date">Jun 2027</div>
-        <div class="kd-foot"><span class="kd-save">Earth Line live</span><span class="kd-wk">Helix · HeliOS</span></div>
+        <div class="kd5-l">Complete by</div><div class="kd5-d">30 June 2027</div>
+        <div class="kd-foot"><span class="kd-save">New line</span><span class="kd-wk">Helix · HeliOS</span></div>
+      </div>
+      <div class="card hot kd-c kd5">
+        <div class="kd-h"><span class="dot" style="background:var(--k5)"></span>Cage tracking system</div>
+        <div class="kd5-l">Complete by</div><div class="kd5-d">30 June 2027</div>
+        <div class="kd-foot"><span class="kd-save">Tracking</span><span class="kd-wk">Cages</span></div>
       </div>
     </div>
 
