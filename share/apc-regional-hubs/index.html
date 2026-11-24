@@ -569,6 +569,11 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
 .own td.v.tbcv{color:#F2D04B}
 .own td.tbc8{color:#F2D04B;font-style:italic}
 .own tr:last-child td{border-bottom:0}
+.sim-btn{position:absolute;right:3mm;bottom:3mm;z-index:4;display:flex;align-items:center;gap:2.4mm;text-decoration:none;
+  background:linear-gradient(135deg,#3AA0FF,#7CF3D0);color:#041223;border-radius:2mm;padding:2.2mm 3.6mm;box-shadow:0 2mm 6mm rgba(0,0,0,.45)}
+.sim-btn b{display:flex;align-items:center;justify-content:center;width:6mm;height:6mm;border-radius:50%;background:#041223;color:#7CF3D0;font-size:7pt;padding-left:.4mm}
+.sim-btn span{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:10.5pt;letter-spacing:-.01em}
+.sim-btn i{font-style:normal;font-weight:700;font-size:10pt}
 .glow{position:absolute;border-radius:50%;filter:blur(18mm);background:radial-gradient(circle,rgba(58,160,255,.35),transparent 70%);pointer-events:none}
 </style>
 </head><body>
@@ -664,7 +669,7 @@ body, body *{font-family:Aptos,'Aptos Display','Segoe UI Variable Text','Segoe U
       <p style="width:96mm;font-size:9.5pt">A £100 million investment in a sortation centre: 11 sortation lines and 180 loading doors in a 500,000 sq ft unit. Shown as the Orion digital twin.</p>
     </div>
     <div style="display:grid;grid-template-columns:176mm 1fr;gap:6mm">
-      <div class="rend twin" style="height:99mm"><img class="fill" src="f/assets-hubs-twin-twin-poster.jpg" alt="Orion digital twin of the central sortation hub"><div class="twin-live" data-twin="f/twin.html"></div><div class="twin-badge"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin · live replay</span></div></div>
+      <div class="rend twin" style="height:99mm"><img class="fill" src="f/assets-hubs-twin-twin-poster.jpg" alt="Orion digital twin of the central sortation hub"><div class="twin-live" data-twin="f/twin.html"></div><div class="twin-badge"><img src="f/assets-hubs-orion-logo-white.png" alt="Orion"><span>Digital twin · live replay</span></div><a class="sim-btn" href="https://orionmis.co.uk/share/apc-regional-hubs/f/twin.html" target="_blank" rel="noopener"><b>▶</b><span>See the live simulation</span><i>↗</i></a></div>
       <div class="kgrid">
         <div class="card hot" style="padding:3.2mm 4.5mm"><div class="mono">Investment</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">£100m</div></div>
         <div class="card" style="padding:3.2mm 4.5mm"><div class="mono">Annual savings</div><div class="big-num" style="font-size:19pt;margin-top:1.2mm">£18m</div></div>
