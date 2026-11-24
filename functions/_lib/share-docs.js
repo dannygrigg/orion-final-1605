@@ -192,14 +192,14 @@ export const DOCS = {
     },
   },
   'apc-network-accountability': {
-    title: 'APC Network Accountability',
+    title: 'APC Network Software',
     neutral: true,                      // PIN screen shows no Orion branding
-    ref: 'Savings and growth accountability across the network',
+    ref: 'Cost saving ideas · bringing network software in house',
     customer: 'APC Overnight Ltd',
     pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',   // same PIN as the other APC packs
     expires: null,
     files: {
-      'document.pdf': { name: 'APC Network Accountability.pdf', type: 'application/pdf' },
+      'document.pdf': { name: 'APC Network Software - Cost Savings.pdf', type: 'application/pdf' },
     },
   },
   'apc-cannock-phase2-v4': {
