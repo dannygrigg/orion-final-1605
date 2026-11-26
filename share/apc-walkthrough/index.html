@@ -98,8 +98,6 @@ footer p{max-width:80ch}
   </div>
   <div class="tally">
     <div><span>Heads / shift</span><strong id="t-heads">299</strong></div>
-    <div><span>Capex</span><strong id="t-capex">£42.6M</strong></div>
-    <div><span>Payback</span><strong id="t-pay">4.3 yrs</strong></div>
   </div>
 </div></div>
 
@@ -131,17 +129,17 @@ footer p{max-width:80ch}
 <footer><div class="wrap">
   <p><b style="color:var(--fg)">See it running.</b> The live digital twin runs the APC measured mix at 82,500 parcels an hour. Follow a single tyre, bag or exception through the building.</p>
   <p><a class="twin-btn" href="/share/apc-regional-hubs/f/twin.html" target="_blank" rel="noopener">Open the live digital twin</a></p>
-  <p>The stills are from the Orion digital twins and show the fully automated end state; steps 5–7 are from the depot concept twin, which uses the same equipment. Labour, energy and maintenance figures are planning assumptions until APC confirms staffing, shift pattern, rates and tariff. Capex is a rough order of magnitude; robot cells, AMRs and autonomous forklifts are allowances pending supplier quotes.</p>
+  <p>The stills are from the Orion digital twins and show the fully automated end state; steps 5–7 are from the depot concept twin, which uses the same equipment. Head counts are planning figures until APC confirms staffing and shift pattern.</p>
   <p>Orion · British technology house · orionmis.co.uk</p>
 </div></footer>
 
 <script>
 const OPT={
- today:{t:"Today",capex:"–",pay:"–",heads:580,text:"The manual operation at 550,000 a night: FLTs unload, people induct and sort into cages by hand, FLTs and tugs move cages to trailers."},
- sort:{t:"Sort only",capex:"£27.9M",pay:"7.1 yrs",heads:468,text:"Orion sort and flow (X-Flow spine, 11 Helix loops, three scan points, HeliOS). People still induct and stack. Pays back too slowly to recommend on its own."},
- p1:{t:"Phase 1 · reduced scope",capex:"£42.6M",pay:"4.3 yrs",heads:299,text:"Sort and flow plus robotic induct. People stay at the cages and on the FLTs. Within APC's £50M budget. The building is ready for AMRs."},
- p2:{t:"Phase 2",capex:"£55.6M",pay:"3.8 yrs",heads:208,text:"Adds 40 autonomous forklifts for unloading and 227 AMRs for cage moves and trailer loading. The FLT fleet retires."},
- p3:{t:"Phase 3",capex:"£55.6M",pay:"2.6 yrs",heads:38,text:"Cage filling without a person at every chute, only once a trial on APC's mix matches hand-packed density. No extra kit: a process change."}
+ today:{t:"Today",heads:580,text:"The manual operation at 550,000 a night: FLTs unload, people induct and sort into cages by hand, FLTs and tugs move cages to trailers."},
+ sort:{t:"Sort only",heads:468,text:"Orion sort and flow (X-Flow spine, 11 Helix loops, three scan points, HeliOS). People still induct and stack."},
+ p1:{t:"Phase 1 · reduced scope",heads:299,text:"Sort and flow plus robotic induct. People stay at the cages and on the FLTs. The building is ready for AMRs."},
+ p2:{t:"Phase 2",heads:208,text:"Adds 40 autonomous forklifts for unloading and 227 AMRs for cage moves and trailer loading. The FLT fleet retires."},
+ p3:{t:"Phase 3",heads:38,text:"Cage filling without a person at every chute, only once a trial on APC's mix matches hand-packed density. No extra kit: a process change."}
 };
 const ORDER=["today","sort","p1","p2","p3"];
 const STOPS=[
@@ -151,14 +149,14 @@ const STOPS=[
   o:{today:[43,"FLT drivers pull cages off the trailer and take them to the tip area.",""],
      sort:[43,"As today.","Unchanged; the money goes on the sort."],
      p1:[43,"As today. APC's FLT fleet stays.","The money goes on induct, where the people are."],
-     p2:[4,"40 autonomous forklifts pull cages to the tippers. People supervise and deal with damaged or mis-loaded cages.","Retires most of the £1.5M a year FLT cost."],
+     p2:[4,"40 autonomous forklifts pull cages to the tippers. People supervise and deal with damaged or mis-loaded cages.","Retires most of the FLT fleet."],
      p3:[4,"As Phase 2.",""]}},
  {n:"2",title:"Tip and induct onto the belt",img:"f/2-induct.jpg",cap:"Inbound end: caged trunks, cage tippers and rows of robot pick cells feeding the inclines up to the spine.",
   what:"Each cage is tipped onto a pick table. Robot cells pick parcels one at a time onto the belt with a 200 mm gap. Scan 1 at the pick reads the label and flags fragile, oversize and no-read items. Anything a robot won't take (long, heavy, fragile) goes to the manual station on the same row and joins the same belt.",
-  why:"At 400 an hour, induct takes 172 people, the second-largest group on the shift. Robot picking onto a belt is proven in parcel handling, and the cells pay back in about 2.5 years on their own.",
+  why:"At 400 an hour, induct takes 172 people, the second-largest group on the shift. Robot picking onto a belt is proven in parcel handling.",
   o:{today:[172,"People empty cages by hand and place parcels onto belts one at a time, about 400 an hour each.",""],
      sort:[172,"As today, with people spacing parcels for the sorter.","The sorter needs a single, spaced stream; people provide it."],
-     p1:[6,"56 tippers and 98 robot cells put every parcel on the belt. People clear faults and hand-feed what the robots reject.","Takes out 166 people. About 2.5-year payback on its own."],
+     p1:[6,"56 tippers and 98 robot cells put every parcel on the belt. People clear faults and hand-feed what the robots reject.","Takes out 166 people."],
      p2:[6,"As Phase 1.",""],p3:[6,"As Phase 1.",""]}},
  {n:"3",title:"Distribution: the X-Flow spine",img:"f/3-xflow.jpg",cap:"X-Flow wheel deck close-up: steerable wheels move parcels across lanes without tilting or pushing.",
   what:"The inbound belts climb to the spine, 6 m up. Fourteen lanes of X-Flow wheel decks steer each parcel sideways to the lane for its Helix loop. Scan 2, a tunnel, confirms the parcel before it is routed.",
@@ -213,8 +211,6 @@ function show(o){
   document.querySelectorAll(".opts button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.o===o));
   const d=OPT[o];
   document.getElementById("t-heads").textContent=d.heads;
-  document.getElementById("t-capex").textContent=d.capex;
-  document.getElementById("t-pay").textContent=d.pay;
   document.getElementById("od-title").textContent=d.t;
   document.getElementById("od-text").textContent=d.text;
   document.getElementById("od-saved").textContent=o==="today"?"580":(savedVs(o)+" fewer");
