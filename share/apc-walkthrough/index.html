@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>APC of the Future · Walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one long walk down the hub, inbound door to outbound trailer; each stop = still + talk-through + what this option does */
+:root{
+  --bg:#141c3d; --panel:#1b2550; --line:#2c3a73; --fg:#eef2fb; --muted:#a9b4d6;
+  --navy:#243269; --blue:#13B5EA; --blue-soft:rgba(19,181,234,.14);
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:48px 28px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(32px,5vw,54px);line-height:1.05;margin:10px 0 14px;text-wrap:balance}
+.lede{max-width:68ch;color:var(--muted);margin:0}
+.lede b{color:var(--fg);font-weight:600}
+
+/* option bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(20,28,61,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;padding-block:12px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts button{font:600 14px var(--f-body);color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
+.opts button:hover{color:var(--fg);border-color:var(--blue)}
+.opts button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#0b1433}
+.opts button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.tally{display:flex;gap:18px;flex-wrap:wrap;font-variant-numeric:tabular-nums;margin-left:auto}
+.tally div{display:flex;flex-direction:column}
+.tally span{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tally strong{font-family:var(--f-display);font-size:22px;line-height:1.1}
+
+/* summary + non-con */
+.intro{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;padding-block:32px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:22px;min-width:0}
+.card h2{font-family:var(--f-display);font-size:20px;margin:0 0 8px}
+.card p{margin:0 0 10px;color:var(--muted)}
+.card p b{color:var(--fg)}
+.mix{display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center;font-size:14px;font-variant-numeric:tabular-nums;margin-top:12px}
+.mix i{display:block;height:8px;border-radius:4px;background:var(--line)}
+.mix i b{display:block;height:100%;border-radius:4px;background:var(--muted)}
+.mix i.nc b{background:var(--blue)}
+.opt-desc{font-size:15px}
+.opt-desc .hd{font-family:var(--f-display);font-size:36px;font-weight:800;line-height:1;color:var(--blue)}
+
+/* process stops */
+.stop{padding-block:40px;border-top:1px solid var(--line)}
+.stop-head{display:flex;gap:16px;align-items:baseline;margin-bottom:16px}
+.num{font-family:var(--f-mono);font-size:14px;color:var(--blue);border:1px solid var(--blue);border-radius:6px;padding:2px 8px}
+.stop h2{font-family:var(--f-display);font-size:clamp(24px,3.4vw,34px);margin:0;line-height:1.15;text-wrap:balance}
+figure{margin:0 0 20px}
+figure img{width:100%;border-radius:8px;display:block;border:1px solid var(--line)}
+figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.body{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.body h3{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin:0 0 6px;font-weight:500}
+.body p{margin:0 0 12px;max-width:62ch}
+.now{background:var(--blue-soft);border:1px solid rgba(19,181,234,.4);border-radius:10px;padding:18px 20px;margin-top:20px;display:grid;grid-template-columns:auto 1fr;gap:6px 20px;align-items:start}
+.now .lbl{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);grid-column:1/-1}
+.now .heads{font-family:var(--f-display);font-weight:800;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
+.now .heads small{display:block;font:500 12px var(--f-body);color:var(--muted);margin-top:4px}
+.now p{margin:0;min-width:0}
+.now p.why{color:var(--muted);font-size:14px;margin-top:6px}
+.strip{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;font-variant-numeric:tabular-nums}
+.strip span{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--muted)}
+.strip span.on{border-color:var(--blue);color:var(--fg)}
+
+footer{border-top:1px solid var(--line);padding-block:32px 56px;color:var(--muted);font-size:14px}
+footer a{color:var(--blue)}
+footer p{max-width:80ch}
+@media (max-width:760px){.intro,.body{grid-template-columns:1fr}.tally{margin-left:0}.now{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.now,.opt-desc{transition:background .2s}}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:22px}.brand img{height:40px;width:auto}.brand span{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.brand img.orion{height:22px}.brand img.apc{background:#fff;padding:6px 12px;border-radius:6px;height:52px}
+.twin-btn{display:inline-block;margin-top:6px;background:var(--blue);color:#0b1433;font-weight:600;text-decoration:none;border-radius:999px;padding:10px 18px}
+</style>
+</head><body>
+
+<header class="top"><div class="wrap">
+  <div class="brand"><img class="apc" src="f/apc-logo.svg" alt="APC"><span>powered by</span><img class="orion" src="f/orion-logo-white.png" alt="Orion"></div>
+  <div class="eyebrow">APC Central Sortation Hub · Orion concept</div>
+  <h1>APC of the Future: a walk through the hub</h1>
+  <p class="lede">Follow a parcel from the inbound trunk to the outbound trailer: seven steps at <b>550,000 parcels a night</b>. Pick an option above to see what happens at each step, who does it, and why. Heads are per night shift; people work at <b>about 400 parcels an hour</b>.</p>
+</div></header>
+
+<div class="bar"><div class="wrap">
+  <div class="opts" role="group" aria-label="Option">
+    <button id="o-today" data-o="today">Today</button>
+    <button id="o-sort" data-o="sort">Sort only</button>
+    <button id="o-p1" data-o="p1">Phase 1 · reduced scope</button>
+    <button id="o-p2" data-o="p2">Phase 2</button>
+    <button id="o-p3" data-o="p3">Phase 3</button>
+  </div>
+  <div class="tally">
+    <div><span>Heads / shift</span><strong id="t-heads">299</strong></div>
+    <div><span>Capex</span><strong id="t-capex">£42.6M</strong></div>
+    <div><span>Payback</span><strong id="t-pay">4.3 yrs</strong></div>
+  </div>
+</div></div>
+
+<main class="wrap">
+  <section class="intro">
+    <div class="card opt-desc">
+      <h2 id="od-title">Phase 1 · reduced scope</h2>
+      <p id="od-text"></p>
+      <div class="hd" id="od-saved"></div>
+      <p id="od-savedlbl" style="margin-top:6px"></p>
+    </div>
+    <div class="card">
+      <h2>APC sorts what others won't</h2>
+      <p>Most networks refuse or hand-sort tyres, irregular and long items. APC takes them. Orion's wheel-based sorters carry them on the same sort as a box, so <b>non-conveyables become conveyable</b>.</p>
+      <div class="mix" aria-label="APC measured mix, Sorter 1, 8 to 9 Oct 2026">
+        <span>Boxes, totes, mailers</span><i><b style="width:72%"></b></i><span>72%</span>
+        <span>Bags</span><i><b style="width:17.5%"></b></i><span>17.5%</span>
+        <span>Irregular</span><i class="nc"><b style="width:7%"></b></i><span>7.0%</span>
+        <span>Tyres</span><i class="nc"><b style="width:2.3%"></b></i><span>2.3%</span>
+        <span>Long items</span><i class="nc"><b style="width:0.8%"></b></i><span>0.8%</span>
+      </div>
+      <p style="margin-top:12px;font-size:13px">APC measured mix: 400 parcels on Sorter 1, Cannock, 8–9 Oct 2026. Blue = non-conveyable on most networks, about 1 in 10, or about 55,000 a night.</p>
+    </div>
+  </section>
+
+  <div id="stops"></div>
+</main>
+
+<footer><div class="wrap">
+  <p><b style="color:var(--fg)">See it running.</b> The live digital twin runs the APC measured mix at 82,500 parcels an hour. Follow a single tyre, bag or exception through the building.</p>
+  <p><a class="twin-btn" href="/share/apc-regional-hubs/f/twin.html" target="_blank" rel="noopener">Open the live digital twin</a></p>
+  <p>The stills are from the Orion digital twins and show the fully automated end state; steps 5–7 are from the depot concept twin, which uses the same equipment. Labour, energy and maintenance figures are planning assumptions until APC confirms staffing, shift pattern, rates and tariff. Capex is a rough order of magnitude; robot cells, AMRs and autonomous forklifts are allowances pending supplier quotes.</p>
+  <p>Orion · British technology house · orionmis.co.uk</p>
+</div></footer>
+
+<script>
+const OPT={
+ today:{t:"Today",capex:"–",pay:"–",heads:580,text:"The manual operation at 550,000 a night: FLTs unload, people induct and sort into cages by hand, FLTs and tugs move cages to trailers."},
+ sort:{t:"Sort only",capex:"£27.9M",pay:"7.1 yrs",heads:468,text:"Orion sort and flow (X-Flow spine, 11 Helix loops, three scan points, HeliOS). People still induct and stack. Pays back too slowly to recommend on its own."},
+ p1:{t:"Phase 1 · reduced scope",capex:"£42.6M",pay:"4.3 yrs",heads:299,text:"Sort and flow plus robotic induct. People stay at the cages and on the FLTs. Within APC's £50M budget. The building is ready for AMRs."},
+ p2:{t:"Phase 2",capex:"£55.6M",pay:"3.8 yrs",heads:208,text:"Adds 40 autonomous forklifts for unloading and 227 AMRs for cage moves and trailer loading. The FLT fleet retires."},
+ p3:{t:"Phase 3",capex:"£55.6M",pay:"2.6 yrs",heads:38,text:"Cage filling without a person at every chute, only once a trial on APC's mix matches hand-packed density. No extra kit: a process change."}
+};
+const ORDER=["today","sort","p1","p2","p3"];
+const STOPS=[
+ {n:"1",title:"Trunk unload",img:"f/1-trunk-unload.jpg",cap:"Doors with liveried trunks; 54 inbound doors at the two ends of the building.",
+  what:"A caged trunk backs onto one of 54 inbound doors. Its cages come off the trailer and go to the tippers at the head of each inbound row. At full rate that is about 1,720 cages an hour.",
+  why:"Trunks arrive caged, so unloading means moving cages, not parcels. It is a short, fixed, repeated route from dock to tipper, which suits autonomous forklifts once the sort is proven.",
+  o:{today:[43,"FLT drivers pull cages off the trailer and take them to the tip area.",""],
+     sort:[43,"As today.","Unchanged; the money goes on the sort."],
+     p1:[43,"As today. APC's FLT fleet stays.","The money goes on induct, where the people are."],
+     p2:[4,"40 autonomous forklifts pull cages to the tippers. People supervise and deal with damaged or mis-loaded cages.","Retires most of the £1.5M a year FLT cost."],
+     p3:[4,"As Phase 2.",""]}},
+ {n:"2",title:"Tip and induct onto the belt",img:"f/2-induct.jpg",cap:"Inbound end: caged trunks, cage tippers and rows of robot pick cells feeding the inclines up to the spine.",
+  what:"Each cage is tipped onto a pick table. Robot cells pick parcels one at a time onto the belt with a 200 mm gap. Scan 1 at the pick reads the label and flags fragile, oversize and no-read items. Anything a robot won't take (long, heavy, fragile) goes to the manual station on the same row and joins the same belt.",
+  why:"At 400 an hour, induct takes 172 people, the second-largest group on the shift. Robot picking onto a belt is proven in parcel handling, and the cells pay back in about 2.5 years on their own.",
+  o:{today:[172,"People empty cages by hand and place parcels onto belts one at a time, about 400 an hour each.",""],
+     sort:[172,"As today, with people spacing parcels for the sorter.","The sorter needs a single, spaced stream; people provide it."],
+     p1:[6,"56 tippers and 98 robot cells put every parcel on the belt. People clear faults and hand-feed what the robots reject.","Takes out 166 people. About 2.5-year payback on its own."],
+     p2:[6,"As Phase 1.",""],p3:[6,"As Phase 1.",""]}},
+ {n:"3",title:"Distribution: the X-Flow spine",img:"f/3-xflow.jpg",cap:"X-Flow wheel deck close-up: steerable wheels move parcels across lanes without tilting or pushing.",
+  what:"The inbound belts climb to the spine, 6 m up. Fourteen lanes of X-Flow wheel decks steer each parcel sideways to the lane for its Helix loop. Scan 2, a tunnel, confirms the parcel before it is routed.",
+  why:"54 inbound doors feed 11 sorters. This stage lets any door feed any sorter, so each route's cages sit in one place by its door. It also routes around a loop that is down, and carries bags, tyres and irregular items the same way as boxes.",
+  o:{today:[null,"Not present. Each sort area takes what its own belts bring; parcels for another area are moved by hand.",""],
+     sort:[0,"14 overhead lanes and 154 X-Flow decks route every parcel to the right loop.","Looked after by engineering."],
+     p1:[0,"As Sort only.",""],p2:[0,"As Sort only.",""],p3:[0,"As Sort only.",""]}},
+ {n:"4",title:"Sort: the Helix loops",img:"f/4-helix-sort.jpg",cap:"A Helix loop under the overhead spine, with route chutes either side.",
+  what:"The parcel drops to its loop, merges at a 200 mm gap and passes Scan 3. Helix wheels steer under the parcel to divert it left or right into its route's chute at 2.5 m/s. If the chute can't take it, the parcel goes round again instead of onto the floor.",
+  why:"The sort decision moves from a person to the machine. There is no tilt tray or pusher, so handling is gentle, and a tyre or a bag diverts like a box. This is how non-conveyables become conveyable.",
+  o:{today:[null,"People read each label and decide which cage it goes to (counted under cage filling).",""],
+     sort:[0,"11 recirculating Helix loops sort to one chute per route.","Looked after by engineering."],
+     p1:[0,"As Sort only.",""],p2:[0,"As Sort only.",""],p3:[0,"As Sort only.",""]}},
+ {n:"5",title:"Fill the cage at the chute",img:"f/5-cage-fill.jpg",cap:"Helix diverting into route chutes, one cage per route (depot concept twin).",
+  what:"Each chute serves one route, with a cage at the bottom. Parcels arrive already sorted, so the person at the chute only stacks them into the cage, packed tight.",
+  why:"This is the hard part, and we do not rely on robots here. Hand stacking gives about 75% cage fill; an unaided gravity drop gives about 55%, which means more cages and more trailer space. People stay until a fill method matches hand-packed density.",
+  o:{today:[275,"People read, find the right cage and place each parcel, about 250 an hour.",""],
+     sort:[172,"People only stack pre-sorted parcels, about 400 an hour.","The sorting decision has gone; hand-packed density stays."],
+     p1:[172,"As Sort only.","Keeps cage density while robotic fill is unproven."],
+     p2:[172,"As Sort only.",""],
+     p3:[8,"The chute fills the cage with a controlled drop. People level and top up by exception.","Only after a trial on APC's mix matches hand-packed density."]}},
+ {n:"6",title:"Cage moves and trailer load",img:"f/6-cage-moves.jpg",cap:"Loaded trailer leaving a route door (depot concept twin).",
+  what:"When a cage is full it goes to its route door and onto the trailer, and an empty takes its place. In Phase 2, HeliOS knows when each cage is full and calls an AMR to swap it and drive it onto the right trailer.",
+  why:"The trips are short and fixed (39 m on average in the simulation) and run all night. Moving them to AMRs retires the FLT fleet.",
+  o:{today:[50,"FLT and tug drivers swap full cages for empties and load trailers.",""],
+     sort:[50,"As today.",""],
+     p1:[50,"As today. Charging and AMR routes are built in.","Ready for Phase 2 without moving the sorters."],
+     p2:[2,"227 AMRs swap cages at the chutes and drive them onto trailers. People handle trailer changeovers and faults.","Retires the FLT fleet."],
+     p3:[2,"As Phase 2.",""]}},
+ {n:"7",title:"Exceptions, control and engineering",img:"f/7-exceptions.jpg",cap:"X-Flow transfer grid with the exceptions and control area above it (depot concept twin).",
+  what:"Three scan points and recirculation leave about 0.3% of parcels for a single exception station. A small control room runs HeliOS, and engineers on shift look after the kit.",
+  why:"There are fewer no-reads and no missorts on the floor. Engineering goes up because there is more equipment to maintain.",
+  o:{today:[40,"About 1.5% rework (assumed). 4 engineers, 2 in control, 23 team leaders.",""],
+     sort:[31,"One exception station. 8 engineers, 2 in control, 18 team leaders.",""],
+     p1:[28,"10 engineers and 3 in control because of the robot cells. 12 team leaders.",""],
+     p2:[24,"As Phase 1, with 8 team leaders.",""],
+     p3:[18,"As Phase 1, with 2 team leaders.",""]}}
+];
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const host=document.getElementById("stops");
+STOPS.forEach(s=>{
+  const sec=el("section","stop");sec.id="step-"+s.n;
+  sec.innerHTML=`<div class="stop-head"><span class="num">Step ${s.n}</span><h2>${s.title}</h2></div>
+  <figure><img src="${s.img}" alt="${s.cap}" loading="lazy"><figcaption>${s.cap}</figcaption></figure>
+  <div class="body"><div><h3>What happens</h3><p>${s.what}</p></div><div><h3>Why</h3><p>${s.why}</p></div></div>
+  <div class="now"><div class="lbl" data-r="lbl"></div><div class="heads" data-r="heads"></div><div><p data-r="text"></p><p class="why" data-r="why"></p></div>
+  <div class="strip" data-r="strip" style="grid-column:1/-1"></div></div>`;
+  host.appendChild(sec);
+});
+const savedVs=o=>580-OPT[o].heads;
+function show(o){
+  document.querySelectorAll(".opts button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.o===o));
+  const d=OPT[o];
+  document.getElementById("t-heads").textContent=d.heads;
+  document.getElementById("t-capex").textContent=d.capex;
+  document.getElementById("t-pay").textContent=d.pay;
+  document.getElementById("od-title").textContent=d.t;
+  document.getElementById("od-text").textContent=d.text;
+  document.getElementById("od-saved").textContent=o==="today"?"580":(savedVs(o)+" fewer");
+  document.getElementById("od-savedlbl").textContent=o==="today"?"people per shift today":"people per shift than today ("+d.heads+" instead of 580)";
+  STOPS.forEach(s=>{
+    const sec=document.getElementById("step-"+s.n),[h,t,w]=s.o[o];
+    sec.querySelector('[data-r="lbl"]').textContent=d.t;
+    sec.querySelector('[data-r="heads"]').innerHTML=h==null?"–<small>no step</small>":h+"<small>heads / shift</small>";
+    sec.querySelector('[data-r="text"]').textContent=t;
+    const wy=sec.querySelector('[data-r="why"]');wy.textContent=w;wy.hidden=!w;
+    sec.querySelector('[data-r="strip"]').innerHTML=ORDER.map(k=>{const v=s.o[k][0];return `<span class="${k===o?"on":""}">${OPT[k].t.split(" ·")[0]}: ${v==null?"–":v}</span>`}).join("");
+  });
+  try{localStorage.setItem("apc-wt-opt",o)}catch(e){}
+}
+document.querySelectorAll(".opts button").forEach(b=>b.addEventListener("click",()=>show(b.dataset.o)));
+let start="p1";try{const s=localStorage.getItem("apc-wt-opt");if(s&&OPT[s])start=s}catch(e){}
+show(start);
+</script>
+</body></html>

@@ -194,6 +194,25 @@ export const DOCS = {
       'presentation.pptx': { name: 'APC Regional Hub Proposals.pptx', type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' },
     },
   },
+  'apc-walkthrough': {
+    title: 'APC of the Future · Walkthrough',
+    neutral: true,                      // PIN screen shows no Orion branding
+    ref: 'Central sortation hub · process walkthrough',
+    customer: 'APC Overnight Ltd',
+    pinHash: '2d16a037304af4dbce55cde344e1698787604d3de57de9eea8b7c1eb60193d0d',   // same PIN as the other APC packs
+    expires: null,
+    files: {
+      'f/1-trunk-unload.jpg': { name: '1-trunk-unload.jpg', type: 'image/jpeg', inline: true },
+      'f/2-induct.jpg': { name: '2-induct.jpg', type: 'image/jpeg', inline: true },
+      'f/3-xflow.jpg': { name: '3-xflow.jpg', type: 'image/jpeg', inline: true },
+      'f/4-helix-sort.jpg': { name: '4-helix-sort.jpg', type: 'image/jpeg', inline: true },
+      'f/5-cage-fill.jpg': { name: '5-cage-fill.jpg', type: 'image/jpeg', inline: true },
+      'f/6-cage-moves.jpg': { name: '6-cage-moves.jpg', type: 'image/jpeg', inline: true },
+      'f/7-exceptions.jpg': { name: '7-exceptions.jpg', type: 'image/jpeg', inline: true },
+      'f/apc-logo.svg': { name: 'apc-logo.svg', type: 'image/svg+xml', inline: true },
+      'f/orion-logo-white.png': { name: 'orion-logo-white.png', type: 'image/png', inline: true },
+    },
+  },
   'apc-network-accountability': {
     title: 'APC Network Software',
     neutral: true,                      // PIN screen shows no Orion branding
