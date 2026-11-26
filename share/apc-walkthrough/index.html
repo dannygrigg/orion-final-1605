@@ -78,14 +78,24 @@ footer p{max-width:80ch}
 @media (prefers-reduced-motion:no-preference){.now,.opt-desc{transition:background .2s}}
 .brand{display:flex;align-items:center;gap:14px;margin-bottom:22px}.brand img{height:40px;width:auto}.brand span{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.brand img.orion{height:22px}.brand img.apc{background:#fff;padding:6px 12px;border-radius:6px;height:52px}
 .twin-btn{display:inline-block;margin-top:6px;background:var(--blue);color:#0b1433;font-weight:600;text-decoration:none;border-radius:999px;padding:10px 18px}
+.growth{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;padding-block:32px 8px}
+.approach{padding-block:28px 8px}
+.approach h2.sec{font-family:var(--f-display);font-size:clamp(22px,3vw,30px);margin:8px 0 18px;text-wrap:balance}
+.steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.steps li{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0}
+.steps .n{font-family:var(--f-mono);font-size:13px;color:#0b1433;background:var(--blue);border-radius:6px;padding:2px 8px}
+.steps h3{font-family:var(--f-display);font-size:18px;margin:12px 0 6px}
+.steps p{margin:0;color:var(--muted);font-size:14.5px}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){.growth,.steps{grid-template-columns:1fr}}
 </style>
 </head><body>
 
 <header class="top"><div class="wrap">
   <div class="brand"><img class="apc" src="f/apc-logo.svg" alt="APC"><span>powered by</span><img class="orion" src="f/orion-logo-white.png" alt="Orion"></div>
   <div class="eyebrow">APC Central Sortation Hub · Orion concept</div>
-  <h1>APC of the Future: a walk through the hub</h1>
-  <p class="lede">Follow a parcel from the inbound trunk to the outbound trailer: seven steps at <b>550,000 parcels a night</b>. Pick an option above to see what happens at each step, who does it, and why. Heads are per night shift; people work at <b>about 400 parcels an hour</b>.</p>
+  <h1>Awkward parcels are APC's biggest growth market</h1>
+  <p class="lede">Most of the parcel industry refuses awkward and non-conveyable freight, or takes it off the sorter and handles it by hand. APC already takes it. <b>Orion's Helix sorter handles awkward and non-conveyable freight on Sorter 1 at Cannock today.</b> This concept builds a hub around that strength, so APC can lead a market the rest of the industry under-serves.</p>
 </div></header>
 
 <div class="bar"><div class="wrap">
@@ -102,6 +112,36 @@ footer p{max-width:80ch}
 </div></div>
 
 <main class="wrap">
+  <section class="growth">
+    <div class="card">
+      <h2>The proof is in APC's own parcels</h2>
+      <p>We photographed and measured 400 parcels on Sorter 1 at Cannock on 8–9 October 2026. About <b>1 in 10</b> are tyres, irregular or long items that most networks treat as non-conveyable. At hub volume that is about <b>55,000 parcels a night</b>.</p>
+      <p>The Helix moves parcels on steerable wheels, with no tilt tray, cross-belt or pusher, so these items travel and divert on the same sorter as a box. <b>Non-conveyable becomes conveyable.</b> No separate line and no separate team.</p>
+    </div>
+    <div class="card">
+      <h2>APC measured mix, Sorter 1</h2>
+      <div class="mix" aria-label="APC measured mix, Sorter 1, 8 to 9 Oct 2026">
+        <span>Boxes, totes, mailers</span><i><b style="width:72%"></b></i><span>72%</span>
+        <span>Bags</span><i><b style="width:17.5%"></b></i><span>17.5%</span>
+        <span>Irregular</span><i class="nc"><b style="width:7%"></b></i><span>7.0%</span>
+        <span>Tyres</span><i class="nc"><b style="width:2.3%"></b></i><span>2.3%</span>
+        <span>Long items</span><i class="nc"><b style="width:0.8%"></b></i><span>0.8%</span>
+      </div>
+      <p style="margin-top:12px;font-size:13px">Blue: non-conveyable on most networks. Sizes from the Sorter 1 dimension scanner.</p>
+    </div>
+  </section>
+
+  <section class="approach">
+    <div class="eyebrow">How we designed the hub</div>
+    <h2 class="sec">Modular first, then flow, then people and speed, and no fresh air</h2>
+    <ol class="steps">
+      <li><span class="n">1</span><h3>Modular</h3><p>The hub is built from repeatable modules: 11 identical Helix loops, each serving the doors in its own band, fed by one overhead X-Flow spine. Loops can be added, or moved from people to robots, one at a time as volume grows, without stopping the rest.</p></li>
+      <li><span class="n">2</span><h3>Flow first</h3><p>Get the flow of goods right before anything else. Any inbound door can reach any sorter, every route sits in one place by its door, three scan points track every parcel, and a parcel that misses goes round again instead of onto the floor.</p></li>
+      <li><span class="n">3</span><h3>Then heads and speed</h3><p>With the flow under control, people come out where the technology is proven: induct first, then unloading and cage moves. The hub is designed for 82,500 parcels an hour.</p></li>
+      <li><span class="n">4</span><h3>No fresh air</h3><p>Every parcel is measured at the first scan, so the volume for each route is known before it reaches the chute. Cages are packed to full density, by hand until a machine can match it, so trunks and trailers carry parcels, not empty space.</p></li>
+    </ol>
+  </section>
+
   <section class="intro">
     <div class="card opt-desc">
       <h2 id="od-title">Phase 1 · reduced scope</h2>
@@ -110,16 +150,8 @@ footer p{max-width:80ch}
       <p id="od-savedlbl" style="margin-top:6px"></p>
     </div>
     <div class="card">
-      <h2>APC sorts what others won't</h2>
-      <p>Most networks refuse or hand-sort tyres, irregular and long items. APC takes them. Orion's wheel-based sorters carry them on the same sort as a box, so <b>non-conveyables become conveyable</b>.</p>
-      <div class="mix" aria-label="APC measured mix, Sorter 1, 8 to 9 Oct 2026">
-        <span>Boxes, totes, mailers</span><i><b style="width:72%"></b></i><span>72%</span>
-        <span>Bags</span><i><b style="width:17.5%"></b></i><span>17.5%</span>
-        <span>Irregular</span><i class="nc"><b style="width:7%"></b></i><span>7.0%</span>
-        <span>Tyres</span><i class="nc"><b style="width:2.3%"></b></i><span>2.3%</span>
-        <span>Long items</span><i class="nc"><b style="width:0.8%"></b></i><span>0.8%</span>
-      </div>
-      <p style="margin-top:12px;font-size:13px">APC measured mix: 400 parcels on Sorter 1, Cannock, 8–9 Oct 2026. Blue = non-conveyable on most networks, about 1 in 10, or about 55,000 a night.</p>
+      <h2>Follow a parcel through the hub</h2>
+      <p>Seven steps from the inbound trunk to the outbound trailer, at 550,000 parcels a night. Pick an option at the top to see who does each step and why. Heads are per night shift; people work at about 400 parcels an hour.</p>
     </div>
   </section>
 
